@@ -4,5 +4,18 @@
     <string name="app_name">epe</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    
+    <!-- account -->
+    <string name="account_login_frag_title">"登录"</string>
+    <string name="account_login_divider">"使用第三方帐号登录"</string>
+    <string name="account_login_by_qq">"qq"</string>
+    <string name="account_login_by_wechat">"wechat"</string>
+    <string name="account_login_by_weibo">"微博"</string>
+    <string name="account_frag_hint_phone">"手机号"</string>
+    <string name="account_frag_hint_verifycode">"验证码"</string>
+    <string name="account_frag_hint_password">"密码"</string>
+    <string name="account_frag_reset_password">"忘记密码？"</string>
+    <string name="account_reg_frag_title">"注册"</string>
+    <string name="account_reg_frag_btn_verifycode">"获取验证码"</string>
 
 </resources>
