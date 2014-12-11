@@ -3,7 +3,11 @@ package tw.supra.epe.core;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.net.Network;
 import android.text.TextUtils;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 
 import tw.supra.epe.App;
 
@@ -13,6 +17,7 @@ public abstract class BaseFrag extends Fragment {
     public final UUID FRAG_ID = UUID.randomUUID();
     public final String FRAG_TAG = FRAG_ID.toString();
     private CharSequence mTitle = "";
+    private RequestQueue mRequestQueue;
 
     private boolean mIsInited = false;
 
@@ -23,16 +28,21 @@ public abstract class BaseFrag extends Fragment {
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        if (null != mRequestQueue) {
+            mRequestQueue.stop();
+            mRequestQueue = null;
+        }
+        super.onDestroy();
     }
 
     public boolean IsInited() {
         return mIsInited;
     }
-    
+
     abstract protected CharSequence getDefaultTitle(Context c);
-    public abstract int getIconResId() ;
+
+    public abstract int getIconResId();
 
     protected void setTitle(int title) {
         setTitle(getText(title));
@@ -43,11 +53,17 @@ public abstract class BaseFrag extends Fragment {
     }
 
     public CharSequence getTitle() {
-        if(TextUtils.isEmpty(mTitle)){
+        if (TextUtils.isEmpty(mTitle)) {
             mTitle = getDefaultTitle(App.getInstance());
         }
         return mTitle;
     }
 
-    
+    private RequestQueue getRequestQueue() {
+        if (null == mRequestQueue) {
+            mRequestQueue = Volley.newRequestQueue(getActivity());
+        }
+        return mRequestQueue;
+    }
+
 }
