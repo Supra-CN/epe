@@ -2,7 +2,7 @@ package tw.supra.network.request;
 
 import android.net.Uri;
 
-import tw.supra.epe.ApiDef.ClubAPIDefine;
+import tw.supra.epe.ApiDef.APIDef;
 import tw.supra.epe.ApiDef.EpeErrorCode;
 
 import java.util.HashMap;
@@ -14,16 +14,16 @@ public abstract class EpeRequestInfo extends AbstractRequestInfo<EpeErrorCode> {
 	protected abstract void fillQueryParamters(HashMap<String, String> paramters);
 
 	private void fillQueryParamtersInternal(HashMap<String, String> paramters) {
-		paramters.put("client", ClubAPIDefine.CLIENT_ANDROID);
-		paramters.put("api_ver", ClubAPIDefine.API_VER);
+//		paramters.put("client", APIDef.CLIENT_ANDROID);
+//		paramters.put("api_ver",APIDef.API_VER);
 		fillQueryParamters(paramters);
 	}
 
 	protected String buildRequestUrl() {
 		Uri uri;
 		Uri.Builder builder = new Uri.Builder();
-		builder.scheme(ClubAPIDefine.SCHEMA);
-		builder.encodedAuthority(ClubAPIDefine.HOST_API);
+		builder.scheme(APIDef.SCHEMA);
+		builder.encodedAuthority(APIDef.HOST_API);
 		builder.path("/");
 		HashMap<String, String> paramters = new HashMap<String, String>();
 		fillQueryParamtersInternal(paramters);
@@ -32,5 +32,10 @@ public abstract class EpeRequestInfo extends AbstractRequestInfo<EpeErrorCode> {
 		}
 		uri = builder.build();
 		return uri.toString();
+	}
+	
+	@Override
+	protected EpeErrorCode initErrorCode() {
+	    return new EpeErrorCode();
 	}
 }

@@ -13,26 +13,30 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import tw.supra.epe.R;
+import tw.supra.epe.account.RequestVerifyCode.Type;
 import tw.supra.epe.core.BaseFrag;
+import tw.supra.network.NetworkCenter;
+import tw.supra.network.request.EpeRequestInfo;
+import tw.supra.network.request.NetWorkHandler;
 
-public class RegFrag extends BaseFrag implements OnClickListener{
+public class RegFrag extends BaseFrag implements OnClickListener, NetWorkHandler<EpeRequestInfo> {
     private static final int DELAY_VERIFY_CODE = 60;// 定义发送验证码后的倒数计时
-    
+
     private Button mBtnVerifyCode;
     private EditText mEtPhone;
-    
+
     private int mCountDown = 0;// 发送验证码后的倒数计时
-    
+
     private static Handler sHandler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_reg, container, false);
-        mEtPhone = (EditText)v.findViewById(R.id.et_phone);
-        mBtnVerifyCode = (Button)v.findViewById(R.id.btn_verifycode);
+        mEtPhone = (EditText) v.findViewById(R.id.et_phone);
+        mBtnVerifyCode = (Button) v.findViewById(R.id.btn_verifycode);
         return v;
     }
-    
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -60,12 +64,13 @@ public class RegFrag extends BaseFrag implements OnClickListener{
                 break;
         }
     }
-    
+
     private void onClickGetVerify() {
 
         String phoneNum = mEtPhone.getText().toString().toLowerCase().trim();
         if (!AccountUtils.isLegalPhoneNum(phoneNum)) {
-            Toast.makeText(getActivity(), R.string.account_toast_check_phone, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.account_toast_check_phone, Toast.LENGTH_SHORT)
+                    .show();
             return;
         }
         mCountDown = DELAY_VERIFY_CODE;
@@ -74,32 +79,11 @@ public class RegFrag extends BaseFrag implements OnClickListener{
         requestVerifyCode(phoneNum);
         countDown();
     }
-    
+
     private void requestVerifyCode(String phoneNum) {
-//        final NetWorkHandler<BaseRequestInfo> handler = new NetWorkHandler<BaseRequestInfo>() {
-//
-//            @Override
-//            public boolean HandleEvent(RequestEvent event, BaseRequestInfo info) {
-//                switch (event) {
-//                case FINISH:
-//                    if (info.ERROR_CODE.isOK()) {
-//                        Toast.makeText(getActivity(), R.string.register_toast_wait_for_verify_code, Toast.LENGTH_SHORT)
-//                                .show();
-//                    } else {
-//                        mCountDown = 0;
-//                    }
-//                    break;
-//
-//                default:
-//                    break;
-//                }
-//                return true;
-//            }
-//        };
-//        VerifyCodeRequest request = new VerifyCodeRequest(handler, phoneNum);
-//        NetworkCenter.getInstance().putToQueue(request);
+        NetworkCenter.getInstance().putToQueue(new RequestVerifyCode(this, phoneNum, Type.REG));
     }
-    
+
     private void countDown() {
         if (!isAdded()) {
             mCountDown = 0;
@@ -110,7 +94,8 @@ public class RegFrag extends BaseFrag implements OnClickListener{
             mEtPhone.setEnabled(true);
             mBtnVerifyCode.setText(R.string.account_reg_frag_btn_verifycode);
         } else {
-            mBtnVerifyCode.setText(getString(R.string.account_btn_verifycode_enable_delay, mCountDown));
+            mBtnVerifyCode.setText(getString(R.string.account_btn_verifycode_enable_delay,
+                    mCountDown));
             mCountDown--;
             sHandler.postDelayed(new Runnable() {
                 @Override
@@ -119,6 +104,26 @@ public class RegFrag extends BaseFrag implements OnClickListener{
                 }
             }, 1000);
         }
+    }
+
+    @Override
+    public boolean HandleEvent(tw.supra.network.request.NetWorkHandler.RequestEvent event,
+            EpeRequestInfo info) {
+        switch (event) {
+            case FINISH:
+                if (info.ERROR_CODE.isOK()) {
+                    Toast.makeText(getActivity(),
+                            R.string.account_toast_wait_for_verify_code,
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    mCountDown = 0;
+                }
+                break;
+
+            default:
+                break;
+        }
+        return true;
     }
 
 }

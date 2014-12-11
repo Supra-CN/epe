@@ -17,6 +17,7 @@
     <string name="account_frag_reset_password">"忘记密码？"</string>
     <string name="account_reg_frag_title">"注册"</string>
     <string name="account_reg_frag_btn_verifycode">"获取验证码"</string>
+    <string name="account_toast_wait_for_verify_code">已发送验证码，请查收</string>
     <string name="account_btn_verifycode_enable_delay">等待(%d秒)</string>
     <string name="account_toast_check_phone">请检查电话号码是否正确</string>
 
