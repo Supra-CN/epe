@@ -5,10 +5,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
-import tw.supra.data.DataDef.DataUser;
-import tw.supra.data.DataDef.DataUser.TableThreads;
 import tw.supra.data.LocalData;
 import tw.supra.epe.App;
+import tw.supra.epe.DataDef.DataUser;
 import tw.supra.utils.Log;
 
 import java.util.HashMap;
@@ -55,7 +54,7 @@ public class UserData extends LocalData {
         // db.execSQL(DBDefine.UserDB.SQL_CREARE);
         // db.execSQL(TableForums.SQL_CREATE);
         // db.execSQL(DataDefine.UserDB.PostsTable.SQL_CREATE);
-        db.execSQL(TableThreads.SQL_CREATE);
+//        db.execSQL(TableThreads.SQL_CREATE);
         // db.execSQL(DataDefine.UserDB.DraftsTableBak.SQL_CREATE);
         Log.i(LOG_TAG, "SupraDebug onInitForums : " + NAME);
         // onInitForums(db);
@@ -69,27 +68,27 @@ public class UserData extends LocalData {
     public void onDbUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         for (int v = oldVersion; v <= newVersion; v++) {
             switch (v) {
-                case 1:
-                    // db.execSQL(DataDefine.UserDB.PostsTable.SQL_UPGRADE_V1);
-                    // TODO:处理数据版本升级
-                    break;
-                case 2:
-                    // db.execSQL(TableForums.SQL_UPGRADE_V2_ADD_DESC);
-                    // db.execSQL(TableForums.SQL_UPGRADE_V2_ADD_LOGO);
-                    // db.execSQL(DataDefine.UserDB.PostsTable.SQL_UPGRADE_V2);
-                    // TODO:处理数据版本升级
-                    break;
-                case 3:
-                    // db.execSQL(DataDefine.UserDB.PostsTable.SQL_UPGRADE_V3);
-                    break;
-
-                case 4:
-                    db.execSQL(DataUser.SQL_UPGRADE_V4_DROP_DRAFTS);
-                    db.execSQL(DataUser.SQL_UPGRADE_V4_DROP_POSTS);
-                    break;
-                case 5:
-                    db.execSQL(DataUser.SQL_UPGRADE_V5_DROP_FORUMS);
-                    break;
+//                case 1:
+//                    // db.execSQL(DataDefine.UserDB.PostsTable.SQL_UPGRADE_V1);
+//                    // TODO:处理数据版本升级
+//                    break;
+//                case 2:
+//                    // db.execSQL(TableForums.SQL_UPGRADE_V2_ADD_DESC);
+//                    // db.execSQL(TableForums.SQL_UPGRADE_V2_ADD_LOGO);
+//                    // db.execSQL(DataDefine.UserDB.PostsTable.SQL_UPGRADE_V2);
+//                    // TODO:处理数据版本升级
+//                    break;
+//                case 3:
+//                    // db.execSQL(DataDefine.UserDB.PostsTable.SQL_UPGRADE_V3);
+//                    break;
+//
+//                case 4:
+//                    db.execSQL(DataUser.SQL_UPGRADE_V4_DROP_DRAFTS);
+//                    db.execSQL(DataUser.SQL_UPGRADE_V4_DROP_POSTS);
+//                    break;
+//                case 5:
+//                    db.execSQL(DataUser.SQL_UPGRADE_V5_DROP_FORUMS);
+//                    break;
                 default:
                     break;
             }

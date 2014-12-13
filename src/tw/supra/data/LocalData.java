@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.text.TextUtils;
 
+import tw.supra.epe.DataDef;
+
 import java.util.HashMap;
 
 /**

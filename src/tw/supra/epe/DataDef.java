@@ -1,18 +1,18 @@
 
-package tw.supra.data;
+package tw.supra.epe;
 
 import android.provider.BaseColumns;
 
-import tw.supra.data.ColumnDef.ColumnThreads;
-import tw.supra.data.ColumnDef.ColumnTopic;
-import tw.supra.data.ColumnDef.ColumnsAccount;
-import tw.supra.data.ColumnDef.ColumnsDraft;
-import tw.supra.data.ColumnDef.ColumnsEmotion;
-import tw.supra.data.ColumnDef.ColumnsFavForum;
-import tw.supra.data.ColumnDef.ColumnsForum;
-import tw.supra.data.ColumnDef.ColumnsPost;
-import tw.supra.data.ColumnDef.PreferencesCommon;
-import tw.supra.data.ColumnDef.PreferencesUser;
+import tw.supra.epe.ColumnDef.ColumnThreads;
+import tw.supra.epe.ColumnDef.ColumnTopic;
+import tw.supra.epe.ColumnDef.ColumnsAccount;
+import tw.supra.epe.ColumnDef.ColumnsDraft;
+import tw.supra.epe.ColumnDef.ColumnsEmotion;
+import tw.supra.epe.ColumnDef.ColumnsFavForum;
+import tw.supra.epe.ColumnDef.ColumnsForum;
+import tw.supra.epe.ColumnDef.ColumnsPost;
+import tw.supra.epe.ColumnDef.PreferencesCommon;
+import tw.supra.epe.ColumnDef.PreferencesUser;
 
 /**
  * 数据库相关定义；数据库定义，表定义，行定义，创建语句定义，升级语句定义；

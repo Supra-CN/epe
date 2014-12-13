@@ -7,7 +7,6 @@ import com.umeng.analytics.MobclickAgent;
 
 public class App extends Application {
     public static final String ACTION_LOGIN = "com.sohu.club.intent.action.ACTION_LOGIN";
-
     private static App sInstance;
 
     @Override
@@ -20,5 +19,4 @@ public class App extends Application {
     public static App getInstance() {
         return sInstance;
     }
-
 }

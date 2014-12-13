@@ -10,9 +10,9 @@ import android.os.Environment;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
-import tw.supra.data.ColumnDef.PreferencesCommon;
-import tw.supra.data.DataDef.DataCommon;
 import tw.supra.epe.App;
+import tw.supra.epe.ColumnDef.PreferencesCommon;
+import tw.supra.epe.DataDef.DataCommon;
 import tw.supra.epe.account.Account;
 import tw.supra.network.misc.Utils;
 import tw.supra.utils.MD5;

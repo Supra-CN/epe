@@ -6,10 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
-import tw.supra.data.ColumnDef.PreferencesUser;
 import tw.supra.data.CommonData;
 import tw.supra.data.DBUtils;
-import tw.supra.data.DataDef.DataCommon.TableAccounts;
+import tw.supra.epe.ColumnDef.PreferencesUser;
+import tw.supra.epe.DataDef.DataCommon.TableAccounts;
 import tw.supra.mod.PersistableObj;
 import tw.supra.utils.EncryptUtil;
 import tw.supra.utils.Log;
