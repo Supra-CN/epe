@@ -55,10 +55,10 @@ public class RequestVerifyCode extends EpeJsonRequest<EpeRequestInfo> {
     protected void parseJsonResponse(JSONObject response) throws JSONException {
         INFO.ERROR_CODE.setCode(JsonUtils.getIntSafely(response, APIDef.KEY_ERROR_CODE,
                 EpeErrorCode.CODE_UNKNOW));
+        INFO.ERROR_CODE.setDescription(JsonUtils.getStrSafely(response, APIDef.KEY_ERROR_DESC));
         if (!INFO.ERROR_CODE.isOK()) {
             return;
         }
-        INFO.ERROR_CODE.setDescription(JsonUtils.getStrSafely(response, APIDef.KEY_ERROR_DESC));
         INFO.RESULTS.putString(RESULT_CODE, JsonUtils.getStrSafely(response, "code"));
         INFO.ERROR_CODE.addDyingMsg("response : " + response);
     }

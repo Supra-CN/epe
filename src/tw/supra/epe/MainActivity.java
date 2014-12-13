@@ -10,12 +10,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.umeng.analytics.MobclickAgent;
+
 import tw.supra.epe.core.BaseActivity;
 
 public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        MobclickAgent.updateOnlineConfig(this);
         startActivity(new Intent(App.ACTION_LOGIN));
         finish();
         super.onCreate(savedInstanceState);

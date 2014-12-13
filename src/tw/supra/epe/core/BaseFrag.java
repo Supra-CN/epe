@@ -1,13 +1,12 @@
 
 package tw.supra.epe.core;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.net.Network;
 import android.text.TextUtils;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 
 import tw.supra.epe.App;
 
@@ -57,13 +56,6 @@ public abstract class BaseFrag extends Fragment {
             mTitle = getDefaultTitle(App.getInstance());
         }
         return mTitle;
-    }
-
-    private RequestQueue getRequestQueue() {
-        if (null == mRequestQueue) {
-            mRequestQueue = Volley.newRequestQueue(getActivity());
-        }
-        return mRequestQueue;
     }
 
 }

@@ -5,6 +5,21 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <!-- app -->
+    <string name="external_storage_unavailable">sd卡不可用</string>
+    <string name="image_description">衣+衣</string>
+    <string name="time_some_seconds_ago">%s秒前</string>
+    <string name="time_some_minutes_ago">%s分钟前</string>
+    <string name="time_some_hours_ago">%s小时前</string>
+    <string name="time_yester_day">昨天</string>
+    <string name="time_the_day_before_yester_day">前天</string>
+    <string name="time_some_day_ago">%s天前</string>
+    <string name="time_last_week">上周</string>
+    <string name="time_some_week_ago">%s周前</string>
+    <string name="time_some_month_ago">%s月前</string>
+    <string name="progressing_title">请稍后</string>
+    <string name="progressing">处理中&#8230;</string>
+
     <!-- network -->
     <string name="network_toast_no_connection">没有网络连接</string>
     <string name="network_toast_network_error">网络错误</string>
@@ -29,5 +44,14 @@
     <string name="account_toast_wait_for_verify_code">已发送验证码，请查收</string>
     <string name="account_btn_verifycode_enable_delay">等待(%d秒)</string>
     <string name="account_toast_check_phone">请检查电话号码是否正确</string>
+    <string name="account_register_toast_check_phone">请输入正确的电话号码</string>
+    <string name="account_register_toast_check_password">密码格式有误</string>
+    <string name="account_register_toast_check_user_name">用户名格式有误</string>
+    <string name="account_register_toast_check_verify_code">请输入正确的验证码</string>
+    <string name="account_register_toast_check_agreement">同意协议才能继续</string>
+    <string name="account_register_toast_wait_for_verify_code">已发送验证码，请查收</string>
+    <string name="account_register_toast_register_ok_phone">注册成功，用户名及密码已通过短信发送</string>
+    <string name="account_register_toast_register_ok_mail">注册成功</string>
+    <string name="account_register_progressing">注册中,请稍候&#8230;</string>
 
 </resources>
