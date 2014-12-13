@@ -1,52 +1,70 @@
+
 package tw.supra.epe.account;
 
-import android.util.Log;
-
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import tw.supra.epe.ApiDef.APIDef;
 import tw.supra.epe.ApiDef.EpeErrorCode;
 import tw.supra.network.request.EpeJsonRequest;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
+import tw.supra.utils.JsonUtils;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class RequestVerifyCode extends EpeJsonRequest<EpeRequestInfo> {
     private static final String LOG_TAG = RequestVerifyCode.class.getSimpleName();
+    
+//    public static final int TYPE_REG = 1;//用于注册
+//    public static final int TYPE_STORE = 2;//用于商店短信验证
+//    public static final int TYPE_RESET = 3;//用于找回密码 
 
-    public final String MOBILE;
-    public final Type TYPE;
-
-    public enum Type {
-        REG(1),
-        STORE(2),
-        RESET(3);
-        final int CODE;
-
-        private Type(int code) {
-            CODE = code;
+    //ARGS
+//    public static final String ARG_MOBILE = "arg_mobile";// 参数：请求手机号
+//    public static final String ARG_TYPE = "arg_type";// 参数：验证码用途，默认{@link RequestVerifyCode#TYPE_REG}}
+    
+    //RESULTS
+    public static final String RESULT_CODE = "RESULT_CODE";// 结果，正确验证码；
+    
+    /**
+     * 验证码用途
+     * @author supra
+     */
+    public enum Type{
+        REG(1),//用于注册
+        STORE(2),//用于商店短信验证
+        RESET(3);//用于找回密码 
+        public final int ID;
+        private Type(int id) {
+            ID = id;
         }
     }
+    
+//    public final String PHONE;
+//    public final Type TYPE;
 
-    public RequestVerifyCode(NetWorkHandler<EpeRequestInfo> eventHandler,  String mobile,  Type type) {
+    public RequestVerifyCode(NetWorkHandler<EpeRequestInfo> eventHandler,String mobile, Type type) {
         super(eventHandler, createInfo(mobile, type));
-        MOBILE = mobile;
-        TYPE = type;
     }
 
     @Override
     protected void parseJsonResponse(JSONObject response) throws JSONException {
-        Log.i(LOG_TAG ,"parseJsonResponse : "+ response);
+        INFO.ERROR_CODE.setCode(JsonUtils.getIntSafely(response, APIDef.KEY_ERROR_CODE, EpeErrorCode.CODE_UNKNOW));
+        if (!INFO.ERROR_CODE.isOK()) {
+            return;
+        }
+        INFO.ERROR_CODE.setDescription(JsonUtils.getStrSafely(response, APIDef.KEY_ERROR_DESC));
+        INFO.RESULTS.putInt(RESULT_CODE, JsonUtils.getIntSafely(response, "code"));
     }
 
     @Override
     protected void onPostParseJson() {
-        // TODO Auto-generated method stub
-
     }
 
-    private static EpeRequestInfo createInfo(final String mobile,  final Type type){
+    private static EpeRequestInfo createInfo(final String mobile, final Type type) {
         return new EpeRequestInfo() {
             @Override
             protected void fillQueryParamters(HashMap<String, String> paramters) {
@@ -54,7 +72,7 @@ public class RequestVerifyCode extends EpeJsonRequest<EpeRequestInfo> {
                 paramters.put("c", "user_api");
                 paramters.put("m", "get_code");
                 paramters.put("mobile", mobile);
-                paramters.put("type", String.valueOf(type.CODE));
+                paramters.put("type", String.valueOf(type));
             }
 
             @Override

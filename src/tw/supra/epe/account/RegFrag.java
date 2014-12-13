@@ -26,6 +26,7 @@ public class RegFrag extends BaseFrag implements OnClickListener, NetWorkHandler
     private EditText mEtPhone;
 
     private int mCountDown = 0;// 发送验证码后的倒数计时
+    private int mVerifyCode;
 
     private static Handler sHandler = new Handler();
 
@@ -112,8 +113,10 @@ public class RegFrag extends BaseFrag implements OnClickListener, NetWorkHandler
         switch (event) {
             case FINISH:
                 if (info.ERROR_CODE.isOK()) {
+                    mVerifyCode = info.RESULTS.getInt(RequestVerifyCode.RESULT_CODE);
+
                     Toast.makeText(getActivity(),
-                            R.string.account_toast_wait_for_verify_code,
+                            getString(R.string.account_toast_wait_for_verify_code) + mVerifyCode,
                             Toast.LENGTH_SHORT).show();
                 } else {
                     mCountDown = 0;
@@ -125,5 +128,4 @@ public class RegFrag extends BaseFrag implements OnClickListener, NetWorkHandler
         }
         return true;
     }
-
 }

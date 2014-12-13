@@ -28,7 +28,7 @@ public class APIDef {
 	public static final String CLIENT_IOS = "ios";
 	public static final String API_VER = "1";
 
-	public static final String KEY_ERROR_CODE = "code";
+	public static final String KEY_ERROR_CODE = "errorcode";
 	public static final String KEY_ERROR_DESC = "msg";
 	public static final String KEY_TIME_STAMP = "timeStamp";
 
