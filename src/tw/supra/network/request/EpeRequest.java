@@ -9,6 +9,7 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 
+import tw.supra.epe.R;
 import tw.supra.epe.ApiDef.EpeErrorCode;
 
  abstract public class EpeRequest<T extends EpeRequestInfo> extends InfoRequest<EpeErrorCode,T> {
@@ -46,27 +47,27 @@ import tw.supra.epe.ApiDef.EpeErrorCode;
 		String toast = null;
 
 		switch (INFO.ERROR_CODE.getCode()) {
-//		case ErrorCode.CODE_INFO_PP_TOKEN_EXPIRED:
-//		case ErrorCode.CODE_INFO_TOKEN_EXPIRED:
+//		case EpeErrorCode.CODE_INFO_PP_TOKEN_EXPIRED:
+//		case EpeErrorCode.CODE_INFO_TOKEN_EXPIRED:
 //			toast = getContext()
 //					.getString(R.string.network_toast_token_expired);
 //			ClubAccountManager.getInstance().doLogOut();
 //			break;
-//		case ErrorCode.CODE_ERROR_BY_VOLLY_NETWORK:
-//			toast = getContext()
-//					.getString(R.string.network_toast_network_error);
-//			break;
-//		case ErrorCode.CODE_ERROR_BY_VOLLY_NO_CONNECTION:
-//			toast = getContext()
-//					.getString(R.string.network_toast_no_connection);
-//			break;
-//		case ErrorCode.CODE_ERROR_BY_VOLLY_TIMEOUT:
-//			toast = getContext().getString(R.string.network_toast_timeout);
-//			break;
-//		case ErrorCode.CODE_ERROR_BY_VOLLY_SERVER:
-//			toast = getContext().getString(R.string.network_toast_timeout);
-//			toast = getContext().getString(R.string.network_toast_server_error);
-//			break;
+		case EpeErrorCode.CODE_ERROR_BY_VOLLY_NETWORK:
+			toast = getContext()
+					.getString(R.string.network_toast_network_error);
+			break;
+		case EpeErrorCode.CODE_ERROR_BY_VOLLY_NO_CONNECTION:
+			toast = getContext()
+					.getString(R.string.network_toast_no_connection);
+			break;
+		case EpeErrorCode.CODE_ERROR_BY_VOLLY_TIMEOUT:
+			toast = getContext().getString(R.string.network_toast_timeout);
+			break;
+		case EpeErrorCode.CODE_ERROR_BY_VOLLY_SERVER:
+			toast = getContext().getString(R.string.network_toast_timeout);
+			toast = getContext().getString(R.string.network_toast_server_error);
+			break;
 		default: {
 			if (INFO.ERROR_CODE.isFriendlyInfo()) {
 				toast = INFO.ERROR_CODE.getDescription();

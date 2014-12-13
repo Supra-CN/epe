@@ -96,9 +96,9 @@ public class EpeErrorCode extends AbstractErrorCodeWithState {
         // if (code >= 7000 && code <= 7499) {
         // return Status.ERROE_BY_API;
         // }
-        // if (code >= 7500 && code <= 8000) {
-        // return Status.FRIENDLY_INFO;
-        // }
+         if (code >= 1000 && code <= 1999) {
+         return Status.FRIENDLY_INFO;
+         }
         if (code >= 10000) {
             return Status.ERROR_BY_NETWORK;
         }

@@ -5,6 +5,15 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <!-- network -->
+    <string name="network_toast_no_connection">没有网络连接</string>
+    <string name="network_toast_network_error">网络错误</string>
+    <string name="network_toast_token_expired">登陆信息失效，请重新登录</string>
+    <string name="network_toast_timeout">网络超时</string>
+    <string name="network_toast_server_error">服务器错误</string>
+    <string name="network_empty_view">网络不给力\n单击页面重新加载</string>
+    <string name="network_image_upload_request_faild">图片上传失败</string>
+
     <!-- account -->
     <string name="account_login_frag_title">"登录"</string>
     <string name="account_login_divider">"使用第三方帐号登录"</string>
