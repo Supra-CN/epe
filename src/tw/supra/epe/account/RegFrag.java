@@ -22,6 +22,7 @@ import tw.supra.network.request.NetWorkHandler;
 public class RegFrag extends BaseFrag implements OnClickListener, NetWorkHandler<EpeRequestInfo> {
     private static final int DELAY_VERIFY_CODE = 60;// 定义发送验证码后的倒数计时
 
+    private EditText mEtVerifyCode;
     private Button mBtnVerifyCode;
     private EditText mEtPhone;
 
@@ -34,6 +35,7 @@ public class RegFrag extends BaseFrag implements OnClickListener, NetWorkHandler
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_reg, container, false);
         mEtPhone = (EditText) v.findViewById(R.id.et_phone);
+        mEtVerifyCode = (EditText) v.findViewById(R.id.et_verifycode);
         mBtnVerifyCode = (Button) v.findViewById(R.id.btn_verifycode);
         return v;
     }
@@ -115,7 +117,7 @@ public class RegFrag extends BaseFrag implements OnClickListener, NetWorkHandler
                 if (info.ERROR_CODE.isOK()) {
                     mVerifyCode = info.RESULTS.getString(RequestVerifyCode.RESULT_CODE);
                     //TODO:清理测试代码
-                    mBtnVerifyCode.setText(String.valueOf(mVerifyCode));
+                    mEtVerifyCode.setText(mVerifyCode);
                     Toast.makeText(getActivity(),
                             getString(R.string.account_toast_wait_for_verify_code) + mVerifyCode,
                             Toast.LENGTH_SHORT).show();
