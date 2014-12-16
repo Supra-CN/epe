@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-public abstract class ClubObjIdentifier<T extends ModelObj> extends Identifier<T> {
+public abstract class ObjIdentifier<T extends ModelObj> extends Identifier<T> {
 
 	abstract public T build();
 	

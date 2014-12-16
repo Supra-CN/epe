@@ -22,6 +22,8 @@ import java.util.HashMap;
 public abstract class LocalData {
 
     private static final String LOG_TAG = LocalData.class.getSimpleName();
+    private static final String DB_SUB_FIX = ".db";
+
     public final int VERSION;
     public final Context CONTEXT;
     public final String NAME;
@@ -46,14 +48,16 @@ public abstract class LocalData {
         NAME = name;
         VERSION = version;
         CONTEXT = context;
-        DB_HELPER = new SQLiteOpenHelper(CONTEXT, NAME, null, VERSION) {
+        String dbName = NAME.endsWith(DB_SUB_FIX) ? NAME : NAME + DB_SUB_FIX;
+        DB_HELPER = new SQLiteOpenHelper(CONTEXT, dbName,
+                null, VERSION) {
 
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onConfigure(SQLiteDatabase db) {
                 super.onConfigure(db);
                 mTmpDbOnInitializing = db;
-//                setForeignKeyConstraintsEnabled(db, true);
+                // setForeignKeyConstraintsEnabled(db, true);
                 onDbConfigure(db);
                 mTmpDbOnInitializing = null;
             }
@@ -61,7 +65,7 @@ public abstract class LocalData {
             @Override
             public void onCreate(SQLiteDatabase db) {
                 mTmpDbOnInitializing = db;
-//                setForeignKeyConstraintsEnabled(db, true);
+                // setForeignKeyConstraintsEnabled(db, true);
                 onDbCreate(db);
                 mTmpDbOnInitializing = null;
             }
@@ -77,10 +81,10 @@ public abstract class LocalData {
             public void onOpen(SQLiteDatabase db) {
                 super.onOpen(db);
                 mTmpDbOnInitializing = db;
-//                if (!db.isReadOnly()) {
-//                    // Enable foreign key constraints
-//                    db.execSQL(DataDef.ENABLE_DB_FOREIGN_KEY);
-//                }
+                // if (!db.isReadOnly()) {
+                // // Enable foreign key constraints
+                // db.execSQL(DataDef.ENABLE_DB_FOREIGN_KEY);
+                // }
                 onDbOpen(db);
                 mTmpDbOnInitializing = null;
             }
@@ -94,13 +98,14 @@ public abstract class LocalData {
     public abstract void onDbCreate(SQLiteDatabase db);
 
     public abstract void onDbUpgrade(SQLiteDatabase db, int oldVersion, int newVersion);
-    
-    public void close(){
+
+    public void close() {
         DB_HELPER.close();
     }
 
     /**
      * 在SQLiteOpenHelper初始化期间，返回初始化时的临时数据库，避免初始化时死锁；
+     * 
      * @return
      */
     public SQLiteDatabase getDb() {

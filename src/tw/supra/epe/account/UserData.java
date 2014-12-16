@@ -28,7 +28,7 @@ public class UserData extends LocalData {
      */
     public static UserData getUserData(String passport) {
         UserData userData = USER_DATAS
-                .get(TextUtils.isEmpty(passport) ? Account.ANONYMOUS_UID : passport);
+                .get(TextUtils.isEmpty(passport) ? User.ANONYMOUS : passport);
         userData = new UserData(App.getInstance(), passport);
         USER_DATAS.put(passport, userData);
         return userData;

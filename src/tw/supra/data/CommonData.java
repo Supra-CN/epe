@@ -11,9 +11,8 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import tw.supra.epe.App;
-import tw.supra.epe.ColumnDef.PreferencesCommon;
+import tw.supra.epe.ColumnDef.PrefCommon;
 import tw.supra.epe.DataDef.DataCommon;
-import tw.supra.epe.account.Account;
 import tw.supra.network.misc.Utils;
 import tw.supra.utils.MD5;
 
@@ -54,35 +53,35 @@ public class CommonData extends LocalData {
 
     @Override
     public void onDbCreate(SQLiteDatabase db) {
-//        db.execSQL(DataCommon.TableEmotion.SQL_CREATE);
-//        db.execSQL(DataCommon.TableAccounts.SQL_CREATE);
-//        db.execSQL(DataCommon.TableForums.SQL_CREATE);
-//        db.execSQL(DataCommon.TableFavForums.SQL_CREATE);
-//        db.execSQL(DataCommon.TablePost.SQL_CREATE);
-//        db.execSQL(DataCommon.TableDrafts.SQL_CREATE);
-//        onInitEmotions(db);
-//        onInitForums(db);
+        // db.execSQL(DataCommon.TableEmotion.SQL_CREATE);
+        // db.execSQL(DataCommon.TableAccounts.SQL_CREATE);
+        // db.execSQL(DataCommon.TableForums.SQL_CREATE);
+        // db.execSQL(DataCommon.TableFavForums.SQL_CREATE);
+        // db.execSQL(DataCommon.TablePost.SQL_CREATE);
+        // db.execSQL(DataCommon.TableDrafts.SQL_CREATE);
+        // onInitEmotions(db);
+        // onInitForums(db);
     }
 
     @Override
     public void onDbUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         for (int v = oldVersion; v <= newVersion; v++) {
             switch (v) {
-//                case 1:
-//                    db.execSQL(DataCommon.SQL_UPGRADE_V1_CREATE_TABLES_EMOTION);
-//                    onInitEmotions(db);
-//                    db.execSQL(DataCommon.SQL_UPGRADE_V1_CREATE_TABLE_DRAFT);
-//                    onUpgradeSaveDrafts();
-//                    break;
-//                case 2:
-//                    db.execSQL(DataCommon.SQL_UPGRADE_V2_CREATE_TABLE_POST);
-//                    break;
-//                case 3:
-//                    db.execSQL(DataCommon.SQL_UPGRADE_V3_CREATE_TABLE_FAV_FORUMS);
-//                    db.execSQL(DataCommon.SQL_UPGRADE_V3_CREATE_TABLE_FORUMS);
-//                    onInitForums(db);
-//                    break;
-                // TODO:显示个人信息，数据库v4-v5的升级语句
+            // case 1:
+            // db.execSQL(DataCommon.SQL_UPGRADE_V1_CREATE_TABLES_EMOTION);
+            // onInitEmotions(db);
+            // db.execSQL(DataCommon.SQL_UPGRADE_V1_CREATE_TABLE_DRAFT);
+            // onUpgradeSaveDrafts();
+            // break;
+            // case 2:
+            // db.execSQL(DataCommon.SQL_UPGRADE_V2_CREATE_TABLE_POST);
+            // break;
+            // case 3:
+            // db.execSQL(DataCommon.SQL_UPGRADE_V3_CREATE_TABLE_FAV_FORUMS);
+            // db.execSQL(DataCommon.SQL_UPGRADE_V3_CREATE_TABLE_FORUMS);
+            // onInitForums(db);
+            // break;
+            // TODO:显示个人信息，数据库v4-v5的升级语句
                 default:
                     break;
             }
@@ -93,87 +92,77 @@ public class CommonData extends LocalData {
     public void onDbOpen(SQLiteDatabase db) {
     }
 
-    public void putCurrentUserPassport(String passport) {
-        putPrefStr(PreferencesCommon.CURRENT_USER, passport);
-    }
-
     public void putTrafficCtrlState(boolean state) {
-        putPrefBool(PreferencesCommon.TRAFFIC_CTRL, state);
+        putPrefBool(PrefCommon.TRAFFIC_CTRL, state);
     }
 
     public void putLargeTextState(boolean state) {
-        putPrefBool(PreferencesCommon.LARGE_TEXT, state);
+        putPrefBool(PrefCommon.LARGE_TEXT, state);
     }
 
     public String getGID() {
-        return getPrefStringByKey(PreferencesCommon.GID);
+        return getPrefStringByKey(PrefCommon.GID);
     }
 
     public String getPassportMD5() {
-        return getPrefStringByKey(PreferencesCommon.PASSPORT_MD5);
+        return getPrefStringByKey(PrefCommon.PASSPORT_MD5);
     }
 
     public String getOsType() {
-        return getPrefStringByKey(PreferencesCommon.OS_TYPE);
+        return getPrefStringByKey(PrefCommon.OS_TYPE);
     }
 
     public String getModelType() {
-        return getPrefStringByKey(PreferencesCommon.MODEL_TYPE);
+        return getPrefStringByKey(PrefCommon.MODEL_TYPE);
     }
 
     public String getAppId() {
-        return getPrefStringByKey(PreferencesCommon.APP_ID);
+        return getPrefStringByKey(PrefCommon.APP_ID);
     }
 
     public String getIMEI() {
-        return getPrefStringByKey(PreferencesCommon.IMEI);
+        return getPrefStringByKey(PrefCommon.IMEI);
     }
 
     public String getIMSI() {
-        return getPrefStringByKey(PreferencesCommon.IMSI);
+        return getPrefStringByKey(PrefCommon.IMSI);
     }
 
     public String getMacAddress() {
-        return getPrefStringByKey(PreferencesCommon.MAC_ADDRESS);
+        return getPrefStringByKey(PrefCommon.MAC_ADDRESS);
     }
 
     public String getUUID() {
-        return getPrefStringByKey(PreferencesCommon.UUID);
-    }
-
-    public String getCurrentUserPassport() {
-        return getPrefStringByKey(PreferencesCommon.CURRENT_USER);
+        return getPrefStringByKey(PrefCommon.UUID);
     }
 
     public boolean getTrafficCtrlStatues() {
-        return getPrefBool(PreferencesCommon.TRAFFIC_CTRL, true);
+        return getPrefBool(PrefCommon.TRAFFIC_CTRL, true);
     }
 
     public boolean getLargeTextStatues() {
-        return getPrefBool(PreferencesCommon.LARGE_TEXT, false);
+        return getPrefBool(PrefCommon.LARGE_TEXT, false);
     }
 
     protected String generateString(String key) {
-        if (PreferencesCommon.GID.equals(key)) {
+        if (PrefCommon.GID.equals(key)) {
             return generateGID();
-//        } else if (PreferencesCommon.PASSPORT_MD5.equals(key)) {
-//            return CONTEXT.getString(R.string.passport_md5);
-//        } else if (PreferencesCommon.OS_TYPE.equals(key)) {
-//            return CONTEXT.getString(R.string.os_type);
-//        } else if (PreferencesCommon.APP_ID.equals(key)) {
-//            return CONTEXT.getString(R.string.app_id);
-//        } else if (PreferencesCommon.MODEL_TYPE.equals(key)) {
-//            return CONTEXT.getString(R.string.model_type);
-        } else if (PreferencesCommon.IMEI.equals(key)) {
+            // } else if (PreferencesCommon.PASSPORT_MD5.equals(key)) {
+            // return CONTEXT.getString(R.string.passport_md5);
+            // } else if (PreferencesCommon.OS_TYPE.equals(key)) {
+            // return CONTEXT.getString(R.string.os_type);
+            // } else if (PreferencesCommon.APP_ID.equals(key)) {
+            // return CONTEXT.getString(R.string.app_id);
+            // } else if (PreferencesCommon.MODEL_TYPE.equals(key)) {
+            // return CONTEXT.getString(R.string.model_type);
+        } else if (PrefCommon.IMEI.equals(key)) {
             return generateIMEI();
-        } else if (PreferencesCommon.IMSI.equals(key)) {
+        } else if (PrefCommon.IMSI.equals(key)) {
             return generateIMSI();
-        } else if (PreferencesCommon.MAC_ADDRESS.equals(key)) {
+        } else if (PrefCommon.MAC_ADDRESS.equals(key)) {
             return generateMacAddress();
-        } else if (PreferencesCommon.UUID.equals(key)) {
+        } else if (PrefCommon.UUID.equals(key)) {
             return UUID.randomUUID().toString();
-        } else if (PreferencesCommon.CURRENT_USER.equals(key)) {
-            return Account.Type.ANONYMOUS.name();
         } else {
             return "";
         }
@@ -302,68 +291,68 @@ public class CommonData extends LocalData {
         }
     }
 
-//    private void onInitEmotions(SQLiteDatabase db) {
-//        Log.i(LOG_TAG, "onInitEmotions : " + NAME);
-//        InputStream in = CONTEXT.getResources().openRawResource(R.raw.emotions);
-//        String json = "";
-//        CharBuffer buffer = CharBuffer.allocate(20480);
-//        StringBuilder sb = new StringBuilder();
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-//        try {
-//            while (reader.read(buffer) != -1) {
-//                buffer.flip();
-//                sb.append(buffer.toString());
-//            }
-//            json = sb.toString();
-//            reader.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            throw new IllegalStateException("onInitEmotions abort, cause by raw file exception", e);
-//        }
-//
-//        ArrayList<ClubEmotion> dataArray = null;
-//        try {
-//            JSONObject jo = new JSONObject(json);
-//            JSONArray ja = jo.getJSONArray("face");
-//            dataArray = FetchEmotionsRequest.decodeJaFace(ja);
-//        } catch (JSONException e) {
-//            Log.w(LOG_TAG, "onInitEmotions abort, cause by json decode");
-//            e.printStackTrace();
-//        }
-//
-//        if (null != dataArray) {
-//            FetchEmotionsRequest.updateDataArrayToDB(dataArray, db);
-//        }
-//    }
+    // private void onInitEmotions(SQLiteDatabase db) {
+    // Log.i(LOG_TAG, "onInitEmotions : " + NAME);
+    // InputStream in = CONTEXT.getResources().openRawResource(R.raw.emotions);
+    // String json = "";
+    // CharBuffer buffer = CharBuffer.allocate(20480);
+    // StringBuilder sb = new StringBuilder();
+    // BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+    // try {
+    // while (reader.read(buffer) != -1) {
+    // buffer.flip();
+    // sb.append(buffer.toString());
+    // }
+    // json = sb.toString();
+    // reader.close();
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // throw new IllegalStateException("onInitEmotions abort, cause by raw file exception", e);
+    // }
+    //
+    // ArrayList<ClubEmotion> dataArray = null;
+    // try {
+    // JSONObject jo = new JSONObject(json);
+    // JSONArray ja = jo.getJSONArray("face");
+    // dataArray = FetchEmotionsRequest.decodeJaFace(ja);
+    // } catch (JSONException e) {
+    // Log.w(LOG_TAG, "onInitEmotions abort, cause by json decode");
+    // e.printStackTrace();
+    // }
+    //
+    // if (null != dataArray) {
+    // FetchEmotionsRequest.updateDataArrayToDB(dataArray, db);
+    // }
+    // }
 
-//    private void onInitForums(SQLiteDatabase db) {
-//        Log.i(LOG_TAG, "onInitForums : " + NAME);
-//        InputStream in = CONTEXT.getResources().openRawResource(R.raw.forums);
-//        String json = "";
-//        CharBuffer buffer = CharBuffer.allocate(20480);
-//        StringBuilder sb = new StringBuilder();
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-//        try {
-//            while (reader.read(buffer) != -1) {
-//                buffer.flip();
-//                sb.append(buffer.toString());
-//            }
-//            json = sb.toString();
-//            reader.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            throw new IllegalStateException("onInitForums abort, cause by raw file exception", e);
-//        }
-//
-//        try {
-//            JSONObject jo = new JSONObject(json);
-//            JSONArray ja = jo.getJSONArray("data");
-//            // dataArray = FetchForumsRequest.decodeJaForums(ja,true);
-//            FetchForumsRequest.decodeAndFlushJaForums(ja, false);
-//        } catch (JSONException e) {
-//            Log.w(LOG_TAG, "onInitForums abort, cause by json decode");
-//            e.printStackTrace();
-//        }
-//    }
+    // private void onInitForums(SQLiteDatabase db) {
+    // Log.i(LOG_TAG, "onInitForums : " + NAME);
+    // InputStream in = CONTEXT.getResources().openRawResource(R.raw.forums);
+    // String json = "";
+    // CharBuffer buffer = CharBuffer.allocate(20480);
+    // StringBuilder sb = new StringBuilder();
+    // BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+    // try {
+    // while (reader.read(buffer) != -1) {
+    // buffer.flip();
+    // sb.append(buffer.toString());
+    // }
+    // json = sb.toString();
+    // reader.close();
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // throw new IllegalStateException("onInitForums abort, cause by raw file exception", e);
+    // }
+    //
+    // try {
+    // JSONObject jo = new JSONObject(json);
+    // JSONArray ja = jo.getJSONArray("data");
+    // // dataArray = FetchForumsRequest.decodeJaForums(ja,true);
+    // FetchForumsRequest.decodeAndFlushJaForums(ja, false);
+    // } catch (JSONException e) {
+    // Log.w(LOG_TAG, "onInitForums abort, cause by json decode");
+    // e.printStackTrace();
+    // }
+    // }
 
 }

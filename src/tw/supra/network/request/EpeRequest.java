@@ -1,5 +1,7 @@
 package tw.supra.network.request;
 
+import tw.supra.epe.R;
+import tw.supra.epe.ApiDef.EpeErrorCode;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -9,50 +11,51 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 
-import tw.supra.epe.R;
-import tw.supra.epe.ApiDef.EpeErrorCode;
+abstract public class EpeRequest<T extends EpeRequestInfo> extends
+		InfoRequest<EpeErrorCode, T> {
+	private static final String LOG_TAG = EpeRequest.class.getSimpleName();
 
- abstract public class EpeRequest<T extends EpeRequestInfo> extends InfoRequest<EpeErrorCode,T> {
-     private static final String LOG_TAG = EpeRequest.class.getSimpleName();
+	public EpeRequest(NetWorkHandler<T> eventHandler, T info) {
+		super(eventHandler, info);
+	}
 
-    public EpeRequest(NetWorkHandler<T> eventHandler, T info) {
-        super(eventHandler, info);
-    }
-
-    @Override
-    protected void dispatchVolleyError(VolleyError error) {
+	@Override
+	protected void dispatchVolleyError(VolleyError error) {
 		if (!INFO.ERROR_CODE.isReturnByApiError()) {
 			if (error instanceof NoConnectionError) {
 				INFO.ERROR_CODE
 						.setCode(EpeErrorCode.CODE_ERROR_BY_VOLLY_NO_CONNECTION);
 			} else if (error instanceof NetworkError) {
-				INFO.ERROR_CODE.setCode(EpeErrorCode.CODE_ERROR_BY_VOLLY_NETWORK);
+				INFO.ERROR_CODE
+						.setCode(EpeErrorCode.CODE_ERROR_BY_VOLLY_NETWORK);
 			} else if (error instanceof TimeoutError) {
-				INFO.ERROR_CODE.setCode(EpeErrorCode.CODE_ERROR_BY_VOLLY_TIMEOUT);
-				INFO.ERROR_CODE.setCode(EpeErrorCode.CODE_ERROR_BY_VOLLY_SERVER);
+				INFO.ERROR_CODE
+						.setCode(EpeErrorCode.CODE_ERROR_BY_VOLLY_TIMEOUT);
+				INFO.ERROR_CODE
+						.setCode(EpeErrorCode.CODE_ERROR_BY_VOLLY_SERVER);
 			} else if (error instanceof ServerError) {
 			} else {
-				INFO.ERROR_CODE.setCode(EpeErrorCode.CODE_ERROR_BY_VOLLY_UNKNOW);
+				INFO.ERROR_CODE
+						.setCode(EpeErrorCode.CODE_ERROR_BY_VOLLY_UNKNOW);
 			}
 		}
 		INFO.ERROR_CODE.setVollyError(error);
 
 		notifyFinish(true);
 		super.deliverError(error);
-    }
-    
+	}
 
-    @Override
-    protected void judgeError() {
+	@Override
+	protected void judgeError() {
 		String toast = null;
 
 		switch (INFO.ERROR_CODE.getCode()) {
-//		case EpeErrorCode.CODE_INFO_PP_TOKEN_EXPIRED:
-//		case EpeErrorCode.CODE_INFO_TOKEN_EXPIRED:
-//			toast = getContext()
-//					.getString(R.string.network_toast_token_expired);
-//			ClubAccountManager.getInstance().doLogOut();
-//			break;
+		// case EpeErrorCode.CODE_INFO_PP_TOKEN_EXPIRED:
+		// case EpeErrorCode.CODE_INFO_TOKEN_EXPIRED:
+		// toast = getContext()
+		// .getString(R.string.network_toast_token_expired);
+		// ClubAccountManager.getInstance().doLogOut();
+		// break;
 		case EpeErrorCode.CODE_ERROR_BY_VOLLY_NETWORK:
 			toast = getContext()
 					.getString(R.string.network_toast_network_error);

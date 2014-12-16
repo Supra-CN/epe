@@ -11,8 +11,8 @@ import tw.supra.epe.ColumnDef.ColumnsEmotion;
 import tw.supra.epe.ColumnDef.ColumnsFavForum;
 import tw.supra.epe.ColumnDef.ColumnsForum;
 import tw.supra.epe.ColumnDef.ColumnsPost;
-import tw.supra.epe.ColumnDef.PreferencesCommon;
-import tw.supra.epe.ColumnDef.PreferencesUser;
+import tw.supra.epe.ColumnDef.PrefCommon;
+import tw.supra.epe.ColumnDef.PrefUser;
 
 /**
  * 数据库相关定义；数据库定义，表定义，行定义，创建语句定义，升级语句定义；
@@ -55,7 +55,7 @@ public class DataDef {
         public static final String SQL_UPGRADE_V3_CREATE_TABLE_FAV_FORUMS = TableFavForums.SQL_CREATE;
         public static final String SQL_UPGRADE_V3_CREATE_TABLE_FORUMS = TableForums.SQL_CREATE;
 
-        public static final class Preferences extends BaseColumn implements PreferencesCommon {
+        public static final class Preferences extends BaseColumn implements PrefCommon {
         }
 
         public static final class TableFavForums extends BaseTable {
@@ -129,24 +129,25 @@ public class DataDef {
             public static final String SQL_CREATE = "CREATE TABLE IF NOT EXISTS " + NAME + " (" +
                     Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, " +
                     Columns.UID + " TEXT NOT NULL UNIQUE, " +
-                    Columns.NICK_NAME + " TEXT, " +
-                    Columns.GENDER + " TEXT, " +
-                    Columns.DESCRIPTION + " TEXT, " +
-                    Columns.SCORE + " INTEGER DEFAULT 0, " +
-                    Columns.GRADE + " INTEGER DEFAULT 0, " +
-                    Columns.CHARM + " INTEGER DEFAULT 0, " +
-                    Columns.ELITE + " INTEGER DEFAULT 0, " +
-                    Columns.ART + " INTEGER DEFAULT 0, " +
-                    Columns.TITLE + " TEXT, " +
-                    Columns.LINE_TIME + " INTEGER DEFAULT 0, " +
-                    Columns.LOGIN_COUNT + " INTEGER DEFAULT 0, " +
-                    Columns.LAST_LOGIN + " TEXT, " +
-                    Columns.REG_DATE + " LONG DEFAULT 0, " +
-                    Columns.PROVINCE + " TEXT DEFAULT 0, " +
-                    Columns.MESSAGE_TOTAL + " INTEGER DEFAULT 0, " +
-                    Columns.FRIENDS_TOTAL + " INTEGER DEFAULT 0, " +
-                    Columns.FOLLOWERS_TOTAL + " INTEGER DEFAULT 0, " +
-                    Columns.AVATAR + " TEXT " +
+                    Columns.AUTH + " TEXT, " +
+                    Columns.NAME + " TEXT " +
+//                    Columns.GENDER + " TEXT, " +
+//                    Columns.DESCRIPTION + " TEXT, " +
+//                    Columns.SCORE + " INTEGER DEFAULT 0, " +
+//                    Columns.GRADE + " INTEGER DEFAULT 0, " +
+//                    Columns.CHARM + " INTEGER DEFAULT 0, " +
+//                    Columns.ELITE + " INTEGER DEFAULT 0, " +
+//                    Columns.ART + " INTEGER DEFAULT 0, " +
+//                    Columns.TITLE + " TEXT, " +
+//                    Columns.LINE_TIME + " INTEGER DEFAULT 0, " +
+//                    Columns.LOGIN_COUNT + " INTEGER DEFAULT 0, " +
+//                    Columns.LAST_LOGIN + " TEXT, " +
+//                    Columns.REG_DATE + " LONG DEFAULT 0, " +
+//                    Columns.PROVINCE + " TEXT DEFAULT 0, " +
+//                    Columns.MESSAGE_TOTAL + " INTEGER DEFAULT 0, " +
+//                    Columns.FRIENDS_TOTAL + " INTEGER DEFAULT 0, " +
+//                    Columns.FOLLOWERS_TOTAL + " INTEGER DEFAULT 0, " +
+//                    Columns.AVATAR + " TEXT " +
                     ");";
         }
 
@@ -218,7 +219,7 @@ public class DataDef {
         public static final String SQL_UPGRADE_V4_DROP_POSTS = "DROP TABLE IF EXISTS posts;";
         public static final String SQL_UPGRADE_V4_DROP_DRAFTS = "DROP TABLE IF EXISTS drafts;";
 
-        public static final class Preferences extends BaseColumn implements PreferencesUser {
+        public static final class Preferences extends BaseColumn implements PrefUser {
         }
 
 //         public static final class TableForums extends BaseTable {

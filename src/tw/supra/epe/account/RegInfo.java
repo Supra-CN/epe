@@ -20,8 +20,7 @@ public class RegInfo extends EpeRequestInfo {
      public static final String ARG_INT_TYPE = "arg_int_type";
 
     // RESULTS
-    public static final String RESULT_STR_AUTH = "result_str_auth";// 返回：auth；
-    public static final String RESULT_STR_NAME = "result_str_name";// 返回：昵称；
+    public static final String RESULT_STR_UID = "result_str_uid";// 返回：用户id；
 
     @Override
     protected void fillQueryParamters(HashMap<String, String> paramters) {

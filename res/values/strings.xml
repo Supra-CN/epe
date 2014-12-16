@@ -28,7 +28,7 @@
     <string name="network_toast_server_error">服务器错误</string>
     <string name="network_empty_view">网络不给力\n单击页面重新加载</string>
     <string name="network_image_upload_request_faild">图片上传失败</string>
-
+    
     <!-- account -->
     <string name="account_login_frag_title">"登录"</string>
     <string name="account_login_divider">"使用第三方帐号登录"</string>
@@ -53,5 +53,13 @@
     <string name="account_register_toast_register_ok_phone">注册成功，用户名及密码已通过短信发送</string>
     <string name="account_register_toast_register_ok_mail">注册成功</string>
     <string name="account_register_progressing">注册中,请稍候&#8230;</string>
-
+    <string name="account_login_title">登录搜狐社区</string>
+    <string name="account_login_menu_register">注册</string>
+    <string name="account_login_passport_hint">账号</string>
+    <string name="account_login_password_hint">密码</string>
+    <string name="account_login_mis_password">忘记密码？</string>
+    <string name="account_login_btn">登录</string>
+    <string name="account_login_progressing">登录中,请稍候&#8230;</string>
+    <string name="account_login_toast_illegal_passport">账户不合法</string>
+    <string name="account_login_toast_illegal_password">密码不合法</string>
 </resources>

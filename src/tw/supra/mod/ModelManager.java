@@ -91,7 +91,7 @@ public class ModelManager implements ComponentCallbacks2 {
         Log.i(LOG_TAG, "=== end trim ===");
     }
 
-    public synchronized <T extends ModelObj> T getObj(ClubObjIdentifier<T> identifier) {
+    public synchronized <T extends ModelObj> T getObj(ObjIdentifier<T> identifier) {
 
         if (null == identifier || !identifier.isValid()) {
             return null;
@@ -124,7 +124,7 @@ public class ModelManager implements ComponentCallbacks2 {
         return t;
     }
 
-    private <T extends ModelObj> T buildObj(ClubObjIdentifier<T> identifier) {
+    private <T extends ModelObj> T buildObj(ObjIdentifier<T> identifier) {
         dumpPoolStatus();
         Log.i(LOG_TAG, "[buildObj] = " + identifier.getAuthenticatorStr());
         Uri uri = identifier.getAuthenticator();

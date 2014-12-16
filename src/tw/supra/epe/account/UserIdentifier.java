@@ -3,13 +3,13 @@ package tw.supra.epe.account;
 import android.text.TextUtils;
 
 import tw.supra.epe.UriDef;
-import tw.supra.mod.ClubObjIdentifier;
+import tw.supra.mod.ObjIdentifier;
 import tw.supra.mod.Identifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserIdentifier extends ClubObjIdentifier<Account> {
+public class UserIdentifier extends ObjIdentifier<User> {
 	private static final String LOG_TAG = UserIdentifier.class.getSimpleName();
 
 	public static final String SEGMENT_USER = UriDef.PATH_USER;
@@ -19,7 +19,7 @@ public class UserIdentifier extends ClubObjIdentifier<Account> {
 
 	public UserIdentifier(String passport) {
 		if (TextUtils.isEmpty(passport)) {
-			PASSPORT = Account.Type.ANONYMOUS.name();
+			PASSPORT = User.ANONYMOUS;
 		} else {
 			PASSPORT = passport;
 		}
@@ -58,8 +58,8 @@ public class UserIdentifier extends ClubObjIdentifier<Account> {
 	}
 
 	@Override
-	public Account build() {
-		return Account.build(PASSPORT);
+	public User build() {
+		return User.build(PASSPORT);
 	}
 
 }

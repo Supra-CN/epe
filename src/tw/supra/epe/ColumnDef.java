@@ -4,7 +4,7 @@ package tw.supra.epe;
 import android.provider.BaseColumns;
 
 public class ColumnDef {
-    public static interface PreferencesCommon {
+    public static interface PrefCommon {
         public static final String GID = "gid";
         public static final String OS_TYPE = "os_type";
         public static final String APP_ID = "app_id";
@@ -25,24 +25,25 @@ public class ColumnDef {
 
     public static interface ColumnsAccount  {
         public static final String UID = "uid";
-        public static final String NICK_NAME = "nike_name";
-        public static final String GENDER = "gender";
-        public static final String DESCRIPTION = "description";
-        public static final String SCORE = "score";
-        public static final String GRADE = "grade";
-        public static final String CHARM = "charm";
-        public static final String ELITE = "elite";
-        public static final String ART = "art";
-        public static final String TITLE = "title";
-        public static final String LINE_TIME = "line_time";
-        public static final String LOGIN_COUNT = "login_count";
-        public static final String LAST_LOGIN = "last_login";
-        public static final String REG_DATE = "reg_date";
-        public static final String PROVINCE = "province";
-        public static final String MESSAGE_TOTAL = "message_total";
-        public static final String FRIENDS_TOTAL = "friends_total";
-        public static final String FOLLOWERS_TOTAL = "followers_total";
-        public static final String AVATAR = "avatar";
+        public static final String AUTH = "auth";
+        public static final String NAME = "name";
+//        public static final String GENDER = "gender";
+//        public static final String DESCRIPTION = "description";
+//        public static final String SCORE = "score";
+//        public static final String GRADE = "grade";
+//        public static final String CHARM = "charm";
+//        public static final String ELITE = "elite";
+//        public static final String ART = "art";
+//        public static final String TITLE = "title";
+//        public static final String LINE_TIME = "line_time";
+//        public static final String LOGIN_COUNT = "login_count";
+//        public static final String LAST_LOGIN = "last_login";
+//        public static final String REG_DATE = "reg_date";
+//        public static final String PROVINCE = "province";
+//        public static final String MESSAGE_TOTAL = "message_total";
+//        public static final String FRIENDS_TOTAL = "friends_total";
+//        public static final String FOLLOWERS_TOTAL = "followers_total";
+//        public static final String AVATAR = "avatar";
     }
 
     public static interface ColumnsDraft {
@@ -63,9 +64,8 @@ public class ColumnDef {
         public static final String DESC = "desc";
     }
 
-    public static interface PreferencesUser {
+    public static interface PrefUser {
         public static final String UID = "uid";
-        public static final String TYPE = "type";
         public static final String SIG = "sig";
         public static final String TOKEN = "token";
         public static final String PP_TOKEN = "pp_token";
