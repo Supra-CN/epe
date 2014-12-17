@@ -3,7 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context="tw.supra.epe.MainActivity"
     tools:ignore="MergeRootFrame" >
 
@@ -15,7 +15,8 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </android.support.v4.view.ViewPager>
+        android:layout_height="0dp" 
+        android:layout_weight="1"
+        />
 
 </LinearLayout>
