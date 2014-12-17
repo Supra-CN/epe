@@ -398,7 +398,7 @@ public class User extends PersistableObj {
 		}
 
 		setName(DBUtils.getStrByCol(c, TableAccounts.Columns.NAME));
-		setName(DBUtils.getStrByCol(c, TableAccounts.Columns.AUTH));
+		setAuth(DBUtils.getStrByCol(c, TableAccounts.Columns.AUTH));
 		// setNickName(DBUtils.getStrByCol(c, TableAccounts.Columns.NICK_NAME));
 		// setTitle(DBUtils.getStrByCol(c, TableAccounts.Columns.TITLE));
 		// setDesc(DBUtils.getStrByCol(c, TableAccounts.Columns.DESCRIPTION));

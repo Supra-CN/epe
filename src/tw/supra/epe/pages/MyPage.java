@@ -85,7 +85,7 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 	@Override
 	public void onStart() {
 		super.onStart();
-
+		updateUI();
 	}
 
 	@Override
