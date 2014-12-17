@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- list item -->
+    <color name="list_item_bg_selected">#def6ff</color>
+
+</resources>
