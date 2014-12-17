@@ -1,6 +1,18 @@
 
 package tw.supra.data;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
+import java.util.UUID;
+
+import tw.supra.epe.App;
+import tw.supra.epe.ColumnDef.PrefCommon;
+import tw.supra.epe.DataDef.DataCommon;
+import tw.supra.network.misc.Utils;
+import tw.supra.utils.MD5;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,19 +21,6 @@ import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-
-import tw.supra.epe.App;
-import tw.supra.epe.ColumnDef.PrefCommon;
-import tw.supra.epe.DataDef.DataCommon;
-import tw.supra.network.misc.Utils;
-import tw.supra.utils.MD5;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
-import java.util.UUID;
 
 /**
  * 通用数据库，的数据（例如统计信息）
@@ -44,7 +43,7 @@ public class CommonData extends LocalData {
     }
 
     private CommonData() {
-        super(App.getInstance(), DataCommon.NAME, DataCommon.VERSION);
+        super(DataCommon.NAME, DataCommon.VERSION);
     }
 
     @Override
@@ -53,13 +52,7 @@ public class CommonData extends LocalData {
 
     @Override
     public void onDbCreate(SQLiteDatabase db) {
-        // db.execSQL(DataCommon.TableEmotion.SQL_CREATE);
-        // db.execSQL(DataCommon.TableAccounts.SQL_CREATE);
-        // db.execSQL(DataCommon.TableForums.SQL_CREATE);
-        // db.execSQL(DataCommon.TableFavForums.SQL_CREATE);
-        // db.execSQL(DataCommon.TablePost.SQL_CREATE);
-        // db.execSQL(DataCommon.TableDrafts.SQL_CREATE);
-        // onInitEmotions(db);
+    	 db.execSQL(DataCommon.TableAccounts.SQL_CREATE);
         // onInitForums(db);
     }
 
@@ -170,7 +163,7 @@ public class CommonData extends LocalData {
 
     // must have android.permission.READ_PHONE_STATE
     private String generateIMEI() {
-        TelephonyManager tm = (TelephonyManager) CONTEXT.getSystemService(
+        TelephonyManager tm = (TelephonyManager) App.getInstance().getSystemService(
                 Context.TELEPHONY_SERVICE);
         String imei = tm.getDeviceId();
         return TextUtils.isEmpty(imei) ? "" : imei;
@@ -178,14 +171,14 @@ public class CommonData extends LocalData {
 
     // must have android.permission.READ_PHONE_STATE
     private String generateIMSI() {
-        TelephonyManager tm = (TelephonyManager) CONTEXT.getSystemService(
+        TelephonyManager tm = (TelephonyManager) App.getInstance().getSystemService(
                 Context.TELEPHONY_SERVICE);
         String imsi = tm.getSubscriberId();
         return TextUtils.isEmpty(imsi) ? "" : imsi;
     }
 
     private String generateMacAddress() {
-        WifiManager wifi = (WifiManager) CONTEXT.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifi = (WifiManager) App.getInstance().getSystemService(Context.WIFI_SERVICE);
         WifiInfo info = wifi.getConnectionInfo();
         String result = null;
         if (info != null) {

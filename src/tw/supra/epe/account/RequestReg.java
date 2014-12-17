@@ -1,10 +1,10 @@
 
 package tw.supra.epe.account;
 
+import java.io.IOException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
 
 import tw.supra.epe.ApiDef.APIDef;
 import tw.supra.epe.ApiDef.EpeErrorCode;
@@ -29,7 +29,7 @@ public class RequestReg extends EpeJsonRequest<RegInfo> {
             return;
         }
         
-        User user = AccountHelper.getUser(String.valueOf(JsonUtils.getIntSafely(response, "id")));
+        User user = AccountHelper.getUser(JsonUtils.getStrSafely(response, "uid"));
 //        UserData data = AccountHelper.getUserData(user.UID);
         user.setAuth( JsonUtils.getStrSafely(response, "authcode"));
         user.setName(  JsonUtils.getStrSafely(response, "username"));

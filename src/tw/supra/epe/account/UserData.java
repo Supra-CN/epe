@@ -1,16 +1,13 @@
 
 package tw.supra.epe.account;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.text.TextUtils;
+import java.util.HashMap;
 
 import tw.supra.data.LocalData;
-import tw.supra.epe.App;
 import tw.supra.epe.DataDef.DataUser;
 import tw.supra.utils.Log;
-
-import java.util.HashMap;
+import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 
 /**
  * 用户数据库，里面存放和账户有关的数据，包括匿名用户
@@ -26,11 +23,11 @@ public class UserData extends LocalData {
      * 
      * @return
      */
-    public static UserData getUserData(String passport) {
+    public static UserData getUserData(String uid) {
         UserData userData = USER_DATAS
-                .get(TextUtils.isEmpty(passport) ? User.ANONYMOUS : passport);
-        userData = new UserData(App.getInstance(), passport);
-        USER_DATAS.put(passport, userData);
+                .get(TextUtils.isEmpty(uid) ? User.ANONYMOUS : uid);
+        userData = new UserData(uid);
+        USER_DATAS.put(uid, userData);
         return userData;
     }
 
@@ -45,8 +42,8 @@ public class UserData extends LocalData {
         }
     }
 
-    private UserData(Context context, String passport) {
-        super(context, passport, DataUser.VERSION);
+    private UserData(String uid) {
+        super(uid, DataUser.VERSION);
     }
 
     @Override

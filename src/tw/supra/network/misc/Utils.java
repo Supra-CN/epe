@@ -16,6 +16,13 @@
 
 package tw.supra.network.misc;
 
+import java.io.Closeable;
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.ContentResolver;
@@ -25,13 +32,6 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.os.StrictMode;
 import android.util.Log;
-
-import java.io.Closeable;
-import java.io.File;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
 
 /**
  * Class containing some static utility methods.

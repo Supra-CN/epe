@@ -1,8 +1,6 @@
 
 package tw.supra.epe;
 
-import android.provider.BaseColumns;
-
 import tw.supra.epe.ColumnDef.ColumnThreads;
 import tw.supra.epe.ColumnDef.ColumnTopic;
 import tw.supra.epe.ColumnDef.ColumnsAccount;
@@ -13,6 +11,7 @@ import tw.supra.epe.ColumnDef.ColumnsForum;
 import tw.supra.epe.ColumnDef.ColumnsPost;
 import tw.supra.epe.ColumnDef.PrefCommon;
 import tw.supra.epe.ColumnDef.PrefUser;
+import android.provider.BaseColumns;
 
 /**
  * 数据库相关定义；数据库定义，表定义，行定义，创建语句定义，升级语句定义；

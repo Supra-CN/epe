@@ -1,12 +1,12 @@
 
 package tw.supra.network.request;
 
-import com.android.volley.NetworkResponse;
-import com.android.volley.toolbox.HttpHeaderParser;
+import java.io.UnsupportedEncodingException;
 
 import tw.supra.epe.ApiDef.EpeErrorCode;
 
-import java.io.UnsupportedEncodingException;
+import com.android.volley.NetworkResponse;
+import com.android.volley.toolbox.HttpHeaderParser;
 
 public abstract class EpeStringRequest<T extends EpeRequestInfo> extends EpeRequest<T> {
 

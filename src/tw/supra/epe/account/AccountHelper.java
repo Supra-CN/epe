@@ -3,7 +3,6 @@ package tw.supra.epe.account;
 
 import tw.supra.data.CommonData;
 import tw.supra.epe.ColumnDef.PrefCommon;
-import tw.supra.epe.DataDef.DataUser;
 import tw.supra.mod.ModelManager;
 
 public class AccountHelper {
@@ -51,6 +50,10 @@ public class AccountHelper {
 
     public static Boolean isAnonymousUser(String uid) {
         return User.ANONYMOUS.equals(uid);
+    }
+    
+    public static boolean isLogin(){
+    	return !isCurrentUser(User.ANONYMOUS);
     }
 
 }

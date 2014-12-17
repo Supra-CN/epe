@@ -38,5 +38,5 @@ public interface UriDef {
     public final static String PARAMETERS_FORUM_ID = "forum_id";
     public final static String PARAMETERS_THREAD_ID = "thread_id";
     public final static String PARAMETERS_FLOOR = "floor";
-    public final static String PARAMETERS_PASSPORT = "passport";
+    public final static String PARAMETERS_UID = "uid";
 }

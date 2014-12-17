@@ -36,7 +36,8 @@
         android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/account_frag_hint_password" />
+        android:hint="@string/account_frag_hint_password"
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/btn_reg"

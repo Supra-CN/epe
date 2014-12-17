@@ -1,5 +1,21 @@
 package tw.supra.network.cache;
 
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import tw.supra.epe.BuildConfig;
+import tw.supra.network.cache.DiskLruBasedCache.ImageCacheParams;
+import tw.supra.network.misc.DiskLruCache;
+import tw.supra.network.misc.IOUtils;
+import tw.supra.network.misc.IOUtils.CountingInputStream;
+import tw.supra.network.misc.ImageUtils;
+import tw.supra.network.misc.Utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -9,23 +25,6 @@ import android.util.Log;
 import com.android.volley.Cache;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.DiskBasedCache.CacheHeader;
-
-import tw.supra.epe.BuildConfig;
-import tw.supra.network.cache.DiskLruBasedCache.ImageCacheParams;
-import tw.supra.network.misc.DiskLruCache;
-import tw.supra.network.misc.IOUtils;
-import tw.supra.network.misc.IOUtils.CountingInputStream;
-import tw.supra.network.misc.ImageUtils;
-import tw.supra.network.misc.Utils;
-
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * Cache implementation that caches files directly onto the hard disk in the specified directory

@@ -16,13 +16,13 @@
 
 package tw.supra.network.misc;
 
-import android.annotation.TargetApi;
-import android.os.Build;
-import android.util.Log;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.util.Log;
 
 /**
  * Wrapper for {@link InputStream} that allows you to read bytes from it like a byte[]. An

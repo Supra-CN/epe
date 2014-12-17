@@ -1,8 +1,8 @@
 package tw.supra.epe.account;
 
-import tw.supra.network.request.EpeRequestInfo;
-
 import java.util.HashMap;
+
+import tw.supra.network.request.EpeRequestInfo;
 
 public class RegInfo extends EpeRequestInfo {
     

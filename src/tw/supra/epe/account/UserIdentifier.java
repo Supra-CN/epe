@@ -1,27 +1,26 @@
 package tw.supra.epe.account;
 
-import android.text.TextUtils;
-
-import tw.supra.epe.UriDef;
-import tw.supra.mod.ObjIdentifier;
-import tw.supra.mod.Identifier;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import tw.supra.epe.UriDef;
+import tw.supra.mod.Identifier;
+import tw.supra.mod.ObjIdentifier;
+import android.text.TextUtils;
 
 public class UserIdentifier extends ObjIdentifier<User> {
 	private static final String LOG_TAG = UserIdentifier.class.getSimpleName();
 
 	public static final String SEGMENT_USER = UriDef.PATH_USER;
-	public static final String PARAMETERS_PASSPORT = UriDef.PARAMETERS_PASSPORT;
+	public static final String PARAMETERS_UID = UriDef.PARAMETERS_UID;
 
-	public final String PASSPORT;
+	public final String UID;
 
-	public UserIdentifier(String passport) {
-		if (TextUtils.isEmpty(passport)) {
-			PASSPORT = User.ANONYMOUS;
+	public UserIdentifier(String uid) {
+		if (TextUtils.isEmpty(uid)) {
+			UID = User.ANONYMOUS;
 		} else {
-			PASSPORT = passport;
+			UID = uid;
 		}
 	}
 
@@ -35,7 +34,7 @@ public class UserIdentifier extends ObjIdentifier<User> {
 	@Override
 	protected HashMap<String, String> defineUriParameters() {
 		HashMap<String, String> parameters = new HashMap<String, String>();
-		parameters.put(PARAMETERS_PASSPORT, PASSPORT);
+		parameters.put(PARAMETERS_UID, UID);
 		return parameters;
 	}
 
@@ -52,14 +51,14 @@ public class UserIdentifier extends ObjIdentifier<User> {
 
 		if (null != o && o instanceof Identifier) {
 			UserIdentifier identifier = (UserIdentifier) o;
-			return PASSPORT.equals(identifier.PASSPORT);
+			return UID.equals(identifier.UID);
 		}
 		return false;
 	}
 
 	@Override
 	public User build() {
-		return User.build(PASSPORT);
+		return User.build(UID);
 	}
 
 }

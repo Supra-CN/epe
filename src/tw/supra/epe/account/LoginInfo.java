@@ -1,10 +1,8 @@
 package tw.supra.epe.account;
 
-import tw.supra.epe.ApiDef.APIDef;
-import tw.supra.network.request.EpeRequestInfo;
-import tw.supra.network.request.AbstractRequestInfo.Method;
-
 import java.util.HashMap;
+
+import tw.supra.network.request.EpeRequestInfo;
 
 public class LoginInfo extends EpeRequestInfo {
 

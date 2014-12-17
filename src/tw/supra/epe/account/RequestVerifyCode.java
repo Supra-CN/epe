@@ -1,6 +1,8 @@
 
 package tw.supra.epe.account;
 
+import java.util.HashMap;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,8 +12,6 @@ import tw.supra.network.request.EpeJsonRequest;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.utils.JsonUtils;
-
-import java.util.HashMap;
 
 public class RequestVerifyCode extends EpeJsonRequest<EpeRequestInfo> {
     private static final String LOG_TAG = RequestVerifyCode.class.getSimpleName();

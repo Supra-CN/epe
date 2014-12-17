@@ -28,7 +28,8 @@ public class RequestLogin extends EpeJsonRequest<LoginInfo> {
             return;
         }
         
-        User user = AccountHelper.getUser(String.valueOf(JsonUtils.getIntSafely(response, "id")));
+        String uid = JsonUtils.getStrSafely(response, "uid");
+        User user = AccountHelper.getUser(uid);
 //        UserData data = AccountHelper.getUserData(user.UID);
         user.setAuth( JsonUtils.getStrSafely(response, "authcode"));
         user.setName(  JsonUtils.getStrSafely(response, "user_name"));
@@ -39,7 +40,7 @@ public class RequestLogin extends EpeJsonRequest<LoginInfo> {
             INFO.ERROR_CODE.addDyingMsg("response : " + response);
             e.printStackTrace();
         }
-        INFO.RESULTS.putString(RegInfo.RESULT_STR_UID, user.UID);
+        INFO.RESULTS.putString(LoginInfo.RESULT_STR_UID, user.UID);
         INFO.ERROR_CODE.addDyingMsg("response : " + response);
     }
 

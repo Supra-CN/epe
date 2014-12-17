@@ -40,9 +40,7 @@ abstract public class EpeRequest<T extends EpeRequestInfo> extends
 			}
 		}
 		INFO.ERROR_CODE.setVollyError(error);
-
 		notifyFinish(true);
-		super.deliverError(error);
 	}
 
 	@Override

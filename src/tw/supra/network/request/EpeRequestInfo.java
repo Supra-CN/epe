@@ -1,12 +1,11 @@
 package tw.supra.network.request;
 
-import android.net.Uri;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import tw.supra.epe.ApiDef.APIDef;
 import tw.supra.epe.ApiDef.EpeErrorCode;
-
-import java.util.HashMap;
-import java.util.Map.Entry;
+import android.net.Uri;
 
 public abstract class EpeRequestInfo extends AbstractRequestInfo<EpeErrorCode> {
 	

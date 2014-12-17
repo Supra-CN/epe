@@ -1,67 +1,149 @@
-
 package tw.supra.epe;
 
-import android.app.Fragment;
+import java.util.HashMap;
+
+import tw.supra.epe.account.AccountHelper;
+import tw.supra.epe.core.BaseActivity;
+import tw.supra.epe.core.BaseMainPage;
+import tw.supra.epe.pages.TPage;
+import tw.supra.epe.pages.MsgPage;
+import tw.supra.epe.pages.HomePage;
+import tw.supra.epe.pages.MyPage;
+import tw.supra.utils.Log;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Handler;
+import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
+import com.viewpagerindicator.IconPagerAdapter;
+import com.viewpagerindicator.PageIndicator;
 
-import tw.supra.epe.core.BaseActivity;
+public class MainActivity extends BaseActivity implements OnClickListener,
+		OnPageChangeListener {
+	
+	private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-public class MainActivity extends BaseActivity {
+	private static final int MSG_PENDING_CHECK_FOR_EXIT = 100000;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        MobclickAgent.updateOnlineConfig(this);
-        startActivity(new Intent(App.ACTION_LOGIN));
-        finish();
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
-    }
+	private static Handler sHandle = new Handler();
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+	private static final Class<?>[] PAGES = { HomePage.class,
+			TPage.class, MsgPage.class, MyPage.class };
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+	private PageAdapter mAdapter;
+	private PageIndicator mPageIndicator;
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
+	/**
+	 * 设置布局
+	 */
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		MobclickAgent.updateOnlineConfig(this);
+		setContentView(R.layout.activity_main);
 
-        public PlaceholderFragment() {
-        }
+		ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+		mAdapter = new PageAdapter(getFragmentManager());
+		viewPager.setAdapter(mAdapter);
+		mPageIndicator = (PageIndicator) findViewById(R.id.page_indicator);
+		mPageIndicator.setViewPager(viewPager);
+		mPageIndicator.setOnPageChangeListener(this);
+	}
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-    }
+	@Override
+	protected void onStart() {
+		super.onStart();
+		if (!AccountHelper.isLogin()) {
+			startActivity(new Intent(App.ACTION_LOGIN));
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (sHandle.hasMessages(MSG_PENDING_CHECK_FOR_EXIT)) {
+			super.onBackPressed();
+		} else {
+			sHandle.sendEmptyMessageDelayed(MSG_PENDING_CHECK_FOR_EXIT, 3000);
+			Toast.makeText(this, R.string.activity_toast_press_again_to_exit,
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int state) {
+	}
+
+	@Override
+	public void onPageScrolled(int position, float positionOffset,
+			int positionOffsetPixels) {
+	}
+
+	@Override
+	public void onPageSelected(int position) {
+		// setActionTitle(mAdapter.getItem(position).getTitle());
+	}
+
+	public class PageAdapter extends FragmentPagerAdapter implements
+			IconPagerAdapter {
+
+		private final HashMap<Class<?>, BaseMainPage> PAGE_POOL = new HashMap<Class<?>, BaseMainPage>();
+
+		public PageAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public int getCount() {
+			return PAGES.length;
+		}
+
+		@Override
+		public BaseMainPage getItem(int position) {
+			BaseMainPage page = PAGE_POOL.get(PAGES[position]);
+			if (null == page) {
+				try {
+					page = (BaseMainPage) PAGES[position].newInstance();
+					PAGE_POOL.put(PAGES[position], page);
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+					throw new IllegalStateException(String.format(
+							"the page %s is not a legal page",
+							PAGES[position].getSimpleName()), e);
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+					throw new IllegalStateException(String.format(
+							"the page %s is not a legal page",
+							PAGES[position].getSimpleName()), e);
+				}
+			}
+			Log.i(LOG_TAG, "getItem :  pos =" + position + " page" + page);
+			return page;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			return getItem(position).getTitle();
+		}
+
+		@Override
+		public int getIconResId(int index) {
+			return getItem(index).getIconResId();
+		}
+	}
+
 }

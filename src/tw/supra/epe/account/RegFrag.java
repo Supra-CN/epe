@@ -1,6 +1,12 @@
 
 package tw.supra.epe.account;
 
+import tw.supra.epe.R;
+import tw.supra.epe.account.RequestVerifyCode.Type;
+import tw.supra.epe.core.BaseHostFrag;
+import tw.supra.network.NetworkCenter;
+import tw.supra.network.request.EpeRequestInfo;
+import tw.supra.network.request.NetWorkHandler;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,13 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import tw.supra.epe.R;
-import tw.supra.epe.account.RequestVerifyCode.Type;
-import tw.supra.epe.core.BaseHostFrag;
-import tw.supra.network.NetworkCenter;
-import tw.supra.network.request.EpeRequestInfo;
-import tw.supra.network.request.NetWorkHandler;
 
 public class RegFrag extends BaseHostFrag<LoginActivity> implements OnClickListener {
     private static final int DELAY_VERIFY_CODE = 60;// 定义发送验证码后的倒数计时
@@ -33,7 +32,7 @@ public class RegFrag extends BaseHostFrag<LoginActivity> implements OnClickListe
     private String mVerifyCode;
 
     private static Handler sHandler = new Handler();
-
+    
     private final NetWorkHandler<EpeRequestInfo> HANDLE_VERIFY_CODE = new NetWorkHandler<EpeRequestInfo>() {
         @Override
         public boolean HandleEvent(RequestEvent event,

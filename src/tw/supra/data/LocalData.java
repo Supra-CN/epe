@@ -1,6 +1,10 @@
 
 package tw.supra.data;
 
+import java.util.HashMap;
+
+import tw.supra.epe.App;
+import tw.supra.epe.DataDef;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,10 +13,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.text.TextUtils;
-
-import tw.supra.epe.DataDef;
-
-import java.util.HashMap;
 
 /**
  * 数据库基类；
@@ -25,7 +25,6 @@ public abstract class LocalData {
     private static final String DB_SUB_FIX = ".db";
 
     public final int VERSION;
-    public final Context CONTEXT;
     public final String NAME;
     private final SQLiteOpenHelper DB_HELPER;
     private HashMap<String, String> mPrefStrCache = new HashMap<String, String>();
@@ -43,13 +42,12 @@ public abstract class LocalData {
         }
     }
 
-    protected LocalData(Context context, String name, int version) {
+    protected LocalData(String name, int version) {
         checkName(name);
         NAME = name;
         VERSION = version;
-        CONTEXT = context;
         String dbName = NAME.endsWith(DB_SUB_FIX) ? NAME : NAME + DB_SUB_FIX;
-        DB_HELPER = new SQLiteOpenHelper(CONTEXT, dbName,
+        DB_HELPER = new SQLiteOpenHelper(App.getInstance(), dbName,
                 null, VERSION) {
 
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -135,7 +133,7 @@ public abstract class LocalData {
     // =======================================================
     private SharedPreferences getPreferences() {
         if (null == mPref) {
-            mPref = CONTEXT.getSharedPreferences(NAME, Context.MODE_PRIVATE);
+            mPref = App.getInstance().getSharedPreferences(NAME, Context.MODE_PRIVATE);
         }
         return mPref;
     }

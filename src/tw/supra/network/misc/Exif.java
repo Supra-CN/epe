@@ -16,10 +16,10 @@
 
 package tw.supra.network.misc;
 
-import android.util.Log;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+
+import android.util.Log;
 
 public class Exif {
     private static final String TAG = "CameraExif";

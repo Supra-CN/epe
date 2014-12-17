@@ -1,5 +1,12 @@
 package tw.supra.network.misc;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.regex.Pattern;
+
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,13 +16,6 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.regex.Pattern;
 
 public class ImageUtils {
 

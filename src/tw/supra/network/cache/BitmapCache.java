@@ -16,6 +16,7 @@
 
 package tw.supra.network.cache;
 
+import tw.supra.network.misc.Utils;
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -25,8 +26,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.util.LruCache;
 
 import com.android.volley.VolleyLog;
-
-import tw.supra.network.misc.Utils;
 
 /**
  * This class holds our bitmap caches (memory and disk).

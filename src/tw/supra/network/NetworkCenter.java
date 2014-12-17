@@ -1,5 +1,6 @@
 package tw.supra.network;
 
+import tw.supra.epe.App;
 import android.graphics.Bitmap;
 import android.util.LruCache;
 
@@ -7,8 +8,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-
-import tw.supra.epe.App;
 
 public class NetworkCenter {
 

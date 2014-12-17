@@ -1,6 +1,8 @@
 
 package tw.supra.network.request;
 
+import tw.supra.epe.App;
+import tw.supra.network.request.NetWorkHandler.RequestEvent;
 import android.content.Context;
 import android.util.Log;
 
@@ -9,9 +11,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-
-import tw.supra.epe.App;
-import tw.supra.network.request.NetWorkHandler.RequestEvent;
 
 abstract public class InfoRequest<E extends ErrorCode, T extends AbstractRequestInfo<E>> extends Request<T> {
 

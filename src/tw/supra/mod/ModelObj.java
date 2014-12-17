@@ -1,11 +1,11 @@
 package tw.supra.mod;
 
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.UUID;
+
 import android.content.ContentValues;
 import android.text.TextUtils;
-
-import java.util.HashMap;
-import java.util.UUID;
-import java.util.Map.Entry;
 
 public abstract class ModelObj {
 	public final UUID ID = UUID.randomUUID();

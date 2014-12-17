@@ -1,13 +1,12 @@
 
 package tw.supra.epe.account;
 
-import android.os.Bundle;
-import android.support.v13.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseFrag;
+import android.os.Bundle;
+import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 
 public class LoginActivity extends BaseActivity {
     private LoginFrag mLoginFrag;

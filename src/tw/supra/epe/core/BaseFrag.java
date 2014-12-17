@@ -1,16 +1,14 @@
 
 package tw.supra.epe.core;
 
-import android.app.Activity;
+import java.util.UUID;
+
+import tw.supra.epe.App;
 import android.app.Fragment;
 import android.content.Context;
 import android.text.TextUtils;
 
 import com.android.volley.RequestQueue;
-
-import tw.supra.epe.App;
-
-import java.util.UUID;
 
 public abstract class BaseFrag extends Fragment {
     public final UUID FRAG_ID = UUID.randomUUID();

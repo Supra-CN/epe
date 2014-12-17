@@ -1,13 +1,12 @@
 package tw.supra.mod;
 
-import android.net.Uri;
-import android.net.Uri.Builder;
-
-import tw.supra.epe.UriDef;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import tw.supra.epe.UriDef;
+import android.net.Uri;
+import android.net.Uri.Builder;
 
 public abstract class ObjIdentifier<T extends ModelObj> extends Identifier<T> {
 

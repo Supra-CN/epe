@@ -1,12 +1,11 @@
 
 package tw.supra.network.request;
 
-import android.text.TextUtils;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import tw.supra.epe.ApiDef.EpeErrorCode;
+import android.text.TextUtils;
 
 public abstract class EpeJsonRequest<T extends EpeRequestInfo> extends EpeStringRequest<T> {
     private static final String LOG_TAG = EpeJsonRequest.class.getSimpleName();
