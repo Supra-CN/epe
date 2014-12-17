@@ -93,7 +93,7 @@ public class LoginFrag extends BaseHostFrag<LoginActivity> implements
         case FINISH:
             getHostActivity().hideProgressDialog();
             if (info.ERROR_CODE.isOK()) {
-                AccountHelper.switchUser(info.RESULTS.getString(LoginInfo.RESULT_STR_UID, User.ANONYMOUS));
+                AccountCenter.switchUser(info.RESULTS.getString(LoginInfo.RESULT_STR_UID, User.ANONYMOUS));
                 getActivity().finish();
             }
             break;

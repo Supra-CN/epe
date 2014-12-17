@@ -49,9 +49,10 @@ public class User extends PersistableObj {
 	// private String mTitle;
 	// private String mDescription;
 	// private String mLastLogin;
-	// private String mAvatar;
+	private String mAvatar;
 	// private String mProvince;
-	// private int mScore = -1;
+	private int mScore = -1;
+
 	// private int mGrade = -1;
 	// private int mCharm = -1;
 	// private int mElite = -1;
@@ -154,7 +155,7 @@ public class User extends PersistableObj {
 	}
 
 	public String generateUserTokenAES(String ct) {
-		if (AccountHelper.isAnonymousUser(UID)) {
+		if (AccountCenter.isAnonymousUser(UID)) {
 			return "";
 		}
 
@@ -251,23 +252,24 @@ public class User extends PersistableObj {
 	// return mLastLogin;
 	// }
 	//
-	// public void setAvatarUrl(String avatarUrl) {
-	// touch(State.MODIFIED);
-	// mAvatar = avatarUrl;
-	// }
-	//
-	// public String getAvatarUrl() {
-	// return mAvatar;
-	// }
-	//
-	// public void setScore(int score) {
-	// touch(State.MODIFIED);
-	// mScore = score;
-	// }
-	//
-	// public int getScore() {
-	// return mScore;
-	// }
+	public void setAvatarUrl(String avatarUrl) {
+		touch(State.MODIFIED);
+		mAvatar = avatarUrl;
+	}
+
+	public String getAvatarUrl() {
+		return mAvatar;
+	}
+
+	public void setScore(int score) {
+		touch(State.MODIFIED);
+		mScore = score;
+	}
+
+	public int getScore() {
+		return mScore;
+	}
+
 	//
 	// public void setGrade(int grade) {
 	// touch(State.MODIFIED);
@@ -402,9 +404,9 @@ public class User extends PersistableObj {
 		// setDesc(DBUtils.getStrByCol(c, TableAccounts.Columns.DESCRIPTION));
 		// setLastLogin(DBUtils.getStrByCol(c,
 		// TableAccounts.Columns.LAST_LOGIN));
-		// setAvatarUrl(DBUtils.getStrByCol(c, TableAccounts.Columns.AVATAR));
+		setAvatarUrl(DBUtils.getStrByCol(c, TableAccounts.Columns.AVATAR));
 		// setGender(DBUtils.getStrByCol(c, TableAccounts.Columns.GENDER));
-		// setScore(DBUtils.getIntByCol(c, TableAccounts.Columns.SCORE));
+		setScore(DBUtils.getIntByCol(c, TableAccounts.Columns.SCORE));
 		// setGrade(DBUtils.getIntByCol(c, TableAccounts.Columns.GRADE));
 		// setCharm(DBUtils.getIntByCol(c, TableAccounts.Columns.CHARM));
 		// setElite(DBUtils.getIntByCol(c, TableAccounts.Columns.ELITE));
@@ -430,12 +432,12 @@ public class User extends PersistableObj {
 		// stringMap.put(TableAccounts.Columns.GENDER, mGender.desc);
 		// stringMap.put(TableAccounts.Columns.TITLE, mTitle);
 		// stringMap.put(TableAccounts.Columns.DESCRIPTION, mDescription);
-		// stringMap.put(TableAccounts.Columns.AVATAR, mAvatar);
+		 stringMap.put(TableAccounts.Columns.AVATAR, mAvatar);
 		// stringMap.put(TableAccounts.Columns.LAST_LOGIN, mLastLogin);
 		// stringMap.put(TableAccounts.Columns.PROVINCE, mProvince);
 
-		// HashMap<String, Integer> intMap = new HashMap<String, Integer>();
-		// intMap.put(TableAccounts.Columns.SCORE, mScore);
+		HashMap<String, Integer> intMap = new HashMap<String, Integer>();
+		intMap.put(TableAccounts.Columns.SCORE, mScore);
 		// intMap.put(TableAccounts.Columns.GRADE, mGrade);
 		// intMap.put(TableAccounts.Columns.CHARM, mCharm);
 		// intMap.put(TableAccounts.Columns.ELITE, mElite);
@@ -451,14 +453,14 @@ public class User extends PersistableObj {
 
 		ContentValues values = new ContentValues();
 		checkAndPutString(values, stringMap);
-		// checkAndPutInt(values, intMap);
+		checkAndPutInt(values, intMap);
 		// checkAndPutLong(values, longMap);
 
 		return values;
 	}
 
 	public static boolean isLegalNormalUser(String uid) {
-		if (!TextUtils.isEmpty(uid) && !AccountHelper.isAnonymousUser(uid)) {
+		if (!TextUtils.isEmpty(uid) && !AccountCenter.isAnonymousUser(uid)) {
 			return true;
 		} else {
 			return false;

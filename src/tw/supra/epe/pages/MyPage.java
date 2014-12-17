@@ -2,7 +2,10 @@ package tw.supra.epe.pages;
 
 import tw.supra.epe.App;
 import tw.supra.epe.R;
+import tw.supra.epe.account.AccountCenter;
+import tw.supra.epe.account.User;
 import tw.supra.epe.core.BaseMainPage;
+import tw.supra.network.NetworkCenter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +17,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.android.volley.toolbox.NetworkImageView;
 
 public class MyPage extends BaseMainPage implements OnItemClickListener {
 	private final Item ITEM_LOG_OUT = new Item(R.string.my_page_item_log_out) {
@@ -60,6 +65,10 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 		}
 	};
 
+	private TextView mTvName;
+	private TextView mTvScore;
+	private NetworkImageView mIvAvator;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -67,7 +76,16 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 		ListView listView = (ListView) v.findViewById(R.id.list_view);
 		listView.setOnItemClickListener(this);
 		listView.setAdapter(ADAPTER);
+		mTvName = (TextView) v.findViewById(R.id.name);
+		mTvScore = (TextView) v.findViewById(R.id.score);
+		mIvAvator = (NetworkImageView) v.findViewById(R.id.avator);
 		return v;
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+
 	}
 
 	@Override
@@ -95,5 +113,12 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 
 		public void onItemClick() {
 		}
+	}
+
+	private void updateUI() {
+		User user = AccountCenter.getCurrentUser();
+		mIvAvator.setImageUrl(user.getAvatarUrl(),NetworkCenter.getInstance().getImageLoader());
+		mTvName.setText(user.getName());
+		mTvScore.setText(getString(R.string.my_page_score, user.getScore()));
 	}
 }

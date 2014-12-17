@@ -129,10 +129,10 @@ public class DataDef {
                     Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, " +
                     Columns.UID + " TEXT NOT NULL UNIQUE, " +
                     Columns.AUTH + " TEXT, " +
-                    Columns.NAME + " TEXT " +
+                    Columns.NAME + " TEXT, " +
+                    Columns.SCORE + " INTEGER DEFAULT 0, " +
 //                    Columns.GENDER + " TEXT, " +
 //                    Columns.DESCRIPTION + " TEXT, " +
-//                    Columns.SCORE + " INTEGER DEFAULT 0, " +
 //                    Columns.GRADE + " INTEGER DEFAULT 0, " +
 //                    Columns.CHARM + " INTEGER DEFAULT 0, " +
 //                    Columns.ELITE + " INTEGER DEFAULT 0, " +
@@ -146,7 +146,7 @@ public class DataDef {
 //                    Columns.MESSAGE_TOTAL + " INTEGER DEFAULT 0, " +
 //                    Columns.FRIENDS_TOTAL + " INTEGER DEFAULT 0, " +
 //                    Columns.FOLLOWERS_TOTAL + " INTEGER DEFAULT 0, " +
-//                    Columns.AVATAR + " TEXT " +
+                    Columns.AVATAR + " TEXT " +
                     ");";
         }
 
@@ -200,7 +200,6 @@ public class DataDef {
                     Column.TOPIC_TITLE + " TEXT, " +
                     Column.TOPIC_LOGO + " TEXT " +
                     ");";
-
         }
 
     }

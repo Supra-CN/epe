@@ -2,7 +2,7 @@ package tw.supra.epe;
 
 import java.util.HashMap;
 
-import tw.supra.epe.account.AccountHelper;
+import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.pages.TPage;
@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (!AccountHelper.isLogin()) {
+		if (!AccountCenter.isLogin()) {
 			startActivity(new Intent(App.ACTION_LOGIN));
 		}
 	}

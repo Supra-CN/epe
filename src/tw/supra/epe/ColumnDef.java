@@ -28,8 +28,8 @@ public class ColumnDef {
         public static final String AUTH = "auth";
         public static final String NAME = "name";
 //        public static final String GENDER = "gender";
+        public static final String SCORE = "score";
 //        public static final String DESCRIPTION = "description";
-//        public static final String SCORE = "score";
 //        public static final String GRADE = "grade";
 //        public static final String CHARM = "charm";
 //        public static final String ELITE = "elite";
@@ -43,7 +43,7 @@ public class ColumnDef {
 //        public static final String MESSAGE_TOTAL = "message_total";
 //        public static final String FRIENDS_TOTAL = "friends_total";
 //        public static final String FOLLOWERS_TOTAL = "followers_total";
-//        public static final String AVATAR = "avatar";
+        public static final String AVATAR = "avatar";
     }
 
     public static interface ColumnsDraft {

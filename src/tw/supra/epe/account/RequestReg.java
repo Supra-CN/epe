@@ -29,7 +29,7 @@ public class RequestReg extends EpeJsonRequest<RegInfo> {
             return;
         }
         
-        User user = AccountHelper.getUser(JsonUtils.getStrSafely(response, "uid"));
+        User user = AccountCenter.getUser(JsonUtils.getStrSafely(response, "uid"));
 //        UserData data = AccountHelper.getUserData(user.UID);
         user.setAuth( JsonUtils.getStrSafely(response, "authcode"));
         user.setName(  JsonUtils.getStrSafely(response, "username"));

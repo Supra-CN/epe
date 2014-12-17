@@ -66,7 +66,7 @@ public class RegFrag extends BaseHostFrag<LoginActivity> implements OnClickListe
                 case FINISH:
                     getHostActivity().hideProgressDialog();
                     if (info.ERROR_CODE.isOK()) {
-                        AccountHelper.switchUser(info.RESULTS.getString(RegInfo.RESULT_STR_UID, User.ANONYMOUS));
+                        AccountCenter.switchUser(info.RESULTS.getString(RegInfo.RESULT_STR_UID, User.ANONYMOUS));
                         getActivity().finish();
                     }
                     break;
