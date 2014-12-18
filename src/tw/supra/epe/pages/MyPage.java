@@ -79,6 +79,7 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 		mTvName = (TextView) v.findViewById(R.id.name);
 		mTvScore = (TextView) v.findViewById(R.id.score);
 		mIvAvator = (NetworkImageView) v.findViewById(R.id.avator);
+		mIvAvator.setErrorImageResId(R.drawable.ic_launcher);
 		return v;
 	}
 

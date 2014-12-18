@@ -7,13 +7,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="30dp"
         android:gravity="center"
         android:orientation="horizontal" >
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/avator"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@android:drawable/picture_frame"
+            android:src="@drawable/ic_launcher" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -35,6 +39,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:text="@string/my_page_btn_edit" />
     </LinearLayout>
 
