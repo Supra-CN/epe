@@ -75,7 +75,7 @@ public class WorthPage extends BaseMainPage implements LocationListener,
 						WorthInfo.ATTR_IMAGELIST).getJSONObject(0);
 				if (null != joImages) {
 					JSONObject joMiddle = JsonUtils.getJoSafely(joImages,
-							WorthInfo.ATTR_IMAGE_504MIDDLE);
+							WorthInfo.ATTR_IMAGE_540MIDDLE);
 					if (null != joMiddle) {
 
 						img = JsonUtils.getStrSafely(joMiddle,
