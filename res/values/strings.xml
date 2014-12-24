@@ -75,6 +75,18 @@
     <string name="account_login_toast_illegal_passport">账户不合法</string>
     <string name="account_login_toast_illegal_password">密码不合法</string>
     
+    <!-- master page -->
+    <string name="master_page_label_my">我的搭配师</string>
+    <string name="master_page_label_top">人气搭配师</string>
+    
+    <!-- epe page -->
+    <string name="epe_page_label_search_bar">搜索</string>
+    <string name="epe_page_label_near_store">附近商家</string>
+    <string name="epe_page_label_near_brand">附近品牌</string>
+    
+    <!-- worth page -->
+    <string name="worth_page_item_discount">%s折</string>
+    
     <!-- my page -->
     <string name="my_page_score">积分：%s</string>
     <string name="my_page_btn_edit">编辑</string>

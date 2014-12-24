@@ -9,6 +9,7 @@ public abstract class AbstractRequestInfo<E extends ErrorCode> {
 	private String mRequestUrl;
 	public Bundle ARGS = new Bundle();
 	public Bundle RESULTS = new Bundle();
+	public Object OBJ;
 
 	public interface Method extends Request.Method {
 	};

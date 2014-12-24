@@ -1,9 +1,12 @@
-package tw.supra.epe.pages;
+package tw.supra.epe.pages.home;
 
 import java.util.HashMap;
 
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseMainPage;
+import tw.supra.epe.pages.epe.EpePage;
+import tw.supra.epe.pages.master.MasterPage;
+import tw.supra.epe.pages.worth.WorthPage;
 import tw.supra.utils.Log;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -112,7 +115,7 @@ public class HomePage extends BaseMainPage implements OnClickListener,
 					e.printStackTrace();
 				}
 			}
-			Log.i(LOG_TAG, "getItem :  pos =" + position + " page" + page);
+//			Log.i(LOG_TAG, "getItem :  pos =" + position + " page" + page);
 			return page;
 		}
 

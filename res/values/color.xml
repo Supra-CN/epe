@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- app -->
+    <color name="half_transparent">#88c0c0c0</color>
+    
     <!-- list item -->
     <color name="list_item_bg_selected">#def6ff</color>
 

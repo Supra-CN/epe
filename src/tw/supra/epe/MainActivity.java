@@ -7,8 +7,8 @@ import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.pages.TPage;
 import tw.supra.epe.pages.MsgPage;
-import tw.supra.epe.pages.HomePage;
 import tw.supra.epe.pages.MyPage;
+import tw.supra.epe.pages.home.HomePage;
 import tw.supra.utils.Log;
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -131,7 +131,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 							PAGES[position].getSimpleName()), e);
 				}
 			}
-			Log.i(LOG_TAG, "getItem :  pos =" + position + " page" + page);
+//			Log.i(LOG_TAG, "getItem :  pos =" + position + " page" + page);
 			return page;
 		}
 
