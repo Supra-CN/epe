@@ -27,7 +27,7 @@ public class WorthInfo extends EpeRequestInfo {
 	public static final String ATTR_IS_LIKE= "is_like";
 	public static final String ATTR_IMAGELIST = "imagelist";
 	public static final String ATTR_IMAGE_ORIGINAL = "original";
-	public static final String ATTR_IMAGE_504MIDDLE = "504Middle";
+	public static final String ATTR_IMAGE_540MIDDLE = "540Middle";
 	public static final String ATTR_IMAGE_SRC = "src";
 	public static final String ATTR_IMAGE_WIDTH = "width";
 	public static final String ATTR_IMAGE_HEIGHT = "height";
