@@ -13,6 +13,7 @@ import tw.supra.location.LocationCenter;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
+import u.aly.ar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -66,8 +67,7 @@ public class EpePage extends BaseMainPage implements LocationListener {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		
-		
+		requestAds();
 	}
 
 	@Override
@@ -213,6 +213,7 @@ public class EpePage extends BaseMainPage implements LocationListener {
 							e.printStackTrace();
 						}
 					}
+					mAdAdapter.notifyDataSetChanged();
 				}
 			}
 			return false;
@@ -259,7 +260,17 @@ public class EpePage extends BaseMainPage implements LocationListener {
 
 		@Override
 		public Fragment getItem(int pos) {
-			return new AdFrag(AD_DATA_SET.get(pos));
+			
+			AdFrag adFrag = new AdFrag();
+			Bundle args = new Bundle();
+			try {
+				args.putString(AdFrag.ARG_IMG, AD_DATA_SET.get(pos).getString(RequestAds.ATTR_IMG_URL));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			adFrag.setArguments(args);
+			
+			return adFrag;
 		}
 	};
 

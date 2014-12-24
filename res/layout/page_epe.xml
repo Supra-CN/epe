@@ -5,27 +5,34 @@
     android:background="@android:color/white"
     android:orientation="vertical" >
     
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
          >
     </android.support.v4.view.ViewPager>
 
     <com.viewpagerindicator.CirclePageIndicator
         android:id="@+id/page_indicator"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" 
+        android:layout_gravity="center_horizontal|bottom"
+        />
+    </FrameLayout>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:text="@string/epe_page_label_search_bar" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:background="@color/half_transparent"
         android:text="@string/epe_page_label_near_store" />
 
@@ -40,13 +47,13 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:orientation="horizontal"
-            android:padding="10dp" />
+            />
     </HorizontalScrollView>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:background="@color/half_transparent"
         android:text="@string/epe_page_label_near_brand" />
 
@@ -61,7 +68,7 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:orientation="horizontal"
-            android:padding="10dp" />
+             />
     </HorizontalScrollView>
 
 </LinearLayout>
