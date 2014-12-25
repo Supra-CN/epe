@@ -78,6 +78,8 @@
     <!-- master page -->
     <string name="master_page_label_my">我的搭配师</string>
     <string name="master_page_label_top">人气搭配师</string>
+    <string name="master_page_indictor_tab_topic">话题</string>
+    <string name="master_page_indictor_tab_custom">搭配</string>
     
     <!-- epe page -->
     <string name="epe_page_label_search_bar">搜索</string>

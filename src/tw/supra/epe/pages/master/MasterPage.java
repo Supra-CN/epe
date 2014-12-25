@@ -1,5 +1,7 @@
 package tw.supra.epe.pages.master;
 
+import java.util.HashMap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,8 +12,11 @@ import tw.supra.epe.core.BaseMainPage;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,13 +29,19 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.viewpagerindicator.PageIndicator;
 
 public class MasterPage extends BaseMainPage {
 	private static final String LOG_TAG = MasterPage.class.getSimpleName();
 
+	private static final Class<?>[] PAGES = { TopicPage.class, CustomPage.class };
+
 	private ViewGroup mMyMasterContainer;
 	private ViewGroup mTopMasterContainer;
 	private ViewGroup mTagsContainer;
+
+	private PageAdapter mAdapter;
+	private PageIndicator mPageIndicator;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +52,12 @@ public class MasterPage extends BaseMainPage {
 		mTopMasterContainer = (ViewGroup) v
 				.findViewById(R.id.top_master_container);
 		mTagsContainer = (ViewGroup) v.findViewById(R.id.tags_container);
+
+		ViewPager viewPager = (ViewPager) v.findViewById(R.id.view_pager);
+		mAdapter = new PageAdapter(getChildFragmentManager());
+		viewPager.setAdapter(mAdapter);
+		mPageIndicator = (PageIndicator) v.findViewById(R.id.page_indicator);
+		mPageIndicator.setViewPager(viewPager);
 
 		return v;
 	}
@@ -198,7 +215,54 @@ public class MasterPage extends BaseMainPage {
 				requestTopMaster(tag);
 			}
 		}
-
 	};
+
+	public class PageAdapter extends FragmentPagerAdapter {
+
+		private final HashMap<Class<?>, BaseMainPage> PAGE_POOL = new HashMap<Class<?>, BaseMainPage>();
+
+		public PageAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public int getCount() {
+			return PAGES.length;
+		}
+
+		@Override
+		public BaseMainPage getItem(int position) {
+			BaseMainPage page = PAGE_POOL.get(PAGES[position]);
+			if (null == page) {
+				try {
+					page = (BaseMainPage) PAGES[position].newInstance();
+					PAGE_POOL.put(PAGES[position], page);
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+					throw new IllegalStateException(String.format(
+							"the page %s is not a legal page",
+							PAGES[position].getSimpleName()), e);
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+					throw new IllegalStateException(String.format(
+							"the page %s is not a legal page",
+							PAGES[position].getSimpleName()), e);
+				} catch (java.lang.InstantiationException e) {
+					e.printStackTrace();
+					throw new IllegalStateException(String.format(
+							"the page %s is not a legal page",
+							PAGES[position].getSimpleName()), e);
+				}
+			}
+			// Log.i(LOG_TAG, "getItem :  pos =" + position + " page" + page);
+			return page;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			return getItem(position).getTitle();
+		}
+
+	}
 
 }
