@@ -10,7 +10,9 @@ import org.json.JSONObject;
 import tw.supra.epe.App;
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseMainPage;
+import tw.supra.location.LocationCallBack;
 import tw.supra.location.LocationCenter;
+import tw.supra.location.SupraLocation;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.utils.JsonUtils;
@@ -29,18 +31,22 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
 
-public class WorthPage extends BaseMainPage implements LocationListener,
-		NetWorkHandler<WorthInfo> {
+public class WorthPage extends BaseMainPage implements
+		NetWorkHandler<WorthInfo> ,LocationCallBack{
 	private static final String LOG_TAG = WorthPage.class.getSimpleName();
 	private RequestWorth mRequestWorth;
 	private Location mLocation;
 	private boolean mDiscount = false;
 	private String mGender = WorthInfo.GENDER_UNKNOW;
 	private final ArrayList<JSONObject> DATA_SET = new ArrayList<JSONObject>();
+	public LocationClient mLocationClient = null;
 
 	private BaseAdapter ADAPTER = new BaseAdapter() {
-
+		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {
@@ -152,6 +158,11 @@ public class WorthPage extends BaseMainPage implements LocationListener,
 		TextView tvDiscount;
 		TextView tvLike;
 	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -168,10 +179,7 @@ public class WorthPage extends BaseMainPage implements LocationListener,
 		super.onStart();
 
 		if (ADAPTER.isEmpty()) {
-			((LocationManager) App.getInstance().getSystemService(
-					Context.LOCATION_SERVICE)).requestSingleUpdate(
-					LocationCenter.getInstance().getBestProvider(), this,
-					getActivity().getMainLooper());
+			LocationCenter.getInstance().requestLocation(this);
 		}
 	}
 
@@ -183,32 +191,6 @@ public class WorthPage extends BaseMainPage implements LocationListener,
 	@Override
 	public int getIconResId() {
 		return 0;
-	}
-
-	@Override
-	public void onLocationChanged(Location location) {
-		Log.i(LOG_TAG, "onLocationChanged : " + location);
-		mLocation = location;
-		requestWorth();
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		Log.i(LOG_TAG, "onLocationChanged : provider = " + provider
-				+ " status = " + status);
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void onProviderEnabled(String provider) {
-		Log.i(LOG_TAG, "onProviderEnabled : " + provider);
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void onProviderDisabled(String provider) {
-		Log.i(LOG_TAG, "onProviderDisabled : " + provider);
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -245,6 +227,12 @@ public class WorthPage extends BaseMainPage implements LocationListener,
 					longitude, mDiscount, mGender, 1));
 			NetworkCenter.getInstance().putToQueue(mRequestWorth);
 		}
+	}
+
+	@Override
+	public void callBack(SupraLocation location) {
+		mLocation = location;
+		requestWorth();
 	}
 
 }
