@@ -34,6 +34,10 @@ public class LocationCenter implements LocationListener {
 		String provider = locationManager.getBestProvider(criteria, true);
 //		String provider = LocationManager.NETWORK_PROVIDER;
 		Log.i(LOG_TAG, "getBestProvider : " + provider);
+		
+		
+		Log.i(LOG_TAG, "getAllProviders : " + locationManager.getAllProviders());
+		
 		return provider;
 	}
 

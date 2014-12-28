@@ -62,7 +62,7 @@ public class CustomPage extends BaseMainPage implements
 	}
 
 	private final BaseAdapter ADAPTER = new BaseAdapter() {
-
+		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (null == convertView) {
@@ -76,12 +76,12 @@ public class CustomPage extends BaseMainPage implements
 						.findViewById(R.id.img);
 				convertView.setTag(holder);
 			}
-
+			
 			ItemHolder holder = (ItemHolder) convertView.getTag();
 			String name = "";
 			String avator = "";
 			String img = "";
-
+			
 			JSONObject jo = getItem(position);
 			try {
 				name = jo.getString(CustomInfo.ATTR_NAME);
@@ -90,21 +90,21 @@ public class CustomPage extends BaseMainPage implements
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-
+			
 			holder.avator.setImageUrl(avator, NetworkCenter.getInstance()
 					.getImageLoader());
 			holder.img.setImageUrl(img, NetworkCenter.getInstance()
 					.getImageLoader());
 			holder.name.setText(name);
-
+			
 			return convertView;
 		}
-
+		
 		@Override
 		public long getItemId(int position) {
 			return 0;
 		}
-
+		
 		@Override
 		public JSONObject getItem(int position) {
 			try {
@@ -114,7 +114,7 @@ public class CustomPage extends BaseMainPage implements
 				return null;
 			}
 		}
-
+		
 		@Override
 		public int getCount() {
 			return (null == mJa) ? 0 : mJa.length();
