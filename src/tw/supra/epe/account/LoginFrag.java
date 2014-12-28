@@ -4,6 +4,7 @@ import tw.supra.epe.R;
 import tw.supra.epe.core.BaseHostFrag;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
+import tw.supra.network.request.RequestEvent;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;

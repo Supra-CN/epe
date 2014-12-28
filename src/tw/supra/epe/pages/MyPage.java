@@ -4,6 +4,8 @@ import tw.supra.epe.App;
 import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.account.User;
+import tw.supra.epe.activity.FavActivity;
+import tw.supra.epe.activity.UserHomeActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.network.NetworkCenter;
 import android.content.Context;
@@ -21,14 +23,23 @@ import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 
 public class MyPage extends BaseMainPage implements OnItemClickListener {
+	private final Item ITEM_MY_HOME = new Item(R.string.my_page_item_my_home) {
+		public void onItemClick() {
+			startActivity(new Intent(getActivity(), UserHomeActivity.class));
+		};
+	};
+	private final Item ITEM_MY_FAV = new Item(R.string.my_page_item_my_fav) {
+		public void onItemClick() {
+			startActivity(new Intent(getActivity(), FavActivity.class));
+		};
+	};
 	private final Item ITEM_LOG_OUT = new Item(R.string.my_page_item_log_out) {
 		public void onItemClick() {
 			startActivity(new Intent(App.ACTION_LOGIN));
 		};
 	};
 
-	private final Item[] LIST = { new Item(R.string.my_page_item_my_home),
-			new Item(R.string.my_page_item_my_fav),
+	private final Item[] LIST = { ITEM_MY_HOME, ITEM_MY_FAV,
 			new Item(R.string.my_page_item_my_custom),
 			new Item(R.string.my_page_item_my_wardrobe),
 			new Item(R.string.my_page_item_my_type),
@@ -118,7 +129,8 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 
 	private void updateUI() {
 		User user = AccountCenter.getCurrentUser();
-		mIvAvator.setImageUrl(user.getAvatarUrl(),NetworkCenter.getInstance().getImageLoader());
+		mIvAvator.setImageUrl(user.getAvatarUrl(), NetworkCenter.getInstance()
+				.getImageLoader());
 		mTvName.setText(user.getName());
 		mTvScore.setText(getString(R.string.my_page_score, user.getScore()));
 	}

@@ -74,21 +74,21 @@
     <string name="account_login_progressing">登录中,请稍候&#8230;</string>
     <string name="account_login_toast_illegal_passport">账户不合法</string>
     <string name="account_login_toast_illegal_password">密码不合法</string>
-    
+
     <!-- master page -->
     <string name="master_page_label_my">我的搭配师</string>
     <string name="master_page_label_top">人气搭配师</string>
     <string name="master_page_indictor_tab_topic">话题</string>
     <string name="master_page_indictor_tab_custom">搭配</string>
-    
+
     <!-- epe page -->
     <string name="epe_page_label_search_bar">搜索</string>
     <string name="epe_page_label_near_store">附近商家</string>
     <string name="epe_page_label_near_brand">附近品牌</string>
-    
+
     <!-- worth page -->
     <string name="worth_page_item_discount">%s折</string>
-    
+
     <!-- my page -->
     <string name="my_page_score">积分：%s</string>
     <string name="my_page_btn_edit">编辑</string>
@@ -103,5 +103,10 @@
     <string name="my_page_item_apply_store">申请衣+衣小店</string>
     <string name="my_page_item_invite">邀请好友</string>
     <string name="my_page_item_log_out">切换帐号</string>
+
+    <!-- user home -->
+    <string name="user_home_attention_count">关注：%d</string>
+    <string name="user_home_fans_count">粉丝：%d</string>
+    <string name="user_home_label_t">T台</string>
 
 </resources>

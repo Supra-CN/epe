@@ -12,6 +12,7 @@ import tw.supra.epe.core.BaseMainPage;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
+import tw.supra.network.request.RequestEvent;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;

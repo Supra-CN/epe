@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 import org.json.JSONArray;
 
-import android.text.TextUtils;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.network.request.EpeRequestInfo;
+import android.text.TextUtils;
 
 public class MasterInfo extends EpeRequestInfo {
 	public static final String ATTR_ID ="id";

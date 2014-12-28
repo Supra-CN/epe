@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.text.TextUtils;
 import tw.supra.epe.ApiDef.APIDef;
 import tw.supra.epe.ApiDef.EpeErrorCode;
 import tw.supra.network.request.EpeJsonRequest;

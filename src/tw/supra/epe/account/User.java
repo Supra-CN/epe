@@ -52,6 +52,8 @@ public class User extends PersistableObj {
 	private String mAvatar;
 	// private String mProvince;
 	private int mScore = -1;
+	private int mFansCount = -1;
+	private int mAttentionCount = -1;
 
 	// private int mGrade = -1;
 	// private int mCharm = -1;
@@ -270,6 +272,24 @@ public class User extends PersistableObj {
 		return mScore;
 	}
 
+	public void setFansCount(int fansCount) {
+		touch(State.MODIFIED);
+		mFansCount = fansCount;
+	}
+
+	public int getFansCount() {
+		return mFansCount;
+	}
+
+	public void setAttentionCount(int attentionCount) {
+		touch(State.MODIFIED);
+		mAttentionCount = attentionCount;
+	}
+
+	public int getAttentionCount() {
+		return mAttentionCount;
+	}
+
 	//
 	// public void setGrade(int grade) {
 	// touch(State.MODIFIED);
@@ -407,6 +427,8 @@ public class User extends PersistableObj {
 		setAvatarUrl(DBUtils.getStrByCol(c, TableAccounts.Columns.AVATAR));
 		// setGender(DBUtils.getStrByCol(c, TableAccounts.Columns.GENDER));
 		setScore(DBUtils.getIntByCol(c, TableAccounts.Columns.SCORE));
+		setFansCount(DBUtils.getIntByCol(c, TableAccounts.Columns.FANS_COUNT));
+		setAttentionCount(DBUtils.getIntByCol(c,TableAccounts.Columns.ATTENTION_COUNT));
 		// setGrade(DBUtils.getIntByCol(c, TableAccounts.Columns.GRADE));
 		// setCharm(DBUtils.getIntByCol(c, TableAccounts.Columns.CHARM));
 		// setElite(DBUtils.getIntByCol(c, TableAccounts.Columns.ELITE));
@@ -432,12 +454,14 @@ public class User extends PersistableObj {
 		// stringMap.put(TableAccounts.Columns.GENDER, mGender.desc);
 		// stringMap.put(TableAccounts.Columns.TITLE, mTitle);
 		// stringMap.put(TableAccounts.Columns.DESCRIPTION, mDescription);
-		 stringMap.put(TableAccounts.Columns.AVATAR, mAvatar);
+		stringMap.put(TableAccounts.Columns.AVATAR, mAvatar);
 		// stringMap.put(TableAccounts.Columns.LAST_LOGIN, mLastLogin);
 		// stringMap.put(TableAccounts.Columns.PROVINCE, mProvince);
 
 		HashMap<String, Integer> intMap = new HashMap<String, Integer>();
 		intMap.put(TableAccounts.Columns.SCORE, mScore);
+		intMap.put(TableAccounts.Columns.FANS_COUNT, mFansCount);
+		intMap.put(TableAccounts.Columns.ATTENTION_COUNT, mAttentionCount);
 		// intMap.put(TableAccounts.Columns.GRADE, mGrade);
 		// intMap.put(TableAccounts.Columns.CHARM, mCharm);
 		// intMap.put(TableAccounts.Columns.ELITE, mElite);

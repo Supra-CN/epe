@@ -1,19 +1,13 @@
 package tw.supra.epe.pages.worth;
 
-import java.io.IOException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import tw.supra.epe.ApiDef.APIDef;
 import tw.supra.epe.ApiDef.EpeErrorCode;
-import tw.supra.epe.account.AccountCenter;
-import tw.supra.epe.account.LoginInfo;
-import tw.supra.epe.account.User;
 import tw.supra.network.request.EpeJsonRequest;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.utils.JsonUtils;
-import android.text.TextUtils;
 
 public class RequestWorth extends EpeJsonRequest<WorthInfo> {
 	private static final String LOG_TAG = RequestWorth.class.getSimpleName();

@@ -1,7 +1,6 @@
 package tw.supra.network;
 
 import tw.supra.epe.App;
-import u.aly.cl;
 import android.graphics.Bitmap;
 import android.util.LruCache;
 
@@ -9,10 +8,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 
 public class NetworkCenter {
 
@@ -45,7 +40,6 @@ public class NetworkCenter {
 
 	public ImageLoader getImageLoader() {
 		if (null == mImageLoader) {
-
 			mImageLoader = new ImageLoader(getRequestQueue(),
 					new ImageLoader.ImageCache() {
 

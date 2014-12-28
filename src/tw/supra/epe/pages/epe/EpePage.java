@@ -13,7 +13,7 @@ import tw.supra.location.LocationCenter;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
-import u.aly.ar;
+import tw.supra.network.request.RequestEvent;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;

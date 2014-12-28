@@ -7,7 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.App;
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.location.LocationCallBack;
@@ -15,11 +14,10 @@ import tw.supra.location.LocationCenter;
 import tw.supra.location.SupraLocation;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
+import tw.supra.network.request.RequestEvent;
 import tw.supra.utils.JsonUtils;
 import android.content.Context;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -31,12 +29,10 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 
 public class WorthPage extends BaseMainPage implements
-		NetWorkHandler<WorthInfo> ,LocationCallBack{
+		NetWorkHandler<WorthInfo>, LocationCallBack {
 	private static final String LOG_TAG = WorthPage.class.getSimpleName();
 	private RequestWorth mRequestWorth;
 	private Location mLocation;
@@ -46,7 +42,7 @@ public class WorthPage extends BaseMainPage implements
 	public LocationClient mLocationClient = null;
 
 	private BaseAdapter ADAPTER = new BaseAdapter() {
-		
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {
@@ -158,7 +154,7 @@ public class WorthPage extends BaseMainPage implements
 		TextView tvDiscount;
 		TextView tvLike;
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -168,7 +164,7 @@ public class WorthPage extends BaseMainPage implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.page_worth, null);
-		GridView gridView = (GridView)v.findViewById(R.id.grid_view);
+		GridView gridView = (GridView) v.findViewById(R.id.grid_view);
 		gridView.setEmptyView(v.findViewById(R.id.progress_bar));
 		gridView.setAdapter(ADAPTER);
 		return v;
@@ -194,10 +190,8 @@ public class WorthPage extends BaseMainPage implements
 	}
 
 	@Override
-	public boolean HandleEvent(
-			tw.supra.network.request.NetWorkHandler.RequestEvent event,
-			WorthInfo info) {
-		
+	public boolean HandleEvent(RequestEvent event, WorthInfo info) {
+
 		if (RequestEvent.FINISH == event) {
 
 			if (info.ERROR_CODE.isOK()) {

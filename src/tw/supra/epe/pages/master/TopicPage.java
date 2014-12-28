@@ -8,6 +8,7 @@ import tw.supra.epe.R;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
+import tw.supra.network.request.RequestEvent;
 import tw.supra.utils.TimeUtil;
 import android.content.Context;
 import android.os.Bundle;

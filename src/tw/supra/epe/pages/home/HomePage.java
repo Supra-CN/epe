@@ -7,7 +7,6 @@ import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.pages.epe.EpePage;
 import tw.supra.epe.pages.master.MasterPage;
 import tw.supra.epe.pages.worth.WorthPage;
-import tw.supra.utils.Log;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;

@@ -131,6 +131,8 @@ public class DataDef {
                     Columns.AUTH + " TEXT, " +
                     Columns.NAME + " TEXT, " +
                     Columns.SCORE + " INTEGER DEFAULT 0, " +
+                    Columns.FANS_COUNT + " INTEGER DEFAULT 0, " +
+                    Columns.ATTENTION_COUNT + " INTEGER DEFAULT 0, " +
 //                    Columns.GENDER + " TEXT, " +
 //                    Columns.DESCRIPTION + " TEXT, " +
 //                    Columns.GRADE + " INTEGER DEFAULT 0, " +

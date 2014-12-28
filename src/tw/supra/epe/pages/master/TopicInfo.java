@@ -4,9 +4,8 @@ import java.util.HashMap;
 
 import org.json.JSONArray;
 
-import android.text.TextUtils;
-import tw.supra.epe.account.AccountCenter;
 import tw.supra.network.request.EpeRequestInfo;
+import android.text.TextUtils;
 
 public class TopicInfo extends EpeRequestInfo {
 	public static final String ATTR_TOPIC_ID ="topic_id";
