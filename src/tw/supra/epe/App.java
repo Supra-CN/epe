@@ -1,6 +1,7 @@
 
 package tw.supra.epe;
 
+import tw.supra.location.LocationCenter;
 import android.app.Application;
 
 import com.umeng.analytics.MobclickAgent;
@@ -14,6 +15,8 @@ public class App extends Application {
         super.onCreate();
         sInstance = this;
         MobclickAgent.setDebugMode(BuildConfig.DEBUG);
+        LocationCenter.getInstance().startUp(this);
+        
     }
 
     public static App getInstance() {

@@ -12,6 +12,10 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+
 public class LocationCenter {
 	private static final String LOG_TAG = LocationCenter.class.getSimpleName();
 	/**
@@ -26,10 +30,42 @@ public class LocationCenter {
 
 	private static LocationCenter sInstance;
 	private Location mCurrentBestLocation;
-	
+
 	private SupraLocation mBestLocation;
 
 	private final HashSet<LocationCallBack> CALL_BACKS = new HashSet<LocationCallBack>();
+
+	public LocationClient mLocationClient;
+	public final BDLocationListener BAIDU_LOCATION_LISTENER = new BDLocationListener() {
+
+		@Override
+		public void onReceiveLocation(BDLocation location) {
+			if (location == null)
+				return;
+			StringBuffer sb = new StringBuffer(256);
+			sb.append("time : ");
+			sb.append(location.getTime());
+			sb.append("\nerror code : ");
+			sb.append(location.getLocType());
+			sb.append("\nlatitude : ");
+			sb.append(location.getLatitude());
+			sb.append("\nlontitude : ");
+			sb.append(location.getLongitude());
+			sb.append("\nradius : ");
+			sb.append(location.getRadius());
+			if (location.getLocType() == BDLocation.TypeGpsLocation) {
+				sb.append("\nspeed : ");
+				sb.append(location.getSpeed());
+				sb.append("\nsatellite : ");
+				sb.append(location.getSatelliteNumber());
+			} else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {
+				sb.append("\naddr : ");
+				sb.append(location.getAddrStr());
+			}
+
+			Log.i(LOG_TAG, sb.toString());
+		}
+	};
 
 	public static LocationCenter getInstance() {
 		if (null == sInstance) {
@@ -39,6 +75,14 @@ public class LocationCenter {
 	}
 
 	private LocationCenter() {
+	}
+
+	public void startUp(App app) {
+		mLocationClient = new LocationClient(app); // 声明LocationClient类
+		// LocationClientOption clientOption = new LocationClientOption();
+		// mLocationClient.setLocOption(clientOption);
+		mLocationClient.registerLocationListener(BAIDU_LOCATION_LISTENER); // 注册监听函数
+		mLocationClient.start();
 	}
 
 	public String getBestProvider() {
@@ -144,6 +188,7 @@ public class LocationCenter {
 		}
 		return false;
 	}
+
 	/**
 	 * Determines whether one Location reading is better than the current
 	 * Location fix
@@ -160,13 +205,13 @@ public class LocationCenter {
 			// A new location is always better than no location
 			return true;
 		}
-		
+
 		// Check whether the new location fix is newer or older
 		long timeDelta = location.getTime() - currentBestLocation.getTime();
 		boolean isSignificantlyNewer = timeDelta > TWO_MINUTES;
 		boolean isSignificantlyOlder = timeDelta < -TWO_MINUTES;
 		boolean isNewer = timeDelta > 0;
-		
+
 		// If it's been more than two minutes since the current location, use
 		// the new location
 		// because the user has likely moved
@@ -177,18 +222,18 @@ public class LocationCenter {
 		} else if (isSignificantlyOlder) {
 			return false;
 		}
-		
+
 		// Check whether the new location fix is more or less accurate
 		int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation
 				.getAccuracy());
 		boolean isLessAccurate = accuracyDelta > 0;
 		boolean isMoreAccurate = accuracyDelta < 0;
 		boolean isSignificantlyLessAccurate = accuracyDelta > 200;
-		
+
 		// Check if the old and new location are from the same provider
 		boolean isFromSameProvider = isSameProvider(location.getProvider(),
 				currentBestLocation.getProvider());
-		
+
 		// Determine location quality using a combination of timeliness and
 		// accuracy
 		if (isMoreAccurate) {
@@ -237,9 +282,9 @@ public class LocationCenter {
 			// provider.
 			// TODO Auto-generated method stub
 			Log.i(LOG_TAG, "onLocationChanged : " + location);
-			
+
 			SupraLocation supraLocation = new SupraLocation(location);
-			if(isBetterLocation(supraLocation, mBestLocation)){
+			if (isBetterLocation(supraLocation, mBestLocation)) {
 				mBestLocation = supraLocation;
 			}
 			notifyCallBacks();
@@ -256,9 +301,10 @@ public class LocationCenter {
 
 	private void requestLocation() {
 		((LocationManager) App.getInstance().getSystemService(
-				Context.LOCATION_SERVICE)).requestSingleUpdate(
-				LocationCenter.getInstance().getBestProvider(), LOCATION_LISTENER,
-				Looper.getMainLooper());
+				Context.LOCATION_SERVICE)).requestSingleUpdate(LocationCenter
+				.getInstance().getBestProvider(), LOCATION_LISTENER, Looper
+				.getMainLooper());
+//		mLocationClient.requestLocation();
 	}
 
 	private boolean hasBestLoction() {
