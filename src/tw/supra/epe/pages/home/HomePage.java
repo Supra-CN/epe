@@ -7,11 +7,13 @@ import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.pages.epe.EpePage;
 import tw.supra.epe.pages.master.MasterPage;
 import tw.supra.epe.pages.worth.WorthPage;
+import tw.supra.utils.Log;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
@@ -114,7 +116,7 @@ public class HomePage extends BaseMainPage implements OnClickListener,
 					e.printStackTrace();
 				}
 			}
-//			Log.i(LOG_TAG, "getItem :  pos =" + position + " page" + page);
+			Log.i(LOG_TAG, "getItem :  pos =" + position + " page" + page);
 			return page;
 		}
 

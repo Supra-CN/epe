@@ -18,6 +18,7 @@ import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.utils.JsonUtils;
+import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -168,64 +170,6 @@ public class WorthPage extends BaseMainPage implements
 
 	private int mAdjustImageWidth = 0;
 
-	// private static int getImageWidth(Context context) {
-	// DisplayMetrics dm = context.getResources().getDisplayMetrics();
-	// int imageWidth = dm.widthPixels;
-	// if (dm.density > 2) {
-	// imageWidth = 2 * Math.round(dm.widthPixels / dm.density);
-	// }
-	// imageWidth = imageWidth
-	// - (2 * context.getResources().getDimensionPixelSize(
-	// R.dimen.post_content_padding));
-	// return imageWidth;
-	// }
-
-	private int adjustViewWidth() {
-		if (mAdjustImageWidth <= 0) {
-			mAdjustImageWidth = mPullRefreshGrid.getWidth() / 2;
-		}
-		return mAdjustImageWidth;
-	}
-
-	private void adjustViewHeight(View view, int width, int height) {
-		Log.i(LOG_TAG, "===adjustIconView start===");
-
-		int iw = width;
-		int ih = height;
-		Log.i(LOG_TAG, "iw : " + iw);
-		Log.i(LOG_TAG, "ih : " + ih);
-		if (iw < 0 || ih < 0) {
-			return;
-		}
-
-		float ratio = (Float.valueOf(iw) / Float.valueOf(ih));
-		Log.i(LOG_TAG, "ratio : " + ratio);
-
-		int vw = view.getWidth();
-		int vh = -1;
-		Log.i(LOG_TAG, "vw : " + vw);
-
-		if (vw < 1) {
-			vw = adjustViewWidth();
-			Log.i(LOG_TAG, "vw = ADJUST_IMAGE_WIDTH : " + vw);
-		}
-
-		vh = Float.valueOf(vw / ratio).intValue();
-		Log.i(LOG_TAG, "vh : " + vh);
-		view.getLayoutParams().height = vh;
-
-		Log.i(LOG_TAG, "===adjustIconView end===");
-	}
-
-	private class ItemHolder {
-		NetworkImageView iv;
-		TextView tvName;
-		TextView tvPrice;
-		TextView tvDistance;
-		TextView tvDiscount;
-		TextView tvLike;
-	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -234,9 +178,6 @@ public class WorthPage extends BaseMainPage implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// ADJUST_IMAGE_WIDTH = getImageWidth(getActivity());
-		// ADJUST_IMAGE_HEIGHT = Double.valueOf(
-		// ADJUST_IMAGE_WIDTH / ADJUST_ASPECT_RATIO).intValue();
 
 		View v = inflater.inflate(R.layout.page_worth, null);
 		mPullRefreshGrid = (PullToRefreshStaggeredGridView) v
@@ -250,6 +191,7 @@ public class WorthPage extends BaseMainPage implements
 
 	@Override
 	public void onStart() {
+		Log.i(LOG_TAG, "onStart");
 		super.onStart();
 		if (ADAPTER.isEmpty()) {
 			Log.i(LOG_TAG, "onStart setRefreshing");
@@ -260,9 +202,29 @@ public class WorthPage extends BaseMainPage implements
 					mPullRefreshGrid.setRefreshing(false);
 				}
 			});
+		}else {
+			ADAPTER.notifyDataSetChanged();
 		}
 	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		Log.i(LOG_TAG, "onAttach");
+		super.onAttach(activity);
+	}
+	
+	@Override
+	public void onStop() {
+		Log.i(LOG_TAG, "onStop");
+		super.onStop();
+	}
 
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		Log.i(LOG_TAG, "onDetach");
+	}
+	
 	@Override
 	protected CharSequence getDefaultTitle(Context c) {
 		return c.getText(R.string.indictor_tab_worth);
@@ -350,5 +312,66 @@ public class WorthPage extends BaseMainPage implements
 		Log.i(LOG_TAG, "onPullDownToRefresh : " + mPageLoaded + 1);
 		loadData(mPageLoaded + 1);
 	}
+	
+	private int adjustViewWidth() {
+		if (mAdjustImageWidth <= 0) {
+			mAdjustImageWidth = mPullRefreshGrid.getWidth() / 2;
+		}
+		return mAdjustImageWidth;
+	}
+
+	private void adjustViewHeight(View view, int width, int height) {
+		Log.i(LOG_TAG, "===adjustIconView start===");
+
+		int iw = width;
+		int ih = height;
+		Log.i(LOG_TAG, "iw : " + iw);
+		Log.i(LOG_TAG, "ih : " + ih);
+		if (iw < 0 || ih < 0) {
+			return;
+		}
+
+		float ratio = (Float.valueOf(iw) / Float.valueOf(ih));
+		Log.i(LOG_TAG, "ratio : " + ratio);
+
+		int vw = view.getWidth();
+		int vh = -1;
+		Log.i(LOG_TAG, "vw : " + vw);
+
+		if (vw < 1) {
+			vw = adjustViewWidth();
+			Log.i(LOG_TAG, "vw = ADJUST_IMAGE_WIDTH : " + vw);
+		}
+
+		vh = Float.valueOf(vw / ratio).intValue();
+		Log.i(LOG_TAG, "vh : " + vh);
+		view.getLayoutParams().height = vh;
+
+		Log.i(LOG_TAG, "===adjustIconView end===");
+	}
+	
+	// private static int getImageWidth(Context context) {
+	// DisplayMetrics dm = context.getResources().getDisplayMetrics();
+	// int imageWidth = dm.widthPixels;
+	// if (dm.density > 2) {
+	// imageWidth = 2 * Math.round(dm.widthPixels / dm.density);
+	// }
+	// imageWidth = imageWidth
+	// - (2 * context.getResources().getDimensionPixelSize(
+	// R.dimen.post_content_padding));
+	// return imageWidth;
+	// }
+
+
+
+	private class ItemHolder {
+		NetworkImageView iv;
+		TextView tvName;
+		TextView tvPrice;
+		TextView tvDistance;
+		TextView tvDiscount;
+		TextView tvLike;
+	}
+
 
 }
