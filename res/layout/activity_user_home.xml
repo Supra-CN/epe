@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/tw.supra.epe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -46,10 +47,10 @@
         android:background="@color/half_transparent"
         android:text="@string/user_home_label_t" />
 
-    <GridView
+    <tw.supra.epe.ui.staggered.StaggeredGridView
         android:id="@+id/grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="2" />
+        app:numColumns="2" />
 
 </LinearLayout>

@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseMainPage;
+import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
@@ -15,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -29,8 +29,9 @@ public class CustomPage extends BaseMainPage implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		GridView v = new GridView(getActivity());
-		v.setNumColumns(2);
+		StaggeredGridView v = new StaggeredGridView(getActivity());
+//		v.setNumColumns(2);
+		v.setColumnCount(2);
 		v.setAdapter(ADAPTER);
 		return v;
 	}

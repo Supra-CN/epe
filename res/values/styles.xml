@@ -17,7 +17,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-        <style name="StyledIndicators" parent="@android:style/Theme.Light">
+    <style name="StyledIndicators" parent="@android:style/Theme.Light">
         <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
         <item name="vpiLinePageIndicatorStyle">@style/CustomLinePageIndicator</item>
         <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
@@ -75,4 +75,13 @@
         <item name="fadeLength">1000</item>
         <item name="fadeDelay">1000</item>
     </style>
+
+    <style name="HorizScrollViewItem">
+        <item name="android:paddingRight">50dp</item>
+        <item name="android:paddingLeft">50dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:text">Sample Item</item>
+    </style>
+
 </resources>

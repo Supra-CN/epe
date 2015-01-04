@@ -13,6 +13,7 @@ import tw.supra.epe.account.UserInfo;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.pages.RequestT;
 import tw.supra.epe.pages.TInfo;
+import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
@@ -21,7 +22,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -34,7 +34,7 @@ public class UserHomeActivity extends BaseActivity {
 	private TextView mName;
 	private TextView mAttentionCount;
 	private TextView mFansCount;
-	private GridView mGridView;
+	private StaggeredGridView mGridView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class UserHomeActivity extends BaseActivity {
 		mName = (TextView) findViewById(R.id.name);
 		mAttentionCount = (TextView) findViewById(R.id.attention_count);
 		mFansCount = (TextView) findViewById(R.id.fans_count);
-		mGridView = (GridView) findViewById(R.id.grid_view);
+		mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
 		mGridView.setAdapter(ADAPTER);
 		updateUiUserInfo();
 		requestUserInfo();

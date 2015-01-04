@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseMainPage;
+import tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView;
+import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.location.LocationCallBack;
 import tw.supra.location.LocationCenter;
 import tw.supra.location.SupraLocation;
@@ -19,27 +21,40 @@ import tw.supra.utils.JsonUtils;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.baidu.location.LocationClient;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 
 public class WorthPage extends BaseMainPage implements
-		NetWorkHandler<WorthInfo>, LocationCallBack {
+		NetWorkHandler<WorthInfo>, LocationCallBack,
+		OnRefreshListener2<StaggeredGridView> {
 	private static final String LOG_TAG = WorthPage.class.getSimpleName();
 	private RequestWorth mRequestWorth;
 	private Location mLocation;
 	private boolean mDiscount = false;
 	private String mGender = WorthInfo.GENDER_UNKNOW;
 	private final ArrayList<JSONObject> DATA_SET = new ArrayList<JSONObject>();
-	public LocationClient mLocationClient = null;
+	private LocationClient mLocationClient = null;
+	
+	private static Handler sHandler = new Handler();
+
+	private PullToRefreshStaggeredGridView mPullRefreshGrid;
+	// private StaggeredGridView mGridView;
+
+	// private int mPageTop = 1;
+	// private int mPageBottom = 1;
+	private int mPageLoaded = -1;
+	private int mPagePending = -1;
 
 	private BaseAdapter ADAPTER = new BaseAdapter() {
 
@@ -68,20 +83,24 @@ public class WorthPage extends BaseMainPage implements
 			String discount = "";
 			String price = "";
 			String like = "";
+			int width = 0;
+			int height = 0;
 
 			try {
 				JSONObject jo = getItem(position);
 				Log.i(LOG_TAG, "#===== getView =====");
-
 				JSONObject joImages = JsonUtils.getJaSafely(jo,
 						WorthInfo.ATTR_IMAGELIST).getJSONObject(0);
 				if (null != joImages) {
 					JSONObject joMiddle = JsonUtils.getJoSafely(joImages,
 							WorthInfo.ATTR_IMAGE_540MIDDLE);
 					if (null != joMiddle) {
-
 						img = JsonUtils.getStrSafely(joMiddle,
 								WorthInfo.ATTR_IMAGE_SRC);
+						width = JsonUtils.getIntSafely(joMiddle,
+								WorthInfo.ATTR_IMAGE_WIDTH);
+						height = JsonUtils.getIntSafely(joMiddle,
+								WorthInfo.ATTR_IMAGE_HEIGHT);
 					}
 				}
 
@@ -117,6 +136,7 @@ public class WorthPage extends BaseMainPage implements
 			}
 
 			ItemHolder holder = (ItemHolder) convertView.getTag();
+			adjustViewHeight(holder.iv, width, height);
 			holder.iv.setImageUrl(img, NetworkCenter.getInstance()
 					.getImageLoader());
 			holder.tvName.setText(name);
@@ -146,6 +166,57 @@ public class WorthPage extends BaseMainPage implements
 		}
 	};
 
+	private int mAdjustImageWidth = 0;
+
+	// private static int getImageWidth(Context context) {
+	// DisplayMetrics dm = context.getResources().getDisplayMetrics();
+	// int imageWidth = dm.widthPixels;
+	// if (dm.density > 2) {
+	// imageWidth = 2 * Math.round(dm.widthPixels / dm.density);
+	// }
+	// imageWidth = imageWidth
+	// - (2 * context.getResources().getDimensionPixelSize(
+	// R.dimen.post_content_padding));
+	// return imageWidth;
+	// }
+
+	private int adjustViewWidth() {
+		if (mAdjustImageWidth <= 0) {
+			mAdjustImageWidth = mPullRefreshGrid.getWidth() / 2;
+		}
+		return mAdjustImageWidth;
+	}
+
+	private void adjustViewHeight(View view, int width, int height) {
+		Log.i(LOG_TAG, "===adjustIconView start===");
+
+		int iw = width;
+		int ih = height;
+		Log.i(LOG_TAG, "iw : " + iw);
+		Log.i(LOG_TAG, "ih : " + ih);
+		if (iw < 0 || ih < 0) {
+			return;
+		}
+
+		float ratio = (Float.valueOf(iw) / Float.valueOf(ih));
+		Log.i(LOG_TAG, "ratio : " + ratio);
+
+		int vw = view.getWidth();
+		int vh = -1;
+		Log.i(LOG_TAG, "vw : " + vw);
+
+		if (vw < 1) {
+			vw = adjustViewWidth();
+			Log.i(LOG_TAG, "vw = ADJUST_IMAGE_WIDTH : " + vw);
+		}
+
+		vh = Float.valueOf(vw / ratio).intValue();
+		Log.i(LOG_TAG, "vh : " + vh);
+		view.getLayoutParams().height = vh;
+
+		Log.i(LOG_TAG, "===adjustIconView end===");
+	}
+
 	private class ItemHolder {
 		NetworkImageView iv;
 		TextView tvName;
@@ -163,19 +234,32 @@ public class WorthPage extends BaseMainPage implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		// ADJUST_IMAGE_WIDTH = getImageWidth(getActivity());
+		// ADJUST_IMAGE_HEIGHT = Double.valueOf(
+		// ADJUST_IMAGE_WIDTH / ADJUST_ASPECT_RATIO).intValue();
+
 		View v = inflater.inflate(R.layout.page_worth, null);
-		GridView gridView = (GridView) v.findViewById(R.id.grid_view);
-		gridView.setEmptyView(v.findViewById(R.id.progress_bar));
-		gridView.setAdapter(ADAPTER);
+		mPullRefreshGrid = (PullToRefreshStaggeredGridView) v
+				.findViewById(R.id.pull_refresh_grid);
+		mPullRefreshGrid.setOnRefreshListener(this);
+		// gridView.setEmptyView(v.findViewById(R.id.progress_bar));
+		mPullRefreshGrid.getRefreshableView().setAdapter(ADAPTER);
+		// mGridView.setAdapter(ADAPTER);
 		return v;
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
-
 		if (ADAPTER.isEmpty()) {
-			LocationCenter.getInstance().requestLocation(this);
+			Log.i(LOG_TAG, "onStart setRefreshing");
+			sHandler.post(new Runnable() {
+				
+				@Override
+				public void run() {
+					mPullRefreshGrid.setRefreshing(false);
+				}
+			});
 		}
 	}
 
@@ -193,8 +277,14 @@ public class WorthPage extends BaseMainPage implements
 	public boolean HandleEvent(RequestEvent event, WorthInfo info) {
 
 		if (RequestEvent.FINISH == event) {
+			Log.i(LOG_TAG, "HandleEvent FINISH : " + info);
 
 			if (info.ERROR_CODE.isOK()) {
+				if (info.ARG_PAGE < mPageLoaded) {
+					DATA_SET.clear();
+				}
+				mPageLoaded = info.ARG_PAGE;
+
 				JSONArray ja = info.resultJoList;
 				for (int i = 0; i < ja.length(); i++) {
 					try {
@@ -208,25 +298,57 @@ public class WorthPage extends BaseMainPage implements
 				}
 				ADAPTER.notifyDataSetChanged();
 			}
+			mPullRefreshGrid.onRefreshComplete();
 			mRequestWorth = null;
+
 		}
 		return false;
 	}
 
-	private void requestWorth() {
-		if (null != mLocation && null == mRequestWorth) {
-			double latitude = mLocation.getLatitude();
-			double longitude = mLocation.getLongitude();
-			mRequestWorth = new RequestWorth(this, new WorthInfo(latitude,
-					longitude, mDiscount, mGender, 1));
-			NetworkCenter.getInstance().putToQueue(mRequestWorth);
+	private void loadData(int page) {
+		Log.i(LOG_TAG, "loadData : " + "page = " + page + " mLocation : "
+				+ mLocation);
+		if (null == mLocation) {
+			mPagePending = page;
+			LocationCenter.getInstance().requestLocation(this);
+		} else {
+			requestWorth(page);
 		}
+
+	}
+
+	private void requestWorth(int page) {
+		Log.i(LOG_TAG, "requestWorth : " + page);
+		double latitude = mLocation.getLatitude();
+		double longitude = mLocation.getLongitude();
+		mRequestWorth = new RequestWorth(this, new WorthInfo(latitude,
+				longitude, mDiscount, mGender, 1));
+		NetworkCenter.getInstance().putToQueue(mRequestWorth);
 	}
 
 	@Override
 	public void callBack(SupraLocation location) {
+		Log.i(LOG_TAG, "callBack : " + "mPagePending = " + mPagePending
+				+ " location : " + location);
 		mLocation = location;
-		requestWorth();
+		if (mPagePending > 0) {
+			requestWorth(mPagePending);
+		}
+		mPagePending = -1;
+	}
+
+	@Override
+	public void onPullDownToRefresh(
+			PullToRefreshBase<StaggeredGridView> refreshView) {
+		Log.i(LOG_TAG, "onPullDownToRefresh");
+		loadData(1);
+	}
+
+	@Override
+	public void onPullUpToRefresh(
+			PullToRefreshBase<StaggeredGridView> refreshView) {
+		Log.i(LOG_TAG, "onPullDownToRefresh : " + mPageLoaded + 1);
+		loadData(mPageLoaded + 1);
 	}
 
 }
