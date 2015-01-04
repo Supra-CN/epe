@@ -8,7 +8,8 @@ import tw.supra.network.request.EpeRequestInfo;
 
 public class TInfo extends EpeRequestInfo {
 	public static final String ATTR_TT_ID = "tt_id";
-	public static final String ATTR_IMG_URL = "img_url";
+	public static final String ATTR_IMG = "image";
+	public static final String ATTR_IMG_URL = "url";
 	public static final String ATTR_TT_LIKE_NUM = "tt_like_num";
 	public static final String ATTR_TT_SHARE_NUM = "tt_share_num";
 	public static final String ATTR_TT_COMMENT_NUM = "tt_comment_num";
