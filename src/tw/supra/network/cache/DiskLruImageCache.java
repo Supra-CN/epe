@@ -10,6 +10,7 @@ import java.io.OutputStream;
 
 import tw.supra.epe.BuildConfig;
 import tw.supra.network.misc.DiskLruCache;
+import tw.supra.network.toolbox.ImageCache;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -20,7 +21,7 @@ import android.util.Log;
  * Implementation of DiskLruCache by Jake Wharton modified from
  * http://stackoverflow.com/questions/10185898/using-disklrucache-in-android-4-0-does-not-provide-for-opencache-method
  */
-public class DiskLruImageCache implements SupraImageCache {
+public class DiskLruImageCache implements ImageCache {
 
 	private DiskLruCache mDiskCache;
 	private CompressFormat mCompressFormat = CompressFormat.JPEG;

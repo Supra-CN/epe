@@ -17,6 +17,7 @@
 package tw.supra.network.cache;
 
 import tw.supra.network.misc.Utils;
+import tw.supra.network.toolbox.ImageCache;
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -30,7 +31,7 @@ import com.android.volley.VolleyLog;
 /**
  * This class holds our bitmap caches (memory and disk).
  */
-public class BitmapCache implements SupraImageCache {
+public class BitmapCache implements ImageCache {
     private static final String TAG = "BitmapCache";
 
     // Default memory cache size as a percent of device memory class

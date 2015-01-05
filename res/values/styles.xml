@@ -83,5 +83,19 @@
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:text">Sample Item</item>
     </style>
+    
+
+    <style name="PhotoGridLayout">
+        <item name="android:drawSelectorOnTop">true</item>
+        <item name="android:listSelector">@drawable/photogrid_list_selector</item>
+    </style>
+
+    <style name="MyTitleText">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">5dip</item>
+    </style>
 
 </resources>

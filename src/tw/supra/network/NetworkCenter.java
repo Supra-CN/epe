@@ -1,23 +1,21 @@
 package tw.supra.network;
 
 import tw.supra.epe.App;
-import tw.supra.network.cache.DiskLruImageCache;
+import tw.supra.network.cache.BitmapImageCache;
 import tw.supra.network.cache.LruImageCache;
-import android.graphics.Bitmap.CompressFormat;
+import tw.supra.network.toolbox.ImageCache;
+import tw.supra.network.toolbox.ImageLoader;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.ImageLoader.ImageCache;
 import com.android.volley.toolbox.Volley;
 
 public class NetworkCenter {
 
 	private static NetworkCenter sInstance;
 	private RequestQueue mRequestQueue;
-	private RequestQueue mImgQueue;
+	private tw.supra.network.RequestQueue mImgQueue;
 	private ImageLoader mImgLoader;
-	private ImageCache mImgCache;
 	
     // Default memory cache size in kilobytes
     private static final int DEFAULT_MEM_CACHE_SIZE = 1024 * 5; // 5MB
@@ -50,24 +48,16 @@ public class NetworkCenter {
 
 	public ImageLoader getImageLoader() {
 		if (null == mImgLoader) {
-			mImgLoader = new ImageLoader(getImgQueue(), getImgCache());
+			mImgLoader = new ImageLoader(getImgQueue(),BitmapImageCache.getInstance(null));
 		}
 
 		return mImgLoader;
 	}
 
-	private RequestQueue getImgQueue() {
+	private tw.supra.network.RequestQueue getImgQueue() {
 		if (mImgQueue == null) {
-			mImgQueue = Volley.newRequestQueue(App.getInstance());
+			mImgQueue = tw.supra.network.toolbox.Volley.newRequestQueue(App.getInstance());
 		}
 		return mImgQueue;
-	}
-
-	private ImageCache getImgCache() {
-		if (mImgCache == null) {
-//			mImgCache = new DiskLruImageCache(App.getInstance(), "imgs", DEFAULT_DISK_CACHE_SIZE, CompressFormat.JPEG, 70);
-			mImgCache = new LruImageCache();
-		}
-		return mImgCache;
 	}
 }

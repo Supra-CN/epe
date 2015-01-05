@@ -19,4 +19,7 @@
     <dimen name="photo_crop_stroke_width">1dip</dimen>
     <dimen name="photo_preview_size">200dip</dimen>
     
+        <dimen name="image_thumbnail_size">100dp</dimen>
+    <dimen name="image_thumbnail_spacing">1dp</dimen>
+    <dimen name="image_detail_pager_margin">80dp</dimen>
 </resources>
