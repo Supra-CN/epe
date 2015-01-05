@@ -14,7 +14,7 @@ import com.android.volley.toolbox.ImageLoader;
  *
  * Added by Vinay S Shenoy on 19/5/13
  */
-public class LruImageCache implements ImageCache {
+public class LruImageCache implements SupraImageCache {
 
     private LruCache<String, Bitmap> mLruCache;
 

@@ -30,7 +30,7 @@ import com.android.volley.VolleyLog;
 /**
  * This class holds our bitmap caches (memory and disk).
  */
-public class BitmapCache implements ImageCache {
+public class BitmapCache implements SupraImageCache {
     private static final String TAG = "BitmapCache";
 
     // Default memory cache size as a percent of device memory class

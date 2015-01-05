@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="5dp" >
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -27,45 +28,50 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:singleLine="true"
                 android:padding="5dp"
-                android:singleLine="true" />
+                />
 
             <TextView
                 android:id="@+id/distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp" />
+                android:padding="5dp"
+                />
         </LinearLayout>
     </FrameLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="wrap_content" 
         android:background="@android:color/white"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical"
+        >
 
         <TextView
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:background="@drawable/worth_item_round_bg"
             android:layout_margin="5dp"
-            android:background="@drawable/worth_item_round_bg" />
+            />
 
         <TextView
             android:id="@+id/discount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:layout_toRightOf="@id/price"
-            android:background="@drawable/worth_item_round_bg" />
+            android:background="@drawable/worth_item_round_bg"
+            android:layout_margin="5dp"
+             />
 
         <TextView
             android:id="@+id/like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            />
     </RelativeLayout>
-
 </LinearLayout>

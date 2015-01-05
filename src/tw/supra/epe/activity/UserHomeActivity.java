@@ -135,7 +135,8 @@ public class UserHomeActivity extends BaseActivity {
 
 			JSONObject jo = getItem(position);
 			try {
-				img = jo.getString(TInfo.ATTR_IMG_URL);
+				JSONObject joImg = jo.getJSONObject(TInfo.ATTR_IMG);
+				img = joImg.getString(TInfo.ATTR_IMG_URL);
 				likeCount = jo.getString(TInfo.ATTR_TT_LIKE_NUM);
 				commentCount = jo.getString(TInfo.ATTR_TT_COMMENT_NUM);
 				time = jo.getLong(TInfo.ATTR_ADD_TIME);

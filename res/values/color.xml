@@ -7,4 +7,9 @@
     <!-- list item -->
     <color name="list_item_bg_selected">#def6ff</color>
 
+    
+        <!-- Photo Viewer Colors -->
+    <color name="solid_black">#ff000000</color>
+    <color name="photo_crop_dim_color">#cc000000</color>
+    <color name="photo_crop_highlight_color">#fff</color>    
 </resources>

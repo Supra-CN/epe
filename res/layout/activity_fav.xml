@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/tw.supra.epe"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pull_refresh_grid"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="fill"
+    android:horizontalSpacing="1dp"
+    android:verticalSpacing="1dp"
+    app:numColumns="2"
+    ptr:ptrMode="both" />

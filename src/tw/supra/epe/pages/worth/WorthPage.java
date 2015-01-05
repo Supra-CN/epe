@@ -119,7 +119,7 @@ public class WorthPage extends BaseMainPage implements
 				NumberFormat nf = NumberFormat.getNumberInstance();
 				if (discountNum < 10) {
 					nf.setMaximumFractionDigits(1);
-					discount = getString(R.string.worth_page_item_discount,
+					discount = getString(R.string.item_discount,
 							nf.format(discountNum));
 					Log.i(LOG_TAG, "# discount : " + discount);
 				}
@@ -276,7 +276,6 @@ public class WorthPage extends BaseMainPage implements
 		} else {
 			requestWorth(page);
 		}
-
 	}
 
 	private void requestWorth(int page) {
