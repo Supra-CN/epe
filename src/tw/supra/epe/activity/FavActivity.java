@@ -18,6 +18,7 @@ import tw.supra.location.SupraLocation;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
+import tw.supra.network.ui.NetworkImageView;
 import tw.supra.utils.JsonUtils;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,7 +28,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 

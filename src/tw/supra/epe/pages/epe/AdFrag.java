@@ -2,13 +2,12 @@ package tw.supra.epe.pages.epe;
 
 import tw.supra.epe.core.BaseFrag;
 import tw.supra.network.NetworkCenter;
+import tw.supra.network.ui.NetworkImageView;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.android.volley.toolbox.NetworkImageView;
 
 public class AdFrag extends BaseFrag {
 	public static final String ARG_IMG = "arg_img";

@@ -11,6 +11,7 @@ import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
+import tw.supra.network.ui.NetworkImageView;
 import tw.supra.utils.TimeUtil;
 import android.content.Context;
 import android.os.Bundle;
@@ -19,8 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import com.android.volley.toolbox.NetworkImageView;
 
 public class TPage extends BaseMainPage implements NetWorkHandler<TInfo> {
 	private static final int PAGE_SIZE = 20;
@@ -32,7 +31,7 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TInfo> {
 		// TextView v = (TextView) inflater.inflate(R.layout.page_t, null);
 		// v.setText(this.getClass().getSimpleName());
 		StaggeredGridView v = new StaggeredGridView(getActivity());
-//		v.setNumColumns(2);
+		// v.setNumColumns(2);
 		v.setColumnCount(2);
 		v.setAdapter(ADAPTER);
 		return v;

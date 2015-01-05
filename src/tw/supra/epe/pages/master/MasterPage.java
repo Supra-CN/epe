@@ -13,6 +13,7 @@ import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
+import tw.supra.network.ui.NetworkImageView;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -29,7 +30,6 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.viewpagerindicator.PageIndicator;
 
 public class MasterPage extends BaseMainPage {

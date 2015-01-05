@@ -8,6 +8,7 @@ import tw.supra.epe.activity.FavActivity;
 import tw.supra.epe.activity.UserHomeActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.network.NetworkCenter;
+import tw.supra.network.ui.NetworkImageView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +21,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
 
 public class MyPage extends BaseMainPage implements OnItemClickListener {
 	private final Item ITEM_MY_HOME = new Item(R.string.my_page_item_my_home) {

@@ -9,6 +9,7 @@ import tw.supra.epe.core.BaseMainPage;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
+import tw.supra.network.ui.NetworkImageView;
 import tw.supra.utils.TimeUtil;
 import android.content.Context;
 import android.os.Bundle;
@@ -19,7 +20,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
 
 public class TopicPage extends BaseMainPage implements
 		NetWorkHandler<TopicInfo> {

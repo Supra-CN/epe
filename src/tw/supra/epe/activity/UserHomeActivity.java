@@ -17,6 +17,7 @@ import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
+import tw.supra.network.ui.NetworkImageView;
 import tw.supra.utils.TimeUtil;
 import android.os.Bundle;
 import android.view.View;
@@ -24,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
 
 public class UserHomeActivity extends BaseActivity {
 	private final ArrayList<JSONObject> DATA_SET = new ArrayList<JSONObject>();

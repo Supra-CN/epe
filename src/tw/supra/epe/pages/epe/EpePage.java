@@ -14,6 +14,7 @@ import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
+import tw.supra.network.ui.NetworkImageView;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -31,7 +32,6 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.viewpagerindicator.PageIndicator;
 
 public class EpePage extends BaseMainPage implements LocationListener {
