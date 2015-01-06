@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/list_item_bg_selector"
-    android:drawableRight="@drawable/icon_arrow_right"
-    android:gravity="left"
-    android:padding="15dp" />
+    android:gravity="left|center_vertical"
+    android:drawablePadding="@dimen/drawable_padding"
+    android:textSize="18sp"
+    android:padding="10dp" />
 <!-- android:background="@drawable/list_item_bg_selector" -->

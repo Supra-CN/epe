@@ -8,7 +8,7 @@ import tw.supra.epe.activity.FavActivity;
 import tw.supra.epe.activity.UserHomeActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.network.NetworkCenter;
-import tw.supra.network.ui.NetworkImageView;
+import tw.supra.network.ui.NetworkRoundedImageView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,42 +21,62 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-
 public class MyPage extends BaseMainPage implements OnItemClickListener {
-	private final Item ITEM_MY_HOME = new Item(R.string.my_page_item_my_home) {
+	private final Item ITEM_MY_HOME = new Item(R.string.my_page_item_my_home,
+			R.drawable.ic_my_home) {
 		public void onItemClick() {
 			startActivity(new Intent(getActivity(), UserHomeActivity.class));
 		};
 	};
-	private final Item ITEM_MY_FAV = new Item(R.string.my_page_item_my_fav) {
+	private final Item ITEM_MY_FAV = new Item(R.string.my_page_item_my_fav,
+			R.drawable.ic_my_fav) {
 		public void onItemClick() {
 			startActivity(new Intent(getActivity(), FavActivity.class));
 		};
 	};
-	private final Item ITEM_LOG_OUT = new Item(R.string.my_page_item_log_out) {
+	private final Item ITEM_LOG_OUT = new Item(R.string.my_page_item_log_out, 0) {
 		public void onItemClick() {
 			startActivity(new Intent(App.ACTION_LOGIN));
 		};
 	};
 
-	private final Item[] LIST = { ITEM_MY_HOME, ITEM_MY_FAV,
-			new Item(R.string.my_page_item_my_custom),
-			new Item(R.string.my_page_item_my_wardrobe),
-			new Item(R.string.my_page_item_my_type),
-			new Item(R.string.my_page_item_my_diary),
-			new Item(R.string.my_page_item_my_focus),
-			new Item(R.string.my_page_item_apply_store),
-			new Item(R.string.my_page_item_invite), ITEM_LOG_OUT };
+	private final Item[] LIST = {
+			ITEM_MY_HOME,
+			new Item(),
+			ITEM_MY_FAV,
+			new Item(R.string.my_page_item_my_custom, R.drawable.ic_my_custom),
+			new Item(),
+			new Item(R.string.my_page_item_my_wardrobe,
+					R.drawable.ic_my_wardrobe),
+			new Item(R.string.my_page_item_my_type, R.drawable.ic_my_type),
+			new Item(R.string.my_page_item_my_diary, R.drawable.ic_my_diary),
+			new Item(),
+			new Item(R.string.my_page_item_my_focus, R.drawable.ic_my_focus),
+			new Item(),
+			new Item(R.string.my_page_item_apply_store,
+					R.drawable.ic_apply_store), new Item(),
+			new Item(R.string.my_page_item_invite, R.drawable.ic_my_invite),
+			new Item(), ITEM_LOG_OUT };
 
 	private final BaseAdapter ADAPTER = new BaseAdapter() {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null) {
+			Item item = getItem(position);
+			if (item.FLAG_DIVIDER) {
+				return View.inflate(getActivity(), R.layout.item_divider, null);
+			}
+
+			if (convertView == null || !(convertView instanceof TextView)) {
 				convertView = View.inflate(getActivity(),
 						R.layout.my_page_item, null);
 			}
-			((TextView) convertView).setText(getItem(position).TITLE_RES);
+
+			TextView tv = ((TextView) convertView);
+			tv.setText(item.TITLE_RES);
+			tv.setCompoundDrawablesWithIntrinsicBounds(item.ICON_RES, 0,
+					R.drawable.icon_arrow_right, 0);
+
 			return convertView;
 		}
 
@@ -74,11 +94,12 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 		public int getCount() {
 			return LIST.length;
 		}
+
 	};
 
 	private TextView mTvName;
 	private TextView mTvScore;
-	private NetworkImageView mIvAvator;
+	private NetworkRoundedImageView mIvAvator;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,7 +110,7 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 		listView.setAdapter(ADAPTER);
 		mTvName = (TextView) v.findViewById(R.id.name);
 		mTvScore = (TextView) v.findViewById(R.id.score);
-		mIvAvator = (NetworkImageView) v.findViewById(R.id.avator);
+		mIvAvator = (NetworkRoundedImageView) v.findViewById(R.id.avator);
 		mIvAvator.setErrorImageResId(R.drawable.ic_launcher);
 		return v;
 	}
@@ -118,9 +139,19 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 
 	private class Item {
 		final int TITLE_RES;
+		final int ICON_RES;
+		final boolean FLAG_DIVIDER;
 
-		public Item(int titleRes) {
+		public Item() {
+			TITLE_RES = 0;
+			ICON_RES = 0;
+			FLAG_DIVIDER = true;
+		}
+
+		public Item(int titleRes, int iconRes) {
 			TITLE_RES = titleRes;
+			ICON_RES = iconRes;
+			FLAG_DIVIDER = false;
 		}
 
 		public void onItemClick() {

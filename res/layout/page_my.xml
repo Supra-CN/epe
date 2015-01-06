@@ -6,46 +6,89 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:gravity="center"
-        android:orientation="horizontal" >
+        android:layout_height="150dp"
+        android:background="@drawable/my_banner"
+        android:orientation="vertical" >
 
-        <tw.supra.network.ui.NetworkImageView
-            android:id="@+id/avator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:background="@android:drawable/picture_frame"
-            android:src="@drawable/ic_launcher" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/top_tab_height"
+            android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/my_page_score" />
-        </LinearLayout>
+                android:layout_gravity="center"
+                android:text="@string/indictor_tab_my"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/top_tab_title_text_size" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="@string/my_page_btn_edit" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_margin="@dimen/top_tab_item_margin"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_setting" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <tw.supra.network.ui.NetworkRoundedImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/avator"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:scaleType="fitCenter"
+                app:riv_border_color="@android:color/white"
+                app:riv_border_width="1dp"
+                app:riv_mutate_background="true"
+                app:riv_oval="true"
+                app:riv_tile_mode="repeat" />
+            <!-- app:riv_corner_radius="@dimen/avator_radius" -->
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_page_score"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_page_btn_edit"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>
