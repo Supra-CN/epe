@@ -31,10 +31,10 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 
-public class FavActivity extends BaseActivity implements
+public class ProductActivity extends BaseActivity implements
 		NetWorkHandler<FavInfo>, LocationCallBack,
 		OnRefreshListener2<StaggeredGridView> {
-	private static final String LOG_TAG = FavActivity.class.getSimpleName();
+	private static final String LOG_TAG = ProductActivity.class.getSimpleName();
 
 	private final ArrayList<JSONObject> DATA_SET = new ArrayList<JSONObject>();
 	private static final int PAGE_SIZE = 20;
@@ -90,7 +90,7 @@ public class FavActivity extends BaseActivity implements
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (null == convertView) {
-				convertView = View.inflate(FavActivity.this,
+				convertView = View.inflate(ProductActivity.this,
 						R.layout.fav_activity_item, null);
 				ItemHolder holder = new ItemHolder();
 				holder.img = (NetworkImageView) convertView

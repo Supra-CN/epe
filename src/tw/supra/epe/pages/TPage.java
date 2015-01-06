@@ -2,44 +2,65 @@ package tw.supra.epe.pages;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseMainPage;
+import tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkImageView;
 import tw.supra.network.ui.NetworkRoundedImageView;
+import tw.supra.utils.JsonUtils;
 import tw.supra.utils.TimeUtil;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class TPage extends BaseMainPage implements NetWorkHandler<TInfo> {
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+
+public class TPage extends BaseMainPage implements NetWorkHandler<TInfo>,
+		OnRefreshListener2<StaggeredGridView> {
+	private static final String LOG_TAG = TPage.class.getSimpleName();
+
 	private static final int PAGE_SIZE = 20;
 	private final ArrayList<JSONObject> DATA_SET = new ArrayList<JSONObject>();
+	private PullToRefreshStaggeredGridView mPullRefreshGrid;
+
+	private int mPageLoaded = -1;
+	private int mAdjustImageWidth = 0;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.page_t, null);
 		// v.setText(this.getClass().getSimpleName());
-		StaggeredGridView grid = (StaggeredGridView) v.findViewById(R.id.grid);
-		grid.setAdapter(ADAPTER);
+		mPullRefreshGrid = (PullToRefreshStaggeredGridView) v
+				.findViewById(R.id.grid);
+		mPullRefreshGrid.setOnRefreshListener(this);
+		mPullRefreshGrid.getRefreshableView().setAdapter(ADAPTER);
 		return v;
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		request();
+	public void onStart() {
+		super.onStart();
+		if (ADAPTER.isEmpty()) {
+			Log.i(LOG_TAG, "onStart setRefreshing");
+			mPullRefreshGrid.setRefreshing(false);
+		} else {
+			ADAPTER.notifyDataSetChanged();
+		}
 	}
 
 	@Override
@@ -54,24 +75,28 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TInfo> {
 
 	@Override
 	public boolean HandleEvent(RequestEvent event, TInfo info) {
-		if (RequestEvent.FINISH == event && info.ERROR_CODE.isOK()
-				&& null != info.resultJoList) {
-
-			for (int i = 0; i < info.resultJoList.length(); i++) {
-				try {
-					DATA_SET.add(info.resultJoList.getJSONObject(i));
-				} catch (JSONException e) {
-					e.printStackTrace();
+		Log.i(LOG_TAG, "HandleEvent FINISH : " + info);
+		if (RequestEvent.FINISH == event) {
+			mPullRefreshGrid.onRefreshComplete();
+			if (info.ERROR_CODE.isOK()) {
+				if (info.ARG_PAGE < mPageLoaded) {
+					DATA_SET.clear();
 				}
-			}
-			ADAPTER.notifyDataSetChanged();
-		}
-		return false;
-	}
+				mPageLoaded = info.ARG_PAGE;
 
-	private void request() {
-		NetworkCenter.getInstance().putToQueue(
-				new RequestT(this, new TInfo(1, PAGE_SIZE)));
+				JSONArray ja = info.resultJoList;
+				for (int i = 0; i < ja.length(); i++) {
+					try {
+						DATA_SET.add(ja.getJSONObject(i));
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+				ADAPTER.notifyDataSetChanged();
+			}
+		}
+
+		return false;
 	}
 
 	private class ItemHolder {
@@ -111,12 +136,18 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TInfo> {
 			long time = 0;
 			String likeCount = "";
 			String commentCount = "";
+			boolean isLike = false;
+			int width = 0;
+			int height = 0;
 
 			JSONObject jo = getItem(position);
 			try {
 				JSONObject joImg = jo.getJSONObject(TInfo.ATTR_IMG);
 				img = joImg.getString(TInfo.ATTR_IMG_URL);
+				width = JsonUtils.getIntSafely(joImg, TInfo.ATTR_IMG_WIDTH);
+				height = JsonUtils.getIntSafely(joImg, TInfo.ATTR_IMG_HEIGTH);
 				likeCount = jo.getString(TInfo.ATTR_TT_LIKE_NUM);
+				isLike = jo.getInt(TInfo.ATTR_IS_LIKE) != 0;
 				commentCount = jo.getString(TInfo.ATTR_TT_COMMENT_NUM);
 				time = jo.getLong(TInfo.ATTR_ADD_TIME);
 				JSONObject joUinfo = jo.getJSONObject(TInfo.ATTR_UINFO);
@@ -126,6 +157,7 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TInfo> {
 				e.printStackTrace();
 			}
 
+			adjustViewHeight(holder.img, width, height);
 			holder.avator.setImageUrl(avator, NetworkCenter.getInstance()
 					.getImageLoader());
 			holder.img.setImageUrl(img, NetworkCenter.getInstance()
@@ -134,6 +166,7 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TInfo> {
 			holder.time.setText(TimeUtil.formatTimeWithCountDown(getActivity(),
 					time));
 			holder.likeCount.setText(likeCount);
+			holder.likeCount.setSelected(isLike);
 			holder.commentCount.setText(commentCount);
 
 			return convertView;
@@ -155,4 +188,62 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TInfo> {
 		}
 	};
 
+	@Override
+	public void onPullDownToRefresh(
+			PullToRefreshBase<StaggeredGridView> refreshView) {
+		loadData(1);
+	}
+
+	@Override
+	public void onPullUpToRefresh(
+			PullToRefreshBase<StaggeredGridView> refreshView) {
+		loadData(mPageLoaded + 1);
+	}
+
+	private void loadData(int page) {
+		Log.i(LOG_TAG, "loadData : " + "page = " + page);
+		request(page);
+	}
+
+	private void request(int page) {
+		NetworkCenter.getInstance().putToQueue(
+				new RequestT(this, new TInfo(page, PAGE_SIZE)));
+	}
+
+	private int adjustViewWidth() {
+		if (mAdjustImageWidth <= 0) {
+			mAdjustImageWidth = mPullRefreshGrid.getWidth() / 2;
+		}
+		return mAdjustImageWidth;
+	}
+
+	private void adjustViewHeight(View view, int width, int height) {
+		Log.i(LOG_TAG, "===adjustIconView start===");
+
+		int iw = width;
+		int ih = height;
+		Log.i(LOG_TAG, "iw : " + iw);
+		Log.i(LOG_TAG, "ih : " + ih);
+		if (iw < 0 || ih < 0) {
+			return;
+		}
+
+		float ratio = (Float.valueOf(iw) / Float.valueOf(ih));
+		Log.i(LOG_TAG, "ratio : " + ratio);
+
+		int vw = view.getWidth();
+		int vh = -1;
+		Log.i(LOG_TAG, "vw : " + vw);
+
+		if (vw < 1) {
+			vw = adjustViewWidth();
+			Log.i(LOG_TAG, "vw = ADJUST_IMAGE_WIDTH : " + vw);
+		}
+
+		vh = Float.valueOf(vw / ratio).intValue();
+		Log.i(LOG_TAG, "vh : " + vh);
+		view.getLayoutParams().height = vh;
+
+		Log.i(LOG_TAG, "===adjustIconView end===");
+	}
 }

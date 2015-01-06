@@ -24,10 +24,10 @@
             app:riv_mutate_background="true"
             app:riv_oval="true"
             app:riv_tile_mode="repeat" />
-<!--             app:riv_corner_radius="@dimen/avator_radius" -->
+        <!-- app:riv_corner_radius="@dimen/avator_radius" -->
         <!-- android:scaleType="centerCrop" -->
-<!--             app:riv_border_color="#333333" -->
-<!--             app:riv_border_width="2dip" -->
+        <!-- app:riv_border_color="#333333" -->
+        <!-- app:riv_border_width="2dip" -->
 
         <TextView
             android:id="@+id/name"
@@ -61,13 +61,17 @@
             android:id="@+id/comment_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:drawableLeft="@drawable/ic_comment"
+            android:drawablePadding="@dimen/drawable_padding" />
 
         <TextView
             android:id="@+id/like_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:drawableLeft="@drawable/ic_like"
+            android:drawablePadding="@dimen/drawable_padding" />
     </LinearLayout>
 
 </LinearLayout>
