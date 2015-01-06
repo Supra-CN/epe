@@ -4,14 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="tw.supra.epe.MainActivity"
+    tools:context="tw.supra.epe.activity.MainActivity"
     tools:ignore="MergeRootFrame" >
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/top_tab_height"
         android:background="@color/epe_pink" 
-        android:padding="10dp"
         >
 
         <tw.supra.epe.pages.home.HomePageTabBar
@@ -19,7 +18,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" 
             android:layout_gravity="center"
-            
+            android:divider="@android:color/transparent"
+            android:background="@android:color/transparent"
+            android:showDividers="middle"
+            android:dividerPadding="2dp"
             />
     </FrameLayout>
 

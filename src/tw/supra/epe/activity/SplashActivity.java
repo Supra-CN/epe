@@ -1,7 +1,8 @@
 
-package tw.supra.epe;
+package tw.supra.epe.activity;
 
 import tw.supra.data.CommonData;
+import tw.supra.epe.BuildConfig;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.utils.Log;
 import android.accounts.Account;

@@ -17,6 +17,15 @@
     <string name="app_about">This library is improvements to Volley along with full image caching.</string>
     <string name="twitter"><a href="https://twitter.com/1HaKr"> Twitter</a></string>
     <string name="gplus"><a href="https://plus.google.com/109240246596102887385"> Google+</a></string>
+    
+      <string name="picasso_app_name">RoundedPicassoView</string>
+
+  <string-array name="action_list">
+    <item>Bitmap</item>
+    <item>Ovals</item>
+    <item>Picasso</item>
+    <item>Color</item>
+  </string-array>
 
     
     <string name="clear_cache_menu">Clear Caches</string>
@@ -48,7 +57,7 @@
     <string name="indictor_tab_home">首页</string>
     <string name="indictor_tab_t">T台</string>
     <string name="indictor_tab_msg">消息</string>
-    <string name="indictor_tab_my">我</string>
+    <string name="indictor_tab_my">我的</string>
     <string name="indictor_tab_worth">值得买</string>
     <string name="indictor_tab_epe">衣+衣</string>
     <string name="indictor_tab_master">搭配师</string>

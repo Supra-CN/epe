@@ -13,8 +13,7 @@ public class MsgPage extends BaseMainPage {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		TextView v = (TextView) inflater.inflate(R.layout.page_msg, null);
-		v.setText(this.getClass().getSimpleName());
+		View v =  inflater.inflate(R.layout.page_msg, null);
 		return v;
 	}
 

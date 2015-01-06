@@ -86,6 +86,7 @@ public class WorthPage extends BaseMainPage implements
 			String like = "";
 			int width = 0;
 			int height = 0;
+			Boolean isLike = false;
 
 			try {
 				JSONObject jo = getItem(position);
@@ -130,6 +131,8 @@ public class WorthPage extends BaseMainPage implements
 				like = JsonUtils.getStrSafely(jo,
 						WorthInfo.ATTR_PRODUCT_LIKE_NUM);
 				Log.i(LOG_TAG, "# like : " + like);
+				isLike = JsonUtils.getIntSafely(jo, WorthInfo.ATTR_IS_LIKE, 0)!=0;
+				Log.i(LOG_TAG, "# isLike : " + isLike);
 
 				Log.i(LOG_TAG, "#==================");
 			} catch (JSONException e) {
@@ -148,6 +151,7 @@ public class WorthPage extends BaseMainPage implements
 							: View.VISIBLE);
 			holder.tvPrice.setText(price);
 			holder.tvLike.setText(like);
+			holder.tvLike.setSelected(isLike);
 			return convertView;
 		}
 

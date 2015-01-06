@@ -1,7 +1,7 @@
 
 package tw.supra.epe.core;
 
-import tw.supra.epe.MainActivity;
+import tw.supra.epe.activity.MainActivity;
 
 public abstract class BaseMainPage extends BaseHostFrag<MainActivity> {
 }

@@ -28,11 +28,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="5dp"
+            android:textColor="@android:color/white"
                 android:singleLine="true" />
 
             <TextView
                 android:id="@+id/distance"
                 android:layout_width="wrap_content"
+            android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:padding="5dp" />
         </LinearLayout>
@@ -50,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_margin="5dp"
+            android:textColor="@android:color/white"
             android:background="@drawable/worth_item_round_bg" />
 
         <TextView
@@ -58,6 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_toRightOf="@id/price"
+            android:textColor="@android:color/white"
             android:background="@drawable/worth_item_round_bg" />
 
         <TextView
@@ -65,6 +69,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:drawableLeft="@drawable/ic_like"
+            android:textColor="@android:color/white"
+            android:drawablePadding="@dimen/drawable_padding"
             android:layout_margin="5dp" />
     </RelativeLayout>
 

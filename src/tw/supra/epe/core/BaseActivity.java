@@ -10,11 +10,6 @@ import com.umeng.analytics.MobclickAgent;
 
 public abstract class BaseActivity extends Activity {
     private ProgressDialog mProgressDialog;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
     
     public void onResume() {
         super.onResume();

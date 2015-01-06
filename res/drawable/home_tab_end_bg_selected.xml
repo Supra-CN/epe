@@ -3,20 +3,19 @@
 
     <solid android:color="@color/epe_pink_h" />
         <corners 
-        android:topRightRadius="20dp"
-        android:bottomRightRadius="20dp"
+        android:topRightRadius="@dimen/home_tab_radius"
+        android:bottomRightRadius="@dimen/home_tab_radius"
         />
 
     <size
-        android:height="40dp"
-        android:width="40dp" />
+        android:height="@dimen/home_tab_height"
+        android:width="@dimen/home_tab_height" />
 
 
-
-    <!-- <stroke -->
-    <!-- android:color="@color/bg_floor_tag_stroke" -->
-    <!-- android:width="1dp" -->
-    <!-- /> -->
+<!--     <stroke -->
+<!--     android:color="@color/epe_pink" -->
+<!--     android:width="1dp" -->
+<!--     /> -->
 
 
 </shape>

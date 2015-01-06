@@ -12,6 +12,7 @@ import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkImageView;
+import tw.supra.network.ui.NetworkRoundedImageView;
 import tw.supra.utils.TimeUtil;
 import android.content.Context;
 import android.os.Bundle;
@@ -28,12 +29,10 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TInfo> {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TextView v = (TextView) inflater.inflate(R.layout.page_t, null);
+		View v = inflater.inflate(R.layout.page_t, null);
 		// v.setText(this.getClass().getSimpleName());
-		StaggeredGridView v = new StaggeredGridView(getActivity());
-		// v.setNumColumns(2);
-		v.setColumnCount(2);
-		v.setAdapter(ADAPTER);
+		StaggeredGridView grid = (StaggeredGridView) v.findViewById(R.id.grid);
+		grid.setAdapter(ADAPTER);
 		return v;
 	}
 
@@ -76,7 +75,7 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TInfo> {
 	}
 
 	private class ItemHolder {
-		NetworkImageView avator;
+		NetworkRoundedImageView avator;
 		NetworkImageView img;
 		TextView name;
 		TextView time;
@@ -92,7 +91,7 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TInfo> {
 				convertView = View.inflate(getActivity(), R.layout.t_page_item,
 						null);
 				ItemHolder holder = new ItemHolder();
-				holder.avator = (NetworkImageView) convertView
+				holder.avator = (NetworkRoundedImageView) convertView
 						.findViewById(R.id.avator);
 				holder.name = (TextView) convertView.findViewById(R.id.name);
 				holder.time = (TextView) convertView.findViewById(R.id.time);

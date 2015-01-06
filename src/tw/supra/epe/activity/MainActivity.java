@@ -1,7 +1,12 @@
-package tw.supra.epe;
+package tw.supra.epe.activity;
 
 import java.util.HashMap;
 
+import tw.supra.epe.App;
+import tw.supra.epe.R;
+import tw.supra.epe.R.id;
+import tw.supra.epe.R.layout;
+import tw.supra.epe.R.string;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseMainPage;

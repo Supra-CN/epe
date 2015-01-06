@@ -21,6 +21,7 @@ package tw.supra.epe.ui.staggered;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import tw.supra.epe.R;
 import android.annotation.TargetApi;

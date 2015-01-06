@@ -3,8 +3,8 @@
 
     <!-- app -->
     <color name="half_transparent">#88c0c0c0</color>
-    <color name="epe_pink">#B34168</color>
-    <color name="epe_pink_h">#9a2753</color>
+    <color name="epe_pink">#fe1a69</color>
+    <color name="epe_pink_h">#e50057</color>
     
     <!-- list item -->
     <color name="list_item_bg_selected">#def6ff</color>
