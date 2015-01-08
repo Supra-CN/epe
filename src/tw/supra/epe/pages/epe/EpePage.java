@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import tw.supra.epe.App;
 import tw.supra.epe.R;
+import tw.supra.epe.activity.BrandActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.location.LocationCenter;
 import tw.supra.network.NetworkCenter;
@@ -18,6 +19,7 @@ import tw.supra.network.ui.NetworkImageView;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -28,6 +30,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
@@ -165,6 +168,23 @@ public class EpePage extends BaseMainPage implements LocationListener {
 			NetworkCenter.getInstance().putToQueue(mRequestNearBrand);
 		}
 	}
+	
+	private final OnClickListener BRAND_CLICK_LISTENER = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			JSONObject joItem = (JSONObject)v.getTag();
+			Intent intent = new Intent(getActivity(), BrandActivity.class);
+			try {
+				intent.putExtra(BrandActivity.EXTRA_BRAND_ID, joItem.getString(NearBrandInfo.ATTR_ID));
+				intent.putExtra(BrandActivity.EXTRA_BRAND_NAME, joItem.getString(NearBrandInfo.ATTR_NAME));
+			} catch (JSONException e) {
+				e.printStackTrace();
+				return;
+			}
+			startActivity(intent);
+		}
+	};
 
 	private final NetWorkHandler<NearBrandInfo> HANDLER_NEAR_BRAND = new NetWorkHandler<NearBrandInfo>() {
 
@@ -242,8 +262,11 @@ public class EpePage extends BaseMainPage implements LocationListener {
 		NetworkImageView iv = (NetworkImageView) v.findViewById(R.id.img);
 		String name = joItem.getString(NearBrandInfo.ATTR_NAME);
 		String logo = joItem.getString(NearBrandInfo.ATTR_LOGO);
+		String id = joItem.getString(NearBrandInfo.ATTR_ID);
 		tv.setText(name);
 		iv.setImageUrl(logo, NetworkCenter.getInstance().getImageLoader());
+		v.setTag(joItem);
+		v.setOnClickListener(BRAND_CLICK_LISTENER);
 		return v;
 	}
 
