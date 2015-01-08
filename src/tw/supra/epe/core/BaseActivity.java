@@ -4,7 +4,6 @@ package tw.supra.epe.core;
 import tw.supra.epe.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.os.Bundle;
 
 import com.umeng.analytics.MobclickAgent;
 

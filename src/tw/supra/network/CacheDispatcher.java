@@ -16,9 +16,9 @@
 
 package tw.supra.network;
 
-import android.os.Process;
-
 import java.util.concurrent.BlockingQueue;
+
+import android.os.Process;
 
 
 /**

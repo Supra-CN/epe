@@ -16,9 +16,6 @@
 
 package tw.supra.network;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -27,6 +24,9 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import android.os.Handler;
+import android.os.Looper;
 
 
 /**

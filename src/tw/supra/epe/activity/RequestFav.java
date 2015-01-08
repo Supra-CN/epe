@@ -12,7 +12,6 @@ import tw.supra.utils.JsonUtils;
 public class RequestFav extends EpeJsonRequest<FavInfo> {
 	private static final String LOG_TAG = RequestFav.class.getSimpleName();
 
-
 	public RequestFav(NetWorkHandler<FavInfo> eventHandler, FavInfo info) {
 		super(eventHandler, info);
 	}

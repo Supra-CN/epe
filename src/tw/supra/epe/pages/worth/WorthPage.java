@@ -8,9 +8,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import tw.supra.epe.R;
+import tw.supra.epe.activity.ProductActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView;
+import tw.supra.epe.ui.staggered.StaggeredGridView.OnItemClickListener;
 import tw.supra.location.LocationCallBack;
 import tw.supra.location.LocationCenter;
 import tw.supra.location.SupraLocation;
@@ -21,6 +23,7 @@ import tw.supra.network.ui.NetworkImageView;
 import tw.supra.utils.JsonUtils;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,7 +40,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 
 public class WorthPage extends BaseMainPage implements
-		NetWorkHandler<WorthInfo>, LocationCallBack,
+		NetWorkHandler<WorthInfo>, LocationCallBack,OnItemClickListener,
 		OnRefreshListener2<StaggeredGridView> {
 	private static final String LOG_TAG = WorthPage.class.getSimpleName();
 	private RequestWorth mRequestWorth;
@@ -174,11 +177,6 @@ public class WorthPage extends BaseMainPage implements
 	private int mAdjustImageWidth = 0;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
@@ -186,9 +184,11 @@ public class WorthPage extends BaseMainPage implements
 		mPullRefreshGrid = (PullToRefreshStaggeredGridView) v
 				.findViewById(R.id.pull_refresh_grid);
 		mPullRefreshGrid.setOnRefreshListener(this);
+		StaggeredGridView grid = mPullRefreshGrid.getRefreshableView();
 		// gridView.setEmptyView(v.findViewById(R.id.progress_bar));
-		mPullRefreshGrid.getRefreshableView().setAdapter(ADAPTER);
+		grid.setAdapter(ADAPTER);
 		// mGridView.setAdapter(ADAPTER);
+		grid.setOnItemClickListener(this);
 		return v;
 	}
 
@@ -373,6 +373,19 @@ public class WorthPage extends BaseMainPage implements
 		TextView tvDistance;
 		TextView tvDiscount;
 		TextView tvLike;
+	}
+
+	@Override
+	public void onItemClick(StaggeredGridView parent, View view, int position,
+			long id) {
+		try {
+			String productId = DATA_SET.get(position).getString(WorthInfo.ATTR_PRODUCT_ID);
+			Intent intent = new Intent(getActivity(), ProductActivity.class);
+			intent.putExtra(ProductActivity.EXTRA_PRODUCT_ID, productId);
+			startActivity(intent);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 

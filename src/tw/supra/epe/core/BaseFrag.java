@@ -4,11 +4,10 @@ package tw.supra.epe.core;
 import java.util.UUID;
 
 import tw.supra.epe.App;
+import tw.supra.network.RequestQueue;
 import android.app.Fragment;
 import android.content.Context;
 import android.text.TextUtils;
-
-import com.android.volley.RequestQueue;
 
 public abstract class BaseFrag extends Fragment {
     public final UUID FRAG_ID = UUID.randomUUID();

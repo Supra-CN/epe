@@ -2,6 +2,7 @@ package tw.supra.epe.account;
 
 import java.util.HashMap;
 
+import tw.supra.network.Request.Method;
 import tw.supra.network.request.EpeRequestInfo;
 
 public class LoginInfo extends EpeRequestInfo {

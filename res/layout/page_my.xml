@@ -27,7 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
-                android:layout_margin="@dimen/top_tab_item_margin"
+                android:layout_marginLeft="@dimen/top_tab_item_margin"
+                android:layout_marginRight="@dimen/top_tab_item_margin"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_setting" />
         </FrameLayout>

@@ -22,8 +22,6 @@ import java.io.FileNotFoundException;
 import tw.supra.network.DefaultRetryPolicy;
 import tw.supra.network.NetworkResponse;
 import tw.supra.network.Request;
-import tw.supra.network.Request.Method;
-import tw.supra.network.Request.Priority;
 import tw.supra.network.Response;
 import tw.supra.network.VolleyLog;
 import tw.supra.network.error.ParseError;

@@ -2,7 +2,9 @@
 <resources>
 
     <!-- app -->
+    <color name="half_trans_black">#88000000</color>
     <color name="half_transparent">#88c0c0c0</color>
+    <color name="epe_yellow">#f3df66</color>
     <color name="epe_pink">#fe1a69</color>
     <color name="epe_pink_h">#e50057</color>
     <color name="bottom_bar_bg">#e1e1e1</color>

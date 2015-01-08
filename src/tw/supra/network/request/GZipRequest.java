@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.util.zip.GZIPInputStream;
 
 import tw.supra.network.NetworkResponse;
-import tw.supra.network.Request.Method;
 import tw.supra.network.Response;
 import tw.supra.network.error.ParseError;
 import tw.supra.network.toolbox.HttpHeaderParser;

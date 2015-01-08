@@ -18,8 +18,6 @@
 
 package tw.supra.network.ui;
 
-import com.makeramen.roundedimageview.RoundedImageView;
-
 import tw.supra.epe.R;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -30,7 +28,8 @@ import android.util.AttributeSet;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
+
+import com.makeramen.roundedimageview.RoundedImageView;
 
 /**
  * Created by vinaysshenoy on 19/5/13.

@@ -1,7 +1,7 @@
 
 package tw.supra.network.request;
 
-import com.android.volley.VolleyError;
+import tw.supra.network.error.VolleyError;
 
 public abstract class AbstractErrorCode implements ErrorCode {
 

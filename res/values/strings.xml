@@ -17,22 +17,19 @@
     <string name="app_about">This library is improvements to Volley along with full image caching.</string>
     <string name="twitter"><a href="https://twitter.com/1HaKr"> Twitter</a></string>
     <string name="gplus"><a href="https://plus.google.com/109240246596102887385"> Google+</a></string>
-    
-      <string name="picasso_app_name">RoundedPicassoView</string>
+    <string name="picasso_app_name">RoundedPicassoView</string>
 
-  <string-array name="action_list">
-    <item>Bitmap</item>
-    <item>Ovals</item>
-    <item>Picasso</item>
-    <item>Color</item>
-  </string-array>
+    <string-array name="action_list">
+        <item>Bitmap</item>
+        <item>Ovals</item>
+        <item>Picasso</item>
+        <item>Color</item>
+    </string-array>
 
-    
     <string name="clear_cache_menu">Clear Caches</string>
     <string name="clear_cache_complete_toast">Caches have been cleared</string>
     <string name="imageview_description">Image Thumbnail</string>
     <string name="no_network_connection_toast">No network connection found</string>
-
     <string name="activity_simple_cache">Simple Image Cache</string>
 
     <!-- app -->
@@ -138,5 +135,15 @@
     <string name="user_home_attention_count">关注：%d</string>
     <string name="user_home_fans_count">粉丝：%d</string>
     <string name="user_home_label_t">T台</string>
+
+    <!-- product -->
+    <string name="product_info_model">型号：%s</string>
+    <string name="product_info_tag">标签：%s</string>
+    <string name="product_info_mall">商场：%s</string>
+    <string name="product_info_address">地址：%s</string>
+    <string name="product_let_s_go">带你去买</string>
+    <string name="master">搭配师</string>
+    <string name="contact_owner">联系店主</string>
+    <string name="product_fetch_faild">"单品加载失败，点击重试"</string>
 
 </resources>

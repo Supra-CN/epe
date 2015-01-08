@@ -1,6 +1,5 @@
 package tw.supra.epe.activity;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -10,242 +9,213 @@ import org.json.JSONObject;
 import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.core.BaseActivity;
-import tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView;
-import tw.supra.epe.ui.staggered.StaggeredGridView;
-import tw.supra.location.LocationCallBack;
-import tw.supra.location.LocationCenter;
-import tw.supra.location.SupraLocation;
+import tw.supra.epe.pages.PhotoClient;
+import tw.supra.epe.utils.AppUtiles;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
-import tw.supra.network.ui.NetworkImageView;
+import tw.supra.ui.PhotoPager;
+import tw.supra.ui.PhotoPager.OnDispatchTouchListener;
 import tw.supra.utils.JsonUtils;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.view.View.OnClickListener;
+import android.view.ViewConfiguration;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-
-public class ProductActivity extends BaseActivity implements
-		NetWorkHandler<FavInfo>, LocationCallBack,
-		OnRefreshListener2<StaggeredGridView> {
+public class ProductActivity extends BaseActivity implements OnClickListener,
+		OnDispatchTouchListener, NetWorkHandler<ProductInfo> {
 	private static final String LOG_TAG = ProductActivity.class.getSimpleName();
+	public static final String EXTRA_PRODUCT_ID = "product_id";
+	/**
+	 * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
+	 * user interaction before hiding the system UI.
+	 */
+	private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
 
-	private final ArrayList<JSONObject> DATA_SET = new ArrayList<JSONObject>();
-	private static final int PAGE_SIZE = 20;
-	private SupraLocation mLocation;
-	private int mAdjustImageWidth = 0;
+	private final ArrayList<String> PHOTOS = new ArrayList<String>();
 
-	private PullToRefreshStaggeredGridView mPullRefreshGrid;
+	private float mPressedX;
+	private float mPressedY;
+	private int mTouchSlop;
+    private boolean mIsMoved = false;
 
-	private int mPageLoaded = -1;
-	private int mPagePending = -1;
+	private TextView mTvProductName;
+	private TextView mTvProductInfo;
+	private TextView mTvBrandName;
+	private TextView mTvPrice;
+	private TextView mTvDiscount;
+	private CheckBox mCbLike;
+	private CheckBox mCbFav;
+
+	private String mProductId;
+	private JSONObject mJoData;
+
+	private PhotoPager mViewPager;
+	private View mFloatLayer;
+
+	private static Handler sHandler = new Handler();
+
+	private ImagePagerAdapter mImageAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_fav);
+		mProductId = getIntent().getStringExtra(EXTRA_PRODUCT_ID);
+		mTouchSlop = ViewConfiguration.get(this).getScaledTouchSlop();
+		mImageAdapter = new ImagePagerAdapter(getFragmentManager());
 
-		mPullRefreshGrid = (PullToRefreshStaggeredGridView) findViewById(R.id.pull_refresh_grid);
-		mPullRefreshGrid.setOnRefreshListener(this);
-		// gridView.setEmptyView(v.findViewById(R.id.progress_bar));
-		mPullRefreshGrid.getRefreshableView().setAdapter(ADAPTER);
+		setContentView(R.layout.activity_product);
+		findViewById(R.id.fetch_failed).setOnClickListener(this);
+
+		mFloatLayer = findViewById(R.id.float_layer);
+		mViewPager = (PhotoPager) findViewById(R.id.view_pager);
+		mCbLike = (CheckBox) findViewById(R.id.like);
+		mCbFav = (CheckBox) findViewById(R.id.fav);
+		mTvBrandName = (TextView) findViewById(R.id.brand_name);
+		mTvDiscount = (TextView) findViewById(R.id.discount);
+		mTvPrice = (TextView) findViewById(R.id.price);
+		mTvProductName = (TextView) findViewById(R.id.product_name);
+		mTvProductInfo = (TextView) findViewById(R.id.product_info);
+
+		mViewPager.setOnDispatchTouchListener(this);
+//		mViewPager.setOnPageChangeListener(this);
+		mViewPager.setPageMargin(getResources().getDimensionPixelSize(
+				R.dimen.image_browser_page_gap));
+
+		mViewPager.setAdapter(mImageAdapter);
 
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		if (ADAPTER.isEmpty()) {
-			Log.i(LOG_TAG, "onStart setRefreshing");
-
-			mPullRefreshGrid.setRefreshing(false);
-		} else {
-			ADAPTER.notifyDataSetChanged();
-		}
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		delayedHide(AUTO_HIDE_DELAY_MILLIS);
+		request();
 	}
-
-	private void requestFav(int page) {
-		NetworkCenter.getInstance().putToQueue(
-				new RequestFav(this, new FavInfo(AccountCenter
-						.getCurrentUserUid(), mLocation, page, PAGE_SIZE)));
-	}
-
-	private class ItemHolder {
-		NetworkImageView img;
-		TextView name;
-		TextView distance;
-		TextView price;
-		TextView discount;
-		TextView like;
-	}
-
-	private final BaseAdapter ADAPTER = new BaseAdapter() {
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			if (null == convertView) {
-				convertView = View.inflate(ProductActivity.this,
-						R.layout.fav_activity_item, null);
-				ItemHolder holder = new ItemHolder();
-				holder.img = (NetworkImageView) convertView
-						.findViewById(R.id.img);
-				holder.like = (TextView) convertView.findViewById(R.id.like);
-				holder.name = (TextView) convertView.findViewById(R.id.name);
-				holder.distance = (TextView) convertView
-						.findViewById(R.id.distance);
-				holder.discount = (TextView) convertView
-						.findViewById(R.id.discount);
-				holder.price = (TextView) convertView.findViewById(R.id.price);
-				convertView.setTag(holder);
-			}
-
-			String img = "";
-			String name = "";
-			String distance = "";
-			String discount = "";
-			String price = "";
-			String like = "";
-			int width = 0;
-			int height = 0;
-
-			JSONObject jo = getItem(position);
-			try {
-				like = jo.getString(FavInfo.PRODUCT_LIKE_NUM);
-				distance = jo.getString(FavInfo.DISTANCE) + "m";
-				name = jo.getString(FavInfo.PRODUCT_NAME);
-
-				
-				double discountNum = JsonUtils.getDoubleSafely(jo,
-						FavInfo.DISCOUNT_NUM) * 10;
-				NumberFormat nf = NumberFormat.getNumberInstance();
-				if (discountNum < 10) {
-					nf.setMaximumFractionDigits(1);
-					discount = getString(R.string.item_discount,
-							nf.format(discountNum));
-				}
-
-				nf.setMaximumFractionDigits(2);
-				price = nf.format(JsonUtils.getDoubleSafely(jo,
-						FavInfo.PRODUCT_PRICE));
-
-				JSONObject joImages = JsonUtils.getJaSafely(jo,
-						FavInfo.IMAGELIST).getJSONObject(0);
-				JSONObject joMiddle = JsonUtils.getJoSafely(joImages,
-						FavInfo.IMG_540MIDDLE);
-				img = JsonUtils.getStrSafely(joMiddle, FavInfo.IMG_SRC);
-				width = JsonUtils.getIntSafely(joMiddle, FavInfo.IMG_WIDTH);
-				height = JsonUtils.getIntSafely(joMiddle, FavInfo.IMG_HEIGTH);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			ItemHolder holder = (ItemHolder) convertView.getTag();
-			adjustViewHeight(holder.img, width, height);
-			holder.img.setImageUrl(img, NetworkCenter.getInstance()
-					.getImageLoader());
-
-			holder.name.setText(name);
-			holder.like.setText(like);
-			holder.discount.setText(discount);
-			holder.discount
-					.setVisibility(TextUtils.isEmpty(discount) ? View.GONE
-							: View.VISIBLE);
-			holder.distance.setText(distance);
-			holder.price.setText(price);
-
-			return convertView;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return 0;
-		}
-
-		@Override
-		public JSONObject getItem(int position) {
-			return DATA_SET.get(position);
-		}
-
-		@Override
-		public int getCount() {
-			return DATA_SET.size();
-		}
-	};
 
 	@Override
-	public boolean HandleEvent(RequestEvent event, FavInfo info) {
+	public boolean HandleEvent(RequestEvent event, ProductInfo info) {
 
 		Log.i(LOG_TAG, "HandleEvent FINISH : " + info);
 		if (RequestEvent.FINISH == event) {
-			if (info.ERROR_CODE.isOK()) {
-				if (info.ARG_PAGE < mPageLoaded) {
-					DATA_SET.clear();
-				}
-				mPageLoaded = info.ARG_PAGE;
-
-				JSONArray ja = info.resultJoList;
-				for (int i = 0; i < ja.length(); i++) {
-					try {
-						DATA_SET.add(ja.getJSONObject(i));
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-				ADAPTER.notifyDataSetChanged();
+			hideProgressDialog();
+			if (info.ERROR_CODE.isOK() && info.resultPInfo != null) {
+				mJoData = info.resultPInfo;
+				updateUi();
+			} else {
+				findViewById(R.id.fetch_failed).setVisibility(View.VISIBLE);
 			}
-			mPullRefreshGrid.onRefreshComplete();
-
 		}
 
 		return false;
 	}
 
-	@Override
-	public void onPullDownToRefresh(
-			PullToRefreshBase<StaggeredGridView> refreshView) {
-		Log.i(LOG_TAG, "onPullDownToRefresh");
-		loadData(1);
+	private void request() {
+		showProgressDialog();
+		NetworkCenter.getInstance().putToQueue(
+				new RequestProduct(this, new ProductInfo(AccountCenter
+						.getCurrentUserUid(), mProductId)));
 	}
 
-	@Override
-	public void onPullUpToRefresh(
-			PullToRefreshBase<StaggeredGridView> refreshView) {
-		Log.i(LOG_TAG, "onPullDownToRefresh : " + mPageLoaded + 1);
-		loadData(mPageLoaded + 1);
-	}
+	private void updateUi() {
 
-	@Override
-	public void callBack(SupraLocation location) {
-		Log.i(LOG_TAG, "callBack : " + "mPagePending = " + mPagePending
-				+ " location : " + location);
-		mLocation = location;
-		if (mPagePending > 0) {
-			requestFav(mPagePending);
+		if (mJoData == null) {
+			return;
 		}
-		mPagePending = -1;
-	}
 
-	private void loadData(int page) {
-		Log.i(LOG_TAG, "loadData : " + "page = " + page + " mLocation : "
-				+ mLocation);
-		if (null == mLocation) {
-			mPagePending = page;
-			LocationCenter.getInstance().requestLocation(this);
-		} else {
-			requestFav(page);
+		String img = "";
+		String productName = "";
+		String brandName = "";
+		String discount = "";
+		String price = "";
+		String productInfo = "";
+		int width = 0;
+		int height = 0;
+		Boolean isLike = false;
+		Boolean isFav = false;
+
+		try {
+
+			productName = JsonUtils.getStrSafely(mJoData,
+					ProductInfo.PRODUCT_NAME);
+
+			discount = AppUtiles.formatdiscount(JsonUtils.getDoubleSafely(
+					mJoData, ProductInfo.DISCOUNT_NUM));
+
+			price = AppUtiles.formatPrice(JsonUtils.getDoubleSafely(mJoData,
+					ProductInfo.PRODUCT_PRICE));
+
+			isLike = JsonUtils.getIntSafely(mJoData, ProductInfo.IS_LIKE, 0) != 0;
+			isFav = JsonUtils.getIntSafely(mJoData, ProductInfo.IS_FAVOR, 0) != 0;
+
+			JSONObject joMall = JsonUtils.getJoSafely(mJoData,
+					ProductInfo.MALL_INFO);
+			productInfo = getString(R.string.product_info_model,
+					JsonUtils.getStrSafely(mJoData, ProductInfo.PRODUCT_SKU))
+					+ "\n";
+			productInfo += getString(R.string.product_info_tag,
+					JsonUtils.getStrSafely(mJoData, ProductInfo.PRODUCT_TAG))
+					+ "\n";
+			productInfo += getString(R.string.product_info_mall,
+					JsonUtils.getStrSafely(joMall, ProductInfo.MALL_NAME))
+					+ "\n";
+			productInfo += getString(R.string.product_info_address,
+					JsonUtils.getStrSafely(joMall, ProductInfo.MALL_ADDRESS));
+
+			JSONObject joBrand = JsonUtils.getJoSafely(mJoData,
+					ProductInfo.BRAND_INFO);
+			brandName = JsonUtils.getStrSafely(joBrand, ProductInfo.BRAND_NAME);
+
+			JSONArray jaImages = JsonUtils.getJaSafely(mJoData,
+					ProductInfo.IMAGES);
+
+			PHOTOS.clear();
+			for (int i = 0; i < jaImages.length(); i++) {
+				PHOTOS.add(jaImages.getJSONObject(i)
+						.getJSONObject(ProductInfo.IMG_ORIGINAL)
+						.getString(ProductInfo.IMG_SRC));
+			}
+
+			// if (null != joImages) {
+			// JSONObject joOriginal = JsonUtils.getJoSafely(joImages,
+			// ProductInfo.IMG_ORIGINAL);
+			// if (null != joOriginal) {
+			// img = JsonUtils.getStrSafely(joOriginal,
+			// ProductInfo.IMG_SRC);
+			// width = JsonUtils.getIntSafely(joOriginal,
+			// ProductInfo.IMG_WIDTH);
+			// height = JsonUtils.getIntSafely(joOriginal,
+			// ProductInfo.IMG_HEIGHT);
+			// }
+			// }
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
+		mTvBrandName.setText(brandName);
+		mTvProductName.setText(productName);
+		mTvDiscount.setText(getString(R.string.item_discount, discount));
+		mTvDiscount.setVisibility(TextUtils.isEmpty(discount) ? View.GONE
+				: View.VISIBLE);
+		mTvPrice.setText(price);
+		mTvBrandName.setText(brandName);
+		mCbLike.setChecked(isLike);
+		mCbFav.setChecked(isFav);
+		mTvProductInfo.setText(productInfo);
+		mImageAdapter.notifyDataSetChanged();
+		// adjustViewHeight(mIvImg, width, height);
 	}
 
 	private int adjustViewWidth() {
-		if (mAdjustImageWidth <= 0) {
-			mAdjustImageWidth = mPullRefreshGrid.getWidth() / 2;
-		}
-		return mAdjustImageWidth;
+		return getResources().getDisplayMetrics().widthPixels;
 	}
 
 	private void adjustViewHeight(View view, int width, int height) {
@@ -278,6 +248,118 @@ public class ProductActivity extends BaseActivity implements
 		Log.i(LOG_TAG, "===adjustIconView end===");
 	}
 
-	
-	
+	private class ImagePagerAdapter extends FragmentStatePagerAdapter {
+
+		public ImagePagerAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public int getCount() {
+			return PHOTOS.size();
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			PhotoClient client = new PhotoClient();
+			Bundle arg = new Bundle();
+			arg.putString(PhotoClient.ARG_STRING_IMG_URL, PHOTOS.get(position));
+			client.setArguments(arg);
+			return client;
+		}
+	}
+
+	Runnable mHideRunnable = new Runnable() {
+		@Override
+		public void run() {
+			setOverLayVisible(false);
+		}
+	};
+
+	/**
+	 * Schedules a call to hide() in [delay] milliseconds, canceling any
+	 * previously scheduled calls.
+	 */
+	private void delayedHide(int delayMillis) {
+		sHandler.removeCallbacks(mHideRunnable);
+		sHandler.postDelayed(mHideRunnable, delayMillis);
+	}
+
+	private void setOverLayVisible(boolean isVisible) {
+		mFloatLayer.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+	}
+
+	public boolean onTouchViewPager(MotionEvent event) {
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			mIsMoved = false;
+			mPressedX = event.getX();
+			mPressedY = event.getY();
+			break;
+		case MotionEvent.ACTION_MOVE:
+			mIsMoved = (Math.abs(mPressedX - event.getX()) >= mTouchSlop)
+					&& (Math.abs(mPressedY - event.getY()) >= mTouchSlop);
+			break;
+		case MotionEvent.ACTION_UP:
+			if (!mIsMoved) {
+				setOverLayVisible(View.VISIBLE != mFloatLayer.getVisibility());
+			}
+			break;
+
+		default:
+			break;
+		}
+		return false;
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.fetch_failed:
+			v.setVisibility(View.GONE);
+			request();
+			break;
+
+		default:
+			break;
+		}
+
+	}
+
+	@Override
+	public boolean onDispatchTouchEvent(MotionEvent ev) {
+		onTouchViewPager(ev);
+		return false;
+	}
+
+	// @Override
+	// public boolean onOptionsItemSelected(MenuItem item) {
+	// switch (item.getItemId()) {
+	// case R.id.action_share:
+	// //
+	// shareWithImg(mImageAdapter.images.get(mViewPager.getCurrentItem()).IMAGE);
+	// shareWithImg(mPhotos.get(mViewPager.getCurrentItem()).IMG);
+	// return true;
+	// case R.id.action_download:
+	// // String url =
+	// // mImageAdapter.images.get(mViewPager.getCurrentItem()).IMAGE;
+	// String url = mPhotos.get(mViewPager.getCurrentItem()).IMG;
+	// File path = CommonData.getInstance().getPathDownload();
+	// if (null == path) {
+	// Toast.makeText(this, R.string.external_storage_unavailable,
+	// Toast.LENGTH_SHORT).show();
+	// return true;
+	// }
+	// File image = new File(path, Uri.parse(url).getLastPathSegment());
+	// DownloadRequest request = new DownloadRequest(url, image.getPath(),
+	// this, this);
+	// NetworkCenter.getInstance().putToQueue(request);
+	// Toast.makeText(this, R.string.image_browser_download_start,
+	// Toast.LENGTH_SHORT).show();
+	// return true;
+	//
+	// default:
+	// return super.onOptionsItemSelected(item);
+	// }
+	// }
 }

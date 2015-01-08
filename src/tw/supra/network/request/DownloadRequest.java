@@ -23,7 +23,6 @@ import java.io.UnsupportedEncodingException;
 
 import tw.supra.network.NetworkResponse;
 import tw.supra.network.Request;
-import tw.supra.network.Request.Method;
 import tw.supra.network.Response;
 import tw.supra.network.Response.ErrorListener;
 import tw.supra.network.Response.Listener;
