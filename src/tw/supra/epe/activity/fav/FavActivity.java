@@ -1,4 +1,4 @@
-package tw.supra.epe.activity;
+package tw.supra.epe.activity.fav;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;

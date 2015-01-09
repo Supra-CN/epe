@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
@@ -26,17 +25,16 @@ import com.umeng.analytics.MobclickAgent;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
 
-public class MainActivity extends BaseActivity implements OnClickListener,
-		OnPageChangeListener {
-	
+public class MainActivity extends BaseActivity implements OnClickListener {
+
 	private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
 	private static final int MSG_PENDING_CHECK_FOR_EXIT = 100000;
 
 	private static Handler sHandle = new Handler();
 
-	private static final Class<?>[] PAGES = { HomePage.class,
-			TPage.class, MsgPage.class, MyPage.class };
+	private static final Class<?>[] PAGES = { HomePage.class, TPage.class,
+			MsgPage.class, MyPage.class };
 
 	private PageAdapter mAdapter;
 	private PageIndicator mPageIndicator;
@@ -55,7 +53,6 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		viewPager.setAdapter(mAdapter);
 		mPageIndicator = (PageIndicator) findViewById(R.id.page_indicator);
 		mPageIndicator.setViewPager(viewPager);
-		mPageIndicator.setOnPageChangeListener(this);
 	}
 
 	@Override
@@ -83,20 +80,6 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		default:
 			break;
 		}
-	}
-
-	@Override
-	public void onPageScrollStateChanged(int state) {
-	}
-
-	@Override
-	public void onPageScrolled(int position, float positionOffset,
-			int positionOffsetPixels) {
-	}
-
-	@Override
-	public void onPageSelected(int position) {
-		// setActionTitle(mAdapter.getItem(position).getTitle());
 	}
 
 	public class PageAdapter extends FragmentPagerAdapter implements
@@ -132,7 +115,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 							PAGES[position].getSimpleName()), e);
 				}
 			}
-//			Log.i(LOG_TAG, "getItem :  pos =" + position + " page" + page);
+			// Log.i(LOG_TAG, "getItem :  pos =" + position + " page" + page);
 			return page;
 		}
 

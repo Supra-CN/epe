@@ -8,7 +8,8 @@ import org.json.JSONObject;
 
 import tw.supra.epe.App;
 import tw.supra.epe.R;
-import tw.supra.epe.activity.BrandActivity;
+import tw.supra.epe.activity.MallActivity;
+import tw.supra.epe.activity.brand.BrandActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.location.LocationCenter;
 import tw.supra.network.NetworkCenter;
@@ -66,7 +67,7 @@ public class EpePage extends BaseMainPage implements LocationListener {
 		indicator.setViewPager(pager);
 		return v;
 	}
-	
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
@@ -168,21 +169,39 @@ public class EpePage extends BaseMainPage implements LocationListener {
 			NetworkCenter.getInstance().putToQueue(mRequestNearBrand);
 		}
 	}
-	
-	private final OnClickListener BRAND_CLICK_LISTENER = new OnClickListener() {
-		
+
+	private final OnClickListener MALL_CLICK_LISTENER = new OnClickListener() {
+
 		@Override
 		public void onClick(View v) {
-			JSONObject joItem = (JSONObject)v.getTag();
-			Intent intent = new Intent(getActivity(), BrandActivity.class);
+			JSONObject joItem = (JSONObject) v.getTag();
 			try {
-				intent.putExtra(BrandActivity.EXTRA_BRAND_ID, joItem.getString(NearBrandInfo.ATTR_ID));
-				intent.putExtra(BrandActivity.EXTRA_BRAND_NAME, joItem.getString(NearBrandInfo.ATTR_NAME));
+				Intent intent = new Intent(getActivity(), MallActivity.class);
+				intent.putExtra(MallActivity.EXTRA_MALL_ID,
+						joItem.getString(NearStoreInfo.ATTR_MALL_ID));
+				startActivity(intent);
 			} catch (JSONException e) {
 				e.printStackTrace();
 				return;
 			}
-			startActivity(intent);
+		}
+	};
+	private final OnClickListener BRAND_CLICK_LISTENER = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			JSONObject joItem = (JSONObject) v.getTag();
+			try {
+				Intent intent = new Intent(getActivity(), BrandActivity.class);
+				intent.putExtra(BrandActivity.EXTRA_BRAND_ID,
+						joItem.getString(NearBrandInfo.ATTR_ID));
+				intent.putExtra(BrandActivity.EXTRA_BRAND_NAME,
+						joItem.getString(NearBrandInfo.ATTR_NAME));
+				startActivity(intent);
+			} catch (JSONException e) {
+				e.printStackTrace();
+				return;
+			}
 		}
 	};
 
@@ -212,19 +231,19 @@ public class EpePage extends BaseMainPage implements LocationListener {
 			return false;
 		}
 	};
-	
+
 	private void requestAds() {
-			NetworkCenter.getInstance().putToQueue(new RequestAds(HANDLER_ADS));
-		}
-	
+		NetworkCenter.getInstance().putToQueue(new RequestAds(HANDLER_ADS));
+	}
+
 	private final NetWorkHandler<EpeRequestInfo> HANDLER_ADS = new NetWorkHandler<EpeRequestInfo>() {
-		
+
 		@Override
 		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
 			if (RequestEvent.FINISH == event) {
-				
+
 				if (info.ERROR_CODE.isOK() && info.OBJ instanceof JSONArray) {
-					JSONArray ja = (JSONArray)info.OBJ;
+					JSONArray ja = (JSONArray) info.OBJ;
 					AD_DATA_SET.clear();
 					for (int i = 0; i < ja.length(); i++) {
 						try {
@@ -251,6 +270,10 @@ public class EpePage extends BaseMainPage implements LocationListener {
 		tv.setGravity((isEnen ? Gravity.BOTTOM : Gravity.TOP)
 				| Gravity.CENTER_HORIZONTAL);
 		tv.setText(text);
+
+		tv.setTag(joItem);
+		tv.setOnClickListener(MALL_CLICK_LISTENER);
+
 		return tv;
 	}
 
@@ -283,16 +306,17 @@ public class EpePage extends BaseMainPage implements LocationListener {
 
 		@Override
 		public Fragment getItem(int pos) {
-			
+
 			AdFrag adFrag = new AdFrag();
 			Bundle args = new Bundle();
 			try {
-				args.putString(AdFrag.ARG_IMG, AD_DATA_SET.get(pos).getString(RequestAds.ATTR_IMG_URL));
+				args.putString(AdFrag.ARG_IMG,
+						AD_DATA_SET.get(pos).getString(RequestAds.ATTR_IMG_URL));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			adFrag.setArguments(args);
-			
+
 			return adFrag;
 		}
 	};

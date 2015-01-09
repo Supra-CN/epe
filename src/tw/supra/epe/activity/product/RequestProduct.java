@@ -1,4 +1,4 @@
-package tw.supra.epe.activity;
+package tw.supra.epe.activity.product;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,10 +9,11 @@ import tw.supra.network.request.EpeJsonRequest;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.utils.JsonUtils;
 
-public class RequestBrand extends EpeJsonRequest<BrandInfo> {
-	private static final String LOG_TAG = RequestBrand.class.getSimpleName();
+public class RequestProduct extends EpeJsonRequest<ProductInfo> {
+	private static final String LOG_TAG = RequestProduct.class.getSimpleName();
 
-	public RequestBrand(NetWorkHandler<BrandInfo> eventHandler, BrandInfo info) {
+	public RequestProduct(NetWorkHandler<ProductInfo> eventHandler,
+			ProductInfo info) {
 		super(eventHandler, info);
 	}
 
@@ -27,7 +28,7 @@ public class RequestBrand extends EpeJsonRequest<BrandInfo> {
 			return;
 		}
 
-		INFO.resultJoList = JsonUtils.getJaSafely(response, "mall_list");
+		INFO.resultPInfo = JsonUtils.getJoSafely(response, "pinfo");
 		INFO.ERROR_CODE.addDyingMsg("response : " + response);
 	}
 

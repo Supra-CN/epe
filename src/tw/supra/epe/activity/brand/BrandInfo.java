@@ -1,4 +1,4 @@
-package tw.supra.epe.activity;
+package tw.supra.epe.activity.brand;
 
 import java.util.HashMap;
 

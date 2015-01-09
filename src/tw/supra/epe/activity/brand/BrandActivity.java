@@ -1,4 +1,4 @@
-package tw.supra.epe.activity;
+package tw.supra.epe.activity.brand;
 
 import java.util.ArrayList;
 
@@ -137,6 +137,7 @@ public class BrandActivity extends BaseActivity implements
 
 		Log.i(LOG_TAG, "HandleEvent FINISH : " + info);
 		if (RequestEvent.FINISH == event) {
+			mPullRefreshList.onRefreshComplete();
 			if (info.ERROR_CODE.isOK()) {
 				if (info.ARG_PAGE < mPageLoaded) {
 					DATA_SET.clear();
@@ -153,7 +154,6 @@ public class BrandActivity extends BaseActivity implements
 				}
 				ADAPTER.notifyDataSetChanged();
 			}
-			mPullRefreshList.onRefreshComplete();
 
 		}
 

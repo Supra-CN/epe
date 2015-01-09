@@ -8,7 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import tw.supra.epe.R;
-import tw.supra.epe.activity.ProductActivity;
+import tw.supra.epe.activity.product.ProductActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView;

@@ -148,5 +148,9 @@
     
     <!-- brand -->
     <string name="brand_action_focus">+关注</string>
+    
+    <!-- mall -->
+    <string name="mall_floor">F%s</string>
+    <string name="mall_info_address">地址：%s</string>
 
 </resources>

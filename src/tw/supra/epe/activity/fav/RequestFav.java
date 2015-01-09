@@ -1,4 +1,4 @@
-package tw.supra.epe.activity;
+package tw.supra.epe.activity.fav;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,11 +9,10 @@ import tw.supra.network.request.EpeJsonRequest;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.utils.JsonUtils;
 
-public class RequestProduct extends EpeJsonRequest<ProductInfo> {
-	private static final String LOG_TAG = RequestProduct.class.getSimpleName();
+public class RequestFav extends EpeJsonRequest<FavInfo> {
+	private static final String LOG_TAG = RequestFav.class.getSimpleName();
 
-	public RequestProduct(NetWorkHandler<ProductInfo> eventHandler,
-			ProductInfo info) {
+	public RequestFav(NetWorkHandler<FavInfo> eventHandler, FavInfo info) {
 		super(eventHandler, info);
 	}
 
@@ -28,7 +27,7 @@ public class RequestProduct extends EpeJsonRequest<ProductInfo> {
 			return;
 		}
 
-		INFO.resultPInfo = JsonUtils.getJoSafely(response, "pinfo");
+		INFO.resultJoList = JsonUtils.getJaSafely(response, "list");
 		INFO.ERROR_CODE.addDyingMsg("response : " + response);
 	}
 
