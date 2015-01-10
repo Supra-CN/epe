@@ -46,7 +46,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 	private float mPressedX;
 	private float mPressedY;
 	private int mTouchSlop;
-    private boolean mIsMoved = false;
+	private boolean mIsMoved = false;
 
 	private TextView mTvProductName;
 	private TextView mTvProductInfo;
@@ -75,6 +75,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 
 		setContentView(R.layout.activity_product);
 		findViewById(R.id.fetch_failed).setOnClickListener(this);
+		findViewById(R.id.action_back).setOnClickListener(this);
 
 		mFloatLayer = findViewById(R.id.float_layer);
 		mViewPager = (PhotoPager) findViewById(R.id.view_pager);
@@ -87,7 +88,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 		mTvProductInfo = (TextView) findViewById(R.id.product_info);
 
 		mViewPager.setOnDispatchTouchListener(this);
-//		mViewPager.setOnPageChangeListener(this);
+		// mViewPager.setOnPageChangeListener(this);
 		mViewPager.setPageMargin(getResources().getDimensionPixelSize(
 				R.dimen.image_browser_page_gap));
 
@@ -318,6 +319,9 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 		case R.id.fetch_failed:
 			v.setVisibility(View.GONE);
 			request();
+			break;
+		case R.id.action_back:
+			onBackPressed();
 			break;
 
 		default:

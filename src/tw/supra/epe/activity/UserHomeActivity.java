@@ -2,6 +2,7 @@ package tw.supra.epe.activity;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,42 +14,66 @@ import tw.supra.epe.account.UserInfo;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.pages.RequestT;
 import tw.supra.epe.pages.TInfo;
+import tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkImageView;
+import tw.supra.network.ui.NetworkRoundedImageView;
+import tw.supra.utils.JsonUtils;
 import tw.supra.utils.TimeUtil;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 
-public class UserHomeActivity extends BaseActivity {
+public class UserHomeActivity extends BaseActivity implements OnClickListener,
+		OnRefreshListener2<StaggeredGridView> {
+	private static final String LOG_TAG = UserHomeActivity.class
+			.getSimpleName();
+
 	private final ArrayList<JSONObject> DATA_SET = new ArrayList<JSONObject>();
 	private static final int PAGE_SIZE = 20;
 
-	private NetworkImageView mAvator;
+	private NetworkRoundedImageView mAvator;
 	private TextView mName;
 	private TextView mAttentionCount;
 	private TextView mFansCount;
-	private StaggeredGridView mGridView;
+	private PullToRefreshStaggeredGridView mPullRefreshGrid;
+
+	private int mPageLoaded = -1;
+	private int mAdjustImageWidth = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_home);
-		mAvator = (NetworkImageView) findViewById(R.id.avator);
+		findViewById(R.id.action_back).setOnClickListener(this);
+		mAvator = (NetworkRoundedImageView) findViewById(R.id.avator);
 		mName = (TextView) findViewById(R.id.name);
 		mAttentionCount = (TextView) findViewById(R.id.attention_count);
 		mFansCount = (TextView) findViewById(R.id.fans_count);
-		mGridView = (StaggeredGridView) findViewById(R.id.grid_view);
-		mGridView.setAdapter(ADAPTER);
+
+		mPullRefreshGrid = (PullToRefreshStaggeredGridView) findViewById(R.id.grid);
+		mPullRefreshGrid.setOnRefreshListener(this);
+
+		StaggeredGridView gridView = mPullRefreshGrid.getRefreshableView();
+		gridView.setAdapter(ADAPTER);
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
 		updateUiUserInfo();
 		requestUserInfo();
-		requestT();
+		mPullRefreshGrid.setRefreshing(false);
 	}
 
 	private void requestUserInfo() {
@@ -57,25 +82,32 @@ public class UserHomeActivity extends BaseActivity {
 						AccountCenter.getCurrentUserUid())));
 	}
 
-	private void requestT() {
+	private void requestT(int page) {
 		NetworkCenter.getInstance().putToQueue(
-				new RequestT(HANDLE_T_INFO, new TInfo(1, PAGE_SIZE)));
+				new RequestT(HANDLE_T_INFO, new TInfo(page, PAGE_SIZE)));
 	}
 
 	private final NetWorkHandler<TInfo> HANDLE_T_INFO = new NetWorkHandler<TInfo>() {
 		@Override
 		public boolean HandleEvent(RequestEvent event, TInfo info) {
-			if (RequestEvent.FINISH == event && info.ERROR_CODE.isOK()
-					&& null != info.resultJoList) {
-
-				for (int i = 0; i < info.resultJoList.length(); i++) {
-					try {
-						DATA_SET.add(info.resultJoList.getJSONObject(i));
-					} catch (JSONException e) {
-						e.printStackTrace();
+			if (RequestEvent.FINISH == event) {
+				mPullRefreshGrid.onRefreshComplete();
+				if (info.ERROR_CODE.isOK()) {
+					if (info.ARG_PAGE < mPageLoaded) {
+						DATA_SET.clear();
 					}
+					mPageLoaded = info.ARG_PAGE;
+
+					JSONArray ja = info.resultJoList;
+					for (int i = 0; i < ja.length(); i++) {
+						try {
+							DATA_SET.add(ja.getJSONObject(i));
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+					ADAPTER.notifyDataSetChanged();
 				}
-				ADAPTER.notifyDataSetChanged();
 			}
 			return false;
 		}
@@ -133,11 +165,19 @@ public class UserHomeActivity extends BaseActivity {
 			String likeCount = "";
 			String commentCount = "";
 
+			boolean isLike = false;
+			int width = 0;
+			int height = 0;
+
 			JSONObject jo = getItem(position);
+
 			try {
 				JSONObject joImg = jo.getJSONObject(TInfo.ATTR_IMG);
 				img = joImg.getString(TInfo.ATTR_IMG_URL);
+				width = JsonUtils.getIntSafely(joImg, TInfo.ATTR_IMG_WIDTH);
+				height = JsonUtils.getIntSafely(joImg, TInfo.ATTR_IMG_HEIGTH);
 				likeCount = jo.getString(TInfo.ATTR_TT_LIKE_NUM);
+				isLike = jo.getInt(TInfo.ATTR_IS_LIKE) != 0;
 				commentCount = jo.getString(TInfo.ATTR_TT_COMMENT_NUM);
 				time = jo.getLong(TInfo.ATTR_ADD_TIME);
 			} catch (JSONException e) {
@@ -149,7 +189,9 @@ public class UserHomeActivity extends BaseActivity {
 			holder.time.setText(TimeUtil.formatTimeWithCountDown(
 					UserHomeActivity.this, time));
 			holder.likeCount.setText(likeCount);
+			holder.likeCount.setSelected(isLike);
 			holder.commentCount.setText(commentCount);
+			adjustViewHeight(holder.img, width, height);
 
 			return convertView;
 		}
@@ -170,4 +212,69 @@ public class UserHomeActivity extends BaseActivity {
 		}
 	};
 
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.action_back:
+			onBackPressed();
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void onPullDownToRefresh(
+			PullToRefreshBase<StaggeredGridView> refreshView) {
+		loadData(1);
+	}
+
+	@Override
+	public void onPullUpToRefresh(
+			PullToRefreshBase<StaggeredGridView> refreshView) {
+		loadData(mPageLoaded + 1);
+	}
+
+	private void loadData(int page) {
+		Log.i(LOG_TAG, "loadData : " + "page = " + page);
+		requestT(page);
+	}
+
+	private int adjustViewWidth() {
+		if (mAdjustImageWidth <= 0) {
+			mAdjustImageWidth = mPullRefreshGrid.getWidth() / 2;
+		}
+		return mAdjustImageWidth;
+	}
+
+	private void adjustViewHeight(View view, int width, int height) {
+		Log.i(LOG_TAG, "===adjustIconView start===");
+
+		int iw = width;
+		int ih = height;
+		Log.i(LOG_TAG, "iw : " + iw);
+		Log.i(LOG_TAG, "ih : " + ih);
+		if (iw < 0 || ih < 0) {
+			return;
+		}
+
+		float ratio = (Float.valueOf(iw) / Float.valueOf(ih));
+		Log.i(LOG_TAG, "ratio : " + ratio);
+
+		int vw = view.getWidth();
+		int vh = -1;
+		Log.i(LOG_TAG, "vw : " + vw);
+
+		if (vw < 1) {
+			vw = adjustViewWidth();
+			Log.i(LOG_TAG, "vw = ADJUST_IMAGE_WIDTH : " + vw);
+		}
+
+		vh = Float.valueOf(vw / ratio).intValue();
+		Log.i(LOG_TAG, "vh : " + vh);
+		view.getLayoutParams().height = vh;
+
+		Log.i(LOG_TAG, "===adjustIconView end===");
+	}
 }

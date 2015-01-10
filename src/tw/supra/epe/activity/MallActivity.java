@@ -8,6 +8,8 @@ import org.json.JSONObject;
 
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
+import tw.supra.epe.ui.staggered.StaggeredGridView;
+import tw.supra.epe.ui.staggered.StaggeredGridView.OnItemClickListener;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
@@ -21,12 +23,13 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.viewpagerindicator.PageIndicator;
 
-public class MallActivity extends BaseActivity implements
+public class MallActivity extends BaseActivity implements OnClickListener,
 		NetWorkHandler<MallInfo> {
 	private static final String LOG_TAG = MallActivity.class.getSimpleName();
 	public static final String EXTRA_MALL_ID = "extra_mall_id";
@@ -48,6 +51,8 @@ public class MallActivity extends BaseActivity implements
 		mMallId = getIntent().getStringExtra(EXTRA_MALL_ID);
 
 		setContentView(R.layout.activity_mall);
+		
+		findViewById(R.id.action_back).setOnClickListener(this);
 
 		mTvAddress = (TextView) findViewById(R.id.address);
 		mTvMallName = (TextView) findViewById(R.id.mall_name);
@@ -216,6 +221,18 @@ public class MallActivity extends BaseActivity implements
 			return convertView;
 		}
 
+	}
+
+	@Override
+	public void onClick(View v) {
+switch (v.getId()) {
+case R.id.action_back:
+	finish();
+	break;
+
+default:
+	break;
+}		
 	}
 
 }

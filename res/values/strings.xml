@@ -137,6 +137,7 @@
     <string name="user_home_label_t">T台</string>
 
     <!-- product -->
+    <string name="product_label">单品</string>
     <string name="product_info_model">型号：%s</string>
     <string name="product_info_tag">标签：%s</string>
     <string name="product_info_mall">商场：%s</string>
@@ -145,12 +146,15 @@
     <string name="master">搭配师</string>
     <string name="contact_owner">联系店主</string>
     <string name="product_fetch_faild">"单品加载失败，点击重试"</string>
-    
+
     <!-- brand -->
     <string name="brand_action_focus">+关注</string>
-    
+
     <!-- mall -->
     <string name="mall_floor">F%s</string>
     <string name="mall_info_address">地址：%s</string>
+    
+    <!-- fav -->
+    <string name="fav_label">我的收藏</string>
 
 </resources>

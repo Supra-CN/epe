@@ -9,9 +9,11 @@ import org.json.JSONObject;
 
 import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
+import tw.supra.epe.activity.product.ProductActivity;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView;
+import tw.supra.epe.ui.staggered.StaggeredGridView.OnItemClickListener;
 import tw.supra.location.LocationCallBack;
 import tw.supra.location.LocationCenter;
 import tw.supra.location.SupraLocation;
@@ -20,10 +22,12 @@ import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkImageView;
 import tw.supra.utils.JsonUtils;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
@@ -31,8 +35,8 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 
-public class FavActivity extends BaseActivity implements
-		NetWorkHandler<FavInfo>, LocationCallBack,
+public class FavActivity extends BaseActivity implements OnClickListener,
+		NetWorkHandler<FavInfo>, LocationCallBack, OnItemClickListener,
 		OnRefreshListener2<StaggeredGridView> {
 	private static final String LOG_TAG = FavActivity.class.getSimpleName();
 
@@ -51,11 +55,14 @@ public class FavActivity extends BaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_fav);
 
+		findViewById(R.id.action_back).setOnClickListener(this);
+		
 		mPullRefreshGrid = (PullToRefreshStaggeredGridView) findViewById(R.id.pull_refresh_grid);
 		mPullRefreshGrid.setOnRefreshListener(this);
 		// gridView.setEmptyView(v.findViewById(R.id.progress_bar));
-		mPullRefreshGrid.getRefreshableView().setAdapter(ADAPTER);
-
+		StaggeredGridView gridView = mPullRefreshGrid.getRefreshableView();
+		gridView.setAdapter(ADAPTER);
+		gridView.setOnItemClickListener(this);
 	}
 
 	@Override
@@ -120,7 +127,6 @@ public class FavActivity extends BaseActivity implements
 				distance = jo.getString(FavInfo.DISTANCE) + "m";
 				name = jo.getString(FavInfo.PRODUCT_NAME);
 
-				
 				double discountNum = JsonUtils.getDoubleSafely(jo,
 						FavInfo.DISCOUNT_NUM) * 10;
 				NumberFormat nf = NumberFormat.getNumberInstance();
@@ -274,10 +280,36 @@ public class FavActivity extends BaseActivity implements
 		vh = Float.valueOf(vw / ratio).intValue();
 		Log.i(LOG_TAG, "vh : " + vh);
 		view.getLayoutParams().height = vh;
-
 		Log.i(LOG_TAG, "===adjustIconView end===");
 	}
 
-	
-	
+	@Override
+	public void onItemClick(StaggeredGridView parent, View view, int position,
+			long id) {
+		JSONObject jo = (JSONObject) ADAPTER.getItem(position);
+		try {
+			Intent intent = new Intent(this, ProductActivity.class);
+			intent.putExtra(ProductActivity.EXTRA_PRODUCT_ID,
+					jo.getString(FavInfo.PRODUCT_ID));
+			startActivity(intent);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		
+		switch (v.getId()) {
+		case R.id.action_back:
+			onBackPressed();
+			break;
+
+		default:
+			break;
+		}
+		// TODO Auto-generated method stub
+		
+	}
+
 }

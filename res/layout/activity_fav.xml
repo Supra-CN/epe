@@ -1,12 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/tw.supra.epe"
-    xmlns:ptr="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/pull_refresh_grid"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="fill"
-    android:horizontalSpacing="1dp"
-    android:verticalSpacing="1dp"
-    app:numColumns="2"
-    ptr:ptrMode="both" />
+    android:orientation="vertical" >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_tab_height"
+        android:background="@color/epe_pink"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/brand_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:text="@string/fav_label"
+            android:textSize="@dimen/top_tab_title_text_size" />
+        
+        
+            <ImageButton
+                android:id="@+id/action_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/top_tab_item_margin"
+                android:layout_marginRight="@dimen/top_tab_item_margin"
+                android:paddingLeft="@dimen/top_tab_item_padding"
+                android:paddingRight="@dimen/top_tab_item_padding"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_action_back" />
+
+    </FrameLayout>
+    <tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView
+        xmlns:app="http://schemas.android.com/apk/res/tw.supra.epe"
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/pull_refresh_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="fill"
+        android:horizontalSpacing="1dp"
+        android:verticalSpacing="1dp"
+        app:numColumns="2"
+        ptr:ptrMode="both" />
+
+</LinearLayout>

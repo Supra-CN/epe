@@ -32,9 +32,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/indictor_tab_t"
+                android:text="@string/product_label"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/top_tab_title_text_size" />
+
+            <ImageButton
+                android:id="@+id/action_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/top_tab_item_margin"
+                android:layout_marginRight="@dimen/top_tab_item_margin"
+                android:paddingLeft="@dimen/top_tab_item_padding"
+                android:paddingRight="@dimen/top_tab_item_padding"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_action_back" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -191,6 +202,8 @@
         android:gravity="center"
         android:text="@string/product_fetch_faild"
         android:visibility="gone" >
-<!--         android:textColor="@color/image_browser_content_text" -->
+
+        <!-- android:textColor="@color/image_browser_content_text" -->
     </TextView>
+
 </FrameLayout>

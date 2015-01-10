@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
@@ -21,29 +21,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/half_transparent"
-            android:gravity="right" />
+            android:background="@color/half_trans_black"
+            android:gravity="right"
+            android:padding="5dp"
+            android:textColor="@android:color/white" />
     </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/half_transparent"
-        android:orientation="horizontal" >
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:padding="5dp" >
 
         <TextView
             android:id="@+id/comment_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_margin="5dp" />
+            android:drawableLeft="@drawable/ic_comment"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/like_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_margin="5dp" />
+            android:drawableLeft="@drawable/ic_like"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:gravity="center" />
     </FrameLayout>
 
 </LinearLayout>

@@ -29,6 +29,8 @@ public class HomePage extends BaseMainPage implements OnClickListener,
 	private static Handler sHandle = new Handler();
 	private static final Class<?>[] PAGES = {WorthPage.class,
 			EpePage.class, MasterPage.class };
+//	private static final Class<?>[] PAGES = {WorthPage.class,
+//			EpePage.class };
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -17,6 +17,7 @@ import tw.supra.network.request.RequestEvent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -27,7 +28,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 public class BrandActivity extends BaseActivity implements
-		NetWorkHandler<BrandInfo>, LocationCallBack,
+		NetWorkHandler<BrandInfo>, LocationCallBack, OnClickListener,
 		OnRefreshListener2<ListView> {
 	private static final String LOG_TAG = BrandActivity.class.getSimpleName();
 	public static final String EXTRA_BRAND_ID = "extra_brand_id";
@@ -42,18 +43,21 @@ public class BrandActivity extends BaseActivity implements
 	private int mPageLoaded = -1;
 	private int mPagePending = -1;
 
-
 	private String mBrandId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		mBrandId = getIntent().getStringExtra(EXTRA_BRAND_ID);
 
 		setContentView(R.layout.activity_brand);
 
-		((TextView) findViewById(R.id.brand_name)).setText(getIntent().getStringExtra(EXTRA_BRAND_NAME));;
+		findViewById(R.id.action_back).setOnClickListener(this);
+
+		((TextView) findViewById(R.id.brand_name)).setText(getIntent()
+				.getStringExtra(EXTRA_BRAND_NAME));
+		;
 		mPullRefreshList = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
 		mPullRefreshList.setOnRefreshListener(this);
 		// mPullRefreshList.setEmptyView(new ProgressBar(this));
@@ -192,5 +196,18 @@ public class BrandActivity extends BaseActivity implements
 		} else {
 			request(page);
 		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.action_back:
+			onBackPressed();
+			break;
+
+		default:
+			break;
+		}
+
 	}
 }

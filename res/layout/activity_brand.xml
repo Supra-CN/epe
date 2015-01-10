@@ -17,6 +17,18 @@
             android:layout_gravity="center"
             android:textColor="@android:color/white"
             android:textSize="@dimen/top_tab_title_text_size" />
+        
+        
+            <ImageButton
+                android:id="@+id/action_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/top_tab_item_margin"
+                android:layout_marginRight="@dimen/top_tab_item_margin"
+                android:paddingLeft="@dimen/top_tab_item_padding"
+                android:paddingRight="@dimen/top_tab_item_padding"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_action_back" />
 
         <TextView
             android:layout_width="wrap_content"

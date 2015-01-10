@@ -16,7 +16,7 @@ import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
-import tw.supra.network.ui.NetworkImageView;
+import tw.supra.network.ui.NetworkRoundedImageView;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -282,10 +282,11 @@ public class EpePage extends BaseMainPage implements LocationListener {
 		View v = View
 				.inflate(getActivity(), R.layout.epe_page_brand_item, null);
 		TextView tv = (TextView) v.findViewById(R.id.text);
-		NetworkImageView iv = (NetworkImageView) v.findViewById(R.id.img);
+		NetworkRoundedImageView iv = (NetworkRoundedImageView) v
+				.findViewById(R.id.img);
 		String name = joItem.getString(NearBrandInfo.ATTR_NAME);
 		String logo = joItem.getString(NearBrandInfo.ATTR_LOGO);
-		String id = joItem.getString(NearBrandInfo.ATTR_ID);
+//		String id = joItem.getString(NearBrandInfo.ATTR_ID);
 		tv.setText(name);
 		iv.setImageUrl(logo, NetworkCenter.getInstance().getImageLoader());
 		v.setTag(joItem);
