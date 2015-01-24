@@ -9,11 +9,11 @@ import tw.supra.network.request.EpeJsonRequest;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.utils.JsonUtils;
 
-public class RequestT extends EpeJsonRequest<TInfo> {
-	private static final String LOG_TAG = RequestT.class.getSimpleName();
+public class RequestTArray extends EpeJsonRequest<TArrayInfo> {
+	private static final String LOG_TAG = RequestTArray.class.getSimpleName();
 
 
-	public RequestT(NetWorkHandler<TInfo> eventHandler, TInfo info) {
+	public RequestTArray(NetWorkHandler<TArrayInfo> eventHandler, TArrayInfo info) {
 		super(eventHandler, info);
 	}
 

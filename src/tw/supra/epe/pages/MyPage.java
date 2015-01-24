@@ -7,6 +7,7 @@ import tw.supra.epe.account.User;
 import tw.supra.epe.activity.UserHomeActivity;
 import tw.supra.epe.activity.fav.FavActivity;
 import tw.supra.epe.core.BaseMainPage;
+import tw.supra.epe.store.ApplyStoreActivity;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.ui.NetworkRoundedImageView;
 import android.content.Context;
@@ -39,6 +40,12 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 			startActivity(new Intent(App.ACTION_LOGIN));
 		};
 	};
+	private final Item ITEM_APPLY_STORE = new Item(
+			R.string.my_page_item_apply_store, R.drawable.ic_apply_store) {
+		public void onItemClick() {
+			startActivity(new Intent(getActivity(), ApplyStoreActivity.class));
+		};
+	};
 
 	private final Item[] LIST = {
 			ITEM_MY_HOME,
@@ -52,9 +59,9 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 			new Item(R.string.my_page_item_my_diary, R.drawable.ic_my_diary),
 			new Item(),
 			new Item(R.string.my_page_item_my_focus, R.drawable.ic_my_focus),
+			new Item(), 
+			ITEM_APPLY_STORE, 
 			new Item(),
-			new Item(R.string.my_page_item_apply_store,
-					R.drawable.ic_apply_store), new Item(),
 			new Item(R.string.my_page_item_invite, R.drawable.ic_my_invite),
 			new Item(), ITEM_LOG_OUT };
 

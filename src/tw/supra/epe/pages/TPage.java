@@ -7,9 +7,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import tw.supra.epe.R;
+import tw.supra.epe.activity.t.TActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView;
+import tw.supra.epe.ui.staggered.StaggeredGridView.OnItemClickListener;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
@@ -18,7 +20,9 @@ import tw.supra.network.ui.NetworkRoundedImageView;
 import tw.supra.utils.JsonUtils;
 import tw.supra.utils.TimeUtil;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,8 +33,8 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 
-public class TPage extends BaseMainPage implements NetWorkHandler<TInfo>,
-		OnRefreshListener2<StaggeredGridView> {
+public class TPage extends BaseMainPage implements NetWorkHandler<TArrayInfo>,
+		OnRefreshListener2<StaggeredGridView>, OnItemClickListener {
 	private static final String LOG_TAG = TPage.class.getSimpleName();
 
 	private static final int PAGE_SIZE = 20;
@@ -49,6 +53,7 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TInfo>,
 				.findViewById(R.id.grid);
 		mPullRefreshGrid.setOnRefreshListener(this);
 		mPullRefreshGrid.getRefreshableView().setAdapter(ADAPTER);
+		mPullRefreshGrid.getRefreshableView().setOnItemClickListener(this);
 		return v;
 	}
 
@@ -74,7 +79,7 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TInfo>,
 	}
 
 	@Override
-	public boolean HandleEvent(RequestEvent event, TInfo info) {
+	public boolean HandleEvent(RequestEvent event, TArrayInfo info) {
 		Log.i(LOG_TAG, "HandleEvent FINISH : " + info);
 		if (RequestEvent.FINISH == event) {
 			mPullRefreshGrid.onRefreshComplete();
@@ -142,17 +147,19 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TInfo>,
 
 			JSONObject jo = getItem(position);
 			try {
-				JSONObject joImg = jo.getJSONObject(TInfo.ATTR_IMG);
-				img = joImg.getString(TInfo.ATTR_IMG_URL);
-				width = JsonUtils.getIntSafely(joImg, TInfo.ATTR_IMG_WIDTH);
-				height = JsonUtils.getIntSafely(joImg, TInfo.ATTR_IMG_HEIGTH);
-				likeCount = jo.getString(TInfo.ATTR_TT_LIKE_NUM);
-				isLike = jo.getInt(TInfo.ATTR_IS_LIKE) != 0;
-				commentCount = jo.getString(TInfo.ATTR_TT_COMMENT_NUM);
-				time = jo.getLong(TInfo.ATTR_ADD_TIME);
-				JSONObject joUinfo = jo.getJSONObject(TInfo.ATTR_UINFO);
-				avator = joUinfo.getString(TInfo.ATTR_UINFO_PHOTO);
-				name = joUinfo.getString(TInfo.ATTR_UINFO_USER_NAME);
+				JSONObject joImg = jo.getJSONObject(TArrayInfo.ATTR_IMG);
+				img = joImg.getString(TArrayInfo.ATTR_IMG_URL);
+				width = JsonUtils
+						.getIntSafely(joImg, TArrayInfo.ATTR_IMG_WIDTH);
+				height = JsonUtils.getIntSafely(joImg,
+						TArrayInfo.ATTR_IMG_HEIGTH);
+				likeCount = jo.getString(TArrayInfo.ATTR_TT_LIKE_NUM);
+				isLike = jo.getInt(TArrayInfo.ATTR_IS_LIKE) != 0;
+				commentCount = jo.getString(TArrayInfo.ATTR_TT_COMMENT_NUM);
+				time = jo.getLong(TArrayInfo.ATTR_ADD_TIME);
+				JSONObject joUinfo = jo.getJSONObject(TArrayInfo.ATTR_UINFO);
+				avator = joUinfo.getString(TArrayInfo.ATTR_UINFO_PHOTO);
+				name = joUinfo.getString(TArrayInfo.ATTR_UINFO_USER_NAME);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -207,7 +214,7 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TInfo>,
 
 	private void request(int page) {
 		NetworkCenter.getInstance().putToQueue(
-				new RequestT(this, new TInfo(page, PAGE_SIZE)));
+				new RequestTArray(this, new TArrayInfo(page, PAGE_SIZE)));
 	}
 
 	private int adjustViewWidth() {
@@ -245,5 +252,23 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TInfo>,
 		view.getLayoutParams().height = vh;
 
 		Log.i(LOG_TAG, "===adjustIconView end===");
+	}
+
+	@Override
+	public void onItemClick(StaggeredGridView parent, View view, int position,
+			long id) {
+		String tId=null;
+		try {
+			JSONObject jo = DATA_SET.get(position);
+			tId = JsonUtils.getStrSafely(jo, TArrayInfo.ATTR_TT_ID);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		if (!TextUtils.isEmpty(tId)) {
+			Intent intent = new Intent(getActivity(), TActivity.class);
+			intent.putExtra(TActivity.EXTRA_T_ID, tId);
+			startActivity(intent);
+		}
+
 	}
 }

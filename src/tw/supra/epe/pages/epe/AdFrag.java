@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView.ScaleType;
 
 public class AdFrag extends BaseFrag {
 	public static final String ARG_IMG = "arg_img";
@@ -24,6 +25,7 @@ public class AdFrag extends BaseFrag {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		NetworkImageView iv = new NetworkImageView(getActivity());
+		iv.setScaleType(ScaleType.CENTER_CROP);
 		iv.setImageUrl(mImg, NetworkCenter.getInstance().getImageLoader());
 		return iv;
 	}

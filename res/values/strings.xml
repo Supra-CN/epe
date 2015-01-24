@@ -156,5 +156,18 @@
     
     <!-- fav -->
     <string name="fav_label">我的收藏</string>
+    <!-- stroe -->
+    <string name="store_apply_boutiques_page_title">精品店</string>
+    <string name="apply_mall_store_page_title">商场店</string>
+    <string name="apply_store_submit">提交</string>
+    <string name="store_apply_label">申请店铺</string>
+    <string name="store_name">名称</string>
+    <string name="store_add">地址</string>
+    <string name="store_phone">电话</string>
+    <string name="store_verify_code">验证码</string>
+    <string name="store_broad_name">品牌名称</string>
+    <string name="store_mall_name">选择商场</string>
+    <string name="store_mall_floor">选择楼层</string>
+    <string name="store_mall_door">门牌号</string>
 
 </resources>

@@ -308,8 +308,6 @@ public class FavActivity extends BaseActivity implements OnClickListener,
 		default:
 			break;
 		}
-		// TODO Auto-generated method stub
-		
 	}
 
 }

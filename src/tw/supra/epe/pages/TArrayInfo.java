@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import tw.supra.network.Request.Method;
 import tw.supra.network.request.EpeRequestInfo;
 
-public class TInfo extends EpeRequestInfo {
+public class TArrayInfo extends EpeRequestInfo {
 	public static final String ATTR_TT_ID = "tt_id";
 	public static final String ATTR_IMG = "image";
 	public static final String ATTR_IMG_URL = "url";
@@ -29,7 +29,7 @@ public class TInfo extends EpeRequestInfo {
 	// RESULTS
 	public JSONArray resultJoList;// 返回：话题列表；
 
-	public TInfo(int page, int size) {
+	public TArrayInfo(int page, int size) {
 		ARG_PAGE = page;
 		ARG_SIZE = size;
 	}

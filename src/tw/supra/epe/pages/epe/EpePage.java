@@ -21,6 +21,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.Shader.TileMode;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -28,7 +31,6 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -46,17 +48,25 @@ public class EpePage extends BaseMainPage implements LocationListener {
 	private RequestNearBrand mRequestNearBrand;
 	private final ArrayList<JSONObject> AD_DATA_SET = new ArrayList<JSONObject>();
 
-	private ViewGroup mNearStoreContainer;
+	private ViewGroup mNearStoreContainerTop;
+	private ViewGroup mNearStoreContainerBottom;
+	private ViewGroup mNearStoreContainerWave;
 	private ViewGroup mNearBrandContainer;
 
 	private AdAdapter mAdAdapter;
+
+	private View mWave;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.page_epe, null);
-		mNearStoreContainer = (ViewGroup) v
-				.findViewById(R.id.near_store_container);
+		mNearStoreContainerTop = (ViewGroup) v
+				.findViewById(R.id.near_store_container_top);
+		mNearStoreContainerBottom = (ViewGroup) v
+				.findViewById(R.id.near_store_container_bottom);
+		mNearStoreContainerWave = (ViewGroup) v
+				.findViewById(R.id.near_store_container_wave);
 		mNearBrandContainer = (ViewGroup) v
 				.findViewById(R.id.near_brand_container);
 		mAdAdapter = new AdAdapter(getChildFragmentManager());
@@ -65,6 +75,9 @@ public class EpePage extends BaseMainPage implements LocationListener {
 		PageIndicator indicator = (PageIndicator) v
 				.findViewById(R.id.page_indicator);
 		indicator.setViewPager(pager);
+
+		mWave = v.findViewById(R.id.wave);
+		setUpNearStoreView();
 		return v;
 	}
 
@@ -72,17 +85,16 @@ public class EpePage extends BaseMainPage implements LocationListener {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		requestAds();
+		((LocationManager) App.getInstance().getSystemService(
+				Context.LOCATION_SERVICE)).requestSingleUpdate(LocationCenter
+				.getInstance().getBestProvider(), this, getActivity()
+				.getMainLooper());
+
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
-		if (mNearStoreContainer.getChildCount() < 1) {
-			((LocationManager) App.getInstance().getSystemService(
-					Context.LOCATION_SERVICE)).requestSingleUpdate(
-					LocationCenter.getInstance().getBestProvider(), this,
-					getActivity().getMainLooper());
-		}
 	}
 
 	@Override
@@ -139,14 +151,29 @@ public class EpePage extends BaseMainPage implements LocationListener {
 			if (RequestEvent.FINISH == event) {
 
 				if (info.ERROR_CODE.isOK()) {
-					mNearStoreContainer.removeAllViews();
+					mNearStoreContainerTop.removeAllViews();
+					mNearStoreContainerBottom.removeAllViews();
 					JSONArray ja = info.resultJoList;
-					for (int i = 0; i < ja.length(); i++) {
+
+					int length = ja.length();
+
+					int waveCount = length / 2 + 1;
+					waveCount = waveCount < 3 ? 3 : waveCount;
+
+					for (int i = 0; i < waveCount; i++) {
+						View waveView = new View(getActivity());
+						waveView.setBackgroundResource(R.drawable.near_store_item_bg);
+						mNearStoreContainerWave.addView(
+								waveView,
+								new LayoutParams(getResources()
+										.getDimensionPixelSize(
+												R.dimen.epe_wave_item_width),
+										LayoutParams.MATCH_PARENT));
+					}
+
+					for (int i = 0; i < length; i++) {
 						try {
 							View v = createNearStoreView(ja.getJSONObject(i), i);
-							mNearStoreContainer.addView(v, new LayoutParams(
-									LayoutParams.WRAP_CONTENT,
-									LayoutParams.MATCH_PARENT));
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -264,17 +291,28 @@ public class EpePage extends BaseMainPage implements LocationListener {
 		boolean isEnen = (postion % 2) == 0;
 		String name = joItem.getString(NearStoreInfo.ATTR_MALL_NAME);
 		String distance = joItem.getString(NearStoreInfo.ATTR_DISTANCE) + "m";
-		String text = String.format("%s\n%s", isEnen ? distance : name,
-				isEnen ? name : distance);
-		TextView tv = new TextView(getActivity());
-		tv.setGravity((isEnen ? Gravity.BOTTOM : Gravity.TOP)
-				| Gravity.CENTER_HORIZONTAL);
-		tv.setText(text);
+		
+		View v = View.inflate(getActivity(),
+				isEnen ? R.layout.near_store_item_top
+						: R.layout.near_store_item_bottom, null);
 
-		tv.setTag(joItem);
-		tv.setOnClickListener(MALL_CLICK_LISTENER);
+		TextView tvName = (TextView) v.findViewById(R.id.name);
+		TextView tvDistance = (TextView) v.findViewById(R.id.distance);
+		// tv.setGravity((isEnen ? Gravity.BOTTOM : Gravity.TOP)
+		// | Gravity.CENTER_HORIZONTAL);
+		tvName.setText(name);
+		tvDistance.setText(distance);
 
-		return tv;
+		tvName.setTag(joItem);
+		tvName.setOnClickListener(MALL_CLICK_LISTENER);
+
+		ViewGroup viewGroup = isEnen ? mNearStoreContainerTop
+				: mNearStoreContainerBottom;
+		viewGroup.addView(v, new LayoutParams(getResources()
+				.getDimensionPixelSize(R.dimen.epe_wave_item_width),
+				LayoutParams.WRAP_CONTENT));
+
+		return tvName;
 	}
 
 	private View createNearBrandView(JSONObject joItem, int postion)
@@ -286,7 +324,7 @@ public class EpePage extends BaseMainPage implements LocationListener {
 				.findViewById(R.id.img);
 		String name = joItem.getString(NearBrandInfo.ATTR_NAME);
 		String logo = joItem.getString(NearBrandInfo.ATTR_LOGO);
-//		String id = joItem.getString(NearBrandInfo.ATTR_ID);
+		// String id = joItem.getString(NearBrandInfo.ATTR_ID);
 		tv.setText(name);
 		iv.setImageUrl(logo, NetworkCenter.getInstance().getImageLoader());
 		v.setTag(joItem);
@@ -322,4 +360,12 @@ public class EpePage extends BaseMainPage implements LocationListener {
 		}
 	};
 
+	private void setUpNearStoreView() {
+
+		BitmapDrawable drawableBg = new BitmapDrawable(getResources(),
+				BitmapFactory.decodeResource(getResources(),
+						R.drawable.near_store_bg));
+		drawableBg.setTileModeX(TileMode.REPEAT);
+		mWave.setBackgroundDrawable(drawableBg);
+	}
 }

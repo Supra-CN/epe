@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- <ScrollView> -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
@@ -38,18 +39,60 @@
             android:background="@color/half_transparent"
             android:text="@string/epe_page_label_near_store" />
 
-        <HorizontalScrollView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2" >
+            android:layout_height="200dp" >
 
-            <LinearLayout
-                android:id="@+id/near_store_container"
+            <View
+                android:id="@+id/wave"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white"
-                android:orientation="horizontal" />
-        </HorizontalScrollView>
+                android:layout_height="100dp"
+                android:layout_gravity="bottom" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" >
+
+                    <LinearLayout
+                        android:id="@+id/near_store_container_wave"
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+
+                        <LinearLayout
+                            android:id="@+id/near_store_container_top"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:gravity="top"
+                            android:paddingLeft="@dimen/epe_wave_item_half_width" />
+
+                        <LinearLayout
+                            android:id="@+id/near_store_container_bottom"
+                            android:layout_width="wrap_content"
+                            android:gravity="bottom"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal" />
+                    </LinearLayout>
+                </FrameLayout>
+            </HorizontalScrollView>
+
+            <!-- android:background="@drawable/near_store_bg_wave" -->
+        </FrameLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -72,4 +115,4 @@
         </HorizontalScrollView>
     </LinearLayout>
 
-<!-- </ScrollView> -->
+</ScrollView>

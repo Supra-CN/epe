@@ -12,8 +12,8 @@ import tw.supra.epe.account.RequestUserInfo;
 import tw.supra.epe.account.User;
 import tw.supra.epe.account.UserInfo;
 import tw.supra.epe.core.BaseActivity;
-import tw.supra.epe.pages.RequestT;
-import tw.supra.epe.pages.TInfo;
+import tw.supra.epe.pages.RequestTArray;
+import tw.supra.epe.pages.TArrayInfo;
 import tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.network.NetworkCenter;
@@ -84,12 +84,12 @@ public class UserHomeActivity extends BaseActivity implements OnClickListener,
 
 	private void requestT(int page) {
 		NetworkCenter.getInstance().putToQueue(
-				new RequestT(HANDLE_T_INFO, new TInfo(page, PAGE_SIZE)));
+				new RequestTArray(HANDLE_T_INFO, new TArrayInfo(page, PAGE_SIZE)));
 	}
 
-	private final NetWorkHandler<TInfo> HANDLE_T_INFO = new NetWorkHandler<TInfo>() {
+	private final NetWorkHandler<TArrayInfo> HANDLE_T_INFO = new NetWorkHandler<TArrayInfo>() {
 		@Override
-		public boolean HandleEvent(RequestEvent event, TInfo info) {
+		public boolean HandleEvent(RequestEvent event, TArrayInfo info) {
 			if (RequestEvent.FINISH == event) {
 				mPullRefreshGrid.onRefreshComplete();
 				if (info.ERROR_CODE.isOK()) {
@@ -172,14 +172,14 @@ public class UserHomeActivity extends BaseActivity implements OnClickListener,
 			JSONObject jo = getItem(position);
 
 			try {
-				JSONObject joImg = jo.getJSONObject(TInfo.ATTR_IMG);
-				img = joImg.getString(TInfo.ATTR_IMG_URL);
-				width = JsonUtils.getIntSafely(joImg, TInfo.ATTR_IMG_WIDTH);
-				height = JsonUtils.getIntSafely(joImg, TInfo.ATTR_IMG_HEIGTH);
-				likeCount = jo.getString(TInfo.ATTR_TT_LIKE_NUM);
-				isLike = jo.getInt(TInfo.ATTR_IS_LIKE) != 0;
-				commentCount = jo.getString(TInfo.ATTR_TT_COMMENT_NUM);
-				time = jo.getLong(TInfo.ATTR_ADD_TIME);
+				JSONObject joImg = jo.getJSONObject(TArrayInfo.ATTR_IMG);
+				img = joImg.getString(TArrayInfo.ATTR_IMG_URL);
+				width = JsonUtils.getIntSafely(joImg, TArrayInfo.ATTR_IMG_WIDTH);
+				height = JsonUtils.getIntSafely(joImg, TArrayInfo.ATTR_IMG_HEIGTH);
+				likeCount = jo.getString(TArrayInfo.ATTR_TT_LIKE_NUM);
+				isLike = jo.getInt(TArrayInfo.ATTR_IS_LIKE) != 0;
+				commentCount = jo.getString(TArrayInfo.ATTR_TT_COMMENT_NUM);
+				time = jo.getLong(TArrayInfo.ATTR_ADD_TIME);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

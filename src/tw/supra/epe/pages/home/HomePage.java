@@ -5,7 +5,6 @@ import java.util.HashMap;
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.pages.epe.EpePage;
-import tw.supra.epe.pages.master.MasterPage;
 import tw.supra.epe.pages.worth.WorthPage;
 import tw.supra.utils.Log;
 import android.app.FragmentManager;
@@ -27,10 +26,9 @@ public class HomePage extends BaseMainPage implements OnClickListener,
 		OnPageChangeListener {
 	private static final String LOG_TAG = HomePage.class.getSimpleName();
 	private static Handler sHandle = new Handler();
-	private static final Class<?>[] PAGES = {WorthPage.class,
-			EpePage.class, MasterPage.class };
-//	private static final Class<?>[] PAGES = {WorthPage.class,
-//			EpePage.class };
+	// private static final Class<?>[] PAGES = {WorthPage.class,
+	// EpePage.class, MasterPage.class };
+	private static final Class<?>[] PAGES = { EpePage.class, WorthPage.class };
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
