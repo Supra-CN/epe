@@ -1,4 +1,4 @@
-package tw.supra.epe.pages;
+package tw.supra.epe.pages.msg;
 
 import java.util.ArrayList;
 
@@ -8,16 +8,16 @@ import org.json.JSONObject;
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.network.NetworkCenter;
-import tw.supra.network.ui.NetworkImageView;
-import tw.supra.network.ui.NetworkRoundedImageView;
-import tw.supra.utils.JsonUtils;
-import tw.supra.utils.TimeUtil;
+import tw.supra.network.request.EpeRequestInfo;
+import tw.supra.network.request.NetWorkHandler;
+import tw.supra.network.request.RequestEvent;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,22 +26,25 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 public class MsgPage extends BaseMainPage implements
-		OnRefreshListener<ListView> {
+		NetWorkHandler<EpeRequestInfo>, OnRefreshListener<ListView> {
+	private static final String LOG_TAG = MsgPage.class.getSimpleName();
 
 	private PullToRefreshListView mListView;
 	private final MsgItem EPE_MSG = new MsgItem();
 	private final MsgItem SHOP_MSG = new MsgItem();
 	private final MsgItem DYNAMIC_MSG = new MsgItem();
 	private final ArrayList<MsgItem> DATA_SET = new ArrayList<MsgItem>();
-	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initDataSet();
 	}
-	
+
 	private void initDataSet() {
+		EPE_MSG.icon = R.drawable.ic_msg_epe;
+		SHOP_MSG.icon = R.drawable.ic_msg_shop;
+
 		DATA_SET.add(EPE_MSG);
 		DATA_SET.add(SHOP_MSG);
 		DATA_SET.add(DYNAMIC_MSG);
@@ -53,7 +56,14 @@ public class MsgPage extends BaseMainPage implements
 		View v = inflater.inflate(R.layout.page_msg, null);
 		mListView = (PullToRefreshListView) v.findViewById(R.id.list_view);
 		mListView.setOnRefreshListener(this);
+		mListView.getRefreshableView().setAdapter(ADAPTER);
 		return v;
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		mListView.setRefreshing(false);
 	}
 
 	@Override
@@ -68,7 +78,15 @@ public class MsgPage extends BaseMainPage implements
 
 	@Override
 	public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+		NetworkCenter.getInstance().putToQueue(new RequestMsg(this));
+	}
 
+	private void decodeMsg(MsgItem item, JSONObject joMsg) throws JSONException {
+		item.id = joMsg.getString("latest_msg_id");
+		item.title = joMsg.getString("latest_msg_title");
+		item.content = joMsg.getString("latest_msg_content");
+		// item.time = joMsg.getLong("latest_msg_time");
+		item.unread = joMsg.getInt("unread_msg_num");
 	}
 
 	private final BaseAdapter ADAPTER = new BaseAdapter() {
@@ -76,60 +94,25 @@ public class MsgPage extends BaseMainPage implements
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (null == convertView) {
-				convertView = View.inflate(getActivity(), R.layout.t_page_item,
-						null);
+				convertView = View.inflate(getActivity(),
+						R.layout.msg_page_item, null);
 				ItemHolder holder = new ItemHolder();
-				holder.avator = (NetworkRoundedImageView) convertView
-						.findViewById(R.id.avator);
-				holder.name = (TextView) convertView.findViewById(R.id.name);
-				holder.time = (TextView) convertView.findViewById(R.id.time);
-				holder.likeCount = (TextView) convertView
-						.findViewById(R.id.like_count);
-				holder.commentCount = (TextView) convertView
-						.findViewById(R.id.comment_count);
+				holder.avator = (ImageView) convertView.findViewById(R.id.img);
+				holder.title = (TextView) convertView.findViewById(R.id.title);
+				holder.content = (TextView) convertView
+						.findViewById(R.id.content);
+				// holder.time = (TextView) convertView.findViewById(R.id.time);
 				convertView.setTag(holder);
 			}
 
 			ItemHolder holder = (ItemHolder) convertView.getTag();
-			String name = "";
-			String avator = "";
-			String img = "";
-			long time = 0;
-			String likeCount = "";
-			String commentCount = "";
-			boolean isLike = false;
-			int width = 0;
-			int height = 0;
+			MsgItem msg = getItem(position);
 
-//			JSONObject jo = getItem(position);
-			JSONObject jo = null;
-			try {
-				JSONObject joImg = jo.getJSONObject(TArrayInfo.ATTR_IMG);
-				img = joImg.getString(TArrayInfo.ATTR_IMG_URL);
-				width = JsonUtils
-						.getIntSafely(joImg, TArrayInfo.ATTR_IMG_WIDTH);
-				height = JsonUtils.getIntSafely(joImg,
-						TArrayInfo.ATTR_IMG_HEIGTH);
-				likeCount = jo.getString(TArrayInfo.ATTR_TT_LIKE_NUM);
-				isLike = jo.getInt(TArrayInfo.ATTR_IS_LIKE) != 0;
-				commentCount = jo.getString(TArrayInfo.ATTR_TT_COMMENT_NUM);
-				time = jo.getLong(TArrayInfo.ATTR_ADD_TIME);
-				JSONObject joUinfo = jo.getJSONObject(TArrayInfo.ATTR_UINFO);
-				avator = joUinfo.getString(TArrayInfo.ATTR_UINFO_PHOTO);
-				name = joUinfo.getString(TArrayInfo.ATTR_UINFO_USER_NAME);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-
-			holder.avator.setImageUrl(avator, NetworkCenter.getInstance()
-					.getImageLoader());
-			holder.name.setText(name);
-			holder.time.setText(TimeUtil.formatTimeWithCountDown(getActivity(),
-					time));
-			holder.likeCount.setText(likeCount);
-			holder.likeCount.setSelected(isLike);
-			holder.commentCount.setText(commentCount);
-
+			holder.avator.setImageResource(msg.icon);
+			holder.title.setText(msg.title);
+			holder.content.setText(msg.content);
+			// holder.time.setText(TimeUtil.formatTimeWithCountDown(getActivity(),
+			// time));
 			return convertView;
 		}
 
@@ -150,20 +133,46 @@ public class MsgPage extends BaseMainPage implements
 	};
 
 	private class ItemHolder {
-		NetworkRoundedImageView avator;
-		TextView name;
+		ImageView avator;
+		TextView title;
+		TextView content;
 		TextView time;
-		TextView likeCount;
-		TextView commentCount;
 	}
 
 	private class MsgItem {
-		int icon;
+		int icon = R.drawable.ic_msg_default;
 		String id;
 		String title;
 		String content;
 		long time;
 		int unread;
+	}
+
+	@Override
+	public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
+		switch (event) {
+		case FINISH: {
+			mListView.onRefreshComplete();
+			if (info.ERROR_CODE.isOK()) {
+				JSONObject response = (JSONObject) info.OBJ;
+				try {
+					decodeMsg(EPE_MSG, response.getJSONObject("yy_msg"));
+					decodeMsg(SHOP_MSG, response.getJSONObject("shop_msg"));
+					decodeMsg(DYNAMIC_MSG,
+							response.getJSONObject("dynamic_msg"));
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				ADAPTER.notifyDataSetChanged();
+			}
+		}
+
+			break;
+
+		default:
+			break;
+		}
+		return false;
 	}
 
 }
