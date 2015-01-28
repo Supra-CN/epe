@@ -7,15 +7,19 @@ import org.json.JSONObject;
 
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseMainPage;
+import tw.supra.epe.msg.MsgTopicActivity;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -25,29 +29,16 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-public class MsgPage extends BaseMainPage implements
+public class MsgPage extends BaseMainPage implements OnItemClickListener,
 		NetWorkHandler<EpeRequestInfo>, OnRefreshListener<ListView> {
 	private static final String LOG_TAG = MsgPage.class.getSimpleName();
 
 	private PullToRefreshListView mListView;
-	private final MsgItem EPE_MSG = new MsgItem();
-	private final MsgItem SHOP_MSG = new MsgItem();
-	private final MsgItem DYNAMIC_MSG = new MsgItem();
 	private final ArrayList<MsgItem> DATA_SET = new ArrayList<MsgItem>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		initDataSet();
-	}
-
-	private void initDataSet() {
-		EPE_MSG.icon = R.drawable.ic_msg_epe;
-		SHOP_MSG.icon = R.drawable.ic_msg_shop;
-
-		DATA_SET.add(EPE_MSG);
-		DATA_SET.add(SHOP_MSG);
-		DATA_SET.add(DYNAMIC_MSG);
 	}
 
 	@Override
@@ -56,7 +47,8 @@ public class MsgPage extends BaseMainPage implements
 		View v = inflater.inflate(R.layout.page_msg, null);
 		mListView = (PullToRefreshListView) v.findViewById(R.id.list_view);
 		mListView.setOnRefreshListener(this);
-		mListView.getRefreshableView().setAdapter(ADAPTER);
+		mListView.setOnItemClickListener(this);
+		mListView.setAdapter(ADAPTER);
 		return v;
 	}
 
@@ -81,12 +73,18 @@ public class MsgPage extends BaseMainPage implements
 		NetworkCenter.getInstance().putToQueue(new RequestMsg(this));
 	}
 
-	private void decodeMsg(MsgItem item, JSONObject joMsg) throws JSONException {
+	private MsgItem decodeMsg(JSONObject joMsg, String type, int iconResDefault)
+			throws JSONException {
+
+		MsgItem item = new MsgItem();
+		item.icon = iconResDefault;
+		item.type = type;
 		item.id = joMsg.getString("latest_msg_id");
 		item.title = joMsg.getString("latest_msg_title");
 		item.content = joMsg.getString("latest_msg_content");
 		// item.time = joMsg.getLong("latest_msg_time");
 		item.unread = joMsg.getInt("unread_msg_num");
+		return item;
 	}
 
 	private final BaseAdapter ADAPTER = new BaseAdapter() {
@@ -140,13 +138,18 @@ public class MsgPage extends BaseMainPage implements
 	}
 
 	private class MsgItem {
-		int icon = R.drawable.ic_msg_default;
+		String type;
+		int icon;
 		String id;
 		String title;
 		String content;
 		long time;
 		int unread;
 	}
+
+	private static final String YY_MSG = "yy";
+	private static final String SHOP_MSG = "shop";
+	private static final String DYNAMIC_MSG = "dynamic";
 
 	@Override
 	public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
@@ -155,11 +158,14 @@ public class MsgPage extends BaseMainPage implements
 			mListView.onRefreshComplete();
 			if (info.ERROR_CODE.isOK()) {
 				JSONObject response = (JSONObject) info.OBJ;
+				DATA_SET.clear();
 				try {
-					decodeMsg(EPE_MSG, response.getJSONObject("yy_msg"));
-					decodeMsg(SHOP_MSG, response.getJSONObject("shop_msg"));
-					decodeMsg(DYNAMIC_MSG,
-							response.getJSONObject("dynamic_msg"));
+					DATA_SET.add(decodeMsg(response.getJSONObject("yy_msg"),
+							YY_MSG, R.drawable.ic_msg_epe));
+					DATA_SET.add(decodeMsg(response.getJSONObject("shop_msg"),
+							SHOP_MSG, R.drawable.ic_msg_shop));
+					DATA_SET.add(decodeMsg(response.getJSONObject("dynamic_msg"),
+							DYNAMIC_MSG, R.drawable.ic_msg_default));
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -175,4 +181,13 @@ public class MsgPage extends BaseMainPage implements
 		return false;
 	}
 
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		MsgItem item = DATA_SET.get(position);
+		Intent intent = new Intent(getActivity(), MsgTopicActivity.class);
+		intent.putExtra(MsgTopicActivity.EXTRA_TOPIC_ID, item.type);
+		intent.putExtra(MsgTopicActivity.EXTRA_TOPIC_TITLE, item.title);
+		startActivity(intent);
+	}
 }
