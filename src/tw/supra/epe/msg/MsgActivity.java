@@ -31,13 +31,12 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-public class MsgTopicActivity extends BaseActivity implements OnClickListener,
+public class MsgActivity extends BaseActivity implements OnClickListener,
 		OnItemClickListener, OnRefreshListener<ListView>,
 		NetWorkHandler<MsgTopicInfo> {
-	private static final String LOG_TAG = MsgTopicActivity.class
+	private static final String LOG_TAG = MsgActivity.class
 			.getSimpleName();
-	public static final String EXTRA_TOPIC_ID = "extra_topic_id";
-	public static final String EXTRA_TOPIC_TITLE = "extra_topic_title";
+	public static final String EXTRA_MSG_ID = "extra_msg_id";
 	/**
 	 * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
 	 * user interaction before hiding the system UI.
@@ -54,15 +53,13 @@ public class MsgTopicActivity extends BaseActivity implements OnClickListener,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mTopicId = getIntent().getStringExtra(EXTRA_TOPIC_ID);
+		mTopicId = getIntent().getStringExtra(EXTRA_MSG_ID);
 
 		setContentView(R.layout.activity_msg_topic);
 
 		mLabel = (TextView) findViewById(R.id.label);
-		mLabel.setText(getIntent().getStringExtra(EXTRA_TOPIC_TITLE));
+//		mLabel.setText(getIntent().getStringExtra(EXTRA_TOPIC_TITLE));
 
-		findViewById(R.id.action_back).setOnClickListener(this);
-		
 		mPullableList = (PullToRefreshListView) findViewById(R.id.list);
 		mPullableList.getRefreshableView().setAdapter(ADAPTER);
 		mPullableList.setOnItemClickListener(this);
@@ -232,7 +229,7 @@ public class MsgTopicActivity extends BaseActivity implements OnClickListener,
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (null == convertView) {
-				convertView = View.inflate(MsgTopicActivity.this,
+				convertView = View.inflate(MsgActivity.this,
 						R.layout.msg_topic_item, null);
 				ItemHolder holder = new ItemHolder();
 				holder.img = (NetworkImageView) convertView
@@ -265,7 +262,7 @@ public class MsgTopicActivity extends BaseActivity implements OnClickListener,
 					.getImageLoader());
 			holder.title.setText(title);
 			holder.time.setText(TimeUtil.formatTimeWithCountDown(
-					MsgTopicActivity.this, time));
+					MsgActivity.this, time));
 			holder.content.setText(content);
 
 			return convertView;
@@ -306,13 +303,13 @@ public class MsgTopicActivity extends BaseActivity implements OnClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-//		try {
-//			Intent intent = new Intent(this, MsgActivity.class);
-//			JsonUtils.getStrSafely(DATA_SET.get(position), MsgTopicInfo.MSG_ID);
-//		} catch (JSONException e) {
+		try {
+			Intent intent = new Intent(this, MsgActivity.class);
+			JsonUtils.getStrSafely(DATA_SET.get(position), MsgTopicInfo.MSG_ID);
+		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+			e.printStackTrace();
+		}
 	}
 
 }

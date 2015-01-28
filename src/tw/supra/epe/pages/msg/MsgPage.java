@@ -164,8 +164,9 @@ public class MsgPage extends BaseMainPage implements OnItemClickListener,
 							YY_MSG, R.drawable.ic_msg_epe));
 					DATA_SET.add(decodeMsg(response.getJSONObject("shop_msg"),
 							SHOP_MSG, R.drawable.ic_msg_shop));
-					DATA_SET.add(decodeMsg(response.getJSONObject("dynamic_msg"),
-							DYNAMIC_MSG, R.drawable.ic_msg_default));
+					DATA_SET.add(decodeMsg(
+							response.getJSONObject("dynamic_msg"), DYNAMIC_MSG,
+							R.drawable.ic_msg_default));
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -184,7 +185,7 @@ public class MsgPage extends BaseMainPage implements OnItemClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		MsgItem item = DATA_SET.get(position);
+		MsgItem item = DATA_SET.get(position - 1);
 		Intent intent = new Intent(getActivity(), MsgTopicActivity.class);
 		intent.putExtra(MsgTopicActivity.EXTRA_TOPIC_ID, item.type);
 		intent.putExtra(MsgTopicActivity.EXTRA_TOPIC_TITLE, item.title);

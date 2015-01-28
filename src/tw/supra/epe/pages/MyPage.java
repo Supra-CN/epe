@@ -1,9 +1,9 @@
 package tw.supra.epe.pages;
 
-import tw.supra.epe.App;
 import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.account.User;
+import tw.supra.epe.activity.SettingsActivity;
 import tw.supra.epe.activity.UserHomeActivity;
 import tw.supra.epe.activity.fav.FavActivity;
 import tw.supra.epe.core.BaseMainPage;
@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -22,7 +23,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MyPage extends BaseMainPage implements OnItemClickListener {
+public class MyPage extends BaseMainPage implements OnItemClickListener,
+		OnClickListener {
 	private final Item ITEM_MY_HOME = new Item(R.string.my_page_item_my_home,
 			R.drawable.ic_my_home) {
 		public void onItemClick() {
@@ -33,11 +35,6 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 			R.drawable.ic_my_fav) {
 		public void onItemClick() {
 			startActivity(new Intent(getActivity(), FavActivity.class));
-		};
-	};
-	private final Item ITEM_LOG_OUT = new Item(R.string.my_page_item_log_out, 0) {
-		public void onItemClick() {
-			startActivity(new Intent(App.ACTION_LOGIN));
 		};
 	};
 	private final Item ITEM_APPLY_STORE = new Item(
@@ -59,11 +56,9 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 			new Item(R.string.my_page_item_my_diary, R.drawable.ic_my_diary),
 			new Item(),
 			new Item(R.string.my_page_item_my_focus, R.drawable.ic_my_focus),
-			new Item(), 
-			ITEM_APPLY_STORE, 
-			new Item(),
+			new Item(), ITEM_APPLY_STORE, new Item(),
 			new Item(R.string.my_page_item_invite, R.drawable.ic_my_invite),
-			new Item(), ITEM_LOG_OUT };
+			new Item() };
 
 	private final BaseAdapter ADAPTER = new BaseAdapter() {
 
@@ -115,6 +110,7 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 		ListView listView = (ListView) v.findViewById(R.id.list_view);
 		listView.setOnItemClickListener(this);
 		listView.setAdapter(ADAPTER);
+		v.findViewById(R.id.setting).setOnClickListener(this);
 		mTvName = (TextView) v.findViewById(R.id.name);
 		mTvScore = (TextView) v.findViewById(R.id.score);
 		mIvAvator = (NetworkRoundedImageView) v.findViewById(R.id.avator);
@@ -141,7 +137,7 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		((Item) ADAPTER.getItem(position)).onItemClick();
+		LIST[position].onItemClick();
 	}
 
 	private class Item {
@@ -171,5 +167,17 @@ public class MyPage extends BaseMainPage implements OnItemClickListener {
 				.getImageLoader());
 		mTvName.setText(user.getName());
 		mTvScore.setText(getString(R.string.my_page_score, user.getScore()));
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.setting:
+			startActivity(new Intent(getActivity(), SettingsActivity.class));
+			break;
+
+		default:
+			break;
+		}
 	}
 }
