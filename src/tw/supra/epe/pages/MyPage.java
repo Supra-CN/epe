@@ -3,6 +3,7 @@ package tw.supra.epe.pages;
 import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.account.User;
+import tw.supra.epe.account.UserInfoEditorActivity;
 import tw.supra.epe.activity.SettingsActivity;
 import tw.supra.epe.activity.UserHomeActivity;
 import tw.supra.epe.activity.fav.FavActivity;
@@ -111,6 +112,7 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 		listView.setOnItemClickListener(this);
 		listView.setAdapter(ADAPTER);
 		v.findViewById(R.id.setting).setOnClickListener(this);
+		v.findViewById(R.id.user_info_container).setOnClickListener(this);
 		mTvName = (TextView) v.findViewById(R.id.name);
 		mTvScore = (TextView) v.findViewById(R.id.score);
 		mIvAvator = (NetworkRoundedImageView) v.findViewById(R.id.avator);
@@ -174,6 +176,9 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 		switch (v.getId()) {
 		case R.id.setting:
 			startActivity(new Intent(getActivity(), SettingsActivity.class));
+			break;
+		case R.id.user_info_container:
+			startActivity(new Intent(getActivity(), UserInfoEditorActivity.class));
 			break;
 
 		default:
