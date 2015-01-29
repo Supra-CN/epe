@@ -97,6 +97,10 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 		public int getCount() {
 			return LIST.length;
 		}
+		
+		public boolean isEnabled(int position) {
+			return !getItem(position).FLAG_DIVIDER;
+		};
 
 	};
 

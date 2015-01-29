@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import tw.supra.epe.R;
 import tw.supra.epe.activity.t.TActivity;
+import tw.supra.epe.activity.t.TEditorActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView;
@@ -26,6 +27,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
@@ -34,7 +36,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 
 public class TPage extends BaseMainPage implements NetWorkHandler<TArrayInfo>,
-		OnRefreshListener2<StaggeredGridView>, OnItemClickListener {
+		OnRefreshListener2<StaggeredGridView>, OnItemClickListener,
+		OnClickListener {
 	private static final String LOG_TAG = TPage.class.getSimpleName();
 
 	private static final int PAGE_SIZE = 20;
@@ -54,6 +57,8 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TArrayInfo>,
 		mPullRefreshGrid.setOnRefreshListener(this);
 		mPullRefreshGrid.getRefreshableView().setAdapter(ADAPTER);
 		mPullRefreshGrid.getRefreshableView().setOnItemClickListener(this);
+		v.findViewById(R.id.action_editor).setOnClickListener(this);
+		;
 		return v;
 	}
 
@@ -257,7 +262,7 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TArrayInfo>,
 	@Override
 	public void onItemClick(StaggeredGridView parent, View view, int position,
 			long id) {
-		String tId=null;
+		String tId = null;
 		try {
 			JSONObject jo = DATA_SET.get(position);
 			tId = JsonUtils.getStrSafely(jo, TArrayInfo.ATTR_TT_ID);
@@ -270,5 +275,17 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TArrayInfo>,
 			startActivity(intent);
 		}
 
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.action_editor:
+			startActivity(new Intent(getActivity(), TEditorActivity.class));
+			break;
+
+		default:
+			break;
+		}
 	}
 }

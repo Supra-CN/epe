@@ -162,6 +162,13 @@
     <string name="mall_floor">F%s</string>
     <string name="mall_info_address">地址：%s</string>
 
+    <!-- t -->
+    <string name="t_editor_label">我的收藏</string>
+    <string name="t_editor_action_submit">发布</string>
+    <string name="t_editor_content_hint">发表此刻的想法</string>
+    <string name="t_editor_item_broad">品牌</string>
+    <string name="t_editor_item_model">型号</string>
+    <string name="t_editor_item_price">价格</string>
     <!-- fav -->
     <string name="fav_label">我的收藏</string>
     <!-- settings -->

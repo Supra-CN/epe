@@ -20,6 +20,7 @@
             android:textSize="@dimen/top_tab_title_text_size" />
 
         <ImageButton
+            android:id="@+id/action_editor"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="right|center_vertical"
