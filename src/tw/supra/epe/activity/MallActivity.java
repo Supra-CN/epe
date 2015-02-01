@@ -8,12 +8,14 @@ import org.json.JSONObject;
 
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
+import tw.supra.epe.store.StoreActivity;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkRoundedImageView;
 import android.app.Fragment;
 import android.app.ListFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -22,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.viewpagerindicator.PageIndicator;
@@ -35,6 +38,7 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 
 	private PageIndicator mPageIndicator;
 	private PageAdapter mPageAdapter;
+	private String mMallName;
 
 	private TextView mTvMallName;
 	private TextView mTvAddress;
@@ -79,8 +83,8 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 		if (RequestEvent.FINISH == event) {
 			if (info.ERROR_CODE.isOK()) {
 				try {
-					mTvMallName.setText(info.resultJo
-							.getString(MallInfo.MALL_NAME));
+					mMallName = info.resultJo.getString(MallInfo.MALL_NAME);
+					mTvMallName.setText(mMallName);
 					mTvAddress.setText(getString(R.string.mall_info_address,
 							info.resultJo.getString(MallInfo.ADDRESS)));
 					JSONArray jaFloors = info.resultJo
@@ -132,14 +136,35 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 
 		@Override
 		public Fragment getItem(int position) {
-			ListFragment fragment = new ListFragment();
+			ListFragment fragment = new ListFragment() {
+				@Override
+				public void onListItemClick(ListView l, View v, int position,
+						long id) {
+					super.onListItemClick(l, v, position, id);
+					try {
+						JSONObject jo = ((ShopAdapter) getListAdapter())
+								.getItem(position);
+						Intent intent = new Intent(MallActivity.this,
+								StoreActivity.class);
+						intent.putExtra(StoreActivity.EXTRA_MB_ID,
+								jo.getString(MallInfo.SHOP_ID));
+						intent.putExtra(StoreActivity.EXTRA_MALL_NAME,
+								mMallName);
+						intent.putExtra(StoreActivity.EXTRA_BROAD_NAME,
+								jo.getString(MallInfo.BRAND_NAME));
+						startActivity(intent);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			};
 			fragment.setListAdapter(new ShopAdapter(PAGES.get(position).ARRAY));
 			return fragment;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-//			return getString(R.string.mall_floor, PAGES.get(position).NAME);
+			// return getString(R.string.mall_floor, PAGES.get(position).NAME);
 			return PAGES.get(position).NAME;
 		}
 
@@ -199,7 +224,7 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 
 			JSONObject jo = getItem(position);
 			try {
-				doorNu = jo.getString(MallInfo.SHOP_ID);
+				doorNu = jo.getString(MallInfo.DOOR_NO);
 				img = jo.getString(MallInfo.BRAND_LOGO);
 				name = jo.getString(MallInfo.BRAND_NAME);
 

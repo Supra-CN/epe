@@ -70,7 +70,7 @@ public class MsgPage extends BaseMainPage implements OnItemClickListener,
 
 	@Override
 	public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-		NetworkCenter.getInstance().putToQueue(new RequestMsg(this));
+		NetworkCenter.getInstance().putToQueue(new RequestMsgs(this));
 	}
 
 	private MsgItem decodeMsg(JSONObject joMsg, String type, int iconResDefault)

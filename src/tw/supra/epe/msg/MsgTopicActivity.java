@@ -306,13 +306,14 @@ public class MsgTopicActivity extends BaseActivity implements OnClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-//		try {
-//			Intent intent = new Intent(this, MsgActivity.class);
-//			JsonUtils.getStrSafely(DATA_SET.get(position), MsgTopicInfo.MSG_ID);
-//		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			Intent intent = new Intent(this, MsgActivity.class);
+			intent.putExtra(MsgActivity.EXTRA_MSG_ID, JsonUtils.getStrSafely(DATA_SET.get(position-1), MsgTopicInfo.MSG_ID));
+			startActivity(intent);
+		} catch (JSONException e) {
+//			 TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -29,6 +29,7 @@ public class MallInfo extends EpeRequestInfo {
 	
 	public static final String BRAND = "brand";
 	public static final String SHOP_ID = "shop_id";
+	public static final String DOOR_NO = "doorno";
 	public static final String BRAND_ID = "brand_id";
 	public static final String BRAND_NAME = "brand_name";
 	public static final String BRAND_LOGO = "brand_logo";

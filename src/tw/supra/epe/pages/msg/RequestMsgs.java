@@ -13,9 +13,9 @@ import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.utils.JsonUtils;
 
-public class RequestMsg extends EpeJsonRequest<EpeRequestInfo> {
+public class RequestMsgs extends EpeJsonRequest<EpeRequestInfo> {
 
-	public RequestMsg(NetWorkHandler<EpeRequestInfo> eventHandler
+	public RequestMsgs(NetWorkHandler<EpeRequestInfo> eventHandler
 			) {
 		super(eventHandler, new EpeRequestInfo() {
 			

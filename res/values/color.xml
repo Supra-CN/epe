@@ -7,6 +7,7 @@
     <color name="epe_yellow">#f3df66</color>
     <color name="epe_pink">#fe1a69</color>
     <color name="epe_pink_h">#e50057</color>
+    <color name="text_content">#717171</color>
     <color name="bottom_bar_bg">#e1e1e1</color>
 
     <!-- list item -->

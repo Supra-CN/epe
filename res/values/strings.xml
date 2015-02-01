@@ -186,8 +186,12 @@
     <string name="settings_item_vote">爱的鼓励</string>
     <string name="settings_item_feedback">意见反馈</string>
     <!-- msg -->
+    <string name="msg_activity_label">消息详情</string>
     <string name="msg_show_all">查看全文</string>
     <!-- stroe -->
+    <string name="store_product_label_new">新品</string>
+    <string name="store_product_label_discount">折扣</string>
+    <string name="store_product_label_hot">热销</string>
     <string name="my_store_label_product">单品</string>
     <string name="my_store_label_active">活动</string>
     <string name="store_apply_boutiques_page_title">精品店</string>

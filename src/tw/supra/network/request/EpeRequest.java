@@ -16,6 +16,7 @@ abstract public class EpeRequest<T extends EpeRequestInfo> extends
 
 	public EpeRequest(NetWorkHandler<T> eventHandler, T info) {
 		super(eventHandler, info);
+		setShouldCache(false);
 	}
 
 	@Override

@@ -39,8 +39,6 @@ public class MsgTopicInfo extends EpeRequestInfo {
 		paramters.put("m", "get_special_msg");
 		paramters.put("authcode", AccountCenter.getCurrentUser().getAuth());
 		paramters.put("action",ARG_ACTION);
-		
-		
 	}
 
 	@Override

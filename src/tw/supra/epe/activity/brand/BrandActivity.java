@@ -8,17 +8,21 @@ import org.json.JSONObject;
 
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
+import tw.supra.epe.store.StoreActivity;
 import tw.supra.location.LocationCallBack;
 import tw.supra.location.LocationCenter;
 import tw.supra.location.SupraLocation;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,7 +33,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 public class BrandActivity extends BaseActivity implements
 		NetWorkHandler<BrandInfo>, LocationCallBack, OnClickListener,
-		OnRefreshListener2<ListView> {
+		OnItemClickListener, OnRefreshListener2<ListView> {
 	private static final String LOG_TAG = BrandActivity.class.getSimpleName();
 	public static final String EXTRA_BRAND_ID = "extra_brand_id";
 	public static final String EXTRA_BRAND_NAME = "extra_brand_name";
@@ -44,21 +48,23 @@ public class BrandActivity extends BaseActivity implements
 	private int mPagePending = -1;
 
 	private String mBrandId;
+	private String mBrandName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		mBrandId = getIntent().getStringExtra(EXTRA_BRAND_ID);
+		Intent intent = getIntent();
+		mBrandId = intent.getStringExtra(EXTRA_BRAND_ID);
+		mBrandName = intent.getStringExtra(EXTRA_BRAND_NAME);
 
 		setContentView(R.layout.activity_brand);
 
 		findViewById(R.id.action_back).setOnClickListener(this);
-
-		((TextView) findViewById(R.id.brand_name)).setText(getIntent()
-				.getStringExtra(EXTRA_BRAND_NAME));
-		;
+		((TextView) findViewById(R.id.brand_name)).setText(mBrandName);
+		
 		mPullRefreshList = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
+		mPullRefreshList.setOnItemClickListener(this);
 		mPullRefreshList.setOnRefreshListener(this);
 		// mPullRefreshList.setEmptyView(new ProgressBar(this));
 		mPullRefreshList.getRefreshableView().setAdapter(ADAPTER);
@@ -208,6 +214,22 @@ public class BrandActivity extends BaseActivity implements
 		default:
 			break;
 		}
+	}
 
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		try {
+			JSONObject jo = DATA_SET.get(position - 1);
+			Intent intent = new Intent(this, StoreActivity.class);
+			intent.putExtra(StoreActivity.EXTRA_MB_ID,jo.getString(BrandInfo.MB_ID));
+			intent.putExtra(StoreActivity.EXTRA_BROAD_NAME,mBrandName);
+			intent.putExtra(StoreActivity.EXTRA_MALL_NAME,jo.getString(BrandInfo.MALL_NAME));
+			startActivity(intent);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }
