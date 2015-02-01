@@ -33,7 +33,6 @@ public class MallInfo extends EpeRequestInfo {
 	public static final String BRAND_NAME = "brand_name";
 	public static final String BRAND_LOGO = "brand_logo";
 	public static final String FLOOR = "floor";
-	public static final String DOORNO = "doorno";
 
 	// ARGS
 	public final String ARG_MALL_ID;// 参数：品牌ID；

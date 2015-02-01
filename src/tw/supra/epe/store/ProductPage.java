@@ -1,4 +1,4 @@
-package tw.supra.epe.pages.worth;
+package tw.supra.epe.store;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -10,6 +10,8 @@ import org.json.JSONObject;
 import tw.supra.epe.R;
 import tw.supra.epe.activity.product.ProductActivity;
 import tw.supra.epe.core.BaseMainPage;
+import tw.supra.epe.pages.worth.RequestWorth;
+import tw.supra.epe.pages.worth.WorthInfo;
 import tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView.OnItemClickListener;
@@ -42,10 +44,10 @@ import com.baidu.location.LocationClient;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 
-public class WorthPage extends BaseMainPage implements OnClickListener,
+public class ProductPage extends BaseMainPage implements OnClickListener,
 		NetWorkHandler<WorthInfo>, LocationCallBack, OnItemClickListener,
 		OnRefreshListener2<StaggeredGridView> {
-	private static final String LOG_TAG = WorthPage.class.getSimpleName();
+	private static final String LOG_TAG = ProductPage.class.getSimpleName();
 	private RequestWorth mRequestWorth;
 	private Location mLocation;
 	private int mGender = WorthInfo.GENDER_ALL;
@@ -234,7 +236,7 @@ public class WorthPage extends BaseMainPage implements OnClickListener,
 
 	@Override
 	protected CharSequence getDefaultTitle(Context c) {
-		return c.getText(R.string.indictor_tab_worth);
+		return c.getText(R.string.my_store_label_product);
 	}
 
 	@Override

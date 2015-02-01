@@ -134,7 +134,7 @@ public class TActivity extends BaseActivity implements OnClickListener,OnRefresh
 			if (RequestEvent.FINISH == event) {
 				mPullableList.onRefreshComplete();
 				if (info.ERROR_CODE.isOK()) {
-					if (info.ARG_PAGE < mPageLoaded) {
+					if (info.ARG_PAGE <= mPageLoaded) {
 						DATA_SET.clear();
 					}
 					mPageLoaded = info.ARG_PAGE;

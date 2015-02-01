@@ -93,7 +93,7 @@ public class UserHomeActivity extends BaseActivity implements OnClickListener,
 			if (RequestEvent.FINISH == event) {
 				mPullRefreshGrid.onRefreshComplete();
 				if (info.ERROR_CODE.isOK()) {
-					if (info.ARG_PAGE < mPageLoaded) {
+					if (info.ARG_PAGE <= mPageLoaded) {
 						DATA_SET.clear();
 					}
 					mPageLoaded = info.ARG_PAGE;

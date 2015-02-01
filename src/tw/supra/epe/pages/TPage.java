@@ -89,7 +89,7 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TArrayInfo>,
 		if (RequestEvent.FINISH == event) {
 			mPullRefreshGrid.onRefreshComplete();
 			if (info.ERROR_CODE.isOK()) {
-				if (info.ARG_PAGE < mPageLoaded) {
+				if (info.ARG_PAGE <= mPageLoaded) {
 					DATA_SET.clear();
 				}
 				mPageLoaded = info.ARG_PAGE;

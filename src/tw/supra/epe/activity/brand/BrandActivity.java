@@ -143,7 +143,7 @@ public class BrandActivity extends BaseActivity implements
 		if (RequestEvent.FINISH == event) {
 			mPullRefreshList.onRefreshComplete();
 			if (info.ERROR_CODE.isOK()) {
-				if (info.ARG_PAGE < mPageLoaded) {
+				if (info.ARG_PAGE <= mPageLoaded) {
 					DATA_SET.clear();
 				}
 				mPageLoaded = info.ARG_PAGE;

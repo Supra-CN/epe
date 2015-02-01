@@ -14,7 +14,19 @@
         android:verticalSpacing="1dp"
         app:numColumns="2"
         ptr:ptrMode="both" />
-<!--         ptr:ptrDrawable="@drawable/android" -->
+
+    <ImageButton
+        android:id="@+id/select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:layout_margin="20dp"
+        android:alpha="0.9"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_worth_select" />
+
+    <!-- ptr:ptrDrawable="@drawable/android" -->
+
 
     <!-- <tw.supra.epe.ui.staggered.StaggeredGridView -->
     <!-- android:id="@+id/grid_view" -->

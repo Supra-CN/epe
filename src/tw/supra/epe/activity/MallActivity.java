@@ -8,13 +8,10 @@ import org.json.JSONObject;
 
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
-import tw.supra.epe.ui.staggered.StaggeredGridView;
-import tw.supra.epe.ui.staggered.StaggeredGridView.OnItemClickListener;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkRoundedImageView;
-import tw.supra.utils.JsonUtils;
 import android.app.Fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -22,8 +19,8 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -51,7 +48,7 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 		mMallId = getIntent().getStringExtra(EXTRA_MALL_ID);
 
 		setContentView(R.layout.activity_mall);
-		
+
 		findViewById(R.id.action_back).setOnClickListener(this);
 
 		mTvAddress = (TextView) findViewById(R.id.address);
@@ -86,24 +83,20 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 							.getString(MallInfo.MALL_NAME));
 					mTvAddress.setText(getString(R.string.mall_info_address,
 							info.resultJo.getString(MallInfo.ADDRESS)));
-					JSONObject joFloors = info.resultJo
-							.getJSONObject(MallInfo.BRAND);
+					JSONArray jaFloors = info.resultJo
+							.getJSONArray(MallInfo.BRAND);
 
-					Log.i(LOG_TAG, "joFloors : "+joFloors);
-					
-					JSONArray names = joFloors.names();
-					Log.i(LOG_TAG, "names : "+names);
-					if (names != null) {
-						for (int i = 0; i < names.length(); i++) {
-							String name = names.getString(i);
-							PAGES.add(new Page(name, JsonUtils.getJaSafely(
-									joFloors, name)));
-						}
+					Log.i(LOG_TAG, "jaFloors : " + jaFloors);
+
+					for (int i = 0; i < jaFloors.length(); i++) {
+						JSONArray ja = jaFloors.getJSONArray(i);
+						PAGES.add(new Page(ja.getJSONObject(0).getString(
+								"floor_name"), ja));
 					}
-					Log.i(LOG_TAG, "PAGES : "+PAGES.size());
-					for(Page page : PAGES){
-						Log.i(LOG_TAG, "page : name = "+page.NAME+" array = "+page.ARRAY);
-
+					Log.i(LOG_TAG, "PAGES : " + PAGES.size());
+					for (Page page : PAGES) {
+						Log.i(LOG_TAG, "page : name = " + page.NAME
+								+ " array = " + page.ARRAY);
 					}
 					mPageAdapter.notifyDataSetChanged();
 					mPageIndicator.notifyDataSetChanged();
@@ -146,7 +139,8 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			return getString(R.string.mall_floor, PAGES.get(position).NAME);
+//			return getString(R.string.mall_floor, PAGES.get(position).NAME);
+			return PAGES.get(position).NAME;
 		}
 
 	}
@@ -205,7 +199,7 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 
 			JSONObject jo = getItem(position);
 			try {
-				doorNu = jo.getString(MallInfo.DOORNO);
+				doorNu = jo.getString(MallInfo.SHOP_ID);
 				img = jo.getString(MallInfo.BRAND_LOGO);
 				name = jo.getString(MallInfo.BRAND_NAME);
 
@@ -225,14 +219,14 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 
 	@Override
 	public void onClick(View v) {
-switch (v.getId()) {
-case R.id.action_back:
-	finish();
-	break;
+		switch (v.getId()) {
+		case R.id.action_back:
+			finish();
+			break;
 
-default:
-	break;
-}		
+		default:
+			break;
+		}
 	}
 
 }

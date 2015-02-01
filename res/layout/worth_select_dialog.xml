@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/worth_select_dialog_round_bg"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/worth_select_label_gender" />
+
+        <RadioGroup
+            android:id="@+id/gender_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/gender_all"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/worth_page_select_dialog_radio_start_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/worth_select_all"
+                android:textColor="@color/worth_page_select_dialog_text_color" />
+
+            <RadioButton
+                android:id="@+id/gender_male"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/worth_page_select_dialog_radio_middle_bg"
+                android:button="@null"
+                android:drawableLeft="@drawable/ic_worth_select_boy"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/worth_select_male"
+                android:textColor="@color/worth_page_select_dialog_text_color" />
+
+            <RadioButton
+                android:id="@+id/gender_female"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/worth_page_select_dialog_radio_end_bg"
+                android:button="@null"
+                android:drawableLeft="@drawable/ic_worth_select_girl"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/worth_select_female"
+                android:textColor="@color/worth_page_select_dialog_text_color" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/worth_select_label_sort" />
+
+        <RadioGroup
+            android:id="@+id/sort_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/sort_distance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/worth_page_select_dialog_radio_start_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/worth_select_distance"
+                android:textColor="@color/worth_page_select_dialog_text_color" />
+
+            <RadioButton
+                android:id="@+id/sort_discount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/worth_page_select_dialog_radio_end_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/worth_select_discount"
+                android:textColor="@color/worth_page_select_dialog_text_color" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#e1e1e1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/worth_page_select_dialog_btn_bg_color"
+            android:padding="10dp"
+            android:text="@android:string/cancel"
+            android:textColor="@color/worth_page_select_dialog_text_color" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#e1e1e1" />
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/worth_page_select_dialog_btn_bg_color"
+            android:padding="10dp"
+            android:text="@android:string/ok"
+            android:textColor="@color/worth_page_select_dialog_text_color" />
+    </LinearLayout>
+
+</LinearLayout>

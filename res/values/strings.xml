@@ -123,6 +123,13 @@
 
     <!-- worth page -->
     <string name="item_discount">%s折</string>
+    <string name="worth_select_all">全部</string>
+    <string name="worth_select_label_gender">想看到的衣服</string>
+    <string name="worth_select_male">男</string>
+    <string name="worth_select_female">女</string>
+    <string name="worth_select_label_sort">排序选项</string>
+    <string name="worth_select_discount">折扣</string>
+    <string name="worth_select_distance">距离</string>
 
     <!-- my page -->
     <string name="my_page_score">积分：%s</string>
@@ -181,9 +188,12 @@
     <!-- msg -->
     <string name="msg_show_all">查看全文</string>
     <!-- stroe -->
+    <string name="my_store_label_product">单品</string>
+    <string name="my_store_label_active">活动</string>
     <string name="store_apply_boutiques_page_title">精品店</string>
     <string name="apply_mall_store_page_title">商场店</string>
     <string name="apply_store_submit">提交</string>
+    <string name="store_my_label">我是店主</string>
     <string name="store_apply_label">申请店铺</string>
     <string name="store_name">名称</string>
     <string name="store_add">地址</string>

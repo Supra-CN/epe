@@ -189,7 +189,7 @@ public class FavActivity extends BaseActivity implements OnClickListener,
 		Log.i(LOG_TAG, "HandleEvent FINISH : " + info);
 		if (RequestEvent.FINISH == event) {
 			if (info.ERROR_CODE.isOK()) {
-				if (info.ARG_PAGE < mPageLoaded) {
+				if (info.ARG_PAGE <= mPageLoaded) {
 					DATA_SET.clear();
 				}
 				mPageLoaded = info.ARG_PAGE;

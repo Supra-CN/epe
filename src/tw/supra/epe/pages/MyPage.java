@@ -9,6 +9,7 @@ import tw.supra.epe.activity.UserHomeActivity;
 import tw.supra.epe.activity.fav.FavActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.store.ApplyStoreActivity;
+import tw.supra.epe.store.MyStoreActivity;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.ui.NetworkRoundedImageView;
 import android.content.Context;
@@ -44,20 +45,25 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 			startActivity(new Intent(getActivity(), ApplyStoreActivity.class));
 		};
 	};
+	private final Item ITEM_MY_STORE = new Item(R.string.my_page_item_my_store,
+			R.drawable.ic_apply_store) {
+		public void onItemClick() {
+			startActivity(new Intent(getActivity(), MyStoreActivity.class));
+		};
+	};
 
 	private final Item[] LIST = {
 			ITEM_MY_HOME,
 			new Item(),
 			ITEM_MY_FAV,
-			new Item(R.string.my_page_item_my_custom, R.drawable.ic_my_custom),
-			new Item(),
-			new Item(R.string.my_page_item_my_wardrobe,
-					R.drawable.ic_my_wardrobe),
-			new Item(R.string.my_page_item_my_type, R.drawable.ic_my_type),
-			new Item(R.string.my_page_item_my_diary, R.drawable.ic_my_diary),
+//			new Item(R.string.my_page_item_my_custom, R.drawable.ic_my_custom),
+//			new Item(),
+//			new Item(R.string.my_page_item_my_wardrobe,					R.drawable.ic_my_wardrobe),
+//			new Item(R.string.my_page_item_my_type, R.drawable.ic_my_type),
+//			new Item(R.string.my_page_item_my_diary, R.drawable.ic_my_diary),
 			new Item(),
 			new Item(R.string.my_page_item_my_focus, R.drawable.ic_my_focus),
-			new Item(), ITEM_APPLY_STORE, new Item(),
+			new Item(), ITEM_APPLY_STORE, ITEM_MY_STORE, new Item(),
 			new Item(R.string.my_page_item_invite, R.drawable.ic_my_invite),
 			new Item() };
 
@@ -97,7 +103,7 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 		public int getCount() {
 			return LIST.length;
 		}
-		
+
 		public boolean isEnabled(int position) {
 			return !getItem(position).FLAG_DIVIDER;
 		};
@@ -182,7 +188,8 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 			startActivity(new Intent(getActivity(), SettingsActivity.class));
 			break;
 		case R.id.user_info_container:
-			startActivity(new Intent(getActivity(), UserInfoEditorActivity.class));
+			startActivity(new Intent(getActivity(),
+					UserInfoEditorActivity.class));
 			break;
 
 		default:
