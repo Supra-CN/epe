@@ -36,6 +36,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:padding="15sp"
             android:background="@color/half_transparent"
             android:text="@string/epe_page_label_near_store" />
 
@@ -98,6 +100,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+                        android:textSize="18sp"
+            android:padding="15sp"
             android:background="@color/half_transparent"
             android:text="@string/epe_page_label_near_brand" />
 

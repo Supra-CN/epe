@@ -124,7 +124,7 @@ public class StoreActivity extends BaseActivity implements OnClickListener {
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			return getItem(position).getTitle();
+			return getString(PAGES[position].LABEL);
 		}
 
 		@Override
