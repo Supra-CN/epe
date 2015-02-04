@@ -167,8 +167,8 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 			JSONObject joMall = JsonUtils.getJoSafely(mJoData,
 					ProductInfo.MALL_INFO);
 			mMallName = JsonUtils.getStrSafely(joMall, ProductInfo.MALL_NAME);
-			mLat = JsonUtils.getLongSafely(joMall, ProductInfo.MALL_LATITUDE);
-			mLon = JsonUtils.getLongSafely(joMall, ProductInfo.MALL_LONGITUDE);
+			mLat = JsonUtils.getDoubleSafely(joMall, ProductInfo.MALL_LATITUDE);
+			mLon = JsonUtils.getDoubleSafely(joMall, ProductInfo.MALL_LONGITUDE);
 
 			productInfo = getString(R.string.product_info_model,
 					JsonUtils.getStrSafely(mJoData, ProductInfo.PRODUCT_SKU))
