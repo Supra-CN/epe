@@ -11,6 +11,7 @@ import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.pages.PhotoClient;
 import tw.supra.epe.utils.AppUtiles;
+import tw.supra.location.MapActivity;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
@@ -19,6 +20,7 @@ import tw.supra.ui.PhotoPager.OnDispatchTouchListener;
 import tw.supra.utils.JsonUtils;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v13.app.FragmentStatePagerAdapter;
@@ -57,6 +59,10 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 	private CheckBox mCbFav;
 
 	private String mProductId;
+	private String mBrandName;
+	private String mMallName;
+	private double mLat;
+	private double mLon;
 	private JSONObject mJoData;
 
 	private PhotoPager mViewPager;
@@ -76,6 +82,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 		setContentView(R.layout.activity_product);
 		findViewById(R.id.fetch_failed).setOnClickListener(this);
 		findViewById(R.id.action_back).setOnClickListener(this);
+		findViewById(R.id.map).setOnClickListener(this);
 
 		mFloatLayer = findViewById(R.id.float_layer);
 		mViewPager = (PhotoPager) findViewById(R.id.view_pager);
@@ -135,7 +142,6 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 
 		String img = "";
 		String productName = "";
-		String brandName = "";
 		String discount = "";
 		String price = "";
 		String productInfo = "";
@@ -160,21 +166,24 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 
 			JSONObject joMall = JsonUtils.getJoSafely(mJoData,
 					ProductInfo.MALL_INFO);
+			mMallName = JsonUtils.getStrSafely(joMall, ProductInfo.MALL_NAME);
+			mLat = JsonUtils.getLongSafely(joMall, ProductInfo.MALL_LATITUDE);
+			mLon = JsonUtils.getLongSafely(joMall, ProductInfo.MALL_LONGITUDE);
+
 			productInfo = getString(R.string.product_info_model,
 					JsonUtils.getStrSafely(mJoData, ProductInfo.PRODUCT_SKU))
 					+ "\n";
 			productInfo += getString(R.string.product_info_tag,
 					JsonUtils.getStrSafely(mJoData, ProductInfo.PRODUCT_TAG))
 					+ "\n";
-			productInfo += getString(R.string.product_info_mall,
-					JsonUtils.getStrSafely(joMall, ProductInfo.MALL_NAME))
+			productInfo += getString(R.string.product_info_mall,mMallName)
 					+ "\n";
 			productInfo += getString(R.string.product_info_address,
 					JsonUtils.getStrSafely(joMall, ProductInfo.MALL_ADDRESS));
 
 			JSONObject joBrand = JsonUtils.getJoSafely(mJoData,
 					ProductInfo.BRAND_INFO);
-			brandName = JsonUtils.getStrSafely(joBrand, ProductInfo.BRAND_NAME);
+			mBrandName = JsonUtils.getStrSafely(joBrand, ProductInfo.BRAND_NAME);
 
 			JSONArray jaImages = JsonUtils.getJaSafely(mJoData,
 					ProductInfo.IMAGES);
@@ -201,13 +210,12 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		mTvBrandName.setText(brandName);
 		mTvProductName.setText(productName);
 		mTvDiscount.setText(getString(R.string.item_discount, discount));
 		mTvDiscount.setVisibility(TextUtils.isEmpty(discount) ? View.GONE
 				: View.VISIBLE);
 		mTvPrice.setText(price);
-		mTvBrandName.setText(brandName);
+		mTvBrandName.setText(mBrandName);
 		mCbLike.setChecked(isLike);
 		mCbFav.setChecked(isFav);
 		mTvProductInfo.setText(productInfo);
@@ -322,6 +330,9 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 			break;
 		case R.id.action_back:
 			onBackPressed();
+			break;
+		case R.id.map:
+			MapActivity.show(this, mMallName	, mLat, mLon);
 			break;
 
 		default:

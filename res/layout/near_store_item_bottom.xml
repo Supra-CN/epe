@@ -10,8 +10,8 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_near_store_bottom_item_bg"
         android:gravity="center"
-        android:padding="5dp"
         android:textColor="@android:color/white" />
 
     <TextView

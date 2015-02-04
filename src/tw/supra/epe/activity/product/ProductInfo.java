@@ -20,7 +20,7 @@ public class ProductInfo extends EpeRequestInfo {
 	public static final String PRODUCT_BRAND_ID = "product_brand_id";
 	public static final String PRODUCT_MALL_ID = "product_mall_id";
 	public static final String PRODUCT_SHOP_ID = "product_shop_id";
-	public static final String PRODUCT_TAG = "product_tag";
+	public static final String PRODUCT_TAG = "product_tag";	
 	public static final String PRODUCT_SHARE_NUM = "product_share_num";
 	public static final String PRODUCT_SKU = "product_sku";
 	public static final String PRODUCT_HOTSALE = "product_hotsale";
@@ -40,6 +40,8 @@ public class ProductInfo extends EpeRequestInfo {
 	public static final String MALL_ID = "mall_id";
 	public static final String MALL_NAME = "mall_name";
 	public static final String MALL_ADDRESS = "address";
+	public static final String MALL_LATITUDE = "latitude";
+	public static final String MALL_LONGITUDE = "longitude";
 
 	public static final String BRAND_INFO = "brand_info";
 	public static final String BRAND_NAME = "brand_name";

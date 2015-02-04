@@ -2,28 +2,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-        tools:context="tw.supra.epe.account.LoginFrag" 
-    >
+    tools:context="tw.supra.epe.account.LoginFrag" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical" >
 
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            android:divider="@android:color/transparent"
-            android:dividerPadding="10dp"
-            android:showDividers="middle"
-            android:stretchColumns="1" >
+            android:orientation="vertical" >
 
-            <TableRow
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/store_table_row_margin"
-                android:background="@android:color/white" >
+                android:background="@android:color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:padding="@dimen/store_table_item_padding"
+                    android:text="@string/store_select_area"
+                    android:textSize="@dimen/store_table_item_text_size" />
+
+                <TextView
+                    android:id="@+id/area"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableRight="@android:drawable/arrow_down_float"
+                    android:drawablePadding="@dimen/drawable_padding"
+                    android:gravity="right|center_vertical"
+                    android:padding="@dimen/store_table_item_padding"
+                    android:textSize="@dimen/store_table_item_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/store_table_row_margin"
+                android:background="@android:color/white"
+                android:orientation="horizontal" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -34,16 +59,47 @@
                     android:textSize="@dimen/store_table_item_text_size" />
 
                 <EditText
+                    android:id="@+id/et_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:padding="@dimen/store_table_item_padding"
                     android:textSize="@dimen/store_table_item_text_size" />
-            </TableRow>
-
-            <TableRow
+            </LinearLayout>
+            
+                        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/store_table_row_margin"
-                android:background="@android:color/white" >
+                android:background="@android:color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:padding="@dimen/store_table_item_padding"
+                    android:text="@string/store_select_map"
+                    android:textSize="@dimen/store_table_item_text_size" />
+
+                <TextView
+                    android:id="@+id/map"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableRight="@android:drawable/arrow_down_float"
+                    android:drawablePadding="@dimen/drawable_padding"
+                    android:gravity="right|center_vertical"
+                    android:padding="@dimen/store_table_item_padding"
+                    android:textSize="@dimen/store_table_item_text_size" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/store_table_row_margin"
+                android:background="@android:color/white"
+                android:orientation="horizontal" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -60,11 +116,14 @@
                     android:background="@android:color/transparent"
                     android:padding="@dimen/store_table_item_padding"
                     android:textSize="@dimen/store_table_item_text_size" />
-            </TableRow>
+            </LinearLayout>
 
-            <TableRow
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/store_table_row_margin"
-                android:background="@android:color/white" >
+                android:background="@android:color/white"
+                android:orientation="horizontal" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -82,11 +141,14 @@
                     android:inputType="phone"
                     android:padding="@dimen/store_table_item_padding"
                     android:textSize="@dimen/store_table_item_text_size" />
-            </TableRow>
+            </LinearLayout>
 
-            <TableRow
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/store_table_row_margin"
-                android:background="@android:color/white" >
+                android:background="@android:color/white"
+                android:orientation="horizontal" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -97,7 +159,7 @@
                     android:textSize="@dimen/store_table_item_text_size" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
 
@@ -119,8 +181,8 @@
                         android:padding="@dimen/store_table_item_padding"
                         android:text="@string/account_reg_frag_btn_verifycode" />
                 </LinearLayout>
-            </TableRow>
-        </TableLayout>
+            </LinearLayout>
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_submit"

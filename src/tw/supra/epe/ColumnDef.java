@@ -116,7 +116,7 @@ public class ColumnDef {
 		public static final String USER_FOLLOWING = "user_following";
 		public static final String USER_FOLLOWED_BY = "user_followed_by";
 	}
-
+	
 	public interface ColumnTag extends BaseColumns {
 		String TAG = "tag";
 	}

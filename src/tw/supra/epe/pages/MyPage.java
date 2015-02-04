@@ -63,11 +63,12 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 			// R.drawable.ic_my_wardrobe),
 			// new Item(R.string.my_page_item_my_type, R.drawable.ic_my_type),
 			// new Item(R.string.my_page_item_my_diary, R.drawable.ic_my_diary),
-//			new Item(),
+			// new Item(),
 			new Item(R.string.my_page_item_my_focus, R.drawable.ic_my_focus),
 			new Item(), ITEM_APPLY_STORE, ITEM_MY_STORE, new Item(),
-			new Item(R.string.my_page_item_invite, R.drawable.ic_my_invite),
-			new Item() };
+			new Item(R.string.my_page_item_invite, R.drawable.ic_my_invite)
+	// new Item()
+	};
 
 	private final BaseAdapter ADAPTER = new BaseAdapter() {
 

@@ -281,6 +281,7 @@ public class DataDef {
                     Columns.R_TIME + " LONG DEFAULT 0 " +
                     ");";
         }
+
     }
 
 }

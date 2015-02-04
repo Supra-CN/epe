@@ -9,6 +9,7 @@ import tw.supra.epe.account.RequestVerifyCode;
 import tw.supra.epe.account.RequestVerifyCode.Type;
 import tw.supra.epe.account.User;
 import tw.supra.epe.core.BaseHostFrag;
+import tw.supra.epe.store.AreaPickerDialog.OnAreaPickedListener;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
@@ -23,9 +24,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class ApplyMallPage extends BaseHostFrag<ApplyStoreActivity> implements
+public class ApplyMallPage extends BaseHostFrag<ApplyStoreActivity> implements OnAreaPickedListener,
 		OnClickListener {
 	private static final int DELAY_VERIFY_CODE = 60;// 定义发送验证码后的倒数计时
 
@@ -34,6 +36,9 @@ public class ApplyMallPage extends BaseHostFrag<ApplyStoreActivity> implements
 	private EditText mEtPassword;
 	private Button mBtnVerifyCode;
 	private Button mBtnReg;
+	
+	private AreaItem mArea;
+	private TextView mTvArea;
 
 	private int mCountDown = 0;// 发送验证码后的倒数计时
 	private String mVerifyCode;
@@ -95,6 +100,9 @@ public class ApplyMallPage extends BaseHostFrag<ApplyStoreActivity> implements
 //		mEtPassword = (EditText) v.findViewById(R.id.et_password);
 //		mBtnVerifyCode = (Button) v.findViewById(R.id.btn_verifycode);
 //		mBtnReg = (Button) v.findViewById(R.id.btn_reg);
+		
+		mTvArea = (TextView) v.findViewById(R.id.area);
+		mTvArea.setOnClickListener(this);
 		return v;
 	}
 
@@ -111,7 +119,7 @@ public class ApplyMallPage extends BaseHostFrag<ApplyStoreActivity> implements
 	}
 
 	@Override
-	public int getIconResId() {
+	public int getIconResId() { 
 		return 0;
 	}
 
@@ -123,6 +131,9 @@ public class ApplyMallPage extends BaseHostFrag<ApplyStoreActivity> implements
 			break;
 		case R.id.btn_reg:
 			onClickReg();
+			break;
+		case R.id.area:
+			showAreaDialog();
 			break;
 
 		default:
@@ -214,4 +225,20 @@ public class ApplyMallPage extends BaseHostFrag<ApplyStoreActivity> implements
 			}, 1000);
 		}
 	}
+	
+	private AreaPickerDialog mAreaPicker;
+
+	private void showAreaDialog() {
+		if (mAreaPicker == null) {
+			mAreaPicker = new AreaPickerDialog(getActivity(), this);
+		}
+		mAreaPicker.show();
+	}
+
+	@Override
+	public void onAreaPicked(AreaItem area) {
+			mArea = area;
+			mTvArea.setText(mArea.NAME);
+	}
+
 }

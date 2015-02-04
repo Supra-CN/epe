@@ -31,32 +31,13 @@
             android:paddingLeft="@dimen/top_tab_item_padding"
             android:paddingRight="@dimen/top_tab_item_padding"
             android:src="@drawable/ic_action_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginLeft="@dimen/top_tab_item_margin"
-            android:layout_marginRight="@dimen/top_tab_item_margin"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="@string/brand_action_focus"
-            android:textColor="@android:color/white" />
     </FrameLayout>
 
-    <tw.supra.epe.pages.home.HomePageTabBar
-        android:id="@+id/page_indicator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:gravity="center_vertical" />
-    <!-- android:background="@color/bottom_bar_bg" -->
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" >
-    </android.support.v4.view.ViewPager>
+        android:layout_weight="1"
+        android:clickable="true" />
 
 </LinearLayout>

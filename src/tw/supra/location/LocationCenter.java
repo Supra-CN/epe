@@ -15,6 +15,7 @@ import android.util.Log;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
+import com.baidu.mapapi.SDKInitializer;
 
 public class LocationCenter {
 	private static final String LOG_TAG = LocationCenter.class.getSimpleName();
@@ -78,6 +79,7 @@ public class LocationCenter {
 	}
 
 	public void startUp(App app) {
+		SDKInitializer.initialize(app);
 		mLocationClient = new LocationClient(app); // 声明LocationClient类
 		// LocationClientOption clientOption = new LocationClientOption();
 		// mLocationClient.setLocOption(clientOption);

@@ -33,13 +33,13 @@
         <!-- android:layout_margin="5dp" -->
         <!-- android:text="@string/epe_page_label_search_bar" /> -->
 
+<!--             android:background="@color/half_transparent" -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:padding="15sp"
-            android:background="@color/half_transparent"
-            android:text="@string/epe_page_label_near_store" />
+            android:padding="5sp"
+            android:text="@string/epe_page_label_near_store"
+            android:textSize="18sp" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -63,31 +63,29 @@
                         android:id="@+id/near_store_container_wave"
                         android:layout_width="wrap_content"
                         android:layout_height="120dp"
-                        android:orientation="horizontal"
                         android:layout_gravity="bottom"
-                        />
+                        android:orientation="horizontal" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        >
+                        android:orientation="vertical" >
 
                         <LinearLayout
                             android:id="@+id/near_store_container_top"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:orientation="horizontal"
                             android:gravity="top"
+                            android:orientation="horizontal"
                             android:paddingLeft="@dimen/epe_wave_item_half_width" />
 
                         <LinearLayout
                             android:id="@+id/near_store_container_bottom"
                             android:layout_width="wrap_content"
-                            android:gravity="bottom"
                             android:layout_height="0dp"
                             android:layout_weight="1"
+                            android:gravity="bottom"
                             android:orientation="horizontal" />
                     </LinearLayout>
                 </FrameLayout>
@@ -96,14 +94,14 @@
             <!-- android:background="@drawable/near_store_bg_wave" -->
         </FrameLayout>
 
+<!--             android:background="@color/half_transparent" -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-                        android:textSize="18sp"
-            android:padding="15sp"
-            android:background="@color/half_transparent"
-            android:text="@string/epe_page_label_near_brand" />
+            android:padding="5sp"
+            android:text="@string/epe_page_label_near_brand"
+            android:textSize="18sp" />
 
         <HorizontalScrollView
             android:layout_width="match_parent"

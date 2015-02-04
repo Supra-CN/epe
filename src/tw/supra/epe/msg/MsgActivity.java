@@ -85,7 +85,7 @@ public class MsgActivity extends BaseActivity implements OnClickListener,
 			title = JsonUtils.getStrSafely(mJoData, "title");
 			name = JsonUtils.getStrSafely(mJoData, "from_username");
 
-			img = JsonUtils.getStrSafely(mJoData, "photo");
+			img = JsonUtils.getStrSafely(mJoData, "pic");
 
 			time = TimeUtil.formatTimeWithCountDown(this,
 					JsonUtils.getLongSafely(mJoData, "send_time"));

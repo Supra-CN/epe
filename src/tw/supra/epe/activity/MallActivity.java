@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.store.StoreActivity;
+import tw.supra.location.MapActivity;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
@@ -42,7 +43,10 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 
 	private TextView mTvMallName;
 	private TextView mTvAddress;
-
+	
+	private double mLat;
+	private double mLon;
+	
 	private final ArrayList<Page> PAGES = new ArrayList<Page>();
 
 	@Override
@@ -54,6 +58,7 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 		setContentView(R.layout.activity_mall);
 
 		findViewById(R.id.action_back).setOnClickListener(this);
+		findViewById(R.id.map).setOnClickListener(this);
 
 		mTvAddress = (TextView) findViewById(R.id.address);
 		mTvMallName = (TextView) findViewById(R.id.mall_name);
@@ -83,6 +88,10 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 		if (RequestEvent.FINISH == event) {
 			if (info.ERROR_CODE.isOK()) {
 				try {
+					
+					mLat= info.resultJo.getDouble(MallInfo.LATITUDE);
+					mLon= info.resultJo.getDouble(MallInfo.LONGITUDE);
+					
 					mMallName = info.resultJo.getString(MallInfo.MALL_NAME);
 					mTvMallName.setText(mMallName);
 					mTvAddress.setText(getString(R.string.mall_info_address,
@@ -247,6 +256,9 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 		switch (v.getId()) {
 		case R.id.action_back:
 			finish();
+			break;
+		case R.id.map:
+			MapActivity.show(this, mMallName, mLat, mLon);
 			break;
 
 		default:

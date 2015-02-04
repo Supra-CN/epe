@@ -292,10 +292,10 @@ public class EpePage extends BaseMainPage implements LocationListener {
 		String name = joItem.getString(NearStoreInfo.ATTR_MALL_NAME);
 		String distance = joItem.getString(NearStoreInfo.ATTR_DISTANCE) + "m";
 		
-		View v = View.inflate(getActivity(),
+		View v = View.inflate(getActivity(), 
 				isEnen ? R.layout.near_store_item_top
 						: R.layout.near_store_item_bottom, null);
-
+ 
 		TextView tvName = (TextView) v.findViewById(R.id.name);
 		TextView tvDistance = (TextView) v.findViewById(R.id.distance);
 		// tv.setGravity((isEnen ? Gravity.BOTTOM : Gravity.TOP)

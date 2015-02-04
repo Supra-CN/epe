@@ -178,6 +178,8 @@
     <string name="t_editor_item_price">价格</string>
     <!-- fav -->
     <string name="fav_label">我的收藏</string>
+    <!-- map -->
+    <string name="map_picker_label">选择地点</string>
     <!-- settings -->
     <string name="settings_label">设置</string>
     <string name="settings_item_about">关于我们</string>
@@ -200,12 +202,16 @@
     <string name="store_my_label">我是店主</string>
     <string name="store_apply_label">申请店铺</string>
     <string name="store_name">名称</string>
+    <string name="store_select_area">选择地区</string>
+    <string name="store_select_map">地图选址</string>
+    <string name="store_select_area_prompt_province">省市</string>
+    <string name="store_select_area_prompt_city"> 城市</string>
     <string name="store_add">地址</string>
     <string name="store_phone">电话</string>
     <string name="store_verify_code">验证码</string>
     <string name="store_broad_name">品牌名称</string>
     <string name="store_mall_name">选择商场</string>
-    <string name="store_mall_floor">选择楼层</string>
+    <string name="store_mall_floor">选择楼层品牌</string>
     <string name="store_mall_door">门牌号</string>
 
 </resources>
