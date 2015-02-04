@@ -11,6 +11,7 @@ import tw.supra.location.MapPickerActivity;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,10 +23,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.baidu.mapapi.model.LatLng;
+
 public class ApplyStorePage extends BaseHostFrag<ApplyStoreActivity> implements
 		OnAreaPickedListener, OnClickListener, NetWorkHandler<LoginInfo> {
 
 	private static final String LOG_TAG = ApplyStorePage.class.getSimpleName();
+
+	private static final int REQUESTCODE_PICK_MAP = 100;
 
 	private TextView mTvMap;
 	private TextView mTvArea;
@@ -33,6 +38,8 @@ public class ApplyStorePage extends BaseHostFrag<ApplyStoreActivity> implements
 	private Button mBtnLogin;
 
 	private AreaItem mArea;
+
+	private LatLng mLatLng;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,10 +98,24 @@ public class ApplyStorePage extends BaseHostFrag<ApplyStoreActivity> implements
 		}
 		mAreaPicker.show();
 	}
-	
+
 	private void showMapPicker() {
-		Intent intent = new Intent(getActivity(),MapPickerActivity.class);
-		startActivity(intent);
+		Intent intent = new Intent(getActivity(), MapPickerActivity.class);
+		startActivityForResult(intent, REQUESTCODE_PICK_MAP);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == Activity.RESULT_OK
+				&& requestCode == REQUESTCODE_PICK_MAP) {
+			mTvMap.setText(data
+					.getStringExtra(MapPickerActivity.RESULT_STR_DESC));
+
+			mLatLng = new LatLng(data.getDoubleExtra(
+					MapPickerActivity.RESULT_DOUBLE_LAT, 0),
+					data.getDoubleExtra(MapPickerActivity.RESULT_DOUBLE_LON, 0));
+
+		}
 	}
 
 	// private void onClickLogin() {
