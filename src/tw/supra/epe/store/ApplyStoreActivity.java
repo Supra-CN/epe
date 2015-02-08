@@ -7,16 +7,16 @@ import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseHostFrag;
-import tw.supra.epe.core.BaseMainPage;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
 import com.viewpagerindicator.IconPagerAdapter;
@@ -27,7 +27,8 @@ public class ApplyStoreActivity extends BaseActivity implements OnClickListener 
 	private static final String LOG_TAG = ApplyStoreActivity.class
 			.getSimpleName();
 
-	private static final Class<?>[] PAGES = {  ApplyMallPage.class,ApplyStorePage.class };
+	private static final Class<?>[] PAGES = { ApplyShopPage.class,
+			ApplyStorePage.class };
 
 	private PageAdapter mAdapter;
 	private PageIndicator mPageIndicator;
@@ -55,6 +56,7 @@ public class ApplyStoreActivity extends BaseActivity implements OnClickListener 
 		if (!AccountCenter.isLogin()) {
 			startActivity(new Intent(App.ACTION_LOGIN));
 		}
+		
 	}
 
 	@Override
@@ -66,6 +68,21 @@ public class ApplyStoreActivity extends BaseActivity implements OnClickListener 
 		default:
 			break;
 		}
+	}
+
+	public void notifyOkToFinish() {
+		Builder builder = new Builder(this);
+		builder.setTitle(R.string.apply_dialog_title);
+		builder.setMessage(R.string.apply_dialog_msg);
+		builder.setPositiveButton(android.R.string.ok, new AlertDialog.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				finish();
+			}
+
+		});
+		builder.create().show();
 	}
 
 	public class PageAdapter extends FragmentPagerAdapter implements
@@ -84,10 +101,12 @@ public class ApplyStoreActivity extends BaseActivity implements OnClickListener 
 
 		@Override
 		public BaseHostFrag<ApplyStoreActivity> getItem(int position) {
-			BaseHostFrag<ApplyStoreActivity> page = PAGE_POOL.get(PAGES[position]);
+			BaseHostFrag<ApplyStoreActivity> page = PAGE_POOL
+					.get(PAGES[position]);
 			if (null == page) {
 				try {
-					page = (BaseHostFrag<ApplyStoreActivity>) PAGES[position].newInstance();
+					page = (BaseHostFrag<ApplyStoreActivity>) PAGES[position]
+							.newInstance();
 					PAGE_POOL.put(PAGES[position], page);
 				} catch (InstantiationException e) {
 					e.printStackTrace();
@@ -114,5 +133,6 @@ public class ApplyStoreActivity extends BaseActivity implements OnClickListener 
 		public int getIconResId(int index) {
 			return getItem(index).getIconResId();
 		}
+
 	}
 }

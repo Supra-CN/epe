@@ -24,19 +24,19 @@ public class AreaPickerDialog extends Dialog implements OnChildClickListener,
 	private final ExpandableListView LIST_VIEW;
 	private final AreaAdapter ADAPTER = new AreaAdapter();
 
-	private final ArrayList<AreaItem> DATA_SET;
+	private final ArrayList<ObjArea> DATA_SET;
 
 	public final OnAreaPickedListener LISTENER;
 
 	public interface OnAreaPickedListener {
-		public void onAreaPicked(AreaItem area);
+		public void onAreaPicked(ObjArea area);
 	}
 
 	public AreaPickerDialog(Context context, OnAreaPickedListener listener) {
 		super(context, R.style.CleanDialog);
 		// super(context);
 		LISTENER = listener;
-		DATA_SET = AreaItem.queryAreas();
+		DATA_SET = ObjArea.queryAreas();
 		LIST_VIEW = new ExpandableListView(context);
 		// LIST_VIEW.setBackgroundColor(context.getResources().getColor(android.R.color.black));
 		LIST_VIEW.setAdapter(ADAPTER);
@@ -66,23 +66,23 @@ public class AreaPickerDialog extends Dialog implements OnChildClickListener,
 		}
 
 		@Override
-		public AreaItem getGroup(int groupPosition) {
+		public ObjArea getGroup(int groupPosition) {
 			return DATA_SET.get(groupPosition);
 		}
 
 		@Override
-		public AreaItem getChild(int groupPosition, int childPosition) {
+		public ObjArea getChild(int groupPosition, int childPosition) {
 			return getGroup(groupPosition).getChilds().get(childPosition);
 		}
 
 		@Override
 		public long getGroupId(int groupPosition) {
-			return getGroup(groupPosition).ID;
+			return getGroup(groupPosition).CITY_ID;
 		}
 
 		@Override
 		public long getChildId(int groupPosition, int childPosition) {
-			return getChild(groupPosition, childPosition).ID;
+			return getChild(groupPosition, childPosition).CITY_ID;
 		}
 
 		@Override

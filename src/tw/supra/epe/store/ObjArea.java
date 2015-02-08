@@ -5,26 +5,29 @@ import java.util.ArrayList;
 import tw.supra.data.AssetData;
 import tw.supra.data.DBUtils;
 import tw.supra.epe.App;
+import tw.supra.mod.ModelObj;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-public class AreaItem {
-	private static final String LOG_TAG = AreaItem.class.getSimpleName();
+public class ObjArea extends ModelObj {
+	private static final String LOG_TAG = ObjArea.class.getSimpleName();
 
 	private static final String DB_AERA = "garea.db";
 	private static final String TABLE_AERA = "area";
 	private static final String AERA_NAME = "name";
 	private static final String AERA_ID = "id";
 
-	final int ID;
+	final int PROVINCE_ID;
+	final int CITY_ID;
 	final String NAME;
 	private String mDesc;
 
-	private ArrayList<AreaItem> mChilds;
+	private ArrayList<ObjArea> mChilds;
 
-	public AreaItem(int id, String name) {
-		ID = id;
+	public ObjArea(int id, String name) {
+		CITY_ID = id;
+		PROVINCE_ID = id - (id % 100);
 		NAME = name;
 		mDesc = name;
 	}
@@ -37,7 +40,7 @@ public class AreaItem {
 		return mDesc;
 	}
 
-	public ArrayList<AreaItem> getChilds() {
+	public ArrayList<ObjArea> getChilds() {
 		if (null == mChilds) {
 			mChilds = queryChilds();
 			Log.i(LOG_TAG, "getChilds : " + mChilds.size());
@@ -45,8 +48,8 @@ public class AreaItem {
 		return mChilds;
 	}
 
-	public static ArrayList<AreaItem> queryAreas() {
-		ArrayList<AreaItem> areas = new ArrayList<AreaItem>();
+	public static ArrayList<ObjArea> queryAreas() {
+		ArrayList<ObjArea> areas = new ArrayList<ObjArea>();
 		SQLiteDatabase db = AssetData.getInstance().getDb(App.getInstance(),
 				DB_AERA);
 		Cursor c = db.query(TABLE_AERA, null, " id%100=0 ", null, null, null,
@@ -58,15 +61,15 @@ public class AreaItem {
 		return areas;
 	}
 
-	private ArrayList<AreaItem> queryChilds() {
-		ArrayList<AreaItem> areas = new ArrayList<AreaItem>();
+	private ArrayList<ObjArea> queryChilds() {
+		ArrayList<ObjArea> areas = new ArrayList<ObjArea>();
 		SQLiteDatabase db = AssetData.getInstance().getDb(App.getInstance(),
 				DB_AERA);
 		Cursor c = db.query(TABLE_AERA, null,
-				String.format(" id-%d between 1 and 99  ", ID), null, null,
-				null, null);
+				String.format(" id-%d between 1 and 99  ", CITY_ID), null,
+				null, null, null);
 		for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-			AreaItem item = createAreaFromCursor(c);
+			ObjArea item = createAreaFromCursor(c);
 			item.setDesc(NAME + " " + item.NAME);
 			areas.add(item);
 		}
@@ -74,10 +77,10 @@ public class AreaItem {
 		return areas;
 	}
 
-	private static AreaItem createAreaFromCursor(Cursor c) {
+	private static ObjArea createAreaFromCursor(Cursor c) {
 		String name = DBUtils.getStrByCol(c, AERA_NAME);
 		int id = DBUtils.getIntByCol(c, AERA_ID);
-		return new AreaItem(id, name);
+		return new ObjArea(id, name);
 	}
 
 }

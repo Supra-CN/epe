@@ -59,6 +59,7 @@
                     android:textSize="@dimen/store_table_item_text_size" />
 
                 <TextView
+                    android:id="@+id/mall"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -85,6 +86,7 @@
                     android:textSize="@dimen/store_table_item_text_size" />
 
                 <TextView
+                    android:id="@+id/mall_store"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -111,14 +113,15 @@
                     android:textSize="@dimen/store_table_item_text_size" />
 
                 <EditText
-                    android:id="@+id/et_name"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/et_door_no"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@android:color/transparent"
+                    android:gravity="right"
                     android:padding="@dimen/store_table_item_padding"
                     android:textSize="@dimen/store_table_item_text_size" />
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -137,9 +140,11 @@
 
                 <EditText
                     android:id="@+id/et_phone"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@android:color/transparent"
+                    android:gravity="right"
                     android:inputType="phone"
                     android:padding="@dimen/store_table_item_padding"
                     android:textSize="@dimen/store_table_item_text_size" />
@@ -166,11 +171,12 @@
                     android:orientation="horizontal" >
 
                     <EditText
-                        android:id="@+id/et_verify_code"
+                        android:id="@+id/et_verifycode"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
+                        android:gravity="right"
                         android:inputType="phone"
                         android:padding="@dimen/store_table_item_padding"
                         android:textSize="@dimen/store_table_item_text_size" />
