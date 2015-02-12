@@ -36,6 +36,8 @@ public class RequestLogin extends EpeJsonRequest<LoginInfo> {
 		user.setAuth(JsonUtils.getStrSafely(response, "authcode"));
 		user.setName(JsonUtils.getStrSafely(response, "user_name"));
 		user.setAvatarUrl(JsonUtils.getStrSafely(response, "photo"));
+		user.setShopMan(JsonUtils.getStrSafely(response, "shopman"));
+		user.setShopId(JsonUtils.getStrSafely(response, "shop_id"));
 		String scoreStr = JsonUtils.getStrSafely(response, "score");
 		if (TextUtils.isDigitsOnly(scoreStr)) {
 			user.setScore(Integer.parseInt(scoreStr));

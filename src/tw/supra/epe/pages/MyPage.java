@@ -1,8 +1,12 @@
 package tw.supra.epe.pages;
 
+import java.util.ArrayList;
+
 import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
+import tw.supra.epe.account.RequestUserInfo;
 import tw.supra.epe.account.User;
+import tw.supra.epe.account.UserInfo;
 import tw.supra.epe.account.UserInfoEditorActivity;
 import tw.supra.epe.activity.SettingsActivity;
 import tw.supra.epe.activity.UserHomeActivity;
@@ -11,10 +15,13 @@ import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.store.ApplyStoreActivity;
 import tw.supra.epe.store.MyStoreActivity;
 import tw.supra.network.NetworkCenter;
+import tw.supra.network.request.NetWorkHandler;
+import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkRoundedImageView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,8 +32,15 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
 public class MyPage extends BaseMainPage implements OnItemClickListener,
-		OnClickListener {
+		NetWorkHandler<UserInfo>, OnRefreshListener<ListView>, OnClickListener {
+
+	private PullToRefreshListView mListView;
+
 	private final Item ITEM_MY_HOME = new Item(R.string.my_page_item_my_home,
 			R.drawable.ic_my_home) {
 		public void onItemClick() {
@@ -39,12 +53,14 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 			startActivity(new Intent(getActivity(), FavActivity.class));
 		};
 	};
+
 	private final Item ITEM_APPLY_STORE = new Item(
 			R.string.my_page_item_apply_store, R.drawable.ic_apply_store) {
 		public void onItemClick() {
 			startActivity(new Intent(getActivity(), ApplyStoreActivity.class));
 		};
 	};
+
 	private final Item ITEM_MY_STORE = new Item(R.string.my_page_item_my_store,
 			R.drawable.ic_apply_store) {
 		public void onItemClick() {
@@ -52,23 +68,41 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 		};
 	};
 
-	private final Item[] LIST = {
-			ITEM_MY_HOME,
-			new Item(),
-			ITEM_MY_FAV,
-			// new Item(R.string.my_page_item_my_custom,
-			// R.drawable.ic_my_custom),
-			// new Item(),
-			// new Item(R.string.my_page_item_my_wardrobe,
-			// R.drawable.ic_my_wardrobe),
-			// new Item(R.string.my_page_item_my_type, R.drawable.ic_my_type),
-			// new Item(R.string.my_page_item_my_diary, R.drawable.ic_my_diary),
-			// new Item(),
-			new Item(R.string.my_page_item_my_focus, R.drawable.ic_my_focus),
-			new Item(), ITEM_APPLY_STORE, ITEM_MY_STORE, new Item(),
-			new Item(R.string.my_page_item_invite, R.drawable.ic_my_invite)
-	// new Item()
-	};
+	private final ArrayList<Item> LIST = new ArrayList<Item>();
+
+	private void setupList() {
+		User user = AccountCenter.getCurrentUser();
+
+		LIST.clear();
+		LIST.add(ITEM_MY_HOME);
+		if (User.SHOP_MAN_OK.equals(user.getShopMan())) {
+			LIST.add(ITEM_MY_STORE);
+		}
+		LIST.add(new Item());
+		LIST.add(ITEM_MY_FAV);
+		// new Item(R.string.my_page_item_my_custom,
+		// R.drawable.ic_my_custom),
+		// new Item(),
+		// new Item(R.string.my_page_item_my_wardrobe,
+		// R.drawable.ic_my_wardrobe),
+		// new Item(R.string.my_page_item_my_type, R.drawable.ic_my_type),
+		// new Item(R.string.my_page_item_my_diary, R.drawable.ic_my_diary),
+		// new Item(),
+		LIST.add(new Item(R.string.my_page_item_my_focus,
+				R.drawable.ic_my_focus));
+		if (User.SHOP_MAN_NO.equals(user.getShopMan())) {
+			LIST.add(new Item());
+			LIST.add(ITEM_APPLY_STORE);
+		}
+		if (User.SHOP_MAN_HOLD.equals(user.getShopMan())) {
+			LIST.add(new Item());
+			LIST.add(new Item(R.string.my_page_item_apply_store_on_hold,
+					R.drawable.ic_apply_store));
+		}
+		LIST.add(new Item());
+		LIST.add(new Item(R.string.my_page_item_invite, R.drawable.ic_my_invite));
+		// new Item()
+	}
 
 	private final BaseAdapter ADAPTER = new BaseAdapter() {
 
@@ -99,12 +133,12 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 
 		@Override
 		public Item getItem(int position) {
-			return LIST[position];
+			return LIST.get(position);
 		}
 
 		@Override
 		public int getCount() {
-			return LIST.length;
+			return LIST.size();
 		}
 
 		public boolean isEnabled(int position) {
@@ -117,13 +151,17 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 	private TextView mTvScore;
 	private NetworkRoundedImageView mIvAvator;
 
+	private static Handler sHandler = new Handler();
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.page_my, null);
-		ListView listView = (ListView) v.findViewById(R.id.list_view);
-		listView.setOnItemClickListener(this);
-		listView.setAdapter(ADAPTER);
+		mListView = (PullToRefreshListView) v.findViewById(R.id.list_view);
+		mListView.setOnRefreshListener(this);
+		mListView.setOnItemClickListener(this);
+		mListView.setAdapter(ADAPTER);
+		mListView.setDividerDrawable(null);
 		v.findViewById(R.id.setting).setOnClickListener(this);
 		v.findViewById(R.id.user_info_container).setOnClickListener(this);
 		mTvName = (TextView) v.findViewById(R.id.name);
@@ -134,8 +172,20 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 	}
 
 	@Override
-	public void onStart() {
-		super.onStart();
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		sHandler.postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				mListView.setRefreshing();
+			}
+		}, 500);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
 		updateUI();
 	}
 
@@ -152,7 +202,7 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		LIST[position].onItemClick();
+		LIST.get(position - 1).onItemClick();
 	}
 
 	private class Item {
@@ -182,6 +232,8 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 				.getImageLoader());
 		mTvName.setText(user.getName());
 		mTvScore.setText(getString(R.string.my_page_score, user.getScore()));
+		setupList();
+		ADAPTER.notifyDataSetChanged();
 	}
 
 	@Override
@@ -199,4 +251,32 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 			break;
 		}
 	}
+
+	@Override
+	public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+		// mListView.onRefreshComplete();
+		updateUI();
+		request();
+	}
+
+	private void request() {
+		NetworkCenter.getInstance().putToQueue(
+				new RequestUserInfo(this, new UserInfo(AccountCenter
+						.getCurrentUserUid())));
+	}
+
+	@Override
+	public boolean HandleEvent(RequestEvent event, UserInfo info) {
+		switch (event) {
+		case FINISH:
+			mListView.onRefreshComplete();
+			updateUI();
+			break;
+
+		default:
+			break;
+		}
+		return false;
+	}
+
 }

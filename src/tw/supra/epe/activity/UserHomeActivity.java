@@ -14,7 +14,7 @@ import tw.supra.epe.account.UserInfo;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.pages.RequestTArray;
 import tw.supra.epe.pages.TArrayInfo;
-import tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView;
+import tw.supra.epe.ui.pullto.SupraPullToRefreshStaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
@@ -46,7 +46,7 @@ public class UserHomeActivity extends BaseActivity implements OnClickListener,
 	private TextView mName;
 	private TextView mAttentionCount;
 	private TextView mFansCount;
-	private PullToRefreshStaggeredGridView mPullRefreshGrid;
+	private SupraPullToRefreshStaggeredGridView mPullRefreshGrid;
 
 	private int mPageLoaded = -1;
 	private int mAdjustImageWidth = 0;
@@ -61,7 +61,7 @@ public class UserHomeActivity extends BaseActivity implements OnClickListener,
 		mAttentionCount = (TextView) findViewById(R.id.attention_count);
 		mFansCount = (TextView) findViewById(R.id.fans_count);
 
-		mPullRefreshGrid = (PullToRefreshStaggeredGridView) findViewById(R.id.grid);
+		mPullRefreshGrid = (SupraPullToRefreshStaggeredGridView) findViewById(R.id.grid);
 		mPullRefreshGrid.setOnRefreshListener(this);
 
 		StaggeredGridView gridView = mPullRefreshGrid.getRefreshableView();

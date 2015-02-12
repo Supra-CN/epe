@@ -12,7 +12,7 @@ import tw.supra.epe.activity.product.ProductActivity;
 import tw.supra.epe.core.BaseFrag;
 import tw.supra.epe.pages.worth.RequestWorth;
 import tw.supra.epe.pages.worth.WorthInfo;
-import tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView;
+import tw.supra.epe.ui.pullto.SupraPullToRefreshStaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView.OnItemClickListener;
 import tw.supra.location.LocationCallBack;
@@ -58,7 +58,7 @@ public class StoreProductPage extends BaseFrag implements OnClickListener,
 
 	private static Handler sHandler = new Handler();
 
-	private PullToRefreshStaggeredGridView mPullRefreshGrid;
+	private SupraPullToRefreshStaggeredGridView mPullRefreshGrid;
 	// private StaggeredGridView mGridView;
 
 	// private int mPageTop = 1;
@@ -188,7 +188,7 @@ public class StoreProductPage extends BaseFrag implements OnClickListener,
 
 		View v = inflater.inflate(R.layout.page_worth, null);
 		v.findViewById(R.id.select).setOnClickListener(this);
-		mPullRefreshGrid = (PullToRefreshStaggeredGridView) v
+		mPullRefreshGrid = (SupraPullToRefreshStaggeredGridView) v
 				.findViewById(R.id.pull_refresh_grid);
 		mPullRefreshGrid.setOnRefreshListener(this);
 		StaggeredGridView grid = mPullRefreshGrid.getRefreshableView();

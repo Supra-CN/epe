@@ -30,6 +30,8 @@ public class ColumnDef {
 		public static final String SCORE = "score";
 		public static final String FANS_COUNT = "fans_count";
 		public static final String ATTENTION_COUNT = "attention_count";
+		public static final String SHOP_MAN = "shop_man";
+		public static final String SHOP_ID = "shop_id";
 		// public static final String DESCRIPTION = "description";
 		// public static final String GRADE = "grade";
 		// public static final String CHARM = "charm";

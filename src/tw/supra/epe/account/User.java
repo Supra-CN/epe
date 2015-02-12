@@ -20,6 +20,11 @@ import android.text.TextUtils;
 public class User extends PersistableObj {
 	private static final String LOG_TAG = User.class.getSimpleName();
 	public static final String ANONYMOUS = DataUser.ANONYMOUS;
+	
+	public static final String SHOP_MAN_NO = "0";
+	public static final String SHOP_MAN_HOLD = "1";
+	public static final String SHOP_MAN_OK = "2";
+	
 
 	public static enum Gender {
 		MALE("male"), FEMALE("female"), SECRET("secret"), UNKNOW("");
@@ -45,6 +50,8 @@ public class User extends PersistableObj {
 	public final String UID;
 	private String mAuth;
 	private String mName;
+	private String mShopMan;
+	private String mShopId;
 
 	// private String mTitle;
 	// private String mDescription;
@@ -209,10 +216,6 @@ public class User extends PersistableObj {
 	// =====================================================================
 	// setter & getter for persistable attrs
 	// =====================================================================
-	public void setName(String nickName) {
-		touch(State.MODIFIED);
-		mName = nickName;
-	}
 
 	public void setAuth(String auth) {
 		touch(State.MODIFIED);
@@ -223,8 +226,26 @@ public class User extends PersistableObj {
 		return mAuth;
 	}
 
+	public void setName(String nickName) {
+		touch(State.MODIFIED);
+		mName = nickName;
+	}
 	public String getName() {
 		return mName;
+	}
+	public void setShopMan(String shopMan) {
+		touch(State.MODIFIED);
+		mShopMan = shopMan;
+	}
+	public String getShopMan() {
+		return mShopMan;
+	}
+	public void setShopId(String shopId) {
+		touch(State.MODIFIED);
+		mShopId = shopId;
+	}
+	public String getShopId() {
+		return mShopId;
 	}
 
 	// public void setTitle(String title) {
@@ -419,6 +440,8 @@ public class User extends PersistableObj {
 
 		setName(DBUtils.getStrByCol(c, TableAccounts.Columns.NAME));
 		setAuth(DBUtils.getStrByCol(c, TableAccounts.Columns.AUTH));
+		setShopMan(DBUtils.getStrByCol(c, TableAccounts.Columns.SHOP_MAN));
+		setShopId(DBUtils.getStrByCol(c, TableAccounts.Columns.SHOP_ID));
 		// setNickName(DBUtils.getStrByCol(c, TableAccounts.Columns.NICK_NAME));
 		// setTitle(DBUtils.getStrByCol(c, TableAccounts.Columns.TITLE));
 		// setDesc(DBUtils.getStrByCol(c, TableAccounts.Columns.DESCRIPTION));
@@ -451,6 +474,8 @@ public class User extends PersistableObj {
 		stringMap.put(TableAccounts.Columns.UID, UID);
 		stringMap.put(TableAccounts.Columns.AUTH, getAuth());
 		stringMap.put(TableAccounts.Columns.NAME, getName());
+		stringMap.put(TableAccounts.Columns.SHOP_MAN, getShopMan());
+		stringMap.put(TableAccounts.Columns.SHOP_ID, getShopId());
 		// stringMap.put(TableAccounts.Columns.GENDER, mGender.desc);
 		// stringMap.put(TableAccounts.Columns.TITLE, mTitle);
 		// stringMap.put(TableAccounts.Columns.DESCRIPTION, mDescription);

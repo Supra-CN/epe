@@ -143,6 +143,7 @@
     <string name="my_page_item_my_focus">我的关注</string>
     <string name="my_page_item_my_store">我是店主</string>
     <string name="my_page_item_apply_store">申请衣+衣小店</string>
+    <string name="my_page_item_apply_store_on_hold">小店审核中</string>
     <string name="my_page_item_invite">邀请好友</string>
     <string name="my_page_item_log_out">切换帐号</string>
 

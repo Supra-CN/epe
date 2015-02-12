@@ -29,23 +29,23 @@ import android.widget.ListAdapter;
 import com.handmark.pulltorefresh.library.OverscrollHelper;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 
-public class PullToRefreshStaggeredGridView extends
+public class SupraPullToRefreshStaggeredGridView extends
 		PullToRefreshBase<StaggeredGridView> {
 
 
-	public PullToRefreshStaggeredGridView(Context context) {
+	public SupraPullToRefreshStaggeredGridView(Context context) {
 		super(context);
 	}
 
-	public PullToRefreshStaggeredGridView(Context context, AttributeSet attrs) {
+	public SupraPullToRefreshStaggeredGridView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public PullToRefreshStaggeredGridView(Context context, Mode mode) {
+	public SupraPullToRefreshStaggeredGridView(Context context, Mode mode) {
 		super(context, mode);
 	}
 
-	public PullToRefreshStaggeredGridView(Context context, Mode mode,
+	public SupraPullToRefreshStaggeredGridView(Context context, Mode mode,
 			AnimationStyle style) {
 		super(context, mode, style);
 	}
@@ -150,7 +150,7 @@ public class PullToRefreshStaggeredGridView extends
 			// OVERSCROLL_SCALE_FACTOR, isTouchEvent);
 
 			// Does all of the hard work...
-			OverscrollHelper.overScrollBy(PullToRefreshStaggeredGridView.this,
+			OverscrollHelper.overScrollBy(SupraPullToRefreshStaggeredGridView.this,
 					deltaX, scrollX, deltaY, getScrollRange(), isTouchEvent);
 
 			return returnValue;

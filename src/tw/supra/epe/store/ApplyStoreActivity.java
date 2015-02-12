@@ -5,6 +5,7 @@ import java.util.HashMap;
 import tw.supra.epe.App;
 import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
+import tw.supra.epe.account.User;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseHostFrag;
 import android.app.AlertDialog;
@@ -71,6 +72,7 @@ public class ApplyStoreActivity extends BaseActivity implements OnClickListener 
 	}
 
 	public void notifyOkToFinish() {
+		AccountCenter.getCurrentUser().setShopMan(User.SHOP_MAN_HOLD);
 		Builder builder = new Builder(this);
 		builder.setTitle(R.string.apply_dialog_title);
 		builder.setMessage(R.string.apply_dialog_msg);

@@ -30,7 +30,7 @@
             android:src="@drawable/ic_create_t" />
     </FrameLayout>
 
-    <tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView
+    <tw.supra.epe.ui.pullto.SupraPullToRefreshStaggeredGridView
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/grid"
         android:layout_width="match_parent"

@@ -10,7 +10,7 @@ import tw.supra.epe.R;
 import tw.supra.epe.activity.t.TActivity;
 import tw.supra.epe.activity.t.TEditorActivity;
 import tw.supra.epe.core.BaseMainPage;
-import tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView;
+import tw.supra.epe.ui.pullto.SupraPullToRefreshStaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView.OnItemClickListener;
 import tw.supra.network.NetworkCenter;
@@ -42,7 +42,7 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TArrayInfo>,
 
 	private static final int PAGE_SIZE = 20;
 	private final ArrayList<JSONObject> DATA_SET = new ArrayList<JSONObject>();
-	private PullToRefreshStaggeredGridView mPullRefreshGrid;
+	private SupraPullToRefreshStaggeredGridView mPullRefreshGrid;
 
 	private int mPageLoaded = -1;
 	private int mAdjustImageWidth = 0;
@@ -52,7 +52,7 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TArrayInfo>,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.page_t, null);
 		// v.setText(this.getClass().getSimpleName());
-		mPullRefreshGrid = (PullToRefreshStaggeredGridView) v
+		mPullRefreshGrid = (SupraPullToRefreshStaggeredGridView) v
 				.findViewById(R.id.grid);
 		mPullRefreshGrid.setOnRefreshListener(this);
 		mPullRefreshGrid.getRefreshableView().setAdapter(ADAPTER);

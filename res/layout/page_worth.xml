@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView
+    <tw.supra.epe.ui.pullto.SupraPullToRefreshStaggeredGridView
         xmlns:app="http://schemas.android.com/apk/res/tw.supra.epe"
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/pull_refresh_grid"

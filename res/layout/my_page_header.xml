@@ -1,40 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/tw.supra.epe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:background="@drawable/my_banner"
         android:orientation="vertical" >
-
-        <!-- android:layout_height="150dp" -->
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/top_tab_height"
             android:orientation="horizontal" >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/indictor_tab_my"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/top_tab_title_text_size" />
+
             <ImageButton
-                android:id="@+id/action_back"
+                android:id="@+id/setting"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="right|center_vertical"
                 android:layout_marginLeft="@dimen/top_tab_item_margin"
                 android:layout_marginRight="@dimen/top_tab_item_margin"
                 android:background="@android:color/transparent"
-                android:paddingLeft="@dimen/top_tab_item_padding"
-                android:paddingRight="@dimen/top_tab_item_padding"
-                android:src="@drawable/ic_action_back" />
+                android:padding="5dp"
+                android:src="@drawable/ic_action_setting" />
         </FrameLayout>
 
         <LinearLayout
+            android:id="@+id/user_info_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:padding="10dp" >
 
             <tw.supra.network.ui.NetworkRoundedImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -50,59 +58,44 @@
                 app:riv_tile_mode="repeat" />
             <!-- app:riv_corner_radius="@dimen/avator_radius" -->
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Supra"
-                android:textColor="@android:color/white"
-                android:textSize="20sp" />
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/attention_count"
+                    android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@string/user_home_attention_count"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:background="@android:color/white" />
-
                 <TextView
-                    android:id="@+id/fans_count"
+                    android:id="@+id/score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@string/user_home_fans_count"
+                    android:text="@string/my_page_score"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_page_btn_edit"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/half_transparent"
-        android:text="@string/user_home_label_t" />
-
-    <tw.supra.epe.ui.pullto.SupraPullToRefreshStaggeredGridView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/grid"
+        android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:orientation="vertical"
         android:layout_weight="1"
-        app:numColumns="2"
-        ptr:ptrMode="both" />
+        ptr:ptrMode="pullFromStart" />
 
 </LinearLayout>

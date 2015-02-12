@@ -33,6 +33,8 @@ public class RequestUserInfo extends EpeJsonRequest<UserInfo> {
 		if (null != joUser) {
 			User user = AccountCenter.getUser(joUser.getString("uid"));
 			user.setName(joUser.getString("user_name"));
+			user.setShopMan(JsonUtils.getStrSafely(joUser, "shopman"));
+			user.setShopId(JsonUtils.getStrSafely(joUser, "shop_id"));
 			user.setAvatarUrl(joUser.getString("photo"));
 			user.setScore(joUser.getInt("score"));
 			user.setFansCount(joUser.getInt("fans_num"));

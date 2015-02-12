@@ -133,6 +133,8 @@ public class DataDef {
                     Columns.SCORE + " INTEGER DEFAULT 0, " +
                     Columns.FANS_COUNT + " INTEGER DEFAULT 0, " +
                     Columns.ATTENTION_COUNT + " INTEGER DEFAULT 0, " +
+                    Columns.SHOP_MAN + " TEXT, " +
+                    Columns.SHOP_ID + " TEXT, " +
 //                    Columns.GENDER + " TEXT, " +
 //                    Columns.DESCRIPTION + " TEXT, " +
 //                    Columns.GRADE + " INTEGER DEFAULT 0, " +

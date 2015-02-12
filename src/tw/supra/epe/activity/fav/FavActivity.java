@@ -11,7 +11,7 @@ import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.activity.product.ProductActivity;
 import tw.supra.epe.core.BaseActivity;
-import tw.supra.epe.ui.pullto.PullToRefreshStaggeredGridView;
+import tw.supra.epe.ui.pullto.SupraPullToRefreshStaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView.OnItemClickListener;
 import tw.supra.location.LocationCallBack;
@@ -45,7 +45,7 @@ public class FavActivity extends BaseActivity implements OnClickListener,
 	private SupraLocation mLocation;
 	private int mAdjustImageWidth = 0;
 
-	private PullToRefreshStaggeredGridView mPullRefreshGrid;
+	private SupraPullToRefreshStaggeredGridView mPullRefreshGrid;
 
 	private int mPageLoaded = -1;
 	private int mPagePending = -1;
@@ -57,7 +57,7 @@ public class FavActivity extends BaseActivity implements OnClickListener,
 
 		findViewById(R.id.action_back).setOnClickListener(this);
 		
-		mPullRefreshGrid = (PullToRefreshStaggeredGridView) findViewById(R.id.pull_refresh_grid);
+		mPullRefreshGrid = (SupraPullToRefreshStaggeredGridView) findViewById(R.id.pull_refresh_grid);
 		mPullRefreshGrid.setOnRefreshListener(this);
 		// gridView.setEmptyView(v.findViewById(R.id.progress_bar));
 		StaggeredGridView gridView = mPullRefreshGrid.getRefreshableView();
