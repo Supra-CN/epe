@@ -1,20 +1,15 @@
 package tw.supra.epe.activity.t;
 
 import tw.supra.epe.App;
-import tw.supra.epe.IntentAction;
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
-import tw.supra.utils.AppUtiles;
-import android.app.Activity;
+import tw.supra.epe.utils.AppUtiles;
 import android.app.AlertDialog.Builder;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
 
 public class TEditorActivity extends BaseActivity implements OnClickListener,
 		DialogInterface.OnClickListener {
@@ -76,8 +71,7 @@ public class TEditorActivity extends BaseActivity implements OnClickListener,
 			break;
 		}
 	}
-	
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
