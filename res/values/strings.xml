@@ -181,6 +181,8 @@
     <string name="img_picker_title">选择图片</string>
     <string name="img_picker_pos">相册</string>
     <string name="img_picker_neg">拍摄</string>
+    <string name="img_picker_toast_can_not_find_camera">找不到摄像头</string>
+    <string name="img_picker_toast_can_not_find_gallery">找不到相册</string>
     <!-- fav -->
     <string name="fav_label">我的收藏</string>
     <!-- map -->

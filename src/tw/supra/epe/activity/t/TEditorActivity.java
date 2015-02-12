@@ -1,10 +1,10 @@
 package tw.supra.epe.activity.t;
 
-import com.sohu.club.imagepicker.IntentAction;
-
 import tw.supra.epe.App;
+import tw.supra.epe.IntentAction;
 import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
+import tw.supra.utils.AppUtiles;
 import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
@@ -66,46 +66,22 @@ public class TEditorActivity extends BaseActivity implements OnClickListener,
 	public void onClick(DialogInterface dialog, int which) {
 		switch (which) {
 		case DialogInterface.BUTTON_POSITIVE:
-//			doPickPhotoFromGallery();
+			AppUtiles.doTakePhoto(this);
+
 			break;
 		case DialogInterface.BUTTON_NEGATIVE:
-//			doTakePhoto();
+			AppUtiles.doPickPhotoFromGallery(this);
 			break;
 		default:
 			break;
 		}
 	}
 	
-    public static int doTakePhoto(Activity activity) {
-        sTmpImageUri = newTmpImageUri();
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, sTmpImageUri);
-        try {
-            activity.startActivityForResult(intent, REQUEST_CODE_FOR_CAPTURE);
-            return REQUEST_CODE_FOR_CAPTURE;
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(activity, R.string.user_info_toast_can_not_find_camera,
-                    Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-            return -1;
-        }
-    }
-
-    public static int doPickPhotoFromGallery(Activity activity) {
-        Intent intent = new Intent();
-        intent.setAction(IntentAction.ACTION_MULTIPLE_PICK);
-        activity.startActivityForResult(intent, REQUEST_CODE_FOR_PICK);
-        return REQUEST_CODE_FOR_PICK;
-
-        // Intent intent = new Intent(Intent.ACTION_PICK);
-        // intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-        // try {
-        // startActivityForResult(intent, REQUEST_CODE_FOR_PICK);
-        // } catch (ActivityNotFoundException e) {
-        // Toast.makeText(this, R.string.user_info_toast_can_not_find_gallery,
-        // Toast.LENGTH_SHORT).show();
-        // e.printStackTrace();
-        // }
-    }
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 
 }
