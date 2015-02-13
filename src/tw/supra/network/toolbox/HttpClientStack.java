@@ -45,12 +45,12 @@ import tw.supra.network.Request;
 import tw.supra.network.Request.Method;
 import tw.supra.network.Response.ProgressListener;
 import tw.supra.network.error.AuthFailureError;
+import tw.supra.network.request.InfoMultiRequest;
 import tw.supra.network.request.MultiPartRequest;
 import tw.supra.network.request.MultiPartRequest.MultiPartParam;
 import tw.supra.network.toolbox.multipart.FilePart;
 import tw.supra.network.toolbox.multipart.MultipartEntity;
 import tw.supra.network.toolbox.multipart.StringPart;
-
 
 /**
  * An HttpStack that performs request over an {@link HttpClient}.
@@ -134,6 +134,10 @@ public class HttpClientStack implements HttpStack {
 			return new HttpDelete(request.getUrl());
 		case Method.POST: {
 			HttpPost postRequest = new HttpPost(request.getUrl());
+			if (!(request instanceof InfoMultiRequest)) {
+				postRequest.addHeader(HEADER_CONTENT_TYPE,
+						request.getBodyContentType());
+			}
 			setEntityIfNonEmptyBody(postRequest, request);
 			return postRequest;
 		}
@@ -163,8 +167,13 @@ public class HttpClientStack implements HttpStack {
 	private static void setEntityIfNonEmptyBody(
 			HttpEntityEnclosingRequestBase httpRequest, Request<?> request)
 			throws IOException, AuthFailureError {
-
-		if (request instanceof MultiPartRequest) {
+		if (request instanceof InfoMultiRequest) {
+			org.apache.http.entity.mime.MultipartEntity entity = ((InfoMultiRequest) request)
+					.getMultipartEntity();
+			if (null != entity) {
+				httpRequest.setEntity(entity);
+			}
+		} else if (request instanceof MultiPartRequest) {
 			ProgressListener progressListener = null;
 			if (request instanceof ProgressListener) {
 				progressListener = (ProgressListener) request;

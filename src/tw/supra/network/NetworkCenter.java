@@ -2,8 +2,11 @@ package tw.supra.network;
 
 import tw.supra.epe.App;
 import tw.supra.network.cache.BitmapImageCache;
+import tw.supra.network.misc.NetUtils;
+import tw.supra.network.toolbox.HttpClientStack;
 import tw.supra.network.toolbox.ImageLoader;
 import tw.supra.network.toolbox.Volley;
+import android.net.http.AndroidHttpClient;
 
 public class NetworkCenter {
 
@@ -30,9 +33,10 @@ public class NetworkCenter {
 
 	public RequestQueue getRequestQueue() {
 		if (mRequestQueue == null) {
-			// getApplicationContext() is key, it keeps you from leaking the
-			// Activity or BroadcastReceiver if someone passes one in.
-			mRequestQueue = Volley.newRequestQueue(App.getInstance());
+			mRequestQueue = Volley.newRequestQueue(
+					App.getInstance(),
+					new HttpClientStack(AndroidHttpClient.newInstance(NetUtils
+							.getUserAgent(App.getInstance()))));
 		}
 		return mRequestQueue;
 	}

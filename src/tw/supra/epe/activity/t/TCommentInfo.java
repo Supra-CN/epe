@@ -41,8 +41,6 @@ public class TCommentInfo extends EpeRequestInfo {
 		paramters.put("tt_id", ARG_TID);
 		paramters.put("page", String.valueOf(ARG_PAGE));
 		paramters.put("count", String.valueOf(ARG_SIZE));
-		
-		
 	}
 
 	@Override

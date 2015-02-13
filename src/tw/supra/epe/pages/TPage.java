@@ -20,6 +20,7 @@ import tw.supra.network.ui.NetworkImageView;
 import tw.supra.network.ui.NetworkRoundedImageView;
 import tw.supra.utils.JsonUtils;
 import tw.supra.utils.TimeUtil;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TArrayInfo>,
 		OnRefreshListener2<StaggeredGridView>, OnItemClickListener,
 		OnClickListener {
 	private static final String LOG_TAG = TPage.class.getSimpleName();
+	private static final int REQUEST_CODE_PUSH_T = 235;
 
 	private static final int PAGE_SIZE = 20;
 	private final ArrayList<JSONObject> DATA_SET = new ArrayList<JSONObject>();
@@ -58,7 +60,6 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TArrayInfo>,
 		mPullRefreshGrid.getRefreshableView().setAdapter(ADAPTER);
 		mPullRefreshGrid.getRefreshableView().setOnItemClickListener(this);
 		v.findViewById(R.id.action_editor).setOnClickListener(this);
-		;
 		return v;
 	}
 
@@ -281,11 +282,21 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TArrayInfo>,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.action_editor:
-			startActivity(new Intent(getActivity(), TEditorActivity.class));
+			startActivityForResult(new Intent(getActivity(),
+					TEditorActivity.class), REQUEST_CODE_PUSH_T);
 			break;
 
 		default:
 			break;
+		}
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (Activity.RESULT_OK == resultCode) {
+			mPullRefreshGrid.setRefreshing();
+		} else {
+			super.onActivityResult(requestCode, resultCode, data);
 		}
 	}
 }

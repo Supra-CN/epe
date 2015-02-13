@@ -57,6 +57,7 @@
             android:orientation="vertical" >
 
             <EditText
+                android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -68,7 +69,7 @@
             <ImageButton
                 android:id="@id/img"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="100dp"
                 android:background="@android:color/white"
                 android:padding="15dp"
                 android:scaleType="fitStart"
@@ -87,6 +88,7 @@
                     android:text="@string/t_editor_item_broad" />
 
                 <EditText
+                    android:id="@+id/brand"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -107,6 +109,7 @@
                     android:text="@string/t_editor_item_model" />
 
                 <EditText
+                    android:id="@+id/model"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -127,6 +130,7 @@
                     android:text="@string/t_editor_item_price" />
 
                 <EditText
+                    android:id="@+id/price"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

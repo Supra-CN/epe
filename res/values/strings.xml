@@ -177,6 +177,12 @@
     <string name="t_editor_item_broad">品牌</string>
     <string name="t_editor_item_model">型号</string>
     <string name="t_editor_item_price">价格</string>
+    <string name="t_editor_toast_check_img">请选择图片</string>
+    <string name="t_editor_toast_check_content">请输入内容</string>
+    <string name="t_editor_toast_check_brand">请输入品牌</string>
+    <string name="t_editor_toast_check_model">请输入型号</string>
+    <string name="t_editor_toast_check_price">请输入价格</string>
+    
     <!-- img picker -->
     <string name="img_picker_title">选择图片</string>
     <string name="img_picker_pos">相册</string>
