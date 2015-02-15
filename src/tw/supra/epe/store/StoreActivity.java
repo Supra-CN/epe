@@ -30,12 +30,15 @@ public class StoreActivity extends BaseActivity implements OnClickListener {
 	public static final String ACTION_BY_HOT = "by_hot";
 
 	private final Page[] PAGES = {
-			new Page(R.string.store_product_label_new, ACTION_BY_TIME),
-			new Page(R.string.store_product_label_discount, ACTION_BY_DISCOUNT),
-			new Page(R.string.store_product_label_hot, ACTION_BY_HOT), };
+			new Page(R.string.store_product_label_new,
+					ProductsOfStoreInfo.SORT_BY_TIME),
+			new Page(R.string.store_product_label_discount,
+					ProductsOfStoreInfo.SORT_BY_DISCOUNT),
+			new Page(R.string.store_product_label_hot,
+					ProductsOfStoreInfo.SORT_BY_HOT), };
 
 	private class Page {
-		final Class<?> CLAZZ = StoreProductPage.class;
+		final Class<?> CLAZZ = StoreProductsPage.class;
 		final int LABEL;
 		final String ACTION;
 
@@ -105,6 +108,11 @@ public class StoreActivity extends BaseActivity implements OnClickListener {
 			if (null == page) {
 				try {
 					page = (BaseFrag) PAGES[position].CLAZZ.newInstance();
+					Bundle args = new Bundle();
+					args.putString(StoreProductsPage.ARG_SORT,
+							PAGES[position].ACTION);
+					args.putString(StoreProductsPage.ARG_STORE_ID, mMbId);
+					page.setArguments(args);
 					PAGE_POOL.put(PAGES[position], page);
 				} catch (InstantiationException e) {
 					e.printStackTrace();

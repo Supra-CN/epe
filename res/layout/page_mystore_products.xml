@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <tw.supra.epe.ui.pullto.SupraPullToRefreshStaggeredGridView
+        xmlns:app="http://schemas.android.com/apk/res/tw.supra.epe"
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/pull_refresh_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="fill"
+        android:horizontalSpacing="1dp"
+        android:verticalSpacing="1dp"
+        app:numColumns="2"
+        ptr:ptrMode="both" />
+
+    <!-- ptr:ptrDrawable="@drawable/android" -->
+
+
+    <!-- <tw.supra.epe.ui.staggered.StaggeredGridView -->
+    <!-- android:id="@+id/grid_view" -->
+    <!-- android:layout_width="match_parent" -->
+    <!-- android:layout_height="match_parent" -->
+    <!-- /> -->
+
+
+    <!-- <ProgressBar -->
+    <!-- android:id="@+id/progress_bar" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_gravity="center" /> -->
+
+</FrameLayout>

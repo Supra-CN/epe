@@ -9,51 +9,45 @@ import org.json.JSONObject;
 
 import tw.supra.epe.R;
 import tw.supra.epe.activity.product.ProductActivity;
-import tw.supra.epe.core.BaseMainPage;
-import tw.supra.epe.pages.worth.RequestWorth;
+import tw.supra.epe.core.BaseFrag;
 import tw.supra.epe.pages.worth.WorthInfo;
 import tw.supra.epe.ui.pullto.SupraPullToRefreshStaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView.OnItemClickListener;
-import tw.supra.location.LocationCallBack;
-import tw.supra.location.LocationCenter;
-import tw.supra.location.SupraLocation;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkImageView;
 import tw.supra.utils.JsonUtils;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.baidu.location.LocationClient;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 
-public class MyStoreProductsPage extends BaseMainPage implements OnClickListener,
-		NetWorkHandler<WorthInfo>, LocationCallBack, OnItemClickListener,
+public class StoreProductsPage extends BaseFrag implements
+		NetWorkHandler<ProductsOfStoreInfo>, OnItemClickListener,
 		OnRefreshListener2<StaggeredGridView> {
-	private static final String LOG_TAG = MyStoreProductsPage.class.getSimpleName();
-	private RequestWorth mRequestWorth;
-	private Location mLocation;
-	private int mGender = WorthInfo.GENDER_ALL;
-	private int mSort = WorthInfo.SORT_DISTANCE;
+	private static final String LOG_TAG = StoreProductsPage.class
+			.getSimpleName();
+
+	public static final String ARG_SORT = "arg_sort";
+	public static final String ARG_STORE_ID = "arg_store_id";
+
+	// private RequestWorth mRequestWorth;
+	private String mSort;
+	private String mStoreId;
 	private final ArrayList<JSONObject> DATA_SET = new ArrayList<JSONObject>();
-	private LocationClient mLocationClient = null;
 
 	private static Handler sHandler = new Handler();
 
@@ -63,7 +57,7 @@ public class MyStoreProductsPage extends BaseMainPage implements OnClickListener
 	// private int mPageTop = 1;
 	// private int mPageBottom = 1;
 	private int mPageLoaded = -1;
-	private int mPagePending = -1;
+	// private int mPagePending = -1;
 
 	private BaseAdapter ADAPTER = new BaseAdapter() {
 
@@ -185,8 +179,10 @@ public class MyStoreProductsPage extends BaseMainPage implements OnClickListener
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View v = inflater.inflate(R.layout.page_worth, null);
-		v.findViewById(R.id.select).setOnClickListener(this);
+		mStoreId = getArguments().getString(ARG_STORE_ID);
+		mSort = getArguments().getString(ARG_SORT);
+
+		View v = inflater.inflate(R.layout.page_mystore_products, null);
 		mPullRefreshGrid = (SupraPullToRefreshStaggeredGridView) v
 				.findViewById(R.id.pull_refresh_grid);
 		mPullRefreshGrid.setOnRefreshListener(this);
@@ -204,13 +200,13 @@ public class MyStoreProductsPage extends BaseMainPage implements OnClickListener
 		super.onStart();
 		if (ADAPTER.isEmpty()) {
 			Log.i(LOG_TAG, "onStart setRefreshing");
-			sHandler.post(new Runnable() {
+			sHandler.postDelayed(new Runnable() {
 
 				@Override
 				public void run() {
 					mPullRefreshGrid.setRefreshing(false);
 				}
-			});
+			}, 500);
 		} else {
 			ADAPTER.notifyDataSetChanged();
 		}
@@ -245,10 +241,11 @@ public class MyStoreProductsPage extends BaseMainPage implements OnClickListener
 	}
 
 	@Override
-	public boolean HandleEvent(RequestEvent event, WorthInfo info) {
+	public boolean HandleEvent(RequestEvent event, ProductsOfStoreInfo info) {
 
 		if (RequestEvent.FINISH == event) {
 			Log.i(LOG_TAG, "HandleEvent FINISH : " + info);
+			mPullRefreshGrid.onRefreshComplete();
 
 			if (info.ERROR_CODE.isOK()) {
 				if (info.ARG_PAGE <= mPageLoaded) {
@@ -269,42 +266,21 @@ public class MyStoreProductsPage extends BaseMainPage implements OnClickListener
 				}
 				ADAPTER.notifyDataSetChanged();
 			}
-			mPullRefreshGrid.onRefreshComplete();
-			mRequestWorth = null;
 
 		}
 		return false;
 	}
 
 	private void loadData(int page) {
-		Log.i(LOG_TAG, "loadData : " + "page = " + page + " mLocation : "
-				+ mLocation);
-		if (null == mLocation) {
-			mPagePending = page;
-			LocationCenter.getInstance().requestLocation(this);
-		} else {
-			requestWorth(page);
-		}
+		Log.i(LOG_TAG, "loadData : " + "page = " + page);
+		request(page);
 	}
 
-	private void requestWorth(int page) {
+	private void request(int page) {
 		Log.i(LOG_TAG, "requestWorth : " + page);
-		double latitude = mLocation.getLatitude();
-		double longitude = mLocation.getLongitude();
-		mRequestWorth = new RequestWorth(this, new WorthInfo(latitude,
-				longitude, mSort, mGender, 1));
-		NetworkCenter.getInstance().putToQueue(mRequestWorth);
-	}
-
-	@Override
-	public void callBack(SupraLocation location) {
-		Log.i(LOG_TAG, "callBack : " + "mPagePending = " + mPagePending
-				+ " location : " + location);
-		mLocation = location;
-		if (mPagePending > 0) {
-			requestWorth(mPagePending);
-		}
-		mPagePending = -1;
+		NetworkCenter.getInstance().putToQueue(
+				new RequestProductsByStore(this, new ProductsOfStoreInfo(mSort,
+						mStoreId, page)));
 	}
 
 	@Override
@@ -390,93 +366,6 @@ public class MyStoreProductsPage extends BaseMainPage implements OnClickListener
 			startActivity(intent);
 		} catch (JSONException e) {
 			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.select:
-			showSelectDialog();
-			break;
-		case R.id.btn_cancel:
-			mDialog.dismiss();
-			break;
-		case R.id.btn_ok:
-			mGender = getGenderOnRadio();
-			mSort = getSortOnRadio();
-			mDialog.dismiss();
-			DATA_SET.clear();
-			ADAPTER.notifyDataSetChanged();
-			mPullRefreshGrid.setRefreshing(false);
-			break;
-
-		default:
-			break;
-		}
-
-	}
-
-	private Dialog mDialog;
-	private RadioGroup mGenderGroup;
-	private RadioGroup mSortGroup;
-
-	private void createSelectDialogIfNecessary() {
-		if (mDialog == null) {
-			mDialog = new Dialog(getActivity(), R.style.CleanDialog);
-			mDialog.setContentView(R.layout.worth_select_dialog);
-			mGenderGroup = ((RadioGroup) mDialog
-					.findViewById(R.id.gender_group));
-			mSortGroup = ((RadioGroup) mDialog.findViewById(R.id.sort_group));
-			mGenderGroup.check(getRadioByGender());
-			mSortGroup.check(getRadioBySort());
-			mDialog.findViewById(R.id.btn_cancel).setOnClickListener(this);
-			mDialog.findViewById(R.id.btn_ok).setOnClickListener(this);
-		}
-	}
-
-	private void showSelectDialog() {
-		createSelectDialogIfNecessary();
-		mDialog.show();
-	}
-
-	private int getRadioByGender() {
-		switch (mGender) {
-		case WorthInfo.GENDER_FEMALE:
-			return R.id.gender_female;
-		case WorthInfo.GENDER_MALE:
-			return R.id.gender_male;
-		default:
-			return R.id.gender_all;
-		}
-	}
-
-	private int getRadioBySort() {
-		switch (mSort) {
-		case WorthInfo.SORT_DISCOUNT:
-			return R.id.sort_discount;
-		default:
-			return R.id.sort_distance;
-		}
-	}
-
-	private int getGenderOnRadio() {
-		switch (mGenderGroup.getCheckedRadioButtonId()) {
-		case R.id.gender_female:
-			return WorthInfo.GENDER_FEMALE;
-		case R.id.gender_male:
-			return WorthInfo.GENDER_MALE;
-		default:
-			return WorthInfo.GENDER_ALL;
-		}
-	}
-
-	private int getSortOnRadio() {
-		switch (mSortGroup.getCheckedRadioButtonId()) {
-		case R.id.sort_discount:
-			return WorthInfo.SORT_DISCOUNT;
-		default:
-			return WorthInfo.SORT_DISTANCE;
 		}
 	}
 

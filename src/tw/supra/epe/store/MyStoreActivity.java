@@ -1,5 +1,6 @@
 package tw.supra.epe.store;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.JSONException;
@@ -8,7 +9,7 @@ import org.json.JSONObject;
 import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.core.BaseActivity;
-import tw.supra.epe.core.BaseHostFrag;
+import tw.supra.epe.core.BaseFrag;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
@@ -31,7 +32,36 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener {
 
 	private static final String LOG_TAG = MyStoreActivity.class.getSimpleName();
 
-	private static final Class<?>[] PAGES = { MyStoreProductsPage.class, ActivePage.class };
+	private final ArrayList<Page> PAGES = new ArrayList<MyStoreActivity.Page>();
+
+	private void setupPages() {
+		PAGES.clear();
+		PAGES.add(new Page(R.string.my_store_label_product) {
+
+			@Override
+			BaseFrag create() {
+				StoreProductsPage page = new StoreProductsPage();
+				Bundle args = new Bundle();
+				args.putString(StoreProductsPage.ARG_STORE_ID, AccountCenter
+						.getCurrentUser().getShopId());
+				page.setArguments(args);
+				return page;
+			}
+		});
+
+		PAGES.add(new Page(R.string.my_store_label_active) {
+
+			@Override
+			BaseFrag create() {
+				return new ActivityPage();
+			}
+		});
+		mAdapter.notifyDataSetChanged();
+		mPageIndicator.notifyDataSetChanged();
+	}
+
+	// MyStoreProductsPage.class,
+	// ActivePage.class };
 
 	private PageAdapter mAdapter;
 	private PageIndicator mPageIndicator;
@@ -63,6 +93,12 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener {
 	}
 
 	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		setupPages();
+	}
+
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.action_back:
@@ -76,7 +112,7 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener {
 	public class PageAdapter extends FragmentPagerAdapter implements
 			IconPagerAdapter {
 
-		private final HashMap<Class<?>, BaseHostFrag<MyStoreActivity>> PAGE_POOL = new HashMap<Class<?>, BaseHostFrag<MyStoreActivity>>();
+		private final HashMap<Page, BaseFrag> PAGE_POOL = new HashMap<Page, BaseFrag>();
 
 		public PageAdapter(FragmentManager fm) {
 			super(fm);
@@ -84,28 +120,15 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener {
 
 		@Override
 		public int getCount() {
-			return PAGES.length;
+			return PAGES.size();
 		}
 
 		@Override
-		public BaseHostFrag<MyStoreActivity> getItem(int position) {
-			BaseHostFrag<MyStoreActivity> page = PAGE_POOL.get(PAGES[position]);
+		public BaseFrag getItem(int position) {
+			BaseFrag page = PAGE_POOL.get(PAGES.get(position));
 			if (null == page) {
-				try {
-					page = (BaseHostFrag<MyStoreActivity>) PAGES[position]
-							.newInstance();
-					PAGE_POOL.put(PAGES[position], page);
-				} catch (InstantiationException e) {
-					e.printStackTrace();
-					throw new IllegalStateException(String.format(
-							"the page %s is not a legal page",
-							PAGES[position].getSimpleName()), e);
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-					throw new IllegalStateException(String.format(
-							"the page %s is not a legal page",
-							PAGES[position].getSimpleName()), e);
-				}
+				page = PAGES.get(position).create();
+				PAGE_POOL.put(PAGES.get(position), page);
 			}
 			// Log.i(LOG_TAG, "getItem :  pos =" + position + " page" + page);
 			return page;
@@ -113,7 +136,7 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener {
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			return getItem(position).getTitle();
+			return getString(PAGES.get(position).LABEL);
 		}
 
 		@Override
@@ -149,5 +172,16 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener {
 			return false;
 		}
 	};
+
+	private abstract class Page {
+		final int LABEL;
+
+		public Page(int label) {
+			LABEL = label;
+		}
+
+		abstract BaseFrag create();
+
+	}
 
 }
