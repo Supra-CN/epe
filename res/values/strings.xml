@@ -172,6 +172,8 @@
     <string name="mall_info_address">地址：%s</string>
 
     <!-- t -->
+    <string name="t_label">T台详情</string>
+    <string name="t_empty_comment">还没有评论</string>
     <string name="t_editor_label">发布T台</string>
     <string name="t_editor_action_submit">发布</string>
     <string name="t_editor_content_hint">发表此刻的想法</string>

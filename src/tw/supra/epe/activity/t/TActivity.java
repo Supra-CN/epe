@@ -9,8 +9,6 @@ import org.json.JSONObject;
 import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.core.BaseActivity;
-import tw.supra.epe.pages.TArrayInfo;
-import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
@@ -20,8 +18,8 @@ import tw.supra.utils.JsonUtils;
 import tw.supra.utils.TimeUtil;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -30,11 +28,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-public class TActivity extends BaseActivity implements OnClickListener,OnRefreshListener2<ListView>,
-		NetWorkHandler<TContentInfo> {
+public class TActivity extends BaseActivity implements OnClickListener,
+		OnRefreshListener2<ListView>, NetWorkHandler<TContentInfo> {
 	private static final String LOG_TAG = TActivity.class.getSimpleName();
 	public static final String EXTRA_T_ID = "t_id";
 	/**
@@ -58,11 +56,11 @@ public class TActivity extends BaseActivity implements OnClickListener,OnRefresh
 	private TextView mTvTime;
 	private TextView mTvContent;
 	private TextView mTvInfo;
-	
+
 	private PullToRefreshListView mPullableList;
 
 	private static Handler sHandler = new Handler();
-	
+
 	private int mPageLoaded = -1;
 
 	@Override
@@ -87,7 +85,6 @@ public class TActivity extends BaseActivity implements OnClickListener,OnRefresh
 		mPullableList.getRefreshableView().addHeaderView(header);
 		mPullableList.getRefreshableView().setAdapter(ADAPTER);
 		mPullableList.setOnRefreshListener(this);
-
 		mTvLike = (TextView) findViewById(R.id.like);
 
 	}
@@ -122,13 +119,15 @@ public class TActivity extends BaseActivity implements OnClickListener,OnRefresh
 				new RequestTContent(this, new TContentInfo(AccountCenter
 						.getCurrentUserUid(), mTId)));
 	}
+
 	private void requestTComment(int page) {
 		NetworkCenter.getInstance().putToQueue(
-				new RequestTComment(HANDLE_COMMENT, new TCommentInfo(mTId, page, PAGE_SIZE)));
+				new RequestTComment(HANDLE_COMMENT, new TCommentInfo(mTId,
+						page, PAGE_SIZE)));
 	}
-	
+
 	final private NetWorkHandler<TCommentInfo> HANDLE_COMMENT = new NetWorkHandler<TCommentInfo>() {
-		
+
 		@Override
 		public boolean HandleEvent(RequestEvent event, TCommentInfo info) {
 			if (RequestEvent.FINISH == event) {
@@ -168,18 +167,18 @@ public class TActivity extends BaseActivity implements OnClickListener,OnRefresh
 		String info = "";
 		int width = 0;
 		int height = 0;
-		String like ="";
-		String comment="";
-		String share="";
+		String like = "";
+		String comment = "";
+		String share = "";
 		Boolean isLike = false;
 
 		try {
-			
+
 			JSONObject joUser = JsonUtils.getJoSafely(mJoData,
 					TContentInfo.UINFO);
 			avator = JsonUtils.getStrSafely(joUser, TContentInfo.PHOTO);
 			name = JsonUtils.getStrSafely(joUser, TContentInfo.USER_NAME);
-			
+
 			JSONObject joImg = JsonUtils.getJoSafely(mJoData,
 					TContentInfo.IMAGE);
 			img = JsonUtils.getStrSafely(joImg, TContentInfo.IMG_SRC);
@@ -187,14 +186,17 @@ public class TActivity extends BaseActivity implements OnClickListener,OnRefresh
 			height = JsonUtils.getIntSafely(joImg, TContentInfo.IMG_HEIGHT);
 
 			isLike = JsonUtils.getIntSafely(mJoData, TContentInfo.IS_LIKE, 0) != 0;
-			time = TimeUtil.formatTimeWithCountDown(this, JsonUtils.getLongSafely(mJoData, TContentInfo.ADD_TIME));
+			time = TimeUtil.formatTimeWithCountDown(this,
+					JsonUtils.getLongSafely(mJoData, TContentInfo.ADD_TIME));
 			content = JsonUtils.getStrSafely(mJoData, TContentInfo.TT_CONTENT);
-			info = JsonUtils.getJaSafely(mJoData, TContentInfo.TT_DETAIL).getJSONObject(0).toString();	
-			
+			info = JsonUtils.getJaSafely(mJoData, TContentInfo.TT_DETAIL)
+					.getJSONObject(0).toString();
+
 			like = JsonUtils.getStrSafely(mJoData, TContentInfo.TT_LIKE_NUM);
-			comment = JsonUtils.getStrSafely(mJoData, TContentInfo.TT_COMMENT_NUM);
+			comment = JsonUtils.getStrSafely(mJoData,
+					TContentInfo.TT_COMMENT_NUM);
 			share = JsonUtils.getStrSafely(mJoData, TContentInfo.TT_SHARE_NUM);
-			
+
 			// if (null != joImages) {
 			// JSONObject joOriginal = JsonUtils.getJoSafely(joImages,
 			// ProductInfo.IMG_ORIGINAL);
@@ -214,15 +216,16 @@ public class TActivity extends BaseActivity implements OnClickListener,OnRefresh
 		mTvName.setText(name);
 		mTvTime.setText(time);
 		mTvInfo.setText(info);
-		
+
 		mTvShare.setText(share);
 		mTvLike.setText(like);
 		mTvComment.setText(comment);
 		mTvLike.setSelected(isLike);
-		
-		mIvAvator.setImageUrl(avator, NetworkCenter.getInstance().getImageLoader());
+
+		mIvAvator.setImageUrl(avator, NetworkCenter.getInstance()
+				.getImageLoader());
 		mIvImg.setImageUrl(img, NetworkCenter.getInstance().getImageLoader());
-		 adjustViewHeight(mIvImg, width, height);
+		adjustViewHeight(mIvImg, width, height);
 	}
 
 	private int adjustViewWidth() {
@@ -311,7 +314,13 @@ public class TActivity extends BaseActivity implements OnClickListener,OnRefresh
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if (null == convertView) {
+			if (isEmptyDateSet()) {
+				TextView tv = new TextView(TActivity.this);
+				tv.setText(R.string.t_empty_comment);
+				tv.setGravity(Gravity.CENTER);
+				return tv;
+			}
+			if (null == convertView || null == convertView.getTag()) {
 				convertView = View.inflate(TActivity.this,
 						R.layout.t_activity_comment_item, null);
 				ItemHolder holder = new ItemHolder();
@@ -358,12 +367,16 @@ public class TActivity extends BaseActivity implements OnClickListener,OnRefresh
 
 		@Override
 		public JSONObject getItem(int position) {
-			return DATA_SET.get(position);
+			return isEmpty() ? null : DATA_SET.get(position);
 		}
 
 		@Override
 		public int getCount() {
-			return DATA_SET.size();
+			return isEmptyDateSet() ? 1 : DATA_SET.size();
+		}
+
+		private boolean isEmptyDateSet() {
+			return DATA_SET.isEmpty();
 		}
 	};
 
@@ -383,7 +396,7 @@ public class TActivity extends BaseActivity implements OnClickListener,OnRefresh
 	public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 		loadData(mPageLoaded + 1);
 	}
-	
+
 	private void loadData(int page) {
 		Log.i(LOG_TAG, "loadData : " + "page = " + page);
 		requestTComment(page);
