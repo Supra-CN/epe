@@ -6,13 +6,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-public class TintWebViewActivity extends BaseActivity {
+public class TintWebViewActivity extends BaseActivity implements
+		OnClickListener {
 	private static final String LOG_TAG = TintWebViewActivity.class
 			.getSimpleName();
 	public static final String EXTRA_URL = "url";
@@ -41,6 +43,7 @@ public class TintWebViewActivity extends BaseActivity {
 		WebSettings webSettings = mWebView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 		mWebView.loadUrl(url);
+		findViewById(R.id.action_back).setOnClickListener(this);
 	}
 
 	private class TintWebChromeClient extends WebChromeClient {
@@ -72,5 +75,10 @@ public class TintWebViewActivity extends BaseActivity {
 			}
 			return false;
 		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		finish();
 	}
 }
