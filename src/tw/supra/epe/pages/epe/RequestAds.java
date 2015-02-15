@@ -24,6 +24,7 @@ public class RequestAds extends EpeJsonRequest<EpeRequestInfo> {
 	public static final String ATTR_STARTTIME = "starttime";
 	public static final String ATTR_ENDTIME = "endtime";
 	public static final String ATTR_STATUS = "status";
+	public static final String ATTR_REDIRECT_URL = "redirect_url";
 	
 	// RESULTS
 	public JSONArray resultJoList  ;// 返回：商品列表；

@@ -17,6 +17,8 @@ import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkRoundedImageView;
+import tw.supra.utils.JsonUtils;
+import tw.supra.web.TintWebViewActivity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -30,6 +32,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +43,8 @@ import android.widget.TextView;
 
 import com.viewpagerindicator.PageIndicator;
 
-public class EpePage extends BaseMainPage implements LocationListener {
+public class EpePage extends BaseMainPage implements LocationListener
+		 {
 	private static final String LOG_TAG = EpePage.class.getSimpleName();
 
 	private Location mLocation;
@@ -54,6 +58,7 @@ public class EpePage extends BaseMainPage implements LocationListener {
 	private ViewGroup mNearBrandContainer;
 
 	private AdAdapter mAdAdapter;
+	ViewPager mAdPager;
 
 	private View mWave;
 
@@ -70,11 +75,11 @@ public class EpePage extends BaseMainPage implements LocationListener {
 		mNearBrandContainer = (ViewGroup) v
 				.findViewById(R.id.near_brand_container);
 		mAdAdapter = new AdAdapter(getChildFragmentManager());
-		ViewPager pager = (ViewPager) v.findViewById(R.id.view_pager);
-		pager.setAdapter(mAdAdapter);
+		mAdPager = (ViewPager) v.findViewById(R.id.view_pager);
+		mAdPager.setAdapter(mAdAdapter);
 		PageIndicator indicator = (PageIndicator) v
 				.findViewById(R.id.page_indicator);
-		indicator.setViewPager(pager);
+		indicator.setViewPager(mAdPager);
 
 		mWave = v.findViewById(R.id.wave);
 		setUpNearStoreView();
@@ -291,11 +296,11 @@ public class EpePage extends BaseMainPage implements LocationListener {
 		boolean isEnen = (postion % 2) == 0;
 		String name = joItem.getString(NearStoreInfo.ATTR_MALL_NAME);
 		String distance = joItem.getString(NearStoreInfo.ATTR_DISTANCE) + "m";
-		
-		View v = View.inflate(getActivity(), 
+
+		View v = View.inflate(getActivity(),
 				isEnen ? R.layout.near_store_item_top
 						: R.layout.near_store_item_bottom, null);
- 
+
 		TextView tvName = (TextView) v.findViewById(R.id.name);
 		TextView tvDistance = (TextView) v.findViewById(R.id.distance);
 		// tv.setGravity((isEnen ? Gravity.BOTTOM : Gravity.TOP)
@@ -351,6 +356,8 @@ public class EpePage extends BaseMainPage implements LocationListener {
 			try {
 				args.putString(AdFrag.ARG_IMG,
 						AD_DATA_SET.get(pos).getString(RequestAds.ATTR_IMG_URL));
+				args.putString(AdFrag.ARG_URL,
+						AD_DATA_SET.get(pos).getString(RequestAds.ATTR_REDIRECT_URL));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -368,4 +375,5 @@ public class EpePage extends BaseMainPage implements LocationListener {
 		drawableBg.setTileModeX(TileMode.REPEAT);
 		mWave.setBackgroundDrawable(drawableBg);
 	}
+
 }
