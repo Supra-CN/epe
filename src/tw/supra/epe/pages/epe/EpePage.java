@@ -11,6 +11,7 @@ import tw.supra.epe.R;
 import tw.supra.epe.activity.MallActivity;
 import tw.supra.epe.activity.brand.BrandActivity;
 import tw.supra.epe.core.BaseMainPage;
+import tw.supra.epe.store.StoreActivity;
 import tw.supra.location.LocationCenter;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
@@ -208,10 +209,19 @@ public class EpePage extends BaseMainPage implements LocationListener
 		public void onClick(View v) {
 			JSONObject joItem = (JSONObject) v.getTag();
 			try {
-				Intent intent = new Intent(getActivity(), MallActivity.class);
-				intent.putExtra(MallActivity.EXTRA_MALL_ID,
-						joItem.getString(NearStoreInfo.ATTR_MALL_ID));
-				startActivity(intent);
+				if(joItem.getString(NearStoreInfo.ATTR_MALL_TYPE).equals("2")){
+					Intent intent = new Intent(getActivity(), StoreActivity.class);
+					intent.putExtra(StoreActivity.EXTRA_MB_ID,
+							joItem.getString(NearStoreInfo.ATTR_MALL_ID));
+					intent.putExtra(StoreActivity.EXTRA_MALL_NAME,
+							joItem.getString(NearStoreInfo.ATTR_MALL_NAME));
+					startActivity(intent);
+				}else{
+					Intent intent = new Intent(getActivity(), MallActivity.class);
+					intent.putExtra(MallActivity.EXTRA_MALL_ID,
+							joItem.getString(NearStoreInfo.ATTR_MALL_ID));
+					startActivity(intent);
+				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 				return;

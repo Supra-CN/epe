@@ -9,6 +9,7 @@ import tw.supra.network.request.EpeRequestInfo;
 
 public class NearStoreInfo extends EpeRequestInfo {
 	public static final String ATTR_MALL_ID ="mall_id";
+	public static final String ATTR_MALL_TYPE ="mall_type";
 	public static final String ATTR_DISTANCE="distance";
 	public static final String ATTR_LONGITUDE=  "longitude";
 	public static final String ATTR_LATITUDE 	= "latitude";
