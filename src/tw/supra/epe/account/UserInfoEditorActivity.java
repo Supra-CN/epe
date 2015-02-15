@@ -71,7 +71,7 @@ public class UserInfoEditorActivity extends BaseActivity implements
 
 		User user = AccountCenter.getCurrentUser();
 		Picasso.with(this).load(user.getAvatarUrl()).into(mIvAvator);
-		mSwGender.setChecked(user.getGender() != "1");
+		mSwGender.setChecked(user.getGender().equals(User.GENDER_BOY));
 		mEtNick.setText(user.getName());
 		mBirthday.setTimeInMillis(user.getBirthday());
 		updateBirthday();

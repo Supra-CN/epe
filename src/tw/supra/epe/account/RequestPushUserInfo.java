@@ -18,6 +18,7 @@ import tw.supra.network.request.EpeJsonMultiRequest;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.utils.JsonUtils;
+import tw.supra.utils.TimeUtil;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
@@ -58,7 +59,8 @@ public class RequestPushUserInfo extends EpeJsonMultiRequest<EpeRequestInfo> {
 		IMG = img;
 		NICK = nick;
 		GENDER = gender;
-		BIRTHDAY = String.valueOf(birthday.getTimeInMillis());
+		BIRTHDAY = TimeUtil.formatDate(getContext(), birthday.getTime());
+		Log.i(LOG_TAG, BIRTHDAY);
 	}
 
 	@Override
@@ -72,6 +74,8 @@ public class RequestPushUserInfo extends EpeJsonMultiRequest<EpeRequestInfo> {
 			return;
 		}
 
+		
+		
 		INFO.ERROR_CODE.addDyingMsg("response : " + response);
 	}
 

@@ -18,6 +18,7 @@ import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkRoundedImageView;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,6 +41,8 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 		NetWorkHandler<UserInfo>, OnRefreshListener<ListView>, OnClickListener {
 
 	private PullToRefreshListView mListView;
+
+	private static final int REQUEST_CODE_PUSH_USER_INFO = 269;
 
 	private final Item ITEM_MY_HOME = new Item(R.string.my_page_item_my_home,
 			R.drawable.ic_my_home) {
@@ -171,9 +174,7 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 		return v;
 	}
 
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
+	private void refresh() {
 		sHandler.postDelayed(new Runnable() {
 
 			@Override
@@ -181,6 +182,12 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 				mListView.setRefreshing();
 			}
 		}, 500);
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		refresh();
 	}
 
 	@Override
@@ -243,8 +250,8 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 			startActivity(new Intent(getActivity(), SettingsActivity.class));
 			break;
 		case R.id.user_info_container:
-			startActivity(new Intent(getActivity(),
-					UserInfoEditorActivity.class));
+			startActivityForResult(new Intent(getActivity(),
+					UserInfoEditorActivity.class), REQUEST_CODE_PUSH_USER_INFO);
 			break;
 
 		default:
@@ -277,6 +284,15 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 			break;
 		}
 		return false;
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (Activity.RESULT_OK == resultCode) {
+			refresh();
+		} else {
+			super.onActivityResult(requestCode, resultCode, data);
+		}
 	}
 
 }
