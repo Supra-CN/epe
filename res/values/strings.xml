@@ -101,6 +101,7 @@
     <string name="account_login_progressing">登录中,请稍候&#8230;</string>
     <string name="account_login_toast_illegal_passport">账户不合法</string>
     <string name="account_login_toast_illegal_password">密码不合法</string>
+    <string name="account_login_toast_illegal_nick">请检查昵称</string>
     <string name="user_info_editor_label">修改个人信息</string>
     <string name="user_info_editor_item_avatar">更换头像</string>
     <string name="user_info_editor_item_nick">昵称</string>

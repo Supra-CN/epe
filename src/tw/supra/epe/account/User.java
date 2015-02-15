@@ -20,30 +20,13 @@ import android.text.TextUtils;
 public class User extends PersistableObj {
 	private static final String LOG_TAG = User.class.getSimpleName();
 	public static final String ANONYMOUS = DataUser.ANONYMOUS;
-	
+
 	public static final String SHOP_MAN_NO = "0";
 	public static final String SHOP_MAN_HOLD = "1";
 	public static final String SHOP_MAN_OK = "2";
-	
 
-	public static enum Gender {
-		MALE("male"), FEMALE("female"), SECRET("secret"), UNKNOW("");
-
-		public String desc;
-
-		private Gender(String desc) {
-			this.desc = desc;
-		}
-
-		public static Gender fromDesc(String desc) {
-			for (Gender gender : Gender.values()) {
-				if (gender.desc.equals(desc)) {
-					return gender;
-				}
-			}
-			return UNKNOW;
-		}
-	}
+	public static final String GENDER_BOY = "1";
+	public static final String GENDER_GIRL = "2";
 
 	private LoginInfo mLoginInfo;
 
@@ -61,6 +44,8 @@ public class User extends PersistableObj {
 	private int mScore = -1;
 	private int mFansCount = -1;
 	private int mAttentionCount = -1;
+	private String mGender;
+	private long mBirthday;
 
 	// private int mGrade = -1;
 	// private int mCharm = -1;
@@ -230,22 +215,45 @@ public class User extends PersistableObj {
 		touch(State.MODIFIED);
 		mName = nickName;
 	}
+
 	public String getName() {
 		return mName;
 	}
+
 	public void setShopMan(String shopMan) {
 		touch(State.MODIFIED);
 		mShopMan = shopMan;
 	}
+
 	public String getShopMan() {
 		return mShopMan;
 	}
+
 	public void setShopId(String shopId) {
 		touch(State.MODIFIED);
 		mShopId = shopId;
 	}
+
 	public String getShopId() {
 		return mShopId;
+	}
+
+	public void setGender(String gender) {
+		touch(State.MODIFIED);
+		mGender = gender;
+	}
+
+	public String getGender() {
+		return mGender;
+	}
+
+	public void setBirthday(long birthday) {
+		touch(State.MODIFIED);
+		mBirthday = birthday;
+	}
+
+	public long getBirthday() {
+		return mBirthday;
 	}
 
 	// public void setTitle(String title) {
@@ -448,10 +456,11 @@ public class User extends PersistableObj {
 		// setLastLogin(DBUtils.getStrByCol(c,
 		// TableAccounts.Columns.LAST_LOGIN));
 		setAvatarUrl(DBUtils.getStrByCol(c, TableAccounts.Columns.AVATAR));
-		// setGender(DBUtils.getStrByCol(c, TableAccounts.Columns.GENDER));
+		 setGender(DBUtils.getStrByCol(c, TableAccounts.Columns.GENDER));
 		setScore(DBUtils.getIntByCol(c, TableAccounts.Columns.SCORE));
 		setFansCount(DBUtils.getIntByCol(c, TableAccounts.Columns.FANS_COUNT));
-		setAttentionCount(DBUtils.getIntByCol(c,TableAccounts.Columns.ATTENTION_COUNT));
+		setAttentionCount(DBUtils.getIntByCol(c,
+				TableAccounts.Columns.ATTENTION_COUNT));
 		// setGrade(DBUtils.getIntByCol(c, TableAccounts.Columns.GRADE));
 		// setCharm(DBUtils.getIntByCol(c, TableAccounts.Columns.CHARM));
 		// setElite(DBUtils.getIntByCol(c, TableAccounts.Columns.ELITE));
@@ -466,7 +475,7 @@ public class User extends PersistableObj {
 		// TableAccounts.Columns.FRIENDS_TOTAL));
 		// setFollowersTotal(DBUtils.getIntByCol(c,
 		// TableAccounts.Columns.FOLLOWERS_TOTAL));
-		// setRegDate(DBUtils.getLongByCol(c, TableAccounts.Columns.REG_DATE));
+		 setBirthday(DBUtils.getLongByCol(c, TableAccounts.Columns.BIRTHDAY));
 	}
 
 	private ContentValues buileValues() {
@@ -476,6 +485,7 @@ public class User extends PersistableObj {
 		stringMap.put(TableAccounts.Columns.NAME, getName());
 		stringMap.put(TableAccounts.Columns.SHOP_MAN, getShopMan());
 		stringMap.put(TableAccounts.Columns.SHOP_ID, getShopId());
+		stringMap.put(TableAccounts.Columns.GENDER, getGender());
 		// stringMap.put(TableAccounts.Columns.GENDER, mGender.desc);
 		// stringMap.put(TableAccounts.Columns.TITLE, mTitle);
 		// stringMap.put(TableAccounts.Columns.DESCRIPTION, mDescription);
@@ -497,13 +507,13 @@ public class User extends PersistableObj {
 		// intMap.put(TableAccounts.Columns.FRIENDS_TOTAL, mFriendsTotal);
 		// intMap.put(TableAccounts.Columns.FOLLOWERS_TOTAL, mFollowersTotal);
 
-		// HashMap<String, Long> longMap = new HashMap<String, Long>();
-		// longMap.put(TableAccounts.Columns.REG_DATE, mRegDate);
+		HashMap<String, Long> longMap = new HashMap<String, Long>();
+		longMap.put(TableAccounts.Columns.BIRTHDAY, getBirthday());
 
 		ContentValues values = new ContentValues();
 		checkAndPutString(values, stringMap);
 		checkAndPutInt(values, intMap);
-		// checkAndPutLong(values, longMap);
+		checkAndPutLong(values, longMap);
 
 		return values;
 	}

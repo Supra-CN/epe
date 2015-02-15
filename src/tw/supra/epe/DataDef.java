@@ -135,7 +135,7 @@ public class DataDef {
                     Columns.ATTENTION_COUNT + " INTEGER DEFAULT 0, " +
                     Columns.SHOP_MAN + " TEXT, " +
                     Columns.SHOP_ID + " TEXT, " +
-//                    Columns.GENDER + " TEXT, " +
+                    Columns.GENDER + " TEXT, " +
 //                    Columns.DESCRIPTION + " TEXT, " +
 //                    Columns.GRADE + " INTEGER DEFAULT 0, " +
 //                    Columns.CHARM + " INTEGER DEFAULT 0, " +
@@ -145,7 +145,7 @@ public class DataDef {
 //                    Columns.LINE_TIME + " INTEGER DEFAULT 0, " +
 //                    Columns.LOGIN_COUNT + " INTEGER DEFAULT 0, " +
 //                    Columns.LAST_LOGIN + " TEXT, " +
-//                    Columns.REG_DATE + " LONG DEFAULT 0, " +
+                    Columns.BIRTHDAY + " LONG DEFAULT 0, " +
 //                    Columns.PROVINCE + " TEXT DEFAULT 0, " +
 //                    Columns.MESSAGE_TOTAL + " INTEGER DEFAULT 0, " +
 //                    Columns.FRIENDS_TOTAL + " INTEGER DEFAULT 0, " +

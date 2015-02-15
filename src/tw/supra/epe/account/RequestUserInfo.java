@@ -39,6 +39,8 @@ public class RequestUserInfo extends EpeJsonRequest<UserInfo> {
 			user.setScore(joUser.getInt("score"));
 			user.setFansCount(joUser.getInt("fans_num"));
 			user.setAttentionCount(joUser.getInt("attentions_num"));
+			user.setGender(joUser.getString("gender"));
+			user.setBirthday(joUser.getLong("birthday"));
 			try {
 				user.flush();
 			} catch (IOException e) {

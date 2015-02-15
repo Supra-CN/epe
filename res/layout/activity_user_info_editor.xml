@@ -4,8 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    
-    
     tools:ignore="MergeRootFrame" >
 
     <FrameLayout
@@ -47,58 +45,80 @@
             android:textColor="@android:color/white" />
     </FrameLayout>
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/change_avator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:drawablePadding="@dimen/drawable_padding"
-        android:drawableRight="@drawable/icon_arrow_right"
         android:background="@android:color/white"
-            android:textSize="18sp"
-        android:padding="10dp"
-        android:text="@string/user_info_editor_item_avatar" />
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:background="@android:color/white"
-        android:orientation="horizontal"
-        android:padding="10dp" >
+        <com.makeramen.roundedimageview.RoundedImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/avator"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_pick_img"
+            app:riv_corner_radius="@dimen/avator_radius" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="@string/user_info_editor_item_nick" />
-
-        <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:gravity="right"
-            android:background="@null" />
+            android:drawablePadding="@dimen/drawable_padding"
+            android:drawableRight="@drawable/icon_arrow_right"
+            android:padding="10dp"
+            android:text="@string/user_info_editor_item_avatar"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:gravity="center"
         android:background="@android:color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_info_editor_item_nick"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/nick"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white"
+        android:gravity="center"
         android:orientation="horizontal"
         android:padding="10dp" >
 
         <TextView
             android:layout_width="0dp"
-            android:textSize="18sp"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_weight="1"
-            android:text="@string/user_info_editor_item_gender" />
+            android:text="@string/user_info_editor_item_gender"
+            android:textSize="18sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -106,6 +126,7 @@
             android:src="@drawable/ic_boy" />
 
         <Switch
+            android:id="@+id/gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/epe_pink"
@@ -118,11 +139,11 @@
             android:src="@drawable/ic_girl" />
     </LinearLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:background="@android:color/white"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:background="@android:color/white"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="10dp" >
@@ -131,21 +152,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:textSize="18sp"
-            android:text="@string/user_info_editor_item_birthday" />
+            android:text="@string/user_info_editor_item_birthday"
+            android:textSize="18sp" />
 
         <TextView
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
+            android:id="@+id/birthday"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_gravity="right" />
-    </FrameLayout>
-
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/my_page_item_log_out" />
+            android:gravity="right"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 </LinearLayout>
