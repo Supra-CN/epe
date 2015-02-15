@@ -2,16 +2,26 @@ package tw.supra.epe.store;
 
 import java.util.HashMap;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import tw.supra.epe.R;
+import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseHostFrag;
-import tw.supra.epe.pages.worth.WorthPage;
+import tw.supra.network.NetworkCenter;
+import tw.supra.network.request.EpeRequestInfo;
+import tw.supra.network.request.NetWorkHandler;
+import tw.supra.network.request.RequestEvent;
+import tw.supra.network.ui.NetworkRoundedImageView;
+import tw.supra.utils.JsonUtils;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.viewpagerindicator.IconPagerAdapter;
@@ -21,11 +31,14 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener {
 
 	private static final String LOG_TAG = MyStoreActivity.class.getSimpleName();
 
-	private static final Class<?>[] PAGES = { WorthPage.class,
-			ActivePage.class };
+	private static final Class<?>[] PAGES = { MyStoreProductsPage.class, ActivePage.class };
 
 	private PageAdapter mAdapter;
 	private PageIndicator mPageIndicator;
+
+	private NetworkRoundedImageView mLogo;
+	private TextView mTvName;
+	private TextView mTVAddress;
 
 	/**
 	 * 设置布局
@@ -42,6 +55,11 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener {
 		viewPager.setAdapter(mAdapter);
 		mPageIndicator = (PageIndicator) findViewById(R.id.page_indicator);
 		mPageIndicator.setViewPager(viewPager);
+		mLogo = (NetworkRoundedImageView) findViewById(R.id.logo);
+		mTvName = (TextView) findViewById(R.id.name);
+		mTVAddress = (TextView) findViewById(R.id.address);
+		request();
+
 	}
 
 	@Override
@@ -103,4 +121,33 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener {
 			return getItem(index).getIconResId();
 		}
 	}
+
+	private void request() {
+		NetworkCenter.getInstance().putToQueue(
+				new RequestMyStore(HANDLER_MY_STORE, AccountCenter
+						.getCurrentUser().getShopId()));
+	}
+
+	private final NetWorkHandler<EpeRequestInfo> HANDLER_MY_STORE = new NetWorkHandler<EpeRequestInfo>() {
+
+		@Override
+		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
+			if (event == RequestEvent.FINISH && info.ERROR_CODE.isOK()
+					&& info.OBJ != null) {
+				JSONObject jo = (JSONObject) info.OBJ;
+				try {
+					mTvName.setText(JsonUtils.getStrSafely(jo, "shop_name"));
+					mTVAddress.setText(JsonUtils.getStrSafely(jo, "address"));
+					mLogo.setImageUrl(JsonUtils.getStrSafely(jo, "logo"),
+							NetworkCenter.getInstance().getImageLoader());
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+			}
+
+			return false;
+		}
+	};
+
 }
