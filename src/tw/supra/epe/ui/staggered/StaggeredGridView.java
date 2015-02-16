@@ -2192,7 +2192,9 @@ public class StaggeredGridView extends ViewGroup {
 		private SavedState(Parcel in) {
 			super(in);
 			firstId = in.readLong();
-			position = in.readInt();
+			position = in.readInt();	
+			Log.i(TAG, "in : "+in);
+			Log.i(TAG, "topOffsets : "+topOffsets);
 			in.readIntArray(topOffsets);
 			in.readTypedList(mapping, ColMap.CREATOR);
 

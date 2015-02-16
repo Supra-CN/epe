@@ -17,6 +17,7 @@ import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,6 +50,7 @@ public class BrandActivity extends BaseActivity implements
 
 	private String mBrandId;
 	private String mBrandName;
+	static Handler sHandler = new Handler();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class BrandActivity extends BaseActivity implements
 
 		findViewById(R.id.action_back).setOnClickListener(this);
 		((TextView) findViewById(R.id.brand_name)).setText(mBrandName);
-		
+
 		mPullRefreshList = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
 		mPullRefreshList.setOnItemClickListener(this);
 		mPullRefreshList.setOnRefreshListener(this);
@@ -73,7 +75,13 @@ public class BrandActivity extends BaseActivity implements
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-		mPullRefreshList.setRefreshing(false);
+		sHandler.postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				mPullRefreshList.setRefreshing();
+			}
+		}, 500);
 	}
 
 	private void request(int page) {
@@ -222,14 +230,16 @@ public class BrandActivity extends BaseActivity implements
 		try {
 			JSONObject jo = DATA_SET.get(position - 1);
 			Intent intent = new Intent(this, StoreActivity.class);
-			intent.putExtra(StoreActivity.EXTRA_MB_ID,jo.getString(BrandInfo.MB_ID));
-			intent.putExtra(StoreActivity.EXTRA_BROAD_NAME,mBrandName);
-			intent.putExtra(StoreActivity.EXTRA_MALL_NAME,jo.getString(BrandInfo.MALL_NAME));
+			intent.putExtra(StoreActivity.EXTRA_MB_ID,
+					jo.getString(BrandInfo.MB_ID));
+			intent.putExtra(StoreActivity.EXTRA_BROAD_NAME, mBrandName);
+			intent.putExtra(StoreActivity.EXTRA_MALL_NAME,
+					jo.getString(BrandInfo.MALL_NAME));
 			startActivity(intent);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 }

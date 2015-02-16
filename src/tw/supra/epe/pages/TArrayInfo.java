@@ -12,7 +12,7 @@ public class TArrayInfo extends EpeRequestInfo {
 	public static final String ATTR_IMG = "image";
 	public static final String ATTR_IMG_URL = "url";
 	public static final String ATTR_IMG_WIDTH = "width";
-	public static final String ATTR_IMG_HEIGTH = "heigth";
+	public static final String ATTR_IMG_HEIGTH = "height";
 	public static final String ATTR_TT_LIKE_NUM = "tt_like_num";
 	public static final String ATTR_IS_LIKE = "is_like";
 	public static final String ATTR_TT_SHARE_NUM = "tt_share_num";

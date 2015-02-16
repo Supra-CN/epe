@@ -170,7 +170,6 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TArrayInfo>,
 				e.printStackTrace();
 			}
 
-			adjustViewHeight(holder.img, width, height);
 			holder.avator.setImageUrl(avator, NetworkCenter.getInstance()
 					.getImageLoader());
 			holder.img.setImageUrl(img, NetworkCenter.getInstance()
@@ -181,6 +180,7 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TArrayInfo>,
 			holder.likeCount.setText(likeCount);
 			holder.likeCount.setSelected(isLike);
 			holder.commentCount.setText(commentCount);
+			adjustViewHeight(holder.img, width, height);
 
 			return convertView;
 		}
