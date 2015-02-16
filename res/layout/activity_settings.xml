@@ -34,16 +34,21 @@
     </FrameLayout>
 
     <ListView
-        android:layout_marginTop="20dp"
         android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
 
     <Button
-        android:layout_marginTop="20dp"
         android:id="@+id/logout"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_bg_round_pink"
+        android:padding="10dp"
         android:text="@string/my_page_item_log_out"
-        android:layout_height="wrap_content" />
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/store_table_item_text_size" />
 
 </LinearLayout>

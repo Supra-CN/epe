@@ -110,7 +110,8 @@
                     android:background="@android:color/transparent"
                     android:padding="@dimen/store_table_item_padding"
                     android:text="@string/store_add"
-                    android:textSize="@dimen/store_table_item_text_size" />
+                    android:textSize="@dimen/store_table_item_text_size" 
+                    />
 
                 <EditText
                     android:id="@+id/et_add"
