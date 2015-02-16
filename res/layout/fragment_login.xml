@@ -20,7 +20,7 @@
         android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="2dp"
         android:background="@android:color/white"
         android:padding="@dimen/store_table_item_padding"
         android:textSize="@dimen/store_table_item_text_size" 

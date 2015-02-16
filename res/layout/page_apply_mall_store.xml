@@ -187,6 +187,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:padding="@dimen/store_table_item_padding"
+                        android:textSize="@dimen/store_table_item_btn_text"
                         android:text="@string/account_reg_frag_btn_verifycode" />
                 </LinearLayout>
             </LinearLayout>

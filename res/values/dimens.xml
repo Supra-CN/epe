@@ -31,6 +31,7 @@
     <!-- store -->
     <dimen name="store_table_row_margin">2dp</dimen>
     <dimen name="store_table_item_padding">10dp</dimen>
+    <dimen name="store_table_item_btn_text">16dp</dimen>
     <dimen name="store_table_item_text_size">18sp</dimen>
     
     <!-- worth -->
