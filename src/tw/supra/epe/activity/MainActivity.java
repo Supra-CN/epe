@@ -59,7 +59,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	protected void onStart() {
 		super.onStart();
 		if (!AccountCenter.isLogin()) {
-			startActivity(new Intent(App.ACTION_LOGIN));
+			finish();
+//			startActivity(new Intent(App.ACTION_LOGIN));
 		}
 	}
 

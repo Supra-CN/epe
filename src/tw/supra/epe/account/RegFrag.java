@@ -3,12 +3,14 @@ package tw.supra.epe.account;
 
 import tw.supra.epe.R;
 import tw.supra.epe.account.RequestVerifyCode.Type;
+import tw.supra.epe.activity.MainActivity;
 import tw.supra.epe.core.BaseHostFrag;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -68,6 +70,7 @@ public class RegFrag extends BaseHostFrag<LoginActivity> implements OnClickListe
                     getHostActivity().hideProgressDialog();
                     if (info.ERROR_CODE.isOK()) {
                         AccountCenter.switchUser(info.RESULTS.getString(RegInfo.RESULT_STR_UID, User.ANONYMOUS));
+                        startActivity(new Intent(getActivity(), MainActivity.class));
                         getActivity().finish();
                     }
                     break;

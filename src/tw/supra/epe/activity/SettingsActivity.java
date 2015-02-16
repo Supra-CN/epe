@@ -2,6 +2,8 @@ package tw.supra.epe.activity;
 
 import tw.supra.epe.App;
 import tw.supra.epe.R;
+import tw.supra.epe.account.AccountCenter;
+import tw.supra.epe.account.User;
 import tw.supra.epe.core.BaseActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,13 +22,11 @@ public class SettingsActivity extends BaseActivity implements OnClickListener,
 	private static final String LOG_TAG = SettingsActivity.class
 			.getSimpleName();
 
-	private final Item[] LIST = {
-			new Item(R.string.settings_item_about),
+	private final Item[] LIST = { new Item(R.string.settings_item_about),
 			new Item(R.string.settings_item_clear),
 			new Item(R.string.settings_item_check_update),
 			new Item(R.string.settings_item_vote),
-			new Item(R.string.settings_item_feedback),
-			};
+			new Item(R.string.settings_item_feedback), };
 
 	/**
 	 * 设置布局
@@ -49,6 +49,7 @@ public class SettingsActivity extends BaseActivity implements OnClickListener,
 			onBackPressed();
 			break;
 		case R.id.logout:
+			AccountCenter.switchUser(User.ANONYMOUS);
 			startActivity(new Intent(App.ACTION_LOGIN));
 			finish();
 			break;
@@ -64,7 +65,8 @@ public class SettingsActivity extends BaseActivity implements OnClickListener,
 			Item item = getItem(position);
 
 			if (convertView == null) {
-				convertView = View.inflate(SettingsActivity.this,R.layout.settings_activity_item, null);
+				convertView = View.inflate(SettingsActivity.this,
+						R.layout.settings_activity_item, null);
 			}
 
 			TextView tv = ((TextView) convertView);
