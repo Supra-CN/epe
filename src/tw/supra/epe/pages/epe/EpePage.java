@@ -8,9 +8,9 @@ import org.json.JSONObject;
 
 import tw.supra.epe.App;
 import tw.supra.epe.R;
-import tw.supra.epe.activity.MallActivity;
 import tw.supra.epe.activity.brand.BrandActivity;
 import tw.supra.epe.core.BaseMainPage;
+import tw.supra.epe.mall.MallActivity;
 import tw.supra.epe.store.StoreActivity;
 import tw.supra.location.LocationCenter;
 import tw.supra.network.NetworkCenter;

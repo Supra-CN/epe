@@ -1,55 +1,42 @@
-package tw.supra.epe.activity.brand;
+package tw.supra.epe.mall;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.baidu.navisdk.ui.widget.NewerGuideDialog;
+
 import tw.supra.epe.ApiDef.APIDef;
 import tw.supra.epe.ApiDef.EpeErrorCode;
 import tw.supra.epe.account.AccountCenter;
-import tw.supra.network.error.AuthFailureError;
 import tw.supra.network.request.EpeJsonRequest;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.utils.JsonUtils;
 
-public class RequestPushBrandFocusStatus extends EpeJsonRequest<EpeRequestInfo> {
-	private static final String LOG_TAG = RequestPushBrandFocusStatus.class
-			.getSimpleName();
-	private final String BRAND_ID;
+public class RequestMallFocusStatus extends EpeJsonRequest<EpeRequestInfo> {
+	private static final String LOG_TAG = RequestMallFocusStatus.class.getSimpleName();
 
-	public RequestPushBrandFocusStatus(
-			NetWorkHandler<EpeRequestInfo> eventHandler,  String brandId,
-			final boolean status) {
+	public RequestMallFocusStatus(NetWorkHandler<EpeRequestInfo> eventHandler, final String brandId) {
 		super(eventHandler, new EpeRequestInfo() {
-
+			
 			@Override
 			public int getRequestMethod() {
-				return Method.POST;
+				return Method.GET;
 			}
-
+			
 			@Override
 			protected void fillQueryParamters(HashMap<String, String> paramters) {
 				paramters.put("d", "api");
 				paramters.put("c", "brand");
-				paramters.put("m", status ? "attend_brand"
-						: "cancel_attend_brand");
+				paramters.put("m", "isBrandFriend");
+				paramters.put("authcode", AccountCenter.getCurrentUser().getAuth());
+				paramters.put("brand_id", brandId);
 			}
 		});
-		
-		BRAND_ID = brandId;
-		
 	}
-	@Override
-	protected Map<String, String> getParams() throws AuthFailureError {
-		HashMap< String, String > p = new HashMap<String, String>();
-		p.put("authcode", AccountCenter.getCurrentUser()
-				.getAuth());
-		p.put("brand_id", BRAND_ID);
-		return p;
-	}
+
 	@Override
 	protected void parseJsonResponse(JSONObject response) throws JSONException {
 		INFO.ERROR_CODE.setCode(JsonUtils.getIntSafely(response,
@@ -59,6 +46,10 @@ public class RequestPushBrandFocusStatus extends EpeJsonRequest<EpeRequestInfo> 
 		if (!INFO.ERROR_CODE.isOK()) {
 			INFO.ERROR_CODE.addDyingMsg("response : " + response);
 			return;
+		}
+		
+		if(1!=response.getInt("relation")){
+			INFO.ERROR_CODE.setCode(EpeErrorCode.CODE_ERROR_CAN_NOT_FRIEND);
 		}
 
 		INFO.ERROR_CODE.addDyingMsg("response : " + response);

@@ -1,4 +1,4 @@
-package tw.supra.epe.activity.brand;
+package tw.supra.epe.activity.product;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,13 +15,14 @@ import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.utils.JsonUtils;
 
-public class RequestPushBrandFocusStatus extends EpeJsonRequest<EpeRequestInfo> {
-	private static final String LOG_TAG = RequestPushBrandFocusStatus.class
+public class RequestPushProductFavStatus extends EpeJsonRequest<EpeRequestInfo> {
+	private static final String LOG_TAG = RequestPushProductFavStatus.class
 			.getSimpleName();
-	private final String BRAND_ID;
+	
+	private final String PRODUCT_ID;
 
-	public RequestPushBrandFocusStatus(
-			NetWorkHandler<EpeRequestInfo> eventHandler,  String brandId,
+	public RequestPushProductFavStatus(
+			NetWorkHandler<EpeRequestInfo> eventHandler,  String productId,
 			final boolean status) {
 		super(eventHandler, new EpeRequestInfo() {
 
@@ -33,23 +34,24 @@ public class RequestPushBrandFocusStatus extends EpeJsonRequest<EpeRequestInfo> 
 			@Override
 			protected void fillQueryParamters(HashMap<String, String> paramters) {
 				paramters.put("d", "api");
-				paramters.put("c", "brand");
-				paramters.put("m", status ? "attend_brand"
-						: "cancel_attend_brand");
+				paramters.put("c", "products");
+				paramters.put("m", status ? "favor"
+						: "cancelFavor");
 			}
 		});
-		
-		BRAND_ID = brandId;
-		
+		PRODUCT_ID = productId;
 	}
+	
+	
 	@Override
 	protected Map<String, String> getParams() throws AuthFailureError {
 		HashMap< String, String > p = new HashMap<String, String>();
 		p.put("authcode", AccountCenter.getCurrentUser()
 				.getAuth());
-		p.put("brand_id", BRAND_ID);
+		p.put("product_id", PRODUCT_ID);
 		return p;
 	}
+
 	@Override
 	protected void parseJsonResponse(JSONObject response) throws JSONException {
 		INFO.ERROR_CODE.setCode(JsonUtils.getIntSafely(response,

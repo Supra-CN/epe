@@ -54,29 +54,29 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
-                <CheckBox
+                <CheckedTextView
                     android:id="@+id/like"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/top_tab_item_margin"
-                    android:layout_marginRight="@dimen/top_tab_item_margin"
+                    android:paddingLeft="@dimen/top_tab_item_margin"
+                    android:paddingRight="@dimen/top_tab_item_margin"
                     android:background="@android:color/transparent"
-                    android:button="@drawable/ic_action_like" />
+                    android:drawableLeft="@drawable/ic_action_like" />
 
-                <CheckBox
+                <CheckedTextView
                     android:id="@+id/fav"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/top_tab_item_margin"
-                    android:layout_marginRight="@dimen/top_tab_item_margin"
+                    android:paddingLeft="@dimen/top_tab_item_margin"
+                    android:paddingRight="@dimen/top_tab_item_margin"
                     android:background="@android:color/transparent"
-                    android:button="@drawable/ic_action_fav" />
+                    android:drawableLeft="@drawable/ic_action_fav" />
 
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/top_tab_item_margin"
-                    android:layout_marginRight="@dimen/top_tab_item_margin"
+                    android:paddingLeft="@dimen/top_tab_item_margin"
+                    android:paddingRight="@dimen/top_tab_item_margin"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_action_share" />
             </LinearLayout>
@@ -133,37 +133,37 @@
                 android:textSize="20sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/info_bar"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
-            android:gravity="right"
-            android:orientation="vertical" >
+<!--         <LinearLayout -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_above="@id/info_bar" -->
+<!--             android:layout_alignParentRight="true" -->
+<!--             android:layout_margin="10dp" -->
+<!--             android:gravity="right" -->
+<!--             android:orientation="vertical" > -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/bg_round_yellow"
-                android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="@string/master"
-                android:textColor="@android:color/white" />
+<!--             <TextView -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_margin="10dp" -->
+<!--                 android:background="@drawable/bg_round_yellow" -->
+<!--                 android:gravity="center" -->
+<!--                 android:paddingLeft="5dp" -->
+<!--                 android:paddingRight="5dp" -->
+<!--                 android:text="@string/master" -->
+<!--                 android:textColor="@android:color/white" /> -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/bg_round_pink"
-                android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="@string/contact_owner"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
+<!--             <TextView -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_margin="10dp" -->
+<!--                 android:background="@drawable/bg_round_pink" -->
+<!--                 android:gravity="center" -->
+<!--                 android:paddingLeft="5dp" -->
+<!--                 android:paddingRight="5dp" -->
+<!--                 android:text="@string/contact_owner" -->
+<!--                 android:textColor="@android:color/white" /> -->
+<!--         </LinearLayout> -->
 
         <LinearLayout
             android:layout_width="wrap_content"

@@ -1,4 +1,4 @@
-package tw.supra.epe.activity;
+package tw.supra.epe.mall;
 
 import org.json.JSONException;
 import org.json.JSONObject;

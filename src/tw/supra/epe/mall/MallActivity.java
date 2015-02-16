@@ -1,4 +1,4 @@
-package tw.supra.epe.activity;
+package tw.supra.epe.mall;
 
 import java.util.ArrayList;
 
@@ -7,10 +7,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import tw.supra.epe.R;
+import tw.supra.epe.activity.brand.BrandActivity;
+import tw.supra.epe.activity.brand.RequestBrandFocusStatus;
+import tw.supra.epe.activity.brand.RequestPushBrandFocusStatus;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.store.StoreActivity;
 import tw.supra.location.MapActivity;
 import tw.supra.network.NetworkCenter;
+import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkRoundedImageView;
@@ -25,12 +29,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.viewpagerindicator.PageIndicator;
 
-public class MallActivity extends BaseActivity implements OnClickListener,
+public class MallActivity extends BaseActivity implements OnClickListener,OnCheckedChangeListener,
 		NetWorkHandler<MallInfo> {
 	private static final String LOG_TAG = MallActivity.class.getSimpleName();
 	public static final String EXTRA_MALL_ID = "extra_mall_id";
@@ -43,10 +50,12 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 
 	private TextView mTvMallName;
 	private TextView mTvAddress;
-	
+
 	private double mLat;
 	private double mLon;
 	
+	private ToggleButton mTbFocus;
+
 	private final ArrayList<Page> PAGES = new ArrayList<Page>();
 
 	@Override
@@ -62,12 +71,17 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 
 		mTvAddress = (TextView) findViewById(R.id.address);
 		mTvMallName = (TextView) findViewById(R.id.mall_name);
+		
+		mTbFocus = (ToggleButton) findViewById(R.id.action_focus);
+		mTbFocus.setOnCheckedChangeListener(this);
 
 		mPageAdapter = new PageAdapter();
 		ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
 		viewPager.setAdapter(mPageAdapter);
 		mPageIndicator = (PageIndicator) findViewById(R.id.page_indicator);
 		mPageIndicator.setViewPager(viewPager);
+//		requestFriendStatus();
+
 	}
 
 	@Override
@@ -80,6 +94,25 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 		NetworkCenter.getInstance().putToQueue(
 				new RequestMall(this, new MallInfo(mMallId)));
 	}
+	
+//	private void requestFriendStatus() {
+//		NetworkCenter.getInstance().putToQueue(
+//				new RequestBrandFocusStatus(HANDLER_BRAND_FRIEND_STATUS,
+//						mBrandId));
+//	}
+	
+	private final NetWorkHandler<EpeRequestInfo> HANDLER_BRAND_FRIEND_STATUS = new NetWorkHandler<EpeRequestInfo>() {
+
+		@Override
+		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
+			if (event == RequestEvent.FINISH && info.ERROR_CODE.isOK()) {
+				mTbFocus.setOnCheckedChangeListener(null);
+				mTbFocus.setChecked(true);
+				mTbFocus.setOnCheckedChangeListener(MallActivity.this);
+			}
+			return false;
+		}
+	};
 
 	@Override
 	public boolean HandleEvent(RequestEvent event, MallInfo info) {
@@ -88,10 +121,10 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 		if (RequestEvent.FINISH == event) {
 			if (info.ERROR_CODE.isOK()) {
 				try {
-					
-					mLat= info.resultJo.getDouble(MallInfo.LATITUDE);
-					mLon= info.resultJo.getDouble(MallInfo.LONGITUDE);
-					
+
+					mLat = info.resultJo.getDouble(MallInfo.LATITUDE);
+					mLon = info.resultJo.getDouble(MallInfo.LONGITUDE);
+
 					mMallName = info.resultJo.getString(MallInfo.MALL_NAME);
 					mTvMallName.setText(mMallName);
 					mTvAddress.setText(getString(R.string.mall_info_address,
@@ -264,6 +297,28 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 		default:
 			break;
 		}
+	}
+	
+	private final NetWorkHandler<EpeRequestInfo> HANDLER_BRAND_PUSH_FOCUS_STATUS = new NetWorkHandler<EpeRequestInfo>() {
+
+		@Override
+		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
+			if (event == RequestEvent.FINISH ) {
+				if (!info.ERROR_CODE.isOK()) {
+					mTbFocus.setOnCheckedChangeListener(null);
+					mTbFocus.toggle();
+					mTbFocus.setOnCheckedChangeListener(MallActivity.this);
+				}
+			}
+			return false;
+		}
+	};
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//		NetworkCenter.getInstance().putToQueue(
+//				new RequestPushBrandFocusStatus(
+//						HANDLER_BRAND_PUSH_FOCUS_STATUS, mBrandId, isChecked));		
 	}
 
 }

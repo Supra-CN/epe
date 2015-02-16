@@ -334,7 +334,7 @@ public class TActivity extends BaseActivity implements OnClickListener,
 		@Override
 		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
 			if (event == RequestEvent.FINISH) {
-				if (!info.ERROR_CODE.isOK()) {
+				if (info.ERROR_CODE.isOK()) {
 					findViewById(R.id.submit).setVisibility(View.VISIBLE);
 					findViewById(R.id.progress).setVisibility(View.GONE);
 					boolean isOk = info.ERROR_CODE.isOK();
@@ -342,6 +342,8 @@ public class TActivity extends BaseActivity implements OnClickListener,
 							: R.string.t_editor_toast_comment_faild;
 					Toast.makeText(TActivity.this, resId, Toast.LENGTH_SHORT)
 							.show();
+					mEditor.setText("");
+					mPullableList.setRefreshing();
 				}
 			}
 			return false;

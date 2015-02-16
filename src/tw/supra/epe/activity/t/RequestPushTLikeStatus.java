@@ -1,6 +1,7 @@
 package tw.supra.epe.activity.t;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,6 +9,7 @@ import org.json.JSONObject;
 import tw.supra.epe.ApiDef.APIDef;
 import tw.supra.epe.ApiDef.EpeErrorCode;
 import tw.supra.epe.account.AccountCenter;
+import tw.supra.network.error.AuthFailureError;
 import tw.supra.network.request.EpeJsonRequest;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
@@ -16,15 +18,16 @@ import tw.supra.utils.JsonUtils;
 public class RequestPushTLikeStatus extends EpeJsonRequest<EpeRequestInfo> {
 	private static final String LOG_TAG = RequestPushTLikeStatus.class
 			.getSimpleName();
+	private final String T_ID;
 
 	public RequestPushTLikeStatus(
-			NetWorkHandler<EpeRequestInfo> eventHandler, final String ttId,
+			NetWorkHandler<EpeRequestInfo> eventHandler,  String ttId,
 			final boolean status) {
 		super(eventHandler, new EpeRequestInfo() {
 
 			@Override
 			public int getRequestMethod() {
-				return Method.GET;
+				return Method.POST;
 			}
 
 			@Override
@@ -33,13 +36,20 @@ public class RequestPushTLikeStatus extends EpeJsonRequest<EpeRequestInfo> {
 				paramters.put("c", "tplat");
 				paramters.put("m", status ? "like"
 						: "cancelLike");
-				paramters.put("authcode", AccountCenter.getCurrentUser()
-						.getAuth());
-				paramters.put("tt_id", ttId);
 			}
 		});
+		T_ID =ttId;
 	}
 
+	@Override
+	protected Map<String, String> getParams() throws AuthFailureError {
+		HashMap< String, String > p = new HashMap<String, String>();
+		p.put("authcode", AccountCenter.getCurrentUser()
+				.getAuth());
+		p.put("tt_id", T_ID);
+		return p;
+	}
+	
 	@Override
 	protected void parseJsonResponse(JSONObject response) throws JSONException {
 		INFO.ERROR_CODE.setCode(JsonUtils.getIntSafely(response,

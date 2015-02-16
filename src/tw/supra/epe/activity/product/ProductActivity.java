@@ -8,11 +8,13 @@ import org.json.JSONObject;
 
 import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
+import tw.supra.epe.activity.t.RequestPushTLikeStatus;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.pages.PhotoClient;
 import tw.supra.epe.utils.AppUtiles;
 import tw.supra.location.MapActivity;
 import tw.supra.network.NetworkCenter;
+import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.ui.PhotoPager;
@@ -29,7 +31,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewConfiguration;
-import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 public class ProductActivity extends BaseActivity implements OnClickListener,
@@ -54,8 +56,8 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 	private TextView mTvBrandName;
 	private TextView mTvPrice;
 	private TextView mTvDiscount;
-	private CheckBox mCbLike;
-	private CheckBox mCbFav;
+	private CheckedTextView mCbLike;
+	private CheckedTextView mCbFav;
 
 	private String mProductId;
 	private String mBrandName;
@@ -85,8 +87,10 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 
 		mFloatLayer = findViewById(R.id.float_layer);
 		mViewPager = (PhotoPager) findViewById(R.id.view_pager);
-		mCbLike = (CheckBox) findViewById(R.id.like);
-		mCbFav = (CheckBox) findViewById(R.id.fav);
+		mCbLike = (CheckedTextView) findViewById(R.id.like);
+		mCbLike.setOnClickListener(this);
+		mCbFav = (CheckedTextView) findViewById(R.id.fav);
+		mCbFav.setOnClickListener(this);
 		mTvBrandName = (TextView) findViewById(R.id.brand_name);
 		mTvDiscount = (TextView) findViewById(R.id.discount);
 		mTvPrice = (TextView) findViewById(R.id.price);
@@ -167,7 +171,8 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 					ProductInfo.MALL_INFO);
 			mMallName = JsonUtils.getStrSafely(joMall, ProductInfo.MALL_NAME);
 			mLat = JsonUtils.getDoubleSafely(joMall, ProductInfo.MALL_LATITUDE);
-			mLon = JsonUtils.getDoubleSafely(joMall, ProductInfo.MALL_LONGITUDE);
+			mLon = JsonUtils
+					.getDoubleSafely(joMall, ProductInfo.MALL_LONGITUDE);
 
 			productInfo = getString(R.string.product_info_model,
 					JsonUtils.getStrSafely(mJoData, ProductInfo.PRODUCT_SKU))
@@ -175,14 +180,15 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 			productInfo += getString(R.string.product_info_tag,
 					JsonUtils.getStrSafely(mJoData, ProductInfo.PRODUCT_TAG))
 					+ "\n";
-			productInfo += getString(R.string.product_info_mall,mMallName)
+			productInfo += getString(R.string.product_info_mall, mMallName)
 					+ "\n";
 			productInfo += getString(R.string.product_info_address,
 					JsonUtils.getStrSafely(joMall, ProductInfo.MALL_ADDRESS));
 
 			JSONObject joBrand = JsonUtils.getJoSafely(mJoData,
 					ProductInfo.BRAND_INFO);
-			mBrandName = JsonUtils.getStrSafely(joBrand, ProductInfo.BRAND_NAME);
+			mBrandName = JsonUtils
+					.getStrSafely(joBrand, ProductInfo.BRAND_NAME);
 
 			JSONArray jaImages = JsonUtils.getJaSafely(mJoData,
 					ProductInfo.IMAGES);
@@ -331,13 +337,29 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 			onBackPressed();
 			break;
 		case R.id.map:
-			MapActivity.show(this, mMallName	, mLat, mLon);
+			MapActivity.show(this, mMallName, mLat, mLon);
+			break;
+		case R.id.like:{
+			
+			boolean status = !mCbLike.isChecked();
+			mCbLike.setChecked(status);
+			NetworkCenter.getInstance().putToQueue(
+					new RequestPushProductLikeStatus(HANDLER_PUSH_LIKE_STATUS, mProductId,
+							status));
+		}
+			break;
+		case R.id.fav:{
+			boolean status = !mCbFav.isChecked();
+			mCbFav.setChecked(status);
+			NetworkCenter.getInstance().putToQueue(
+					new RequestPushProductFavStatus(HANDLER_PUSH_FAV_STATUS, mProductId,
+							status));
+		}
 			break;
 
 		default:
 			break;
 		}
-
 	}
 
 	@Override
@@ -345,6 +367,32 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 		onTouchViewPager(ev);
 		return false;
 	}
+	
+	
+	private final NetWorkHandler<EpeRequestInfo> HANDLER_PUSH_LIKE_STATUS = new NetWorkHandler<EpeRequestInfo>() {
+
+		@Override
+		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
+			if (event == RequestEvent.FINISH) {
+				if (!info.ERROR_CODE.isOK()) {
+					mCbLike.setChecked(!mCbLike.isChecked());
+				}
+			}
+			return false;
+		}
+	};
+	private final NetWorkHandler<EpeRequestInfo> HANDLER_PUSH_FAV_STATUS = new NetWorkHandler<EpeRequestInfo>() {
+		
+		@Override
+		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
+			if (event == RequestEvent.FINISH) {
+				if (!info.ERROR_CODE.isOK()) {
+					mCbFav.setChecked(!mCbFav.isChecked());
+				}
+			}
+			return false;
+		}
+	};
 
 	// @Override
 	// public boolean onOptionsItemSelected(MenuItem item) {

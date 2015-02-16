@@ -11,7 +11,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="5dp"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         app:riv_mutate_background="true"
         app:riv_oval="true"
         app:riv_tile_mode="repeat" />
