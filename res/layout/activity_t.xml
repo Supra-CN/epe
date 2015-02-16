@@ -1,95 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/top_tab_height"
-        android:background="@color/epe_pink"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/t_label"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/top_tab_title_text_size" />
-
-        <ImageButton
-            android:id="@+id/action_back"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/top_tab_item_margin"
-            android:layout_marginRight="@dimen/top_tab_item_margin"
-            android:background="@android:color/transparent"
-            android:paddingLeft="@dimen/top_tab_item_padding"
-            android:paddingRight="@dimen/top_tab_item_padding"
-            android:src="@drawable/ic_action_back" />
-    </FrameLayout>
-
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+    android:layout_height="match_parent" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/half_trans_black"
-        android:gravity="center"
-        android:orientation="horizontal" >
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
         <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/top_tab_height"
+            android:background="@color/epe_pink"
+            android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:drawableLeft="@drawable/ic_action_like"
-                android:drawablePadding="@dimen/drawable_padding"
-                android:gravity="center"
-                android:padding="10dp" />
-        </FrameLayout>
+                android:text="@string/t_label"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/top_tab_title_text_size" />
 
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-
-            <TextView
-                android:id="@+id/comment"
+            <ImageButton
+                android:id="@+id/action_back"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawableLeft="@drawable/ic_action_comment"
-                android:drawablePadding="@dimen/drawable_padding"
-                android:gravity="center"
-                android:padding="10dp" />
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/top_tab_item_margin"
+                android:layout_marginRight="@dimen/top_tab_item_margin"
+                android:background="@android:color/transparent"
+                android:paddingLeft="@dimen/top_tab_item_padding"
+                android:paddingRight="@dimen/top_tab_item_padding"
+                android:src="@drawable/ic_action_back" />
         </FrameLayout>
 
-        <FrameLayout
-            android:layout_width="0dp"
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
+            android:background="@color/half_trans_black"
+            android:gravity="center"
+            android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/share"
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawableLeft="@drawable/ic_action_share"
-                android:drawablePadding="@dimen/drawable_padding"
-                android:gravity="center"
-                android:padding="10dp" />
-        </FrameLayout>
+                android:layout_weight="1" >
+
+                <CheckedTextView
+                    android:id="@+id/like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/ic_action_like"
+                    android:drawablePadding="@dimen/drawable_padding"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textColor="@android:color/white" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/ic_action_comment"
+                    android:drawablePadding="@dimen/drawable_padding"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textColor="@android:color/white" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/ic_action_share"
+                    android:drawablePadding="@dimen/drawable_padding"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textColor="@android:color/white" />
+            </FrameLayout>
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/editor_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:visibility="gone"
+        android:background="@color/half_trans_black" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_msg_bottom_bar"
+            android:orientation="horizontal"
+            android:padding="8dp" >
+
+            <EditText
+                android:id="@+id/editor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_round_white"
+                android:hint="@string/t_editor_content_hint"
+                android:padding="5dp" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/bg_selector_round_xx_pink_btn"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/submit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/bg_selector_round_xx_pink_btn"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/t_editor_action_submit"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>

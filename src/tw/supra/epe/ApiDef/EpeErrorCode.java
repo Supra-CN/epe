@@ -46,8 +46,10 @@ public class EpeErrorCode extends AbstractErrorCodeWithState {
      public static final int CODE_BAD_RESPONSE = -5;
      public static final int CODE_ERROR_BY_LOCAL_IO = -6;
      public static final int CODE_ERROR_CAN_NOT_FIND = -7;
+     public static final int CODE_ERROR_CAN_NOT_FRIEND = -8;
 
-    // FRIENDLY_INFO_BY_LOCAL (code >= -5999 && code <= -5000)
+//     FRIENDLY_INFO_BY_LOCAL (code >= -5999 && code <= -5000)
+//      public static final int CODE_LOCAL_INFO_NOT_FRIEND = -5000;
     // public static final int CODE_LOCAL_INFO_EMPTY_DATA_SET = -5000;
     // public static final int CODE_LOCAL_INFO_THREAD_UNDER_REVIEW = -5001;
     // public static final int CODE_LOCAL_INFO_DUPLICATE = -5002;

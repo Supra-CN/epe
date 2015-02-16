@@ -10,22 +10,29 @@ import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.network.NetworkCenter;
+import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkImageView;
 import tw.supra.network.ui.NetworkRoundedImageView;
 import tw.supra.utils.JsonUtils;
 import tw.supra.utils.TimeUtil;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
+import android.widget.CheckedTextView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -46,7 +53,7 @@ public class TActivity extends BaseActivity implements OnClickListener,
 	private String mTId;
 	private JSONObject mJoData;
 
-	private TextView mTvLike;
+	private CheckedTextView mTvLike;
 	private TextView mTvComment;
 	private TextView mTvShare;
 
@@ -56,6 +63,9 @@ public class TActivity extends BaseActivity implements OnClickListener,
 	private TextView mTvTime;
 	private TextView mTvContent;
 	private TextView mTvInfo;
+
+	private View mEditorLayer;
+	private EditText mEditor;
 
 	private PullToRefreshListView mPullableList;
 
@@ -69,9 +79,16 @@ public class TActivity extends BaseActivity implements OnClickListener,
 		mTId = getIntent().getStringExtra(EXTRA_T_ID);
 
 		setContentView(R.layout.activity_t);
-		mTvLike = (TextView) findViewById(R.id.like);
+		mTvLike = (CheckedTextView) findViewById(R.id.like);
+		mTvLike.setOnClickListener(this);
 		mTvComment = (TextView) findViewById(R.id.comment);
+		mTvComment.setOnClickListener(this);
 		mTvShare = (TextView) findViewById(R.id.share);
+		mEditorLayer = findViewById(R.id.editor_layer);
+		mEditorLayer.setOnClickListener(this);
+		mEditor = ((EditText) findViewById(R.id.editor));
+
+		findViewById(R.id.submit).setOnClickListener(this);
 
 		View header = View.inflate(this, R.layout.t_content_header, null);
 		mIvAvator = (NetworkRoundedImageView) header.findViewById(R.id.avator);
@@ -85,7 +102,6 @@ public class TActivity extends BaseActivity implements OnClickListener,
 		mPullableList.getRefreshableView().addHeaderView(header);
 		mPullableList.getRefreshableView().setAdapter(ADAPTER);
 		mPullableList.setOnRefreshListener(this);
-		mTvLike = (TextView) findViewById(R.id.like);
 
 	}
 
@@ -220,7 +236,7 @@ public class TActivity extends BaseActivity implements OnClickListener,
 		mTvShare.setText(share);
 		mTvLike.setText(like);
 		mTvComment.setText(comment);
-		mTvLike.setSelected(isLike);
+		mTvLike.setChecked(isLike);
 
 		mIvAvator.setImageUrl(avator, NetworkCenter.getInstance()
 				.getImageLoader());
@@ -270,7 +286,28 @@ public class TActivity extends BaseActivity implements OnClickListener,
 			requestTContent();
 			break;
 		case R.id.action_back:
-			onBackPressed();
+			if (mEditorLayer.getVisibility() == View.VISIBLE) {
+				mEditorLayer.setVisibility(View.GONE);
+			} else {
+				onBackPressed();
+			}
+			break;
+		case R.id.comment:
+			mEditorLayer.setVisibility(View.VISIBLE);
+			showInputMethod();
+			break;
+		case R.id.like:
+			boolean status = !mTvLike.isChecked();
+			mTvLike.setChecked(status);
+			NetworkCenter.getInstance().putToQueue(
+					new RequestPushTLikeStatus(HANDLER_PUSH_LIKE_STATUS, mTId,
+							status));
+			break;
+		case R.id.submit:
+			submit();
+			break;
+		case R.id.editor_layer:
+			mEditorLayer.setVisibility(View.GONE);
 			break;
 
 		default:
@@ -278,6 +315,50 @@ public class TActivity extends BaseActivity implements OnClickListener,
 		}
 
 	}
+
+	private void submit() {
+		String msg = mEditor.getText().toString();
+
+		if (!TextUtils.isEmpty(msg)) {
+			findViewById(R.id.submit).setVisibility(View.GONE);
+			findViewById(R.id.progress).setVisibility(View.VISIBLE);
+			// tv.setEnabled(false);
+
+			NetworkCenter.getInstance().putToQueue(
+					new RequestPushTComment(HANDLER_PUSH_COMMENT, mTId, msg));
+		}
+	}
+
+	private final NetWorkHandler<EpeRequestInfo> HANDLER_PUSH_COMMENT = new NetWorkHandler<EpeRequestInfo>() {
+
+		@Override
+		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
+			if (event == RequestEvent.FINISH) {
+				if (!info.ERROR_CODE.isOK()) {
+					findViewById(R.id.submit).setVisibility(View.VISIBLE);
+					findViewById(R.id.progress).setVisibility(View.GONE);
+					boolean isOk = info.ERROR_CODE.isOK();
+					int resId = isOk ? R.string.t_editor_toast_comment_ok
+							: R.string.t_editor_toast_comment_faild;
+					Toast.makeText(TActivity.this, resId, Toast.LENGTH_SHORT)
+							.show();
+				}
+			}
+			return false;
+		}
+	};
+	private final NetWorkHandler<EpeRequestInfo> HANDLER_PUSH_LIKE_STATUS = new NetWorkHandler<EpeRequestInfo>() {
+
+		@Override
+		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
+			if (event == RequestEvent.FINISH) {
+				if (!info.ERROR_CODE.isOK()) {
+					mTvLike.setChecked(!mTvLike.isChecked());
+				}
+			}
+			return false;
+		}
+	};
 
 	// @Override
 	// public boolean onOptionsItemSelected(MenuItem item) {
@@ -400,6 +481,31 @@ public class TActivity extends BaseActivity implements OnClickListener,
 	private void loadData(int page) {
 		Log.i(LOG_TAG, "loadData : " + "page = " + page);
 		requestTComment(page);
+	}
+
+	private void showInputMethod() {
+		Log.i(LOG_TAG, "showInputMethod");
+		sHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				inputManager.showSoftInput(mEditor, 0);
+				mEditor.requestFocus();
+			}
+		});
+	}
+
+	private void hideInputMethod() {
+		sHandler.post(new Runnable() {
+
+			@Override
+			public void run() {
+				Log.i(LOG_TAG, "hideInputMethod");
+				InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				inputManager.hideSoftInputFromWindow(mEditor.getWindowToken(),
+						0);
+			}
+		});
 	}
 
 }

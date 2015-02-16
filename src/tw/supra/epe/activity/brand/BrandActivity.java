@@ -13,6 +13,7 @@ import tw.supra.location.LocationCallBack;
 import tw.supra.location.LocationCenter;
 import tw.supra.location.SupraLocation;
 import tw.supra.network.NetworkCenter;
+import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import android.content.Intent;
@@ -25,8 +26,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -34,7 +38,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 public class BrandActivity extends BaseActivity implements
 		NetWorkHandler<BrandInfo>, LocationCallBack, OnClickListener,
-		OnItemClickListener, OnRefreshListener2<ListView> {
+		OnItemClickListener, OnRefreshListener2<ListView>,
+		OnCheckedChangeListener {
 	private static final String LOG_TAG = BrandActivity.class.getSimpleName();
 	public static final String EXTRA_BRAND_ID = "extra_brand_id";
 	public static final String EXTRA_BRAND_NAME = "extra_brand_name";
@@ -52,6 +57,8 @@ public class BrandActivity extends BaseActivity implements
 	private String mBrandName;
 	static Handler sHandler = new Handler();
 
+	private ToggleButton mTbFocus;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,12 +71,15 @@ public class BrandActivity extends BaseActivity implements
 
 		findViewById(R.id.action_back).setOnClickListener(this);
 		((TextView) findViewById(R.id.brand_name)).setText(mBrandName);
+		mTbFocus = (ToggleButton) findViewById(R.id.action_focus);
+		mTbFocus.setOnCheckedChangeListener(this);
 
 		mPullRefreshList = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
 		mPullRefreshList.setOnItemClickListener(this);
 		mPullRefreshList.setOnRefreshListener(this);
 		// mPullRefreshList.setEmptyView(new ProgressBar(this));
 		mPullRefreshList.getRefreshableView().setAdapter(ADAPTER);
+		requestBrandFriendStatus();
 	}
 
 	@Override
@@ -82,6 +92,39 @@ public class BrandActivity extends BaseActivity implements
 				mPullRefreshList.setRefreshing();
 			}
 		}, 500);
+	}
+
+	private final NetWorkHandler<EpeRequestInfo> HANDLER_BRAND_FRIEND_STATUS = new NetWorkHandler<EpeRequestInfo>() {
+
+		@Override
+		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
+			if (event == RequestEvent.FINISH && info.ERROR_CODE.isOK()) {
+				mTbFocus.setOnCheckedChangeListener(null);
+				mTbFocus.setChecked(true);
+				mTbFocus.setOnCheckedChangeListener(BrandActivity.this);
+			}
+			return false;
+		}
+	};
+	private final NetWorkHandler<EpeRequestInfo> HANDLER_BRAND_PUSH_FOCUS_STATUS = new NetWorkHandler<EpeRequestInfo>() {
+
+		@Override
+		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
+			if (event == RequestEvent.FINISH ) {
+				if (!info.ERROR_CODE.isOK()) {
+					mTbFocus.setOnCheckedChangeListener(null);
+					mTbFocus.toggle();
+					mTbFocus.setOnCheckedChangeListener(BrandActivity.this);
+				}
+			}
+			return false;
+		}
+	};
+
+	private void requestBrandFriendStatus() {
+		NetworkCenter.getInstance().putToQueue(
+				new RequestBrandFocusStatus(HANDLER_BRAND_FRIEND_STATUS,
+						mBrandId));
 	}
 
 	private void request(int page) {
@@ -237,9 +280,15 @@ public class BrandActivity extends BaseActivity implements
 					jo.getString(BrandInfo.MALL_NAME));
 			startActivity(intent);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		NetworkCenter.getInstance().putToQueue(
+				new RequestPushBrandFocusStatus(
+						HANDLER_BRAND_PUSH_FOCUS_STATUS, mBrandId, isChecked));
 	}
 }

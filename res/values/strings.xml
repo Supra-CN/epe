@@ -166,6 +166,7 @@
 
     <!-- brand -->
     <string name="brand_action_focus">+关注</string>
+    <string name="brand_action_focused">已关注</string>
 
     <!-- mall -->
     <string name="mall_floor">F%s</string>
@@ -180,6 +181,8 @@
     <string name="t_editor_item_broad">品牌</string>
     <string name="t_editor_item_model">型号</string>
     <string name="t_editor_item_price">价格</string>
+    <string name="t_editor_toast_comment_ok">评论成功</string>
+    <string name="t_editor_toast_comment_faild">评论失败</string>
     <string name="t_editor_toast_check_img">请选择图片</string>
     <string name="t_editor_toast_check_content">请输入内容</string>
     <string name="t_editor_toast_check_brand">请输入品牌</string>
