@@ -12,6 +12,7 @@ import tw.supra.epe.core.BaseFrag;
 import tw.supra.epe.msg.MsgActivity;
 import tw.supra.epe.msg.MsgTopicInfo;
 import tw.supra.network.NetworkCenter;
+import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkImageView;
@@ -36,7 +37,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 public class ActivityPage extends BaseFrag implements OnItemClickListener,
-		OnRefreshListener<ListView>, NetWorkHandler<MsgTopicInfo> {
+		OnRefreshListener<ListView>, NetWorkHandler<EpeRequestInfo> {
 	private static final String LOG_TAG = ActivityPage.class.getSimpleName();
 	/**
 	 * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
@@ -47,7 +48,6 @@ public class ActivityPage extends BaseFrag implements OnItemClickListener,
 
 	private JSONObject mJoData;
 
-	private TextView mLabel;
 	private PullToRefreshListView mPullableList;
 
 	private static Handler sHandler = new Handler();
@@ -69,23 +69,22 @@ public class ActivityPage extends BaseFrag implements OnItemClickListener,
 
 			@Override
 			public void run() {
-//				mPullableList.setRefreshing();
+				 mPullableList.setRefreshing();
 			}
 		}, 500);
 	}
 
 	private void request() {
-		// NetworkCenter.getInstance().putToQueue(
-		// new RequestMsgTopic(this, new MsgTopicInfo(mTopicId)));
+		NetworkCenter.getInstance().putToQueue(new RequestActivitys(this));
 	}
 
 	@Override
-	public boolean HandleEvent(RequestEvent event, MsgTopicInfo info) {
+	public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
 		if (RequestEvent.FINISH == event) {
 			mPullableList.onRefreshComplete();
 			if (info.ERROR_CODE.isOK()) {
 				DATA_SET.clear();
-				JSONArray ja = info.resultJoList;
+				JSONArray ja = (JSONArray)info.OBJ;
 				for (int i = 0; i < ja.length(); i++) {
 					try {
 						DATA_SET.add(ja.getJSONObject(i));
@@ -301,13 +300,11 @@ public class ActivityPage extends BaseFrag implements OnItemClickListener,
 
 	@Override
 	protected CharSequence getDefaultTitle(Context c) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int getIconResId() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

@@ -94,13 +94,18 @@ public class RequestPushActivity extends EpeJsonMultiRequest<EpeRequestInfo> {
 		MultipartEntity entity = new MultipartEntity();
 		entity.addPart("authcode", StringBody.create(AccountCenter
 				.getCurrentUser().getAuth(), MIME_TEXT, CHARSET));
-		entity.addPart("type", StringBody.create("0".equals(MALL_ID)?"2":"1", MIME_TEXT, CHARSET));
+//		entity.addPart("type", StringBody.create("0".equals(MALL_ID)?"2":"1", MIME_TEXT, CHARSET));
+		entity.addPart("type", StringBody.create("2", MIME_TEXT, CHARSET));
 		
 		entity.addPart("mall_id", StringBody.create(MALL_ID, MIME_TEXT, CHARSET));
 		
 		entity.addPart("shop_id", StringBody.create(AccountCenter
 				.getCurrentUser().getShopId(), MIME_TEXT, CHARSET));
 		
+		entity.addPart("title",
+				StringBody.create(TITLE, MIME_TEXT, CHARSET));
+		entity.addPart("activity_info",
+				StringBody.create(CONTENT, MIME_TEXT, CHARSET));
 		entity.addPart("start_time",
 				StringBody.create(START_TIME, MIME_TEXT, CHARSET));
 		entity.addPart("end_time",

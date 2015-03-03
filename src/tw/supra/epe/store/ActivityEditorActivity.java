@@ -188,16 +188,8 @@ public class ActivityEditorActivity extends BaseActivity implements
 			return;
 		}
 
-		String brand = ((EditText) findViewById(R.id.brand)).getText()
-				.toString().trim();
-		if (TextUtils.isEmpty(brand)) {
-			Toast.makeText(this, R.string.t_editor_toast_check_brand,
-					Toast.LENGTH_SHORT).show();
-			return;
-		}
-
 		if (mStart.after(mEnd)) {
-			Toast.makeText(this, R.string.activity_editor_toast_check_title,
+			Toast.makeText(this, R.string.activity_editor_toast_check_time,
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
