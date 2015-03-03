@@ -57,87 +57,86 @@
             android:orientation="vertical" >
 
             <EditText
-                android:id="@+id/content"
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@android:color/white"
-                android:hint="@string/t_editor_content_hint"
+                android:hint="@string/activity_editor_hint_title"
+                android:padding="10dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:hint="@string/activity_editor_hint_content"
+                android:gravity="top|left"
+                                android:layout_marginTop="1dp"
+                
                 android:minLines="3"
                 android:padding="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="@string/activity_editor_time_start"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/time_start"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginTop="1dp"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="@string/activity_editor_time_end"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/time_end"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
             <ImageButton
                 android:id="@+id/img"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:layout_marginTop="10dp"
                 android:background="@android:color/white"
                 android:padding="15dp"
                 android:scaleType="fitStart"
                 android:src="@drawable/ic_pick_img" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@android:color/white"
-                android:padding="15dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/t_editor_item_broad" />
-
-                <EditText
-                    android:id="@+id/brand"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@android:color/white"
-                android:padding="15dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/t_editor_item_model" />
-
-                <EditText
-                    android:id="@+id/model"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@android:color/white"
-                android:padding="15dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/t_editor_item_price" />
-
-                <EditText
-                    android:id="@+id/price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right"
-                    android:inputType="numberDecimal" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

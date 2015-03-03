@@ -16,7 +16,10 @@ import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkRoundedImageView;
 import tw.supra.utils.JsonUtils;
+import android.app.AlertDialog.Builder;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -28,7 +31,8 @@ import com.umeng.analytics.MobclickAgent;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
 
-public class MyStoreActivity extends BaseActivity implements OnClickListener {
+public class MyStoreActivity extends BaseActivity implements OnClickListener,
+		DialogInterface.OnClickListener {
 
 	private static final String LOG_TAG = MyStoreActivity.class.getSimpleName();
 
@@ -70,6 +74,9 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener {
 	private TextView mTvName;
 	private TextView mTVAddress;
 
+	String mMallId;
+	String mBrandId;
+
 	/**
 	 * 设置布局
 	 */
@@ -79,6 +86,7 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener {
 		MobclickAgent.updateOnlineConfig(this);
 		setContentView(R.layout.activity_my_store);
 		findViewById(R.id.action_back).setOnClickListener(this);
+		findViewById(R.id.action_create).setOnClickListener(this);
 
 		ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
 		mAdapter = new PageAdapter(getFragmentManager());
@@ -88,6 +96,7 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener {
 		mLogo = (NetworkRoundedImageView) findViewById(R.id.logo);
 		mTvName = (TextView) findViewById(R.id.name);
 		mTVAddress = (TextView) findViewById(R.id.address);
+
 		request();
 
 	}
@@ -104,9 +113,22 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener {
 		case R.id.action_back:
 			onBackPressed();
 			break;
+		case R.id.action_create:
+			showCreateDialog();
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void showCreateDialog() {
+		Builder builder = new Builder(this);
+		builder.setTitle(R.string.my_store_create_dialog_title);
+		builder.setNegativeButton(R.string.my_store_create_dialog_btn_product,
+				this);
+		builder.setPositiveButton(R.string.my_store_create_dialog_btn_activity,
+				this);
+		builder.show();
 	}
 
 	public class PageAdapter extends FragmentPagerAdapter implements
@@ -159,6 +181,8 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener {
 					&& info.OBJ != null) {
 				JSONObject jo = (JSONObject) info.OBJ;
 				try {
+					mMallId = JsonUtils.getStrSafely(jo, "mall_id");
+					mBrandId = JsonUtils.getStrSafely(jo, "brand_id");
 					mTvName.setText(JsonUtils.getStrSafely(jo, "shop_name"));
 					mTVAddress.setText(JsonUtils.getStrSafely(jo, "address"));
 					mLogo.setImageUrl(JsonUtils.getStrSafely(jo, "logo"),
@@ -182,6 +206,23 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener {
 
 		abstract BaseFrag create();
 
+	}
+
+	@Override
+	public void onClick(DialogInterface dialog, int which) {
+		switch (which) {
+		case DialogInterface.BUTTON_POSITIVE:
+			Intent intent = new Intent(this, ActivityEditorActivity.class);
+			intent.putExtra(ActivityEditorActivity.EXTRA_MALL_ID, mMallId);
+			startActivity(intent);
+			break;
+		case DialogInterface.BUTTON_NEGATIVE:
+
+			break;
+
+		default:
+			break;
+		}
 	}
 
 }

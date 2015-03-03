@@ -49,6 +49,11 @@ public class TimeUtil {
 		// Date(timeStamp));
 		return new SimpleDateFormat("yyyy-MM-dd").format(date);
 	}
+	public static String formatDateWithMM(Context context, Date date) {
+		// return new SimpleDateFormat("yyyy-MM-dd").format(new
+		// Date(timeStamp));
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date);
+	}
 
 	public static String formatTime(Context context, long timeStamp) {
 		timeStamp *= 1000;

@@ -215,6 +215,15 @@
     <string name="store_product_label_hot">热销</string>
     <string name="my_store_label_product">单品</string>
     <string name="my_store_label_active">活动</string>
+    <string name="my_store_create_dialog_title">发布</string>
+    <string name="my_store_create_dialog_btn_product">单品</string>
+    <string name="my_store_create_dialog_btn_activity">活动</string>
+    <string name="activity_editor_hint_title">请输入活动标题</string>
+    <string name="activity_editor_hint_content">活动内容&#8230;</string>
+    <string name="activity_editor_time_start">开始时间</string>
+    <string name="activity_editor_time_end">结束时间</string>
+    <string name="activity_editor_toast_check_title">请检查标题</string>
+    <string name="activity_editor_toast_check_time">请检查时间</string>
     <string name="store_apply_boutiques_page_title">精品店</string>
     <string name="store_apply_toast_check_area">请选择地区</string>
     <string name="store_apply_toast_check_mall">请选择商场</string>
