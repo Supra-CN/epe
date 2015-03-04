@@ -22,10 +22,16 @@ public class SettingsActivity extends BaseActivity implements OnClickListener,
 	private static final String LOG_TAG = SettingsActivity.class
 			.getSimpleName();
 
-	private final Item[] LIST = { new Item(R.string.settings_item_about),
-			new Item(R.string.settings_item_clear),
+	private final Item[] LIST = { new Item(R.string.settings_item_about) {
+		@Override
+		public void onItemClick() {
+			super.onItemClick();
+			startActivity(new Intent(SettingsActivity.this, AboutActivity.class));
+		}
+	},
+			// new Item(R.string.settings_item_clear),
 			new Item(R.string.settings_item_check_update),
-			new Item(R.string.settings_item_vote),
+			// new Item(R.string.settings_item_vote),
 			new Item(R.string.settings_item_feedback), };
 
 	/**

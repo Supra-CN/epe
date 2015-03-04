@@ -187,8 +187,11 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 
 			JSONObject joBrand = JsonUtils.getJoSafely(mJoData,
 					ProductInfo.BRAND_INFO);
-			mBrandName = JsonUtils
-					.getStrSafely(joBrand, ProductInfo.BRAND_NAME);
+			
+			if (null != joBrand) {
+				mBrandName = JsonUtils
+						.getStrSafely(joBrand, ProductInfo.BRAND_NAME);
+			}
 
 			JSONArray jaImages = JsonUtils.getJaSafely(mJoData,
 					ProductInfo.IMAGES);

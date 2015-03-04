@@ -228,7 +228,7 @@ public class ApplyShopPage extends BaseHostFrag<ApplyStoreActivity> implements
 
 	private void requestVerifyCode(String phoneNum) {
 		NetworkCenter.getInstance().putToQueue(
-				new RequestVerifyCode(HANDLE_VERIFY_CODE, phoneNum, Type.REG));
+				new RequestVerifyCode(HANDLE_VERIFY_CODE, phoneNum, Type.APPLY_STORE));
 	}
 
 	private void countDown() {

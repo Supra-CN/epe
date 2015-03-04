@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">epe</string>
+    <string name="inc_name">北京衣加衣科技有限公司</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="hello">Hello World, PullToRefreshActivity!</string>
@@ -218,6 +219,32 @@
     <string name="my_store_create_dialog_title">发布</string>
     <string name="my_store_create_dialog_btn_product">单品</string>
     <string name="my_store_create_dialog_btn_activity">活动</string>
+    <string name="product_editor_label">发布单品</string>
+    <string name="product_editor_brand">品牌</string>
+    <string name="product_editor_brand_hint">请填写品牌名称</string>
+    <string name="product_editor_toast_check_brand">请检查品牌名称</string>
+    <string name="product_editor_name">品名</string>
+    <string name="product_editor_name_hint">请填写商品名称</string>
+    <string name="product_editor_toast_check_name">请检查单品品名称</string>
+    <string name="product_editor_model">型号</string>
+    <string name="product_editor_model_hint">请填写单品型号</string>
+    <string name="product_editor_toast_check_model">请检查单品品型号</string>
+    <string name="product_editor_price">价格</string>
+    <string name="product_editor_price_hint">单位：元</string>
+    <string name="product_editor_toast_check_price">请检查价格</string>
+    <string name="product_editor_discount">折扣</string>
+    <string name="product_editor_discount_hint">如：8.8即为88折扣</string>
+    <string name="product_editor_toast_check_discount">请检查折扣</string>
+    <string name="product_editor_tag">标签</string>
+    <string name="product_editor_tag_hint">如：运动，休闲，时尚，商务</string>
+    <string name="product_editor_toast_check_tag">请检查标签</string>
+    <string name="product_editor_type">类型</string>
+    <string name="product_editor_type_hint">请选择单品类型</string>
+    <string name="product_editor_toast_check_type">请检查类型</string>
+    <string name="product_editor_type_discount">折扣</string>
+    <string name="product_editor_type_new">新品</string>
+    <string name="product_editor_type_well">畅销</string>
+    <string name="activity_editor_label">发布活动</string>
     <string name="activity_editor_hint_title">请输入活动标题</string>
     <string name="activity_editor_hint_content">活动内容&#8230;</string>
     <string name="activity_editor_time_start">开始时间</string>

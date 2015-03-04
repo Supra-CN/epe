@@ -41,8 +41,9 @@ public class LocationCenter {
 
 		@Override
 		public void onReceiveLocation(BDLocation location) {
-			if (location == null)
+			if (location == null){
 				return;
+			}
 			StringBuffer sb = new StringBuffer(256);
 			sb.append("time : ");
 			sb.append(location.getTime());
@@ -63,8 +64,9 @@ public class LocationCenter {
 				sb.append("\naddr : ");
 				sb.append(location.getAddrStr());
 			}
-
 			Log.i(LOG_TAG, sb.toString());
+			mBestLocation =new SupraLocation(location);
+			notifyCallBacks();
 		}
 	};
 
@@ -302,11 +304,11 @@ public class LocationCenter {
 	}
 
 	private void requestLocation() {
-		((LocationManager) App.getInstance().getSystemService(
-				Context.LOCATION_SERVICE)).requestSingleUpdate(LocationCenter
-				.getInstance().getBestProvider(), LOCATION_LISTENER, Looper
-				.getMainLooper());
-//		mLocationClient.requestLocation();
+//		((LocationManager) App.getInstance().getSystemService(
+//				Context.LOCATION_SERVICE)).requestSingleUpdate(LocationCenter
+//				.getInstance().getBestProvider(), LOCATION_LISTENER, Looper
+//				.getMainLooper());
+		mLocationClient.requestLocation();
 	}
 
 	private boolean hasBestLoction() {

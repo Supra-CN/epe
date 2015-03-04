@@ -36,7 +36,8 @@ public class RequestVerifyCode extends EpeJsonRequest<EpeRequestInfo> {
     public enum Type {
         REG(1), // 用于注册
         STORE(2), // 用于商店短信验证
-        RESET(3);// 用于找回密码
+        RESET(3),// 用于找回密码
+        APPLY_STORE(5);
         public final int ID;
 
         private Type(int id) {

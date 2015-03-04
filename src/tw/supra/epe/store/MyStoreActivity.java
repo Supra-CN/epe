@@ -83,7 +83,6 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		MobclickAgent.updateOnlineConfig(this);
 		setContentView(R.layout.activity_my_store);
 		findViewById(R.id.action_back).setOnClickListener(this);
 		findViewById(R.id.action_create).setOnClickListener(this);
@@ -211,12 +210,19 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener,
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
 		switch (which) {
-		case DialogInterface.BUTTON_POSITIVE:
+		case DialogInterface.BUTTON_POSITIVE:{
+			
 			Intent intent = new Intent(this, ActivityEditorActivity.class);
 			intent.putExtra(ActivityEditorActivity.EXTRA_MALL_ID, mMallId);
 			startActivity(intent);
+		}
 			break;
-		case DialogInterface.BUTTON_NEGATIVE:
+		case DialogInterface.BUTTON_NEGATIVE:{
+			
+			Intent intent = new Intent(this, ProductEditorActivity.class);
+			intent.putExtra(ActivityEditorActivity.EXTRA_MALL_ID, mMallId);
+			startActivity(intent);
+		}
 
 			break;
 

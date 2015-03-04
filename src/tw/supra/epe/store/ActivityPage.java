@@ -214,7 +214,7 @@ public class ActivityPage extends BaseFrag implements OnItemClickListener,
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (null == convertView) {
 				convertView = View.inflate(getActivity(),
-						R.layout.msg_topic_item, null);
+						R.layout.activity_item, null);
 				ItemHolder holder = new ItemHolder();
 				holder.img = (NetworkImageView) convertView
 						.findViewById(R.id.img);
@@ -234,10 +234,10 @@ public class ActivityPage extends BaseFrag implements OnItemClickListener,
 			JSONObject jo = getItem(position);
 
 			try {
-				img = jo.getString(MsgTopicInfo.PHOTO);
-				content = jo.getString(MsgTopicInfo.CONTENT);
-				title = jo.getString(MsgTopicInfo.TITLE);
-				time = jo.getLong(MsgTopicInfo.SEND_TIME);
+				img = jo.getString("pic");
+				content = jo.getString("activity_info");
+				title = jo.getString("activity_title");
+				time = jo.getLong("add_time");
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -287,15 +287,15 @@ public class ActivityPage extends BaseFrag implements OnItemClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		try {
-			Intent intent = new Intent(getActivity(), MsgActivity.class);
-			intent.putExtra(MsgActivity.EXTRA_MSG_ID, JsonUtils.getStrSafely(
-					DATA_SET.get(position - 1), MsgTopicInfo.MSG_ID));
-			startActivity(intent);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			Intent intent = new Intent(getActivity(), MsgActivity.class);
+//			intent.putExtra(MsgActivity.EXTRA_MSG_ID, JsonUtils.getStrSafely(
+//					DATA_SET.get(position - 1), MsgTopicInfo.MSG_ID));
+//			startActivity(intent);
+//		} catch (JSONException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	@Override

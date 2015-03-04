@@ -70,7 +70,11 @@ public class UserInfoEditorActivity extends BaseActivity implements
 		mTvBirthday.setOnClickListener(this);
 
 		User user = AccountCenter.getCurrentUser();
-		Picasso.with(this).load(user.getAvatarUrl()).into(mIvAvator);
+		String avatar = user.getAvatarUrl();
+		if (!TextUtils.isEmpty(avatar)) {
+			Picasso.with(this).load(user.getAvatarUrl())
+					.error(R.drawable.ic_epe_logo).into(mIvAvator);
+		}
 		mSwGender.setChecked(user.getGender().equals(User.GENDER_BOY));
 		mEtNick.setText(user.getName());
 		mBirthday.setTimeInMillis(user.getBirthday());
@@ -133,7 +137,7 @@ public class UserInfoEditorActivity extends BaseActivity implements
 
 	/**
 	 * Creates a dialog offering two options: take a photo or pick a photo from
-	 * the gallery.
+	 * the gallery
 	 */
 	public void createPickPhotoDialog() {
 		Builder builder = new Builder(this);

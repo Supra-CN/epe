@@ -3,7 +3,6 @@ package tw.supra.epe.store;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Calendar;
 import java.util.HashMap;
 
 import org.apache.http.entity.mime.MultipartEntity;
@@ -19,16 +18,16 @@ import tw.supra.network.request.EpeJsonMultiRequest;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.utils.JsonUtils;
-import tw.supra.utils.TimeUtil;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.squareup.picasso.Picasso;
 
-public class RequestPushActivity extends EpeJsonMultiRequest<EpeRequestInfo> {
-	private static final String LOG_TAG = RequestPushActivity.class
+public class RequestPushProduct extends EpeJsonMultiRequest<EpeRequestInfo> {
+	private static final String LOG_TAG = RequestPushProduct.class
 			.getSimpleName();
 	private static final Charset CHARSET = Charset.defaultCharset();
 	private static final String MIME_TEXT = "text/plain";
@@ -36,14 +35,21 @@ public class RequestPushActivity extends EpeJsonMultiRequest<EpeRequestInfo> {
 	private static final int IMG_SIZE_LIMIT = 1024;
 
 	public final Uri IMG;
-	public final String TITLE;
+	public final String NAME;
+	public final String TAG;
+	public final String GENDER;
+	public final String PRICE;
+	public final String BRAND_ID;
+	public final String BRAND_NAME;
 	public final String MALL_ID;
-	public final String CONTENT;
-	public final String START_TIME;
-	public final String END_TIME;
+	public final String SKU;
+	public final String TYPE;
+	public final String DISCOUNT;
 
-	public RequestPushActivity(NetWorkHandler<EpeRequestInfo> eventHandler,
-			Uri img,String mallId,String title,  String content,Calendar startTime,Calendar endTime) {
+	public RequestPushProduct(NetWorkHandler<EpeRequestInfo> eventHandler,
+			Uri img, String mallId, String brandId, String brandName,
+			String name, String sku, String tag, String gender, String price,
+			String type, String discount) {
 		super(eventHandler, new EpeRequestInfo() {
 
 			@Override
@@ -54,18 +60,24 @@ public class RequestPushActivity extends EpeJsonMultiRequest<EpeRequestInfo> {
 			@Override
 			protected void fillQueryParamters(HashMap<String, String> paramters) {
 				paramters.put("d", "api");
-				paramters.put("c", "mall");
-				paramters.put("m", "publish_activity");
+				paramters.put("c", "products");
+				paramters.put("m", "addProducts");
 			}
 		});
 
 		IMG = img;
-		TITLE = title;
-		CONTENT = content;
+		NAME = name;
 		MALL_ID = mallId;
-		START_TIME = TimeUtil.formatDateWithMM(getContext(), startTime.getTime());
-		END_TIME = TimeUtil.formatDateWithMM(getContext(), endTime.getTime());
-		Log.i(LOG_TAG, START_TIME);
+
+		TAG = tag;
+		GENDER = gender;
+		PRICE = price;
+		BRAND_ID = brandId;
+		BRAND_NAME = brandName;
+		SKU = sku;
+		TYPE = type;
+		DISCOUNT = discount;
+
 	}
 
 	@Override
@@ -78,9 +90,6 @@ public class RequestPushActivity extends EpeJsonMultiRequest<EpeRequestInfo> {
 			INFO.ERROR_CODE.addDyingMsg("response : " + response);
 			return;
 		}
-
-		
-		
 		INFO.ERROR_CODE.addDyingMsg("response : " + response);
 	}
 
@@ -94,23 +103,27 @@ public class RequestPushActivity extends EpeJsonMultiRequest<EpeRequestInfo> {
 		MultipartEntity entity = new MultipartEntity();
 		entity.addPart("authcode", StringBody.create(AccountCenter
 				.getCurrentUser().getAuth(), MIME_TEXT, CHARSET));
-//		entity.addPart("type", StringBody.create("0".equals(MALL_ID)?"2":"1", MIME_TEXT, CHARSET));
-		entity.addPart("type", StringBody.create("2", MIME_TEXT, CHARSET));
-		
-		entity.addPart("mall_id", StringBody.create(MALL_ID, MIME_TEXT, CHARSET));
-		
-		entity.addPart("shop_id", StringBody.create(AccountCenter
+		entity.addPart("product_name",
+				StringBody.create(NAME, MIME_TEXT, CHARSET));
+		entity.addPart("product_gender",
+				StringBody.create(GENDER, MIME_TEXT, CHARSET));
+
+		entity.addPart("product_price",
+				StringBody.create(PRICE, MIME_TEXT, CHARSET));
+		entity.addPart("product_brand_id",
+				StringBody.create(BRAND_ID, MIME_TEXT, CHARSET));
+		entity.addPart("product_sku",
+				StringBody.create(SKU, MIME_TEXT, CHARSET));
+		entity.addPart("discount_num",
+				StringBody.create(DISCOUNT, MIME_TEXT, CHARSET));
+		entity.addPart("product_tag",
+				StringBody.create(TAG, MIME_TEXT, CHARSET));
+
+		entity.addPart("product_shop_id", StringBody.create(AccountCenter
 				.getCurrentUser().getShopId(), MIME_TEXT, CHARSET));
-		
-		entity.addPart("activity_title",
-				StringBody.create(TITLE, MIME_TEXT, CHARSET));
-		entity.addPart("activity_info",
-				StringBody.create(CONTENT, MIME_TEXT, CHARSET));
-		entity.addPart("start_time",
-				StringBody.create(START_TIME, MIME_TEXT, CHARSET));
-		entity.addPart("end_time",
-				StringBody.create(END_TIME, MIME_TEXT, CHARSET));
-		// String img = decodeImg(Uri.parse(INFO.SRC));
+		if (!TextUtils.isEmpty(TYPE)) {
+			entity.addPart(TYPE, StringBody.create("1", MIME_TEXT, CHARSET));
+		}
 
 		if (null != IMG) {
 			Bitmap bm = null;
@@ -141,7 +154,7 @@ public class RequestPushActivity extends EpeJsonMultiRequest<EpeRequestInfo> {
 			Log.i(LOG_TAG, "out = " + out.size() / 1024);
 			ByteArrayBody body = new ByteArrayBody(out.toByteArray(),
 					"image/jpeg", IMG.getLastPathSegment());
-			entity.addPart("pic", body);
+			entity.addPart("images", body);
 			bm.recycle();
 		}
 		return entity;

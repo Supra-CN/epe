@@ -12,7 +12,9 @@ import tw.supra.epe.activity.brand.BrandActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.mall.MallActivity;
 import tw.supra.epe.store.StoreActivity;
+import tw.supra.location.LocationCallBack;
 import tw.supra.location.LocationCenter;
+import tw.supra.location.SupraLocation;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
@@ -44,11 +46,11 @@ import android.widget.TextView;
 
 import com.viewpagerindicator.PageIndicator;
 
-public class EpePage extends BaseMainPage implements LocationListener
+public class EpePage extends BaseMainPage implements LocationCallBack
 		 {
 	private static final String LOG_TAG = EpePage.class.getSimpleName();
 
-	private Location mLocation;
+	private SupraLocation mLocation;
 	private RequestNearStore mRequestNearStore;
 	private RequestNearBrand mRequestNearBrand;
 	private final ArrayList<JSONObject> AD_DATA_SET = new ArrayList<JSONObject>();
@@ -91,10 +93,12 @@ public class EpePage extends BaseMainPage implements LocationListener
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		requestAds();
-		((LocationManager) App.getInstance().getSystemService(
-				Context.LOCATION_SERVICE)).requestSingleUpdate(LocationCenter
-				.getInstance().getBestProvider(), this, getActivity()
-				.getMainLooper());
+		LocationCenter.getInstance().requestLocation(this);
+		
+//		((LocationManager) App.getInstance().getSystemService(
+//				Context.LOCATION_SERVICE)).requestSingleUpdate(LocationCenter
+//				.getInstance().getBestProvider(), this, getActivity()
+//				.getMainLooper());
 
 	}
 
@@ -113,31 +117,7 @@ public class EpePage extends BaseMainPage implements LocationListener
 		return 0;
 	}
 
-	@Override
-	public void onLocationChanged(Location location) {
-		Log.i(LOG_TAG, "onLocationChanged : " + location);
-		mLocation = location;
-		requestNearStore();
-		requestNearBrand();
-	}
 
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-
-	}
 
 	private void requestNearStore() {
 		if (null != mLocation && null == mRequestNearStore) {
@@ -384,6 +364,15 @@ public class EpePage extends BaseMainPage implements LocationListener
 						R.drawable.near_store_bg));
 		drawableBg.setTileModeX(TileMode.REPEAT);
 		mWave.setBackgroundDrawable(drawableBg);
+	}
+
+	@Override
+	public void callBack(SupraLocation location) {
+			Log.i(LOG_TAG, "onLocationChanged : " + location);
+			mLocation = location;
+			requestNearStore();
+			requestNearBrand();
+		
 	}
 
 }
