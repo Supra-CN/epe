@@ -94,25 +94,6 @@ public class MallActivity extends BaseActivity implements OnClickListener,OnChec
 		NetworkCenter.getInstance().putToQueue(
 				new RequestMall(this, new MallInfo(mMallId)));
 	}
-	
-//	private void requestFriendStatus() {
-//		NetworkCenter.getInstance().putToQueue(
-//				new RequestBrandFocusStatus(HANDLER_BRAND_FRIEND_STATUS,
-//						mBrandId));
-//	}
-	
-	private final NetWorkHandler<EpeRequestInfo> HANDLER_BRAND_FRIEND_STATUS = new NetWorkHandler<EpeRequestInfo>() {
-
-		@Override
-		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
-			if (event == RequestEvent.FINISH && info.ERROR_CODE.isOK()) {
-				mTbFocus.setOnCheckedChangeListener(null);
-				mTbFocus.setChecked(true);
-				mTbFocus.setOnCheckedChangeListener(MallActivity.this);
-			}
-			return false;
-		}
-	};
 
 	@Override
 	public boolean HandleEvent(RequestEvent event, MallInfo info) {
@@ -124,9 +105,15 @@ public class MallActivity extends BaseActivity implements OnClickListener,OnChec
 
 					mLat = info.resultJo.getDouble(MallInfo.LATITUDE);
 					mLon = info.resultJo.getDouble(MallInfo.LONGITUDE);
+					
+					String following = info.resultJo.getString(MallInfo.FOLLOWING);
+					mTbFocus.setOnCheckedChangeListener(null);
+					mTbFocus.setChecked("1".equals(following));
+					mTbFocus.setOnCheckedChangeListener(this);
 
 					mMallName = info.resultJo.getString(MallInfo.MALL_NAME);
 					mTvMallName.setText(mMallName);
+					
 					mTvAddress.setText(getString(R.string.mall_info_address,
 							info.resultJo.getString(MallInfo.ADDRESS)));
 					JSONArray jaFloors = info.resultJo
@@ -299,7 +286,7 @@ public class MallActivity extends BaseActivity implements OnClickListener,OnChec
 		}
 	}
 	
-	private final NetWorkHandler<EpeRequestInfo> HANDLER_BRAND_PUSH_FOCUS_STATUS = new NetWorkHandler<EpeRequestInfo>() {
+	private final NetWorkHandler<EpeRequestInfo> HANDLER_PUSH_FOCUS_STATUS = new NetWorkHandler<EpeRequestInfo>() {
 
 		@Override
 		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
@@ -316,9 +303,11 @@ public class MallActivity extends BaseActivity implements OnClickListener,OnChec
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//		NetworkCenter.getInstance().putToQueue(
-//				new RequestPushBrandFocusStatus(
-//						HANDLER_BRAND_PUSH_FOCUS_STATUS, mBrandId, isChecked));		
+		NetworkCenter.getInstance().putToQueue(
+				new RequestPushMallFocusStatus(
+						HANDLER_PUSH_FOCUS_STATUS, mMallId, isChecked));		
 	}
+	
+
 
 }

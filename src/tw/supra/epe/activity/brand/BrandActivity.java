@@ -282,7 +282,6 @@ public class BrandActivity extends BaseActivity implements
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override

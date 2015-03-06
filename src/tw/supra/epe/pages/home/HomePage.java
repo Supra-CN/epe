@@ -43,7 +43,7 @@ public class HomePage extends BaseMainPage implements OnClickListener,
 		mPageIndicator.setOnPageChangeListener(this);
 		return v;
 	}
-
+ 
 	@Override
 	protected CharSequence getDefaultTitle(Context c) {
 		return c.getText(R.string.indictor_tab_home);

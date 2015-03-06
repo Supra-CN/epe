@@ -1,47 +1,49 @@
-package tw.supra.epe.store;
+package tw.supra.epe.activity;
 
 import java.util.HashMap;
 
-import tw.supra.epe.App;
 import tw.supra.epe.R;
-import tw.supra.epe.account.AccountCenter;
-import tw.supra.epe.account.User;
 import tw.supra.epe.core.BaseActivity;
-import tw.supra.epe.core.BaseHostFrag;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
+import tw.supra.epe.core.BaseFrag;
+import tw.supra.epe.mall.FocusMallPage;
+import tw.supra.epe.mall.FocusBrandPage;
+import tw.supra.utils.Log;
+import android.app.Fragment.InstantiationException;
 import android.app.FragmentManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ToggleButton;
 
-import com.umeng.analytics.MobclickAgent;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
 
-public class ApplyStoreActivity extends BaseActivity implements OnClickListener {
-
-	private static final String LOG_TAG = ApplyStoreActivity.class
-			.getSimpleName();
-
-	private static final Class<?>[] PAGES = { ApplyShopPage.class,
-			ApplyStorePage.class };
+public class FocusActivity extends BaseActivity implements OnClickListener,
+		OnCheckedChangeListener {
+	private static final String LOG_TAG = FocusActivity.class.getSimpleName();
 
 	private PageAdapter mAdapter;
 	private PageIndicator mPageIndicator;
+	private ToggleButton mTbEditable;
 
-	/**
-	 * 设置布局
-	 */
+	private final Class<?>[] PAGES = { 
+			FocusMallPage.class,FocusBrandPage.class };
+
+	public interface EditableChengeListener {
+		void onEditableChenge(boolean editable);
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		MobclickAgent.updateOnlineConfig(this);
-		setContentView(R.layout.activity_create_store);
+
+		Intent intent = getIntent();
+		setContentView(R.layout.activity_focus);
 		findViewById(R.id.action_back).setOnClickListener(this);
 
 		ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
@@ -49,21 +51,8 @@ public class ApplyStoreActivity extends BaseActivity implements OnClickListener 
 		viewPager.setAdapter(mAdapter);
 		mPageIndicator = (PageIndicator) findViewById(R.id.page_indicator);
 		mPageIndicator.setViewPager(viewPager);
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-		if (!AccountCenter.isLogin()) {
-			startActivity(new Intent(App.ACTION_LOGIN));
-		}
-		
-	}
-	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		setResult(RESULT_OK);
+		mTbEditable = (ToggleButton) findViewById(R.id.action_focus);
+		mTbEditable.setOnCheckedChangeListener(this);
 	}
 
 	@Override
@@ -72,31 +61,16 @@ public class ApplyStoreActivity extends BaseActivity implements OnClickListener 
 		case R.id.action_back:
 			onBackPressed();
 			break;
+
 		default:
 			break;
 		}
 	}
 
-	public void notifyOkToFinish() {
-		AccountCenter.getCurrentUser().setShopMan(User.SHOP_MAN_HOLD);
-		Builder builder = new Builder(this);
-		builder.setTitle(R.string.apply_dialog_title);
-		builder.setMessage(R.string.apply_dialog_msg);
-		builder.setPositiveButton(android.R.string.ok, new AlertDialog.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				finish();
-			}
-
-		});
-		builder.create().show();
-	}
+	private final HashMap<Class<?>, BaseFrag> PAGE_POOL = new HashMap<Class<?>, BaseFrag>();
 
 	public class PageAdapter extends FragmentPagerAdapter implements
 			IconPagerAdapter {
-
-		private final HashMap<Class<?>, BaseHostFrag<ApplyStoreActivity>> PAGE_POOL = new HashMap<Class<?>, BaseHostFrag<ApplyStoreActivity>>();
 
 		public PageAdapter(FragmentManager fm) {
 			super(fm);
@@ -108,13 +82,11 @@ public class ApplyStoreActivity extends BaseActivity implements OnClickListener 
 		}
 
 		@Override
-		public BaseHostFrag<ApplyStoreActivity> getItem(int position) {
-			BaseHostFrag<ApplyStoreActivity> page = PAGE_POOL
-					.get(PAGES[position]);
+		public BaseFrag getItem(int position) {
+			BaseFrag page = PAGE_POOL.get(PAGES[position]);
 			if (null == page) {
 				try {
-					page = (BaseHostFrag<ApplyStoreActivity>) PAGES[position]
-							.newInstance();
+					page = (BaseFrag) PAGES[position].newInstance();
 					PAGE_POOL.put(PAGES[position], page);
 				} catch (InstantiationException e) {
 					e.printStackTrace();
@@ -126,9 +98,12 @@ public class ApplyStoreActivity extends BaseActivity implements OnClickListener 
 					throw new IllegalStateException(String.format(
 							"the page %s is not a legal page",
 							PAGES[position].getSimpleName()), e);
+				} catch (java.lang.InstantiationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
-			// Log.i(LOG_TAG, "getItem :  pos =" + position + " page" + page);
+			Log.i(LOG_TAG, "getItem :  pos =" + position + " page" + page);
 			return page;
 		}
 
@@ -141,6 +116,19 @@ public class ApplyStoreActivity extends BaseActivity implements OnClickListener 
 		public int getIconResId(int index) {
 			return getItem(index).getIconResId();
 		}
-
 	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		for (Object page : PAGE_POOL.values()) {
+			if (page instanceof EditableChengeListener) {
+				((EditableChengeListener) page).onEditableChenge(isChecked);
+			}
+		}
+	}
+
+	public boolean isEditable() {
+		return mTbEditable.isChecked();
+	}
+
 }

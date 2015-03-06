@@ -27,7 +27,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-import com.umeng.analytics.MobclickAgent;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
 
@@ -104,6 +103,12 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener,
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		setupPages();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		setResult(RESULT_OK);
 	}
 
 	@Override
@@ -218,7 +223,6 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener,
 		}
 			break;
 		case DialogInterface.BUTTON_NEGATIVE:{
-			
 			Intent intent = new Intent(this, ProductEditorActivity.class);
 			intent.putExtra(ActivityEditorActivity.EXTRA_MALL_ID, mMallId);
 			startActivity(intent);

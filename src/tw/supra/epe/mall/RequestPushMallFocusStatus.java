@@ -37,7 +37,6 @@ public class RequestPushMallFocusStatus extends EpeJsonRequest<EpeRequestInfo> {
 				paramters.put("m", status ? "mallShipCreate" : "mallDestory");
 			}
 		});
-
 		MALL_ID = mallId;
 	}
 

@@ -158,7 +158,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 			productName = JsonUtils.getStrSafely(mJoData,
 					ProductInfo.PRODUCT_NAME);
 
-			discount = AppUtiles.formatdiscount(JsonUtils.getDoubleSafely(
+			discount = AppUtiles.formatDiscount(JsonUtils.getDoubleSafely(
 					mJoData, ProductInfo.DISCOUNT_NUM));
 
 			price = AppUtiles.formatPrice(JsonUtils.getDoubleSafely(mJoData,

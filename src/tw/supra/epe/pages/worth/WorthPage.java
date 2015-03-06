@@ -13,6 +13,7 @@ import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.ui.pullto.SupraPullToRefreshStaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView;
 import tw.supra.epe.ui.staggered.StaggeredGridView.OnItemClickListener;
+import tw.supra.epe.utils.AppUtiles;
 import tw.supra.location.LocationCallBack;
 import tw.supra.location.LocationCenter;
 import tw.supra.location.SupraLocation;
@@ -116,8 +117,8 @@ public class WorthPage extends BaseMainPage implements OnClickListener,
 
 				name = JsonUtils.getStrSafely(jo, WorthInfo.ATTR_MALL_NAME);
 				Log.i(LOG_TAG, "# name : " + name);
-				distance = JsonUtils.getStrSafely(jo, WorthInfo.ATTR_DISTANCE)
-						+ "m";
+				distance = AppUtiles.formatDistance(JsonUtils.getIntSafely(jo,
+						WorthInfo.ATTR_DISTANCE));
 				Log.i(LOG_TAG, "# distance : " + distance);
 
 				double discountNum = JsonUtils.getDoubleSafely(jo,

@@ -50,6 +50,8 @@ public class MallInfo extends EpeRequestInfo {
 		paramters.put("d", "api");
 		paramters.put("c", "mall");
 		paramters.put("m", "getMallDetail");
+		
+		paramters.put("authcode", AccountCenter.getCurrentUser().getAuth());
 		paramters.put("mall_id", ARG_MALL_ID);
 	}
 

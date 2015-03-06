@@ -8,6 +8,7 @@ import tw.supra.epe.account.RequestUserInfo;
 import tw.supra.epe.account.User;
 import tw.supra.epe.account.UserInfo;
 import tw.supra.epe.account.UserInfoEditorActivity;
+import tw.supra.epe.activity.FocusActivity;
 import tw.supra.epe.activity.SettingsActivity;
 import tw.supra.epe.activity.UserHomeActivity;
 import tw.supra.epe.activity.fav.FavActivity;
@@ -43,6 +44,7 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 	private PullToRefreshListView mListView;
 
 	private static final int REQUEST_CODE_PUSH_USER_INFO = 269;
+	private static final int REQUEST_CODE_APPLY = 268;
 
 	private final Item ITEM_MY_HOME = new Item(R.string.my_page_item_my_home,
 			R.drawable.ic_my_home) {
@@ -56,11 +58,18 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 			startActivity(new Intent(getActivity(), FavActivity.class));
 		};
 	};
+	private final Item ITEM_MY_FOCUS = 
+			new Item(R.string.my_page_item_my_focus,
+					R.drawable.ic_my_focus){
+		public void onItemClick() {
+			startActivity(new Intent(getActivity(), FocusActivity.class));
+		};
+	};
 
 	private final Item ITEM_APPLY_STORE = new Item(
 			R.string.my_page_item_apply_store, R.drawable.ic_apply_store) {
 		public void onItemClick() {
-			startActivity(new Intent(getActivity(), ApplyStoreActivity.class));
+			startActivityForResult(new Intent(getActivity(), ApplyStoreActivity.class),REQUEST_CODE_APPLY);
 		};
 	};
 
@@ -68,6 +77,7 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 			R.drawable.ic_apply_store) {
 		public void onItemClick() {
 			startActivity(new Intent(getActivity(), MyStoreActivity.class));
+//			startActivityForResult(new Intent(getActivity(), MyStoreActivity.class),REQUEST_CODE_APPLY);
 		};
 	};
 
@@ -91,8 +101,7 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 		// new Item(R.string.my_page_item_my_type, R.drawable.ic_my_type),
 		// new Item(R.string.my_page_item_my_diary, R.drawable.ic_my_diary),
 		// new Item(),
-		LIST.add(new Item(R.string.my_page_item_my_focus,
-				R.drawable.ic_my_focus));
+		LIST.add(ITEM_MY_FOCUS);
 		if (User.SHOP_MAN_NO.equals(user.getShopMan())) {
 			LIST.add(new Item());
 			LIST.add(ITEM_APPLY_STORE);
@@ -289,7 +298,7 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (Activity.RESULT_OK == resultCode) {
-			refresh();
+			mListView.setRefreshing();
 		} else {
 			super.onActivityResult(requestCode, resultCode, data);
 		}

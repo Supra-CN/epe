@@ -133,6 +133,14 @@
     <string name="worth_select_discount">折扣</string>
     <string name="worth_select_distance">距离</string>
 
+    <!-- my focus -->
+    <string name="my_focus_label">我的关注</string>
+    <string name="my_focus_action_edit_on">完成</string>
+    <string name="my_focus_action_edit_off">编辑</string>
+    <string name="focus_mall_label">商家</string>
+    <string name="focus_brand_label">品牌</string>
+    <string name="focus_cancel">取消关注</string>
+    
     <!-- my page -->
     <string name="my_page_score">积分：%s</string>
     <string name="my_page_btn_edit">编辑</string>

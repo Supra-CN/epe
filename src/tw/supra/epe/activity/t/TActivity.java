@@ -1,6 +1,7 @@
 package tw.supra.epe.activity.t;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,6 +80,7 @@ public class TActivity extends BaseActivity implements OnClickListener,
 		mTId = getIntent().getStringExtra(EXTRA_T_ID);
 
 		setContentView(R.layout.activity_t);
+		findViewById(R.id.action_back).setOnClickListener(this);
 		mTvLike = (CheckedTextView) findViewById(R.id.like);
 		mTvLike.setOnClickListener(this);
 		mTvComment = (TextView) findViewById(R.id.comment);
@@ -205,8 +207,13 @@ public class TActivity extends BaseActivity implements OnClickListener,
 			time = TimeUtil.formatTimeWithCountDown(this,
 					JsonUtils.getLongSafely(mJoData, TContentInfo.ADD_TIME));
 			content = JsonUtils.getStrSafely(mJoData, TContentInfo.TT_CONTENT);
-			info = JsonUtils.getJaSafely(mJoData, TContentInfo.TT_DETAIL)
-					.getJSONObject(0).toString();
+			JSONObject joInfo = JsonUtils.getJaSafely(mJoData,
+					TContentInfo.TT_DETAIL).getJSONObject(0);
+			Iterator<String> keys = joInfo.keys();
+			while (keys.hasNext()) {
+				String k = keys.next();
+				info += k + " : " + JsonUtils.getStrSafely(joInfo, k) + "\n";
+			}
 
 			like = JsonUtils.getStrSafely(mJoData, TContentInfo.TT_LIKE_NUM);
 			comment = JsonUtils.getStrSafely(mJoData,
@@ -231,6 +238,7 @@ public class TActivity extends BaseActivity implements OnClickListener,
 		mTvContent.setText(content);
 		mTvName.setText(name);
 		mTvTime.setText(time);
+
 		mTvInfo.setText(info);
 
 		mTvShare.setText(share);

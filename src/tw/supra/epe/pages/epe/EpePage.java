@@ -6,12 +6,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.App;
 import tw.supra.epe.R;
 import tw.supra.epe.activity.brand.BrandActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.mall.MallActivity;
 import tw.supra.epe.store.StoreActivity;
+import tw.supra.epe.utils.AppUtiles;
 import tw.supra.location.LocationCallBack;
 import tw.supra.location.LocationCenter;
 import tw.supra.location.SupraLocation;
@@ -20,8 +20,6 @@ import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkRoundedImageView;
-import tw.supra.utils.JsonUtils;
-import tw.supra.web.TintWebViewActivity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -29,13 +27,9 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,8 +40,7 @@ import android.widget.TextView;
 
 import com.viewpagerindicator.PageIndicator;
 
-public class EpePage extends BaseMainPage implements LocationCallBack
-		 {
+public class EpePage extends BaseMainPage implements LocationCallBack {
 	private static final String LOG_TAG = EpePage.class.getSimpleName();
 
 	private SupraLocation mLocation;
@@ -94,11 +87,11 @@ public class EpePage extends BaseMainPage implements LocationCallBack
 		super.onViewCreated(view, savedInstanceState);
 		requestAds();
 		LocationCenter.getInstance().requestLocation(this);
-		
-//		((LocationManager) App.getInstance().getSystemService(
-//				Context.LOCATION_SERVICE)).requestSingleUpdate(LocationCenter
-//				.getInstance().getBestProvider(), this, getActivity()
-//				.getMainLooper());
+
+		// ((LocationManager) App.getInstance().getSystemService(
+		// Context.LOCATION_SERVICE)).requestSingleUpdate(LocationCenter
+		// .getInstance().getBestProvider(), this, getActivity()
+		// .getMainLooper());
 
 	}
 
@@ -116,8 +109,6 @@ public class EpePage extends BaseMainPage implements LocationCallBack
 	public int getIconResId() {
 		return 0;
 	}
-
-
 
 	private void requestNearStore() {
 		if (null != mLocation && null == mRequestNearStore) {
@@ -189,15 +180,17 @@ public class EpePage extends BaseMainPage implements LocationCallBack
 		public void onClick(View v) {
 			JSONObject joItem = (JSONObject) v.getTag();
 			try {
-				if(joItem.getString(NearStoreInfo.ATTR_MALL_TYPE).equals("2")){
-					Intent intent = new Intent(getActivity(), StoreActivity.class);
+				if (joItem.getString(NearStoreInfo.ATTR_MALL_TYPE).equals("2")) {
+					Intent intent = new Intent(getActivity(),
+							StoreActivity.class);
 					intent.putExtra(StoreActivity.EXTRA_MB_ID,
 							joItem.getString(NearStoreInfo.ATTR_MALL_ID));
 					intent.putExtra(StoreActivity.EXTRA_MALL_NAME,
 							joItem.getString(NearStoreInfo.ATTR_MALL_NAME));
 					startActivity(intent);
-				}else{
-					Intent intent = new Intent(getActivity(), MallActivity.class);
+				} else {
+					Intent intent = new Intent(getActivity(),
+							MallActivity.class);
 					intent.putExtra(MallActivity.EXTRA_MALL_ID,
 							joItem.getString(NearStoreInfo.ATTR_MALL_ID));
 					startActivity(intent);
@@ -285,7 +278,8 @@ public class EpePage extends BaseMainPage implements LocationCallBack
 			throws JSONException {
 		boolean isEnen = (postion % 2) == 0;
 		String name = joItem.getString(NearStoreInfo.ATTR_MALL_NAME);
-		String distance = joItem.getString(NearStoreInfo.ATTR_DISTANCE) + "m";
+		String distance = AppUtiles.formatDistance(joItem
+				.getInt(NearStoreInfo.ATTR_DISTANCE));
 
 		View v = View.inflate(getActivity(),
 				isEnen ? R.layout.near_store_item_top
@@ -346,8 +340,10 @@ public class EpePage extends BaseMainPage implements LocationCallBack
 			try {
 				args.putString(AdFrag.ARG_IMG,
 						AD_DATA_SET.get(pos).getString(RequestAds.ATTR_IMG_URL));
-				args.putString(AdFrag.ARG_URL,
-						AD_DATA_SET.get(pos).getString(RequestAds.ATTR_REDIRECT_URL));
+				args.putString(
+						AdFrag.ARG_URL,
+						AD_DATA_SET.get(pos).getString(
+								RequestAds.ATTR_REDIRECT_URL));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -368,11 +364,11 @@ public class EpePage extends BaseMainPage implements LocationCallBack
 
 	@Override
 	public void callBack(SupraLocation location) {
-			Log.i(LOG_TAG, "onLocationChanged : " + location);
-			mLocation = location;
-			requestNearStore();
-			requestNearBrand();
-		
+		Log.i(LOG_TAG, "onLocationChanged : " + location);
+		mLocation = location;
+		requestNearStore();
+		requestNearBrand();
+
 	}
 
 }
