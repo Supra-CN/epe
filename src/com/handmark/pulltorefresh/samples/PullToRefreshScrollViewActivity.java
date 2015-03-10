@@ -15,7 +15,6 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.samples;
 
-import tw.supra.epe.R;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,6 +23,7 @@ import android.widget.ScrollView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.yijiayi.yijiayi.R;
 
 public final class PullToRefreshScrollViewActivity extends Activity {
 

@@ -18,7 +18,6 @@ package tw.supra.network.util;
 
 import java.util.List;
 
-import tw.supra.epe.R;
 import tw.supra.network.toolbox.ImageLoader;
 import tw.supra.network.ui.NetworkImageView;
 import android.content.Context;
@@ -28,6 +27,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.yijiayi.yijiayi.R;
 
 
 public class ImageArrayAdapter extends ArrayAdapter<ImageEntry> {

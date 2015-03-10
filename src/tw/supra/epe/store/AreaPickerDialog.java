@@ -2,7 +2,6 @@ package tw.supra.epe.store;
 
 import java.util.ArrayList;
 
-import tw.supra.epe.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -15,6 +14,8 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.TextView;
+
+import com.yijiayi.yijiayi.R;
 
 public class AreaPickerDialog extends Dialog implements OnChildClickListener,
 		OnGroupClickListener {

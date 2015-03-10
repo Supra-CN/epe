@@ -1,12 +1,20 @@
 package tw.supra.network;
 
+import tw.supra.data.CommonData;
 import tw.supra.epe.App;
+import tw.supra.epe.ColumnDef.PrefCommon;
 import tw.supra.network.cache.BitmapImageCache;
 import tw.supra.network.misc.NetUtils;
 import tw.supra.network.toolbox.HttpClientStack;
 import tw.supra.network.toolbox.ImageLoader;
 import tw.supra.network.toolbox.Volley;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
 import android.net.http.AndroidHttpClient;
+import android.widget.Toast;
+
+import com.yijiayi.yijiayi.R;
 
 public class NetworkCenter {
 
@@ -61,4 +69,18 @@ public class NetworkCenter {
 		}
 		return mImgQueue;
 	}
+
+	public void download(Uri url, String title, String desc) {
+		DownloadManager manager = (DownloadManager) App.getInstance()
+				.getSystemService(Context.DOWNLOAD_SERVICE);
+		DownloadManager.Request request = new DownloadManager.Request(url);
+		request.setTitle(title);
+		request.setDescription(desc);
+		long id = manager.enqueue(request);
+		CommonData.getInstance().putPrefLong(PrefCommon.UPDATE_APK_DOWNLOAD_ID,
+				id);
+		Toast.makeText(App.getInstance(), R.string.downloading,
+				Toast.LENGTH_SHORT).show();
+	}
+
 }

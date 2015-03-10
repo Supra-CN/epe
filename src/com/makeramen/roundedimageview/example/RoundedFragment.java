@@ -16,7 +16,6 @@
 
 package com.makeramen.roundedimageview.example;
 
-import tw.supra.epe.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,6 +31,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.yijiayi.yijiayi.R;
 
 public class RoundedFragment extends Fragment {
 

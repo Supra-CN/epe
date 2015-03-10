@@ -16,12 +16,13 @@
 
 package com.makeramen.roundedimageview.example;
 
-import tw.supra.epe.R;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ArrayAdapter;
+
+import com.yijiayi.yijiayi.R;
 
 public class ExampleActivity extends FragmentActivity implements ActionBar.OnNavigationListener {
 

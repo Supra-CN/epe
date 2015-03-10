@@ -15,7 +15,6 @@
  *******************************************************************************/
 package tw.supra.epe.ui.pullto;
 
-import tw.supra.epe.R;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -34,6 +33,7 @@ import com.handmark.pulltorefresh.library.LoadingLayoutProxy;
 import com.handmark.pulltorefresh.library.OverscrollHelper;
 import com.handmark.pulltorefresh.library.internal.EmptyViewMethodAccessor;
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
+import com.yijiayi.yijiayi.R;
 
 public class SupraPullToRefreshListView extends SupraPullToRefreshAdapterViewBase<ListView> {
 

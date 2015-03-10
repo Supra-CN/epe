@@ -16,11 +16,12 @@
 
 package tw.supra.network.ui;
 
-import tw.supra.epe.BuildConfig;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
+
+import com.yijiayi.yijiayi.BuildConfig;
 
 /**
  * A BitmapDrawable that keeps track of whether it is being displayed or cached.

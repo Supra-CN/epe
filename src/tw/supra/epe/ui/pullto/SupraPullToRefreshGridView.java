@@ -15,7 +15,6 @@
  *******************************************************************************/
 package tw.supra.epe.ui.pullto;
 
-import tw.supra.epe.R;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build.VERSION;
@@ -26,6 +25,7 @@ import android.widget.GridView;
 
 import com.handmark.pulltorefresh.library.OverscrollHelper;
 import com.handmark.pulltorefresh.library.internal.EmptyViewMethodAccessor;
+import com.yijiayi.yijiayi.R;
 
 public class SupraPullToRefreshGridView extends
 		SupraPullToRefreshAdapterViewBase<GridView> {

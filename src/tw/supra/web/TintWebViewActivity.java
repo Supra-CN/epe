@@ -1,6 +1,5 @@
 package tw.supra.web;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +11,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
+
+import com.yijiayi.yijiayi.R;
 
 public class TintWebViewActivity extends BaseActivity implements
 		OnClickListener {

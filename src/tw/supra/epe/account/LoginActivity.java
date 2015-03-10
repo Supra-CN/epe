@@ -1,6 +1,5 @@
 package tw.supra.epe.account;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseFrag;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.viewpagerindicator.PageIndicator;
+import com.yijiayi.yijiayi.R;
 
 public class LoginActivity extends BaseActivity {
 	private LoginFrag mLoginFrag;

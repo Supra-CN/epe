@@ -22,7 +22,6 @@ package tw.supra.epe.ui.staggered;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import tw.supra.epe.R;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -54,6 +53,8 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.ListAdapter;
+
+import com.yijiayi.yijiayi.R;
 
 /**
  * ListView and GridView just not complex enough? Try StaggeredGridView!

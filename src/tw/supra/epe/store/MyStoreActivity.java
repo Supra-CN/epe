@@ -6,7 +6,6 @@ import java.util.HashMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseFrag;
@@ -29,6 +28,7 @@ import android.widget.TextView;
 
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
+import com.yijiayi.yijiayi.R;
 
 public class MyStoreActivity extends BaseActivity implements OnClickListener,
 		DialogInterface.OnClickListener {

@@ -17,7 +17,6 @@
 
 package tw.supra.network.ui;
 
-import tw.supra.epe.R;
 import tw.supra.network.error.VolleyError;
 import tw.supra.network.misc.Utils.HorizontallyScrollable;
 import tw.supra.network.toolbox.ImageLoader.ImageContainer;
@@ -44,6 +43,8 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup.LayoutParams;
+
+import com.yijiayi.yijiayi.R;
 
 
 /**

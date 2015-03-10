@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.activity.t.TActivity;
 import tw.supra.epe.activity.t.TEditorActivity;
 import tw.supra.epe.core.BaseMainPage;
@@ -35,6 +34,7 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.yijiayi.yijiayi.R;
 
 public class TPage extends BaseMainPage implements NetWorkHandler<TArrayInfo>,
 		OnRefreshListener2<StaggeredGridView>, OnItemClickListener,

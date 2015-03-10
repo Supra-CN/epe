@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.activity.brand.BrandActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.mall.MallActivity;
@@ -39,6 +38,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
 import com.viewpagerindicator.PageIndicator;
+import com.yijiayi.yijiayi.R;
 
 public class EpePage extends BaseMainPage implements LocationCallBack {
 	private static final String LOG_TAG = EpePage.class.getSimpleName();

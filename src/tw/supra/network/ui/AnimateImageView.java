@@ -18,7 +18,6 @@
 
 package tw.supra.network.ui;
 
-import tw.supra.epe.R;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -29,6 +28,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import com.yijiayi.yijiayi.R;
 
 /**
  * Created by vinaysshenoy on 19/5/13.

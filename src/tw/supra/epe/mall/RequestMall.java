@@ -3,12 +3,9 @@ package tw.supra.epe.mall;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.ApiDef.APIDef;
 import tw.supra.epe.ApiDef.EpeErrorCode;
-import tw.supra.epe.activity.brand.BrandInfo;
 import tw.supra.network.request.EpeJsonRequest;
 import tw.supra.network.request.NetWorkHandler;
-import tw.supra.utils.JsonUtils;
 
 public class RequestMall extends EpeJsonRequest<MallInfo> {
 	private static final String LOG_TAG = RequestMall.class.getSimpleName();

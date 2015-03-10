@@ -16,7 +16,6 @@
 
 package tw.supra.network.simple;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.network.RequestQueue;
 import tw.supra.network.Response;
@@ -29,6 +28,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.yijiayi.yijiayi.R;
 
 
 /**

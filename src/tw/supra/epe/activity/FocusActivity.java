@@ -2,11 +2,10 @@ package tw.supra.epe.activity;
 
 import java.util.HashMap;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseFrag;
-import tw.supra.epe.mall.FocusMallPage;
 import tw.supra.epe.mall.FocusBrandPage;
+import tw.supra.epe.mall.FocusMallPage;
 import tw.supra.utils.Log;
 import android.app.Fragment.InstantiationException;
 import android.app.FragmentManager;
@@ -22,6 +21,7 @@ import android.widget.ToggleButton;
 
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
+import com.yijiayi.yijiayi.R;
 
 public class FocusActivity extends BaseActivity implements OnClickListener,
 		OnCheckedChangeListener {

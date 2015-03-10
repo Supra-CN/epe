@@ -8,13 +8,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import tw.supra.epe.App;
-import tw.supra.epe.BuildConfig;
 import tw.supra.epe.UriDef;
 import tw.supra.utils.ListUtil;
 import tw.supra.utils.Log;
 import android.content.ComponentCallbacks2;
 import android.content.res.Configuration;
 import android.net.Uri;
+
+import com.yijiayi.yijiayi.BuildConfig;
 
 /**
  * 负责管理不同类型的本地数据

@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import tw.supra.epe.BuildConfig;
 import tw.supra.network.Cache;
 import tw.supra.network.VolleyLog;
 import tw.supra.network.cache.DiskBasedCache.CacheHeader;
@@ -24,6 +23,8 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+
+import com.yijiayi.yijiayi.BuildConfig;
 
 /**
  * Cache implementation that caches files directly onto the hard disk in the

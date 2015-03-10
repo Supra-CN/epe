@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.activity.t.TContentInfo;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.network.NetworkCenter;
@@ -30,6 +29,7 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yijiayi.yijiayi.R;
 
 public class MsgTopicActivity extends BaseActivity implements OnClickListener,
 		OnItemClickListener, OnRefreshListener<ListView>,

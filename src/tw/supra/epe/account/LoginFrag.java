@@ -1,6 +1,5 @@
 package tw.supra.epe.account;
 
-import tw.supra.epe.R;
 import tw.supra.epe.activity.MainActivity;
 import tw.supra.epe.core.BaseHostFrag;
 import tw.supra.network.NetworkCenter;
@@ -22,6 +21,7 @@ import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
+import com.yijiayi.yijiayi.R;
 
 public class LoginFrag extends BaseHostFrag<LoginActivity> implements
 		OnClickListener, NetWorkHandler<LoginInfo>, IUiListener {

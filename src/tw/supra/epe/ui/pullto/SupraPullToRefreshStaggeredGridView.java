@@ -15,7 +15,6 @@
  *******************************************************************************/
 package tw.supra.epe.ui.pullto;
 
-import tw.supra.epe.R;
 import tw.supra.epe.ui.staggered.StaggeredGridView;
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -28,6 +27,7 @@ import android.widget.ListAdapter;
 
 import com.handmark.pulltorefresh.library.OverscrollHelper;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.yijiayi.yijiayi.R;
 
 public class SupraPullToRefreshStaggeredGridView extends
 		PullToRefreshBase<StaggeredGridView> {

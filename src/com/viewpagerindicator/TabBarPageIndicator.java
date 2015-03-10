@@ -17,7 +17,6 @@
 package com.viewpagerindicator;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import tw.supra.epe.R;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -27,6 +26,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.yijiayi.yijiayi.R;
 
 /**
  * This widget implements the dynamic action bar tab behavior that can change

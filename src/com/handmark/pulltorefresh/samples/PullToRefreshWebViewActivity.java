@@ -15,13 +15,13 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.samples;
 
-import tw.supra.epe.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.handmark.pulltorefresh.library.PullToRefreshWebView;
+import com.yijiayi.yijiayi.R;
 
 public final class PullToRefreshWebViewActivity extends Activity {
 

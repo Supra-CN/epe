@@ -1,11 +1,11 @@
 package com.viewpagerindicator.sample;
 
-import tw.supra.epe.R;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.viewpagerindicator.IconPagerAdapter;
+import com.yijiayi.yijiayi.R;
 
 class TestFragmentAdapter extends FragmentPagerAdapter implements IconPagerAdapter {
     protected static final String[] CONTENT = new String[] { "This", "Is", "A", "Test", };

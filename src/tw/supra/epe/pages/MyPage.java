@@ -2,7 +2,6 @@ package tw.supra.epe.pages;
 
 import java.util.ArrayList;
 
-import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.account.RequestUserInfo;
 import tw.supra.epe.account.User;
@@ -37,6 +36,7 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yijiayi.yijiayi.R;
 
 public class MyPage extends BaseMainPage implements OnItemClickListener,
 		NetWorkHandler<UserInfo>, OnRefreshListener<ListView>, OnClickListener {

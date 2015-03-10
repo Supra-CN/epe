@@ -1,11 +1,11 @@
 package com.viewpagerindicator.sample;
 
-import tw.supra.epe.R;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
+import com.yijiayi.yijiayi.R;
 
 public class SampleTitlesStyledMethods extends BaseSampleActivity {
     @Override

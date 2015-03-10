@@ -48,6 +48,14 @@
     <string name="progressing_title">请稍后</string>
     <string name="progressing">处理中&#8230;</string>
 
+        <!-- update -->
+    <string name="update_toast_up_to_date">这已是最新版本</string>
+    <string name="update_title">版本更新：%s</string>
+    <string name="update_btn_pos">立即更新</string>
+    <string name="update_btn_neg">以后再说</string>
+        <!-- download -->
+    <string name="downloading">下载中,请稍侯</string>
+    
     <!-- activity -->
     <string name="activity_toast_press_again_to_exit">再按一次退出</string>
 

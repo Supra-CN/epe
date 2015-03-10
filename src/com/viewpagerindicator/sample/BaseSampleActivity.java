@@ -2,7 +2,6 @@ package com.viewpagerindicator.sample;
 
 import java.util.Random;
 
-import tw.supra.epe.R;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -10,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.viewpagerindicator.PageIndicator;
+import com.yijiayi.yijiayi.R;
 
 public abstract class BaseSampleActivity extends FragmentActivity {
     private static final Random RANDOM = new Random();

@@ -15,13 +15,13 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.extras.viewpager;
 
-import tw.supra.epe.R;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.yijiayi.yijiayi.R;
 
 public class PullToRefreshViewPager extends PullToRefreshBase<ViewPager> {
 

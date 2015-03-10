@@ -16,13 +16,10 @@
 
 package tw.supra.network;
 
-import java.io.UnsupportedEncodingException;
 import java.util.concurrent.Executor;
 
 import tw.supra.network.error.VolleyError;
-import tw.supra.network.toolbox.HttpHeaderParser;
 import android.os.Handler;
-import android.util.Log;
 
 /**
  * Delivers responses and errors.

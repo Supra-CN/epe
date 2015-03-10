@@ -15,7 +15,6 @@
  *******************************************************************************/
 package tw.supra.epe.ui.pullto;
 
-import tw.supra.epe.R;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -36,6 +35,7 @@ import android.widget.ListAdapter;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.internal.EmptyViewMethodAccessor;
 import com.handmark.pulltorefresh.library.internal.IndicatorLayout;
+import com.yijiayi.yijiayi.R;
 
 public abstract class SupraPullToRefreshAdapterViewBase<T extends AbsListView>
 		extends SupraPullToRefreshBase<T> implements OnScrollListener {

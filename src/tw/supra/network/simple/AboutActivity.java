@@ -16,13 +16,14 @@
 
 package tw.supra.network.simple;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.yijiayi.yijiayi.R;
 
 public class AboutActivity extends BaseActivity {
 

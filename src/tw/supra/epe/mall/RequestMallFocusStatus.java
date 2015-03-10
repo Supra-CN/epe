@@ -5,8 +5,6 @@ import java.util.HashMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.baidu.navisdk.ui.widget.NewerGuideDialog;
-
 import tw.supra.epe.ApiDef.APIDef;
 import tw.supra.epe.ApiDef.EpeErrorCode;
 import tw.supra.epe.account.AccountCenter;

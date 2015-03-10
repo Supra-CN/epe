@@ -2,7 +2,6 @@ package tw.supra.epe.store;
 
 import java.util.HashMap;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseFrag;
 import android.app.FragmentManager;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
+import com.yijiayi.yijiayi.R;
 
 public class StoreActivity extends BaseActivity implements OnClickListener {
 

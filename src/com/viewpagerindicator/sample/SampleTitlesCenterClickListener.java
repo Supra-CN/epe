@@ -1,6 +1,5 @@
 package com.viewpagerindicator.sample;
 
-import tw.supra.epe.R;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.widget.Toast;
@@ -8,6 +7,7 @@ import android.widget.Toast;
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
 import com.viewpagerindicator.TitlePageIndicator.OnCenterItemClickListener;
+import com.yijiayi.yijiayi.R;
 
 public class SampleTitlesCenterClickListener extends BaseSampleActivity implements OnCenterItemClickListener {
     @Override

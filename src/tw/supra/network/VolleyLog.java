@@ -20,9 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import tw.supra.epe.BuildConfig;
 import android.os.SystemClock;
 import android.util.Log;
+
+import com.yijiayi.yijiayi.BuildConfig;
 
 /** Logging helper class. */
 public class VolleyLog {

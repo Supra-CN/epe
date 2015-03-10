@@ -15,7 +15,6 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.samples;
 
-import tw.supra.epe.R;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,6 +28,7 @@ import android.widget.ImageView;
 import com.handmark.pulltorefresh.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.yijiayi.yijiayi.R;
 
 public class PullToRefreshViewPagerActivity extends Activity implements OnRefreshListener<ViewPager> {
 

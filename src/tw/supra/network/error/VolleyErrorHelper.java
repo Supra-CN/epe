@@ -3,12 +3,12 @@ package tw.supra.network.error;
 import java.util.HashMap;
 import java.util.Map;
 
-import tw.supra.epe.R;
 import tw.supra.network.NetworkResponse;
 import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.yijiayi.yijiayi.R;
 
 public class VolleyErrorHelper {
 	/**

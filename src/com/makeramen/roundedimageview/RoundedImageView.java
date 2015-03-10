@@ -16,7 +16,6 @@
 
 package com.makeramen.roundedimageview;
 
-import tw.supra.epe.R;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -29,6 +28,8 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
+
+import com.yijiayi.yijiayi.R;
 
 @SuppressWarnings("UnusedDeclaration")
 public class RoundedImageView extends ImageView {

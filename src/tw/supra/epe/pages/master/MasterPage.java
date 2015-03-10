@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.network.NetworkCenter;
@@ -31,6 +30,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.viewpagerindicator.PageIndicator;
+import com.yijiayi.yijiayi.R;
 
 public class MasterPage extends BaseMainPage {
 	private static final String LOG_TAG = MasterPage.class.getSimpleName();

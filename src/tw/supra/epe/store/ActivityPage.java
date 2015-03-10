@@ -6,11 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.activity.t.TContentInfo;
 import tw.supra.epe.core.BaseFrag;
-import tw.supra.epe.msg.MsgActivity;
-import tw.supra.epe.msg.MsgTopicInfo;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
@@ -19,7 +16,6 @@ import tw.supra.network.ui.NetworkImageView;
 import tw.supra.utils.JsonUtils;
 import tw.supra.utils.TimeUtil;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -35,6 +31,7 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yijiayi.yijiayi.R;
 
 public class ActivityPage extends BaseFrag implements OnItemClickListener,
 		OnRefreshListener<ListView>, NetWorkHandler<EpeRequestInfo> {

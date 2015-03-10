@@ -15,7 +15,6 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.library;
 
-import tw.supra.epe.R;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build.VERSION;
@@ -25,6 +24,8 @@ import android.util.AttributeSet;
 import android.util.FloatMath;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+
+import com.yijiayi.yijiayi.R;
 
 public class PullToRefreshWebView extends PullToRefreshBase<WebView> {
 

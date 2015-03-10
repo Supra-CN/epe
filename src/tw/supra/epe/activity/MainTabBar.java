@@ -16,7 +16,6 @@
  */
 package tw.supra.epe.activity;
 
-import tw.supra.epe.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -33,6 +32,7 @@ import android.widget.TextView;
 
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
+import com.yijiayi.yijiayi.R;
 
 /**
  * This widget implements the dynamic action bar tab behavior that can change

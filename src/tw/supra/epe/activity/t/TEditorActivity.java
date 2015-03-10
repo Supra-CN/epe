@@ -3,7 +3,6 @@ package tw.supra.epe.activity.t;
 import java.io.File;
 
 import tw.supra.data.DBUtils;
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.utils.AppUtiles;
 import tw.supra.network.NetworkCenter;
@@ -27,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.yijiayi.yijiayi.R;
 
 public class TEditorActivity extends BaseActivity implements OnClickListener,
 		NetWorkHandler<EpeRequestInfo>, DialogInterface.OnClickListener {

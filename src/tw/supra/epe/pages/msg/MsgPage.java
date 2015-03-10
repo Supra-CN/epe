@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.msg.MsgTopicActivity;
 import tw.supra.network.NetworkCenter;
@@ -28,6 +27,7 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yijiayi.yijiayi.R;
 
 public class MsgPage extends BaseMainPage implements OnItemClickListener,
 		NetWorkHandler<EpeRequestInfo>, OnRefreshListener<ListView> {

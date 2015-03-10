@@ -7,7 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.activity.product.ProductActivity;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.ui.pullto.SupraPullToRefreshStaggeredGridView;
@@ -42,6 +41,7 @@ import android.widget.TextView;
 import com.baidu.location.LocationClient;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.yijiayi.yijiayi.R;
 
 public class WorthPage extends BaseMainPage implements OnClickListener,
 		NetWorkHandler<WorthInfo>, LocationCallBack, OnItemClickListener,

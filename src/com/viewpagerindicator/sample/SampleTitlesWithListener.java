@@ -1,11 +1,11 @@
 package com.viewpagerindicator.sample;
 
-import tw.supra.epe.R;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.widget.Toast;
 
 import com.viewpagerindicator.TitlePageIndicator;
+import com.yijiayi.yijiayi.R;
 
 public class SampleTitlesWithListener extends BaseSampleActivity {
     @Override

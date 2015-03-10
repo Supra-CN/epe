@@ -6,14 +6,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.activity.FocusActivity;
 import tw.supra.epe.activity.FocusActivity.EditableChengeListener;
 import tw.supra.epe.activity.brand.BrandActivity;
 import tw.supra.epe.activity.brand.RequestPushBrandFocusStatus;
 import tw.supra.epe.core.BaseHostFrag;
-import tw.supra.epe.pages.epe.NearBrandInfo;
-import tw.supra.epe.store.StoreActivity;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
@@ -38,6 +35,7 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yijiayi.yijiayi.R;
 
 public class FocusBrandPage extends BaseHostFrag<FocusActivity> implements
 		OnItemClickListener, OnRefreshListener2<ListView>,

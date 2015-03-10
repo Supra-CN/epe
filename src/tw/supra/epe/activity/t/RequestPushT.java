@@ -20,12 +20,10 @@ import tw.supra.network.request.NetWorkHandler;
 import tw.supra.utils.JsonUtils;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.util.Log;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.RequestCreator;
 
 public class RequestPushT extends EpeJsonMultiRequest<EpeRequestInfo> {
 	private static final String LOG_TAG = RequestPushT.class.getSimpleName();

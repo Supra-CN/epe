@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import tw.supra.epe.BuildConfig;
 import tw.supra.network.misc.DiskLruCache;
 import tw.supra.network.toolbox.ImageCache;
 import android.content.Context;
@@ -16,6 +15,8 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+
+import com.yijiayi.yijiayi.BuildConfig;
 
 /**
  * Implementation of DiskLruCache by Jake Wharton modified from

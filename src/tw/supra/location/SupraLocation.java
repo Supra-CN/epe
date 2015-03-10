@@ -1,7 +1,6 @@
 package tw.supra.location;
 
 import android.location.Location;
-import android.os.Bundle;
 
 import com.baidu.location.BDLocation;
 

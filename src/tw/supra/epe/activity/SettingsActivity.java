@@ -1,7 +1,6 @@
 package tw.supra.epe.activity;
 
 import tw.supra.epe.App;
-import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.account.User;
 import tw.supra.epe.core.BaseActivity;
@@ -15,6 +14,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.yijiayi.yijiayi.R;
 
 public class SettingsActivity extends BaseActivity implements OnClickListener,
 		OnItemClickListener {
@@ -30,7 +31,12 @@ public class SettingsActivity extends BaseActivity implements OnClickListener,
 		}
 	},
 			// new Item(R.string.settings_item_clear),
-			new Item(R.string.settings_item_check_update),
+			new Item(R.string.settings_item_check_update){
+		public void onItemClick() {
+//				showProgressDialog();
+				App.getInstance().checkUpdate();
+		};
+	},
 			// new Item(R.string.settings_item_vote),
 			new Item(R.string.settings_item_feedback), };
 

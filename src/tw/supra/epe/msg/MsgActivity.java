@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
@@ -19,6 +18,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+
+import com.yijiayi.yijiayi.R;
 
 public class MsgActivity extends BaseActivity implements OnClickListener,
 		NetWorkHandler<EpeRequestInfo> {

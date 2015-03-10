@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import org.json.JSONArray;
 
-import tw.supra.epe.account.AccountCenter;
 import tw.supra.network.Request.Method;
 import tw.supra.network.request.EpeRequestInfo;
 import android.text.TextUtils;

@@ -1,7 +1,6 @@
 
 package tw.supra.epe.pages;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseFrag;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.Response.Listener;
@@ -13,6 +12,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.yijiayi.yijiayi.R;
 
 
 public class PhotoClient extends BaseFrag implements Listener<Bitmap> {

@@ -1,6 +1,5 @@
 package com.viewpagerindicator.sample;
 
-import tw.supra.epe.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -9,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.viewpagerindicator.TabPageIndicator;
+import com.yijiayi.yijiayi.R;
 
 public class SampleTabsDefault extends FragmentActivity {
     private static final String[] CONTENT = new String[] { "Recent", "Artists", "Albums", "Songs", "Playlists", "Genres" };

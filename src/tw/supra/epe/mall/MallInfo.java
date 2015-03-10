@@ -2,11 +2,9 @@ package tw.supra.epe.mall;
 
 import java.util.HashMap;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import tw.supra.epe.account.AccountCenter;
-import tw.supra.location.SupraLocation;
 import tw.supra.network.Request.Method;
 import tw.supra.network.request.EpeRequestInfo;
 

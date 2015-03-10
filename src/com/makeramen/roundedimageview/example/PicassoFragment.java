@@ -16,7 +16,6 @@
 
 package com.makeramen.roundedimageview.example;
 
-import tw.supra.epe.R;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -33,6 +32,7 @@ import android.widget.TextView;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
+import com.yijiayi.yijiayi.R;
 
 public class PicassoFragment extends Fragment {
 

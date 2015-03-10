@@ -1,6 +1,5 @@
 package tw.supra.epe.store;
 
-import tw.supra.epe.R;
 import tw.supra.epe.account.AccountUtils;
 import tw.supra.epe.account.RequestVerifyCode;
 import tw.supra.epe.account.RequestVerifyCode.Type;
@@ -27,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.mapapi.model.LatLng;
+import com.yijiayi.yijiayi.R;
 
 public class ApplyStorePage extends BaseHostFrag<ApplyStoreActivity> implements
 		OnAreaPickedListener, OnClickListener, NetWorkHandler<EpeRequestInfo> {

@@ -6,10 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
-import tw.supra.epe.activity.brand.BrandActivity;
-import tw.supra.epe.activity.brand.RequestBrandFocusStatus;
-import tw.supra.epe.activity.brand.RequestPushBrandFocusStatus;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.store.StoreActivity;
 import tw.supra.location.MapActivity;
@@ -36,6 +32,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.viewpagerindicator.PageIndicator;
+import com.yijiayi.yijiayi.R;
 
 public class MallActivity extends BaseActivity implements OnClickListener,OnCheckedChangeListener,
 		NetWorkHandler<MallInfo> {

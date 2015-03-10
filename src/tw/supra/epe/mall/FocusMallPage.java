@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.activity.FocusActivity;
 import tw.supra.epe.activity.FocusActivity.EditableChengeListener;
 import tw.supra.epe.activity.brand.RequestPushBrandFocusStatus;
@@ -35,6 +34,7 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yijiayi.yijiayi.R;
 
 public class FocusMallPage extends BaseHostFrag<FocusActivity> implements
 		OnItemClickListener, OnRefreshListener2<ListView>,

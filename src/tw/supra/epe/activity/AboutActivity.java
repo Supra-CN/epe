@@ -1,12 +1,13 @@
 package tw.supra.epe.activity;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.utils.AppUtiles;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+
+import com.yijiayi.yijiayi.R;
 
 public class AboutActivity extends BaseActivity implements OnClickListener {
 

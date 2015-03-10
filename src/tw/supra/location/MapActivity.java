@@ -1,6 +1,5 @@
 package tw.supra.location;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -20,9 +19,10 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
-import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
+import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.yijiayi.yijiayi.R;
 
 public class MapActivity extends BaseActivity implements OnClickListener ,BDLocationListener{
 

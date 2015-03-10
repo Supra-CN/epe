@@ -2,7 +2,6 @@ package tw.supra.epe.pages.home;
 
 import java.util.HashMap;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.epe.pages.epe.EpePage;
 import tw.supra.epe.pages.worth.WorthPage;
@@ -21,6 +20,7 @@ import android.view.ViewGroup;
 
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
+import com.yijiayi.yijiayi.R;
 
 public class HomePage extends BaseMainPage implements OnClickListener,
 		OnPageChangeListener {

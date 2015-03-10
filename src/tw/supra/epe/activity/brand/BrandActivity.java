@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.store.StoreActivity;
 import tw.supra.location.LocationCallBack;
@@ -35,6 +34,7 @@ import android.widget.ToggleButton;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yijiayi.yijiayi.R;
 
 public class BrandActivity extends BaseActivity implements
 		NetWorkHandler<BrandInfo>, LocationCallBack, OnClickListener,

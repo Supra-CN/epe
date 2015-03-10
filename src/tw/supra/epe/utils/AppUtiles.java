@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import tw.supra.epe.App;
-import tw.supra.epe.R;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -19,6 +18,8 @@ import android.provider.MediaStore;
 import android.util.TypedValue;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.yijiayi.yijiayi.R;
 
 public class AppUtiles {
 

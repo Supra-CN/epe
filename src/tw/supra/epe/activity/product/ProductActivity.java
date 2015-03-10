@@ -6,9 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
-import tw.supra.epe.activity.t.RequestPushTLikeStatus;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.pages.PhotoClient;
 import tw.supra.epe.utils.AppUtiles;
@@ -33,6 +31,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewConfiguration;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
+
+import com.yijiayi.yijiayi.R;
 
 public class ProductActivity extends BaseActivity implements OnClickListener,
 		OnDispatchTouchListener, NetWorkHandler<ProductInfo> {

@@ -1,6 +1,7 @@
 package tw.supra.epe.ApiDef;
 
-import tw.supra.epe.BuildConfig;
+import com.yijiayi.yijiayi.BuildConfig;
+
 
 public class APIDef {
 	public static final int API_VERSION = 1000;
@@ -17,7 +18,7 @@ public class APIDef {
 
 	public static final String SCHEMA = "http";
 
-	public static final String HOST_API_RELEASE = "182.92.158.32";
+	public static final String HOST_API_RELEASE = "www.alayy.com";
 	public static final String HOST_API_DEBUG = HOST_API_RELEASE;
 //	 public static final String HOST_API_DEBUG = "182.92.158.32";
 

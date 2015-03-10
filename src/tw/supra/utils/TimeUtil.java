@@ -3,8 +3,9 @@ package tw.supra.utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import tw.supra.epe.R;
 import android.content.Context;
+
+import com.yijiayi.yijiayi.R;
 
 public class TimeUtil {
 	private static final String LOG_TAG = TimeUtil.class.getSimpleName();

@@ -4,7 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseMainPage;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
@@ -19,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.yijiayi.yijiayi.R;
 
 
 public class TopicPage extends BaseMainPage implements

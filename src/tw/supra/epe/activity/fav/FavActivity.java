@@ -7,7 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.activity.product.ProductActivity;
 import tw.supra.epe.core.BaseActivity;
@@ -34,6 +33,7 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.yijiayi.yijiayi.R;
 
 public class FavActivity extends BaseActivity implements OnClickListener,
 		NetWorkHandler<FavInfo>, LocationCallBack, OnItemClickListener,

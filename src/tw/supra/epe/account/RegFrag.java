@@ -1,7 +1,6 @@
 
 package tw.supra.epe.account;
 
-import tw.supra.epe.R;
 import tw.supra.epe.account.RequestVerifyCode.Type;
 import tw.supra.epe.activity.MainActivity;
 import tw.supra.epe.core.BaseHostFrag;
@@ -21,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.yijiayi.yijiayi.R;
 
 public class RegFrag extends BaseHostFrag<LoginActivity> implements OnClickListener {
     private static final int DELAY_VERIFY_CODE = 60;// 定义发送验证码后的倒数计时

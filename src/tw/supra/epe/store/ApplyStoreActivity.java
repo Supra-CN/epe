@@ -3,7 +3,6 @@ package tw.supra.epe.store;
 import java.util.HashMap;
 
 import tw.supra.epe.App;
-import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.account.User;
 import tw.supra.epe.core.BaseActivity;
@@ -22,6 +21,7 @@ import android.view.View.OnClickListener;
 import com.umeng.analytics.MobclickAgent;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
+import com.yijiayi.yijiayi.R;
 
 public class ApplyStoreActivity extends BaseActivity implements OnClickListener {
 

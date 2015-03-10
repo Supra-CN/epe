@@ -2,7 +2,6 @@ package tw.supra.network.simple;
 
 import java.util.ArrayList;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -24,6 +23,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.yijiayi.yijiayi.R;
 
 public class MainActivity extends BaseActivity implements OnItemClickListener {
 

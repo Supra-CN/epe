@@ -1,6 +1,7 @@
 package tw.supra.utils;
 
-import tw.supra.epe.BuildConfig;
+import com.yijiayi.yijiayi.BuildConfig;
+
 
 final public class Log  {
 	

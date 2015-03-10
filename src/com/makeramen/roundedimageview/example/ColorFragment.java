@@ -16,7 +16,6 @@
 
 package com.makeramen.roundedimageview.example;
 
-import tw.supra.epe.R;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,6 +27,8 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.yijiayi.yijiayi.R;
 
 public class ColorFragment extends Fragment {
 

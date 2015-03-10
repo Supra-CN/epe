@@ -1,11 +1,11 @@
 
 package tw.supra.epe.core;
 
-import tw.supra.epe.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 
 import com.umeng.analytics.MobclickAgent;
+import com.yijiayi.yijiayi.R;
 
 public abstract class BaseActivity extends Activity {
     private ProgressDialog mProgressDialog;

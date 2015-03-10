@@ -1,6 +1,5 @@
 package tw.supra.epe.store;
 
-import tw.supra.epe.R;
 import tw.supra.epe.account.AccountUtils;
 import tw.supra.epe.account.RequestVerifyCode;
 import tw.supra.epe.account.RequestVerifyCode.Type;
@@ -24,6 +23,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.yijiayi.yijiayi.R;
 
 public class ApplyShopPage extends BaseHostFrag<ApplyStoreActivity> implements
 		NetWorkHandler<EpeRequestInfo>, OnAreaPickedListener,

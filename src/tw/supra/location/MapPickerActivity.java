@@ -1,6 +1,5 @@
 package tw.supra.location;
 
-import tw.supra.epe.R;
 import tw.supra.epe.core.BaseActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +30,7 @@ import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.yijiayi.yijiayi.R;
 
 public class MapPickerActivity extends BaseActivity implements OnClickListener,
 		OnGetGeoCoderResultListener, BDLocationListener, OnMapClickListener {

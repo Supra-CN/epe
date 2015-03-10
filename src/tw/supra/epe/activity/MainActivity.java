@@ -2,8 +2,6 @@ package tw.supra.epe.activity;
 
 import java.util.HashMap;
 
-import tw.supra.epe.App;
-import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseMainPage;
@@ -12,7 +10,6 @@ import tw.supra.epe.pages.TPage;
 import tw.supra.epe.pages.home.HomePage;
 import tw.supra.epe.pages.msg.MsgPage;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v13.app.FragmentPagerAdapter;
@@ -24,6 +21,7 @@ import android.widget.Toast;
 import com.umeng.analytics.MobclickAgent;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
+import com.yijiayi.yijiayi.R;
 
 public class MainActivity extends BaseActivity implements OnClickListener {
 

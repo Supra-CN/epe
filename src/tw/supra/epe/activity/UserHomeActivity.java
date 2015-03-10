@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.R;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.account.RequestUserInfo;
 import tw.supra.epe.account.User;
@@ -33,6 +32,7 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.yijiayi.yijiayi.R;
 
 public class UserHomeActivity extends BaseActivity implements OnClickListener,
 		OnRefreshListener2<StaggeredGridView> {

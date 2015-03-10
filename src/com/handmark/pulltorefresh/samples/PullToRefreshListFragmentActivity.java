@@ -18,7 +18,6 @@ package com.handmark.pulltorefresh.samples;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import tw.supra.epe.R;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -29,6 +28,7 @@ import com.handmark.pulltorefresh.extras.listfragment.PullToRefreshListFragment;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yijiayi.yijiayi.R;
 
 public final class PullToRefreshListFragmentActivity extends FragmentActivity implements OnRefreshListener<ListView> {
 

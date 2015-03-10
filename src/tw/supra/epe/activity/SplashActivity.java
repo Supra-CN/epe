@@ -1,8 +1,7 @@
 package tw.supra.epe.activity;
 
 import tw.supra.data.CommonData;
-import tw.supra.epe.BuildConfig;
-import tw.supra.epe.R;
+import tw.supra.epe.App;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.account.LoginActivity;
 import tw.supra.epe.core.BaseActivity;
@@ -19,6 +18,8 @@ import android.os.MessageQueue.IdleHandler;
 import android.view.KeyEvent;
 
 import com.umeng.analytics.MobclickAgent;
+import com.yijiayi.yijiayi.BuildConfig;
+import com.yijiayi.yijiayi.R;
 
 public class SplashActivity extends BaseActivity implements IdleHandler {
 	private static final String LOG_TAG = SplashActivity.class.getSimpleName();
@@ -65,6 +66,7 @@ public class SplashActivity extends BaseActivity implements IdleHandler {
 			protected Void doInBackground(Void... params) {
 				Log.i(LOG_TAG, "startUp");
 				CommonData.getInstance().getDb();
+				App.getInstance().checkUpdateIfNecessary();
 				Log.i(LOG_TAG, "startUp ok");
 				mStatusFlag &= ~FLAG_STARTING;
 				checkPoint("startUp");
