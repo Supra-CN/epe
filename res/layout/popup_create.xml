@@ -3,26 +3,66 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="horizontal" >
-    
-<TextView
-    android:text="btn1"
-    android:layout_margin="20dp"
-    android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-    />
-<TextView
-    android:layout_margin="20dp"
-    android:text="btn2"
-    android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-    />
-<TextView
-    android:text="btn3"
-    android:layout_margin="20dp"
-    android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-    />
-    
-    
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/popup_capture"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:drawableTop="@drawable/ic_popup_capture"
+            android:gravity="center"
+            android:text="@string/popup_capture" />
+
+        <TextView
+            android:id="@+id/popup_pick"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:drawableTop="@drawable/ic_popup_pick"
+            android:gravity="center"
+            android:text="@string/popup_pick" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/popup_fav"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:drawableTop="@drawable/ic_my_fav"
+            android:gravity="center"
+            android:text="@string/popup_fav" />
+
+        <TextView
+            android:id="@+id/popup_focus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:drawableTop="@drawable/ic_my_focus"
+            android:gravity="center"
+            android:text="@string/popup_focus" />
+    </LinearLayout>
+
 </LinearLayout>

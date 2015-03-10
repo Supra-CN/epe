@@ -16,8 +16,11 @@
  */
 package tw.supra.epe.activity;
 
+import tw.supra.epe.activity.fav.FavActivity;
+import tw.supra.epe.activity.t.TEditorActivity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -38,7 +41,8 @@ import com.yijiayi.yijiayi.R;
  * This widget implements the dynamic action bar tab behavior that can change
  * across different configurations or circumstances.
  */
-public class MainTabBar extends LinearLayout implements PageIndicator ,OnClickListener{
+public class MainTabBar extends LinearLayout implements PageIndicator,
+		OnClickListener {
 	/** Title text used when no title is provided by the adapter. */
 	private static final CharSequence EMPTY_TITLE = "";
 
@@ -234,10 +238,54 @@ public class MainTabBar extends LinearLayout implements PageIndicator ,OnClickLi
 		mListener = listener;
 	}
 
+	private Dialog mDialog;
+
 	@Override
 	public void onClick(View v) {
-		Dialog dialog = new Dialog(getContext(), R.style.CleanDialog);
-		dialog.setContentView(R.layout.popup_create);
-		dialog.show();
+		switch (v.getId()) {
+		case R.id.popup_capture: {
+			Intent intent = new Intent(getContext(), TEditorActivity.class);
+			intent.putExtra(TEditorActivity.EXTRA_ACTION,
+					TEditorActivity.ACTION_CAPTURE);
+			getContext().startActivity(intent);
+			mDialog.dismiss();
+		}
+
+			break;
+		case R.id.popup_pick: {
+			Intent intent = new Intent(getContext(), TEditorActivity.class);
+			intent.putExtra(TEditorActivity.EXTRA_ACTION,
+					TEditorActivity.ACTION_PICK);
+			getContext().startActivity(intent);
+			mDialog.dismiss();
+		}
+
+			break;
+		case R.id.popup_fav: {
+			Intent intent = new Intent(getContext(), FavActivity.class);
+			getContext().startActivity(intent);
+			mDialog.dismiss();
+		}
+			break;
+		case R.id.popup_focus: {
+			Intent intent = new Intent(getContext(), FocusActivity.class);
+			getContext().startActivity(intent);
+			mDialog.dismiss();
+		}
+			break;
+
+		default:
+			if (null == mDialog) {
+				mDialog = new Dialog(getContext(), R.style.CleanDialog);
+				mDialog.setContentView(R.layout.popup_create);
+				mDialog.findViewById(R.id.popup_capture).setOnClickListener(
+						this);
+				mDialog.findViewById(R.id.popup_pick).setOnClickListener(this);
+				mDialog.findViewById(R.id.popup_fav).setOnClickListener(this);
+				mDialog.findViewById(R.id.popup_focus).setOnClickListener(this);
+			}
+			mDialog.show();
+			break;
+		}
 	}
 }

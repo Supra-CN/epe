@@ -11,9 +11,11 @@ import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
+import tw.supra.utils.JsonUtils;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,15 +75,25 @@ public class MsgPage extends BaseMainPage implements OnItemClickListener,
 		NetworkCenter.getInstance().putToQueue(new RequestMsgs(this));
 	}
 
-	private MsgItem decodeMsg(JSONObject joMsg, String type, int iconResDefault)
+	private MsgItem decodeMsg(JSONObject joMsg, String type,
+			int iconResDefault, String titleDefault, String contentDefault)
 			throws JSONException {
 
 		MsgItem item = new MsgItem();
 		item.icon = iconResDefault;
 		item.type = type;
 		item.id = joMsg.getString("latest_msg_id");
-		item.title = joMsg.getString("latest_msg_title");
-		item.content = joMsg.getString("latest_msg_content");
+		item.title = JsonUtils.getStrSafely(joMsg, "latest_msg_title",
+				titleDefault);
+
+		if (TextUtils.isEmpty(item.title) || "0".equals(item.title)) {
+			item.title = titleDefault;
+		}
+		item.content = JsonUtils.getStrSafely(joMsg, "latest_msg_content",
+				titleDefault);
+		if (TextUtils.isEmpty(item.content) || "0".equals(item.content)) {
+			item.content = contentDefault;
+		}
 		// item.time = joMsg.getLong("latest_msg_time");
 		item.unread = joMsg.getInt("unread_msg_num");
 		return item;
@@ -161,12 +173,18 @@ public class MsgPage extends BaseMainPage implements OnItemClickListener,
 				DATA_SET.clear();
 				try {
 					DATA_SET.add(decodeMsg(response.getJSONObject("yy_msg"),
-							YY_MSG, R.drawable.ic_msg_epe));
+							YY_MSG, R.drawable.ic_msg_epe,
+							getString(R.string.msg_epe_default_title),
+							getString(R.string.msg_epe_default_content)));
 					DATA_SET.add(decodeMsg(response.getJSONObject("shop_msg"),
-							SHOP_MSG, R.drawable.ic_msg_shop));
+							SHOP_MSG, R.drawable.ic_msg_shop,
+							getString(R.string.msg_shop_default_title),
+							getString(R.string.msg_shop_default_content)));
 					DATA_SET.add(decodeMsg(
 							response.getJSONObject("dynamic_msg"), DYNAMIC_MSG,
-							R.drawable.ic_msg_default));
+							R.drawable.ic_msg_default,
+							getString(R.string.msg_dynamic_default_title),
+							getString(R.string.msg_dynamic_default_content)));
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}

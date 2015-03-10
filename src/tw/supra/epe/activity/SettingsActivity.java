@@ -36,9 +36,10 @@ public class SettingsActivity extends BaseActivity implements OnClickListener,
 //				showProgressDialog();
 				App.getInstance().checkUpdate();
 		};
-	},
+	}
 			// new Item(R.string.settings_item_vote),
-			new Item(R.string.settings_item_feedback), };
+//			new Item(R.string.settings_item_feedback), 
+			};
 
 	/**
 	 * 设置布局

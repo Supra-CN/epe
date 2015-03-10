@@ -33,6 +33,11 @@ public class TEditorActivity extends BaseActivity implements OnClickListener,
 
 	private static final String LOG_TAG = TEditorActivity.class.getSimpleName();
 
+	public static final String EXTRA_ACTION = "extra_action";
+
+	public static final String ACTION_PICK = "action_pick";
+	public static final String ACTION_CAPTURE = "action_capture";
+
 	private Uri mImg;
 
 	/**
@@ -45,6 +50,13 @@ public class TEditorActivity extends BaseActivity implements OnClickListener,
 		findViewById(R.id.action_back).setOnClickListener(this);
 		findViewById(R.id.action_submit).setOnClickListener(this);
 		findViewById(R.id.img).setOnClickListener(this);
+		
+		String action = getIntent().getStringExtra(EXTRA_ACTION);
+		if(ACTION_CAPTURE.equals(action)){
+			doTakePhoto();
+		}else if (ACTION_PICK.equals(action)) {
+			doPickPhotoFromGallery();
+		}
 	}
 
 	@Override
@@ -127,14 +139,22 @@ public class TEditorActivity extends BaseActivity implements OnClickListener,
 	public void onClick(DialogInterface dialog, int which) {
 		switch (which) {
 		case DialogInterface.BUTTON_POSITIVE:
-			AppUtiles.doPickPhotoFromGallery(this);
+			doPickPhotoFromGallery();
 			break;
 		case DialogInterface.BUTTON_NEGATIVE:
-			AppUtiles.doTakePhoto(this);
+			doTakePhoto();
 			break;
 		default:
 			break;
 		}
+	}
+
+	private void doPickPhotoFromGallery() {
+		AppUtiles.doPickPhotoFromGallery(this);
+	}
+
+	private void doTakePhoto() {
+		AppUtiles.doTakePhoto(this);
 	}
 
 	@Override
@@ -146,22 +166,22 @@ public class TEditorActivity extends BaseActivity implements OnClickListener,
 		switch (requestCode) {
 		case AppUtiles.REQUEST_CODE_FOR_CAPTURE: {
 			mImg = AppUtiles.sTmpImageUri;
-			Log.i(LOG_TAG, "mImg : "+mImg);
+			Log.i(LOG_TAG, "mImg : " + mImg);
 			Picasso.with(this).load(mImg).into(iv);
 		}
 			break;
 		case AppUtiles.REQUEST_CODE_FOR_PICK: {
-			 mImg = data.getData();
+			mImg = data.getData();
 
 			Uri uri = data.getData();
-			Log.i(LOG_TAG, "uri : "+uri);
+			Log.i(LOG_TAG, "uri : " + uri);
 			Cursor cursor = getContentResolver().query(uri, null, null, null,
 					null);
 			cursor.moveToFirst();
 			mImg = Uri.fromFile(new File(DBUtils.getStrByCol(cursor,
 					MediaStore.Images.ImageColumns.DATA)));
-			Log.i(LOG_TAG, "mImg : "+mImg);
-			
+			Log.i(LOG_TAG, "mImg : " + mImg);
+
 			cursor.close();
 
 			Picasso.with(this).load(mImg).into(iv);

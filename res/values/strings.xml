@@ -58,6 +58,11 @@
     
     <!-- activity -->
     <string name="activity_toast_press_again_to_exit">再按一次退出</string>
+    <!-- popup -->
+    <string name="popup_capture">拍照</string>
+    <string name="popup_pick">相册</string>
+    <string name="popup_fav">收藏</string>
+    <string name="popup_focus">关注</string>
 
     <!-- main page tab -->
     <string name="indictor_tab_home">首页</string>
@@ -226,6 +231,14 @@
     <!-- msg -->
     <string name="msg_activity_label">消息详情</string>
     <string name="msg_show_all">查看全文</string>
+    <string name="msg_epe_default_title">衣加衣团队</string>
+    <string name="msg_epe_default_content">查欢迎使用！</string>
+    <string name="msg_shop_default_title">商家消息</string>
+    <string name="msg_shop_default_content">您关注的商家没有最新消息！</string>
+    <string name="msg_dynamic_default_title">动态消息</string>
+    <string name="msg_dynamic_default_content">暂时没有动态消息！</string>
+    
+    
     <!-- stroe -->
     <string name="store_product_label_new">新品</string>
     <string name="store_product_label_discount">折扣</string>

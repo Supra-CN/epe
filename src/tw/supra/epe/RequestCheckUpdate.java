@@ -29,11 +29,10 @@ public class RequestCheckUpdate extends EpeJsonRequest<CheckUpdateInfo> {
 			INFO.ERROR_CODE.addDyingMsg("response : " + response);
 			return;
 		}
-        JSONObject joData = response.getJSONObject("res");
-        INFO.resultVersionCode = JsonUtils.getIntSafely(joData, "vcode", 0);
-        INFO.resultVersionName = joData.getString("ver");
-        INFO.resultInfo = joData.getString("info");
-        INFO.resultUrl = joData.getString("download_url");
+        INFO.resultVersionCode = JsonUtils.getIntSafely(response, "ver_code", 0);
+        INFO.resultVersionName = response.getString("ver_name");
+        INFO.resultInfo = response.getString("info");
+        INFO.resultUrl = response.getString("url");
 		INFO.ERROR_CODE.addDyingMsg("response : " + response);
 	}
 

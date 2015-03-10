@@ -56,7 +56,7 @@ public class FavActivity extends BaseActivity implements OnClickListener,
 		setContentView(R.layout.activity_fav);
 
 		findViewById(R.id.action_back).setOnClickListener(this);
-		
+
 		mPullRefreshGrid = (SupraPullToRefreshStaggeredGridView) findViewById(R.id.pull_refresh_grid);
 		mPullRefreshGrid.setOnRefreshListener(this);
 		// gridView.setEmptyView(v.findViewById(R.id.progress_bar));
@@ -188,7 +188,7 @@ public class FavActivity extends BaseActivity implements OnClickListener,
 
 		Log.i(LOG_TAG, "HandleEvent FINISH : " + info);
 		if (RequestEvent.FINISH == event) {
-			if (info.ERROR_CODE.isOK()) {
+			if (info.ERROR_CODE.isOK() && null != info.resultJoList) {
 				if (info.ARG_PAGE <= mPageLoaded) {
 					DATA_SET.clear();
 				}
@@ -299,7 +299,7 @@ public class FavActivity extends BaseActivity implements OnClickListener,
 
 	@Override
 	public void onClick(View v) {
-		
+
 		switch (v.getId()) {
 		case R.id.action_back:
 			onBackPressed();
