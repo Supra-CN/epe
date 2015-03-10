@@ -34,6 +34,8 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:showDividers="none"
+        android:divider="@null"
         android:layout_weight="1" />
 
 </LinearLayout>
