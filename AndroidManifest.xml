@@ -79,7 +79,8 @@
             android:value="@string/channel_id" />
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="WqsPjBeaTyzR0eeBGBjgO7VZ" />
+            android:value="eILM9siivKgEVjhOGVGiZgpI" />
+<!--             android:value="WqsPjBeaTyzR0eeBGBjgO7VZ" /> -->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
             android:value="kj7swf8o7zaf2" />
