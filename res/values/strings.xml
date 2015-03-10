@@ -241,7 +241,7 @@
     <string name="product_editor_price_hint">单位：元</string>
     <string name="product_editor_toast_check_price">请检查价格</string>
     <string name="product_editor_discount">折扣</string>
-    <string name="product_editor_discount_hint">如：8.8即为88折扣</string>
+    <string name="product_editor_discount_hint">如：88即为88折扣</string>
     <string name="product_editor_toast_check_discount">请检查折扣</string>
     <string name="product_editor_tag">标签</string>
     <string name="product_editor_tag_hint">如：运动，休闲，时尚，商务</string>

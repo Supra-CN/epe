@@ -193,7 +193,8 @@
                     android:background="@android:color/transparent"
                     android:gravity="right"
                     android:hint="@string/product_editor_discount_hint"
-                    android:inputType="numberDecimal"
+                    android:inputType="number"
+                    android:maxLength="2"
                     android:singleLine="true"
                     android:textSize="18sp" />
             </LinearLayout>

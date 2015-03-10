@@ -7,3 +7,4 @@ gen
 .settings
 /project.properties
 /local.properties
+/ant.properties

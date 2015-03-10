@@ -9,19 +9,32 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.MyLocationConfiguration;
+import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
 import com.baidu.mapapi.model.LatLng;
 
-public class MapActivity extends BaseActivity implements OnClickListener {
+public class MapActivity extends BaseActivity implements OnClickListener ,BDLocationListener{
 
 	private static final String LOG_TAG = MapActivity.class.getSimpleName();
 	public static final String EXTRA_DOUBLE_LAT = "lat";
 	public static final String EXTRA_DOUBLE_LON = "lon";
 	public static final String EXTRA_STR_LABEL = "label";
+	
+	// 定位相关
+	LocationClient mLocClient;
+	// UI相关
+	boolean isFirstLoc = true;// 是否首次定位
 
 	/**
 	 * MapView 是地图主控件
@@ -58,7 +71,21 @@ public class MapActivity extends BaseActivity implements OnClickListener {
 		mBaiduMap = mMapView.getMap();
 
 		mBaiduMap.clear();
-
+		// 传入null则，恢复默认图标
+		mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(
+				LocationMode.NORMAL, true, null));
+		// 开启定位图层
+		mBaiduMap.setMyLocationEnabled(true);
+		// 定位初始化
+		mLocClient = new LocationClient(this);
+		mLocClient.registerLocationListener(this);
+		LocationClientOption option = new LocationClientOption();
+		option.setOpenGps(true);// 打开gps
+		option.setCoorType("bd09ll"); // 设置坐标类型
+		option.setScanSpan(1000);
+		mLocClient.setLocOption(option);
+		mLocClient.start();
+		
 		mBaiduMap.addOverlay(new MarkerOptions().position(p).icon(
 				BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding)));
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(p));
@@ -92,8 +119,33 @@ public class MapActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onDestroy() {
 		// MapView的生命周期与Activity同步，当activity销毁时需调用MapView.destroy()
+		// 退出时销毁定位
+		mLocClient.stop();
+		// 关闭定位图层
+		mBaiduMap.setMyLocationEnabled(false);
 		mMapView.onDestroy();
+		mMapView = null;
 		super.onDestroy();
+	}
+
+	@Override
+	public void onReceiveLocation(BDLocation location) {
+		// map view 销毁后不在处理新接收的位置
+		if (location == null || mMapView == null)
+			return;
+		MyLocationData locData = new MyLocationData.Builder()
+				.accuracy(location.getRadius())
+				// 此处设置开发者获取到的方向信息，顺时针0-360
+				.direction(100).latitude(location.getLatitude())
+				.longitude(location.getLongitude()).build();
+		mBaiduMap.setMyLocationData(locData);
+		if (isFirstLoc) {
+			isFirstLoc = false;
+			LatLng ll = new LatLng(location.getLatitude(),
+					location.getLongitude());
+			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+			mBaiduMap.animateMapStatus(u);
+		}		
 	}
 
 }

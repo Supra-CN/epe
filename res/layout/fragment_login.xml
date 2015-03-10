@@ -20,18 +20,18 @@
         android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+        android:layout_marginTop="2dp"
         android:background="@android:color/white"
-        android:padding="@dimen/store_table_item_padding"
-        android:textSize="@dimen/store_table_item_text_size" 
         android:hint="@string/account_frag_hint_password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:padding="@dimen/store_table_item_padding"
+        android:textSize="@dimen/store_table_item_text_size" />
 
     <TextView
         android:layout_width="wrap_content"
-                android:layout_marginTop="1dp"
-        android:padding="@dimen/store_table_item_padding"
         android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:padding="@dimen/store_table_item_padding"
         android:text="@string/account_frag_reset_password"
         android:textStyle="italic" />
 
@@ -39,20 +39,21 @@
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/account_login_frag_title"
         android:layout_margin="10dp"
         android:background="@drawable/btn_bg_round_pink"
         android:padding="10dp"
+        android:text="@string/account_login_frag_title"
         android:textColor="@android:color/white"
         android:textSize="@dimen/store_table_item_text_size" />
 
     <FrameLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginTop="50dp"
-        android:background="@drawable/dash_line" >
+        android:background="@drawable/dash_line"
+        >
+<!--         android:visibility="gone"  -->
 
         <TextView
             android:layout_width="wrap_content"
@@ -64,30 +65,34 @@
             android:text="@string/account_login_divider" />
     </FrameLayout>
 
+    <!-- android:visibility="gone" -->
+
     <LinearLayout
-                android:visibility="gone"
-        
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal" >
 
         <Button
+            android:id="@+id/qq"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:layout_margin="5dp"
             android:text="@string/account_login_by_qq" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/account_login_by_wechat" />
+        <!-- <Button -->
+        <!-- android:layout_width="wrap_content" -->
+        <!-- android:layout_height="wrap_content" -->
+        <!-- android:layout_margin="5dp" -->
+        <!-- android:text="@string/account_login_by_wechat" /> -->
 
         <Button
+            android:id="@+id/weibo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@null"
             android:text="@string/account_login_by_weibo" />
     </LinearLayout>
 

@@ -97,6 +97,8 @@
         <item name="android:layout_marginBottom">5dip</item>
     </style>
 
+    <style name="PopCreateDialog" parent="CleanDialog">
+    </style>
     <style name="CleanDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>

@@ -30,7 +30,7 @@
         <!-- Style of the underline indicator. -->
         <attr name="vpiUnderlinePageIndicatorStyle" format="reference"/>
     </declare-styleable>
-
+    
     <attr name="centered" format="boolean" />
     <attr name="selectedColor" format="color" />
     <attr name="strokeWidth" format="dimension" />

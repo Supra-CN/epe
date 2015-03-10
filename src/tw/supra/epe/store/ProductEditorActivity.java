@@ -158,11 +158,18 @@ public class ProductEditorActivity extends BaseActivity implements
 		}
 		String discount = ((EditText) findViewById(R.id.discount)).getText()
 				.toString().trim();
-		if (TextUtils.isEmpty(discount)) {
+		if (TextUtils.isEmpty(discount)|| !TextUtils.isDigitsOnly(discount)) {
 			Toast.makeText(this, R.string.product_editor_toast_check_discount,
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
+		try {
+			discount =String.valueOf( Integer.parseInt(discount)/10);
+		} catch (NumberFormatException e) {
+			Toast.makeText(this, R.string.product_editor_toast_check_discount,
+					Toast.LENGTH_SHORT).show();
+		}
+		
 		String tag = ((EditText) findViewById(R.id.tag)).getText().toString()
 				.trim();
 		if (TextUtils.isEmpty(tag)) {

@@ -6,6 +6,7 @@ import tw.supra.epe.core.BaseHostFrag;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
+import tw.supra.utils.Log;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,12 +18,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.tencent.connect.common.Constants;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
+
 public class LoginFrag extends BaseHostFrag<LoginActivity> implements
-		OnClickListener, NetWorkHandler<LoginInfo> {
+		OnClickListener, NetWorkHandler<LoginInfo>, IUiListener {
+
+	private static final String LOG_TAG = LoginFrag.class.getName();
 
 	private EditText mEtPhone;
 	private EditText mEtPassword;
 	private Button mBtnLogin;
+
+	private Tencent mTencent;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,6 +41,9 @@ public class LoginFrag extends BaseHostFrag<LoginActivity> implements
 		mEtPhone = (EditText) v.findViewById(R.id.et_phone);
 		mEtPassword = (EditText) v.findViewById(R.id.et_password);
 		mBtnLogin = (Button) v.findViewById(R.id.btn_login);
+		v.findViewById(R.id.weibo).setOnClickListener(this);
+		v.findViewById(R.id.qq).setOnClickListener(this);
+
 		return v;
 	}
 
@@ -56,10 +69,24 @@ public class LoginFrag extends BaseHostFrag<LoginActivity> implements
 		case R.id.btn_login:
 			onClickLogin();
 			break;
+		case R.id.qq:
+			onClickLoginWithQQ();
+			break;
+		case R.id.weibo:
+			onClickLogin();
+			break;
 
 		default:
 			break;
 		}
+	}
+
+	private void onClickLoginWithQQ() {
+		if (null == mTencent) {
+			mTencent = Tencent.createInstance("1104065435", getActivity()
+					.getApplicationContext());
+		}
+		mTencent.login(getActivity(), "all", this);
 	}
 
 	private void onClickLogin() {
@@ -92,21 +119,47 @@ public class LoginFrag extends BaseHostFrag<LoginActivity> implements
 
 	@Override
 	public boolean HandleEvent(RequestEvent event, LoginInfo info) {
-        switch (event) {
-        case FINISH:
-            getHostActivity().hideProgressDialog();
-            if (info.ERROR_CODE.isOK()) {
-                AccountCenter.switchUser(info.RESULTS.getString(LoginInfo.RESULT_STR_UID, User.ANONYMOUS));
-                startActivity(new Intent(getActivity(), MainActivity.class));
-                getActivity().finish();
-                
-            }
-            break;
+		switch (event) {
+		case FINISH:
+			getHostActivity().hideProgressDialog();
+			if (info.ERROR_CODE.isOK()) {
+				AccountCenter.switchUser(info.RESULTS.getString(
+						LoginInfo.RESULT_STR_UID, User.ANONYMOUS));
+				startActivity(new Intent(getActivity(), MainActivity.class));
+				getActivity().finish();
 
-        default:
-            break;
-    }
-    return true;
+			}
+			break;
+
+		default:
+			break;
+		}
+		return true;
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == Constants.REQUEST_API) {
+			if (resultCode == Constants.RESULT_LOGIN) {
+				mTencent.handleLoginData(data, this);
+			}
+			super.onActivityResult(requestCode, resultCode, data);
+		}
+	}
+
+	@Override
+	public void onCancel() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void onComplete(Object arg0) {
+		Log.i(LOG_TAG, "onComplete : " + arg0);
+	}
+
+	@Override
+	public void onError(UiError arg0) {
+		// TODO Auto-generated method stub
 	}
 
 }

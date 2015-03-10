@@ -17,6 +17,7 @@
 package tw.supra.epe.activity;
 
 import tw.supra.epe.R;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
@@ -25,6 +26,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,7 +38,7 @@ import com.viewpagerindicator.PageIndicator;
  * This widget implements the dynamic action bar tab behavior that can change
  * across different configurations or circumstances.
  */
-public class MainTabBar extends LinearLayout implements PageIndicator {
+public class MainTabBar extends LinearLayout implements PageIndicator ,OnClickListener{
 	/** Title text used when no title is provided by the adapter. */
 	private static final CharSequence EMPTY_TITLE = "";
 
@@ -109,6 +111,7 @@ public class MainTabBar extends LinearLayout implements PageIndicator {
 	private void addCreateTab() {
 		if (null == mCreateTabView) {
 			mCreateTabView = new ImageButton(getContext());
+			mCreateTabView.setOnClickListener(this);
 		}
 		mCreateTabView.setImageResource(R.drawable.indicator_create_tab);
 		mCreateTabView.setBackgroundColor(Color.TRANSPARENT);
@@ -229,5 +232,12 @@ public class MainTabBar extends LinearLayout implements PageIndicator {
 	@Override
 	public void setOnPageChangeListener(OnPageChangeListener listener) {
 		mListener = listener;
+	}
+
+	@Override
+	public void onClick(View v) {
+		Dialog dialog = new Dialog(getContext(), R.style.CleanDialog);
+		dialog.setContentView(R.layout.popup_create);
+		dialog.show();
 	}
 }
