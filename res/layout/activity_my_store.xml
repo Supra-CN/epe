@@ -10,8 +10,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@drawable/my_store_banner"
+        android:background="@drawable/my_banner"
         android:orientation="vertical" >
+<!--         android:background="@drawable/my_store_banner" -->
 
         <FrameLayout
             android:layout_width="match_parent"
