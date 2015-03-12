@@ -191,6 +191,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 			if (null != joBrand) {
 				mBrandName = JsonUtils
 						.getStrSafely(joBrand, ProductInfo.BRAND_NAME);
+			}else {
 			}
 
 			JSONArray jaImages = JsonUtils.getJaSafely(mJoData,
@@ -224,6 +225,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 				: View.VISIBLE);
 		mTvPrice.setText(price);
 		mTvBrandName.setText(mBrandName);
+		mTvBrandName.setVisibility(TextUtils.isEmpty(mBrandName)?View.GONE:View.VISIBLE);
 		mCbLike.setChecked(isLike);
 		mCbFav.setChecked(isFav);
 		mTvProductInfo.setText(productInfo);
