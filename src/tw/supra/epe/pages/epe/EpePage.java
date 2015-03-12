@@ -129,6 +129,7 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 
 				if (info.ERROR_CODE.isOK()) {
 					mNearStoreContainerTop.removeAllViews();
+					mNearStoreContainerWave.removeAllViews();
 					mNearStoreContainerBottom.removeAllViews();
 					JSONArray ja = info.resultJoList;
 
@@ -139,7 +140,7 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 
 					for (int i = 0; i < waveCount; i++) {
 						View waveView = new View(getActivity());
-						waveView.setBackgroundResource(R.drawable.near_store_item_bg);
+						waveView.setBackgroundResource(R.drawable.near_store_item_wave_bg);
 						mNearStoreContainerWave.addView(
 								waveView,
 								new LayoutParams(getResources()
