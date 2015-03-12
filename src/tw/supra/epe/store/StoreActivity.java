@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -66,8 +67,9 @@ public class StoreActivity extends BaseActivity implements OnClickListener {
 
 		setContentView(R.layout.activity_store);
 
-		((TextView) findViewById(R.id.label)).setText(brandName + "."
-				+ mallName);
+		String label = TextUtils.isEmpty(brandName) ? mallName : brandName
+				+ "." + mallName;
+		((TextView) findViewById(R.id.label)).setText(label);
 		findViewById(R.id.action_back).setOnClickListener(this);
 
 		ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
