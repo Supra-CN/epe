@@ -86,35 +86,35 @@ public class TEditorActivity extends BaseActivity implements OnClickListener,
 
 		String content = ((EditText) findViewById(R.id.content)).getText()
 				.toString().trim();
-		if (TextUtils.isEmpty(content)) {
-			Toast.makeText(this, R.string.t_editor_toast_check_content,
-					Toast.LENGTH_SHORT).show();
-			return;
-		}
+//		if (TextUtils.isEmpty(content)) {
+//			Toast.makeText(this, R.string.t_editor_toast_check_content,
+//					Toast.LENGTH_SHORT).show();
+//			return;
+//		}
 
 		String brand = ((EditText) findViewById(R.id.brand)).getText()
 				.toString().trim();
-		if (TextUtils.isEmpty(brand)) {
-			Toast.makeText(this, R.string.t_editor_toast_check_brand,
-					Toast.LENGTH_SHORT).show();
-			return;
-		}
+//		if (TextUtils.isEmpty(brand)) {
+//			Toast.makeText(this, R.string.t_editor_toast_check_brand,
+//					Toast.LENGTH_SHORT).show();
+//			return;
+//		}
 
 		String model = ((EditText) findViewById(R.id.model)).getText()
 				.toString().trim();
-		if (TextUtils.isEmpty(brand)) {
-			Toast.makeText(this, R.string.t_editor_toast_check_model,
-					Toast.LENGTH_SHORT).show();
-			return;
-		}
+//		if (TextUtils.isEmpty(brand)) {
+//			Toast.makeText(this, R.string.t_editor_toast_check_model,
+//					Toast.LENGTH_SHORT).show();
+//			return;
+//		}
 
 		String price = ((EditText) findViewById(R.id.price)).getText()
 				.toString().trim();
-		if (TextUtils.isEmpty(brand)) {
-			Toast.makeText(this, R.string.t_editor_toast_check_price,
-					Toast.LENGTH_SHORT).show();
-			return;
-		}
+//		if (TextUtils.isEmpty(brand)) {
+//			Toast.makeText(this, R.string.t_editor_toast_check_price,
+//					Toast.LENGTH_SHORT).show();
+//			return;
+//		}
 
 		showProgressDialog();
 		RequestPushT request = new RequestPushT(this, mImg, content, brand,
