@@ -2,29 +2,47 @@ package tw.supra.epe.store;
 
 import java.util.HashMap;
 
+import org.json.JSONException;
+
+import tw.supra.epe.activity.brand.RequestBrandFocusStatus;
+import tw.supra.epe.activity.brand.RequestPushBrandFocusStatus;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseFrag;
+import tw.supra.epe.mall.MallInfo;
+import tw.supra.epe.mall.RequestMall;
+import tw.supra.epe.mall.RequestPushMallFocusStatus;
+import tw.supra.network.NetworkCenter;
+import tw.supra.network.request.EpeRequestInfo;
+import tw.supra.network.request.NetWorkHandler;
+import tw.supra.network.request.RequestEvent;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
 import com.yijiayi.yijiayi.R;
 
-public class StoreActivity extends BaseActivity implements OnClickListener {
+public class StoreActivity extends BaseActivity implements OnClickListener,
+		OnCheckedChangeListener, NetWorkHandler<EpeRequestInfo> {
 
 	private static final String LOG_TAG = StoreActivity.class.getSimpleName();
 
-	public static final String EXTRA_MB_ID = "extra_mb_id";
+	public static final String EXTRA_ID = "extra_id";
+	public static final String EXTRA_FOCUS_ID = "extra_focus_id";
 	public static final String EXTRA_BROAD_NAME = "extra_broad_name";
 	public static final String EXTRA_MALL_NAME = "extra_mall_name";
+	public static final String EXTRA_IS_STORE = "extra_is_store";
 
 	public static final String ACTION_BY_DISCOUNT = "by_discount";
 	public static final String ACTION_BY_TIME = "by_time";
@@ -52,7 +70,12 @@ public class StoreActivity extends BaseActivity implements OnClickListener {
 	private PageAdapter mAdapter;
 	private PageIndicator mPageIndicator;
 
-	private String mMbId;
+	private String mId;
+
+	private String mFocusId;
+	private boolean mIsStore;
+
+	private ToggleButton mTbFocus;
 
 	/**
 	 * 设置布局
@@ -61,22 +84,29 @@ public class StoreActivity extends BaseActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Intent intent = getIntent();
-		mMbId = intent.getStringExtra(EXTRA_MB_ID);
+		mId = intent.getStringExtra(EXTRA_ID);
+		mFocusId = intent.getStringExtra(EXTRA_FOCUS_ID);
+		mIsStore = intent.getBooleanExtra(EXTRA_IS_STORE, false);
 		String brandName = intent.getStringExtra(EXTRA_BROAD_NAME);
 		String mallName = intent.getStringExtra(EXTRA_MALL_NAME);
 
 		setContentView(R.layout.activity_store);
+
+		mTbFocus = (ToggleButton) findViewById(R.id.action_focus);
+		mTbFocus.setOnCheckedChangeListener(this);
 
 		String label = TextUtils.isEmpty(brandName) ? mallName : brandName
 				+ "." + mallName;
 		((TextView) findViewById(R.id.label)).setText(label);
 		findViewById(R.id.action_back).setOnClickListener(this);
 
-		ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-		mAdapter = new PageAdapter(getFragmentManager());
-		viewPager.setAdapter(mAdapter);
-		mPageIndicator = (PageIndicator) findViewById(R.id.page_indicator);
-		mPageIndicator.setViewPager(viewPager);
+		if (mIsStore) {
+			requestMallStatus();
+		} else {
+			initUI();
+			requestBrandStatus();
+		}
+
 	}
 
 	@Override
@@ -88,6 +118,67 @@ public class StoreActivity extends BaseActivity implements OnClickListener {
 		default:
 			break;
 		}
+	}
+
+	private final NetWorkHandler<EpeRequestInfo> HANDLER_BRAND_STATUS = new NetWorkHandler<EpeRequestInfo>() {
+
+		@Override
+		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
+			if (event == RequestEvent.FINISH && info.ERROR_CODE.isOK()) {
+				mTbFocus.setOnCheckedChangeListener(null);
+				mTbFocus.setChecked(true);
+				mTbFocus.setOnCheckedChangeListener(StoreActivity.this);
+			}
+			return false;
+		}
+	};
+
+	private void requestBrandStatus() {
+		NetworkCenter.getInstance().putToQueue(
+				new RequestBrandFocusStatus(HANDLER_BRAND_STATUS, mFocusId));
+	}
+
+	private final NetWorkHandler<MallInfo> HANDLER_MALL_STATUS = new NetWorkHandler<MallInfo>() {
+
+		@Override
+		public boolean HandleEvent(RequestEvent event, MallInfo info) {
+			Log.i(LOG_TAG, "HandleEvent FINISH : " + info);
+			if (RequestEvent.FINISH == event) {
+				if (info.ERROR_CODE.isOK()) {
+					try {
+						String following = info.resultJo
+								.getString(MallInfo.FOLLOWING);
+						mTbFocus.setOnCheckedChangeListener(null);
+						mTbFocus.setChecked("1".equals(following));
+						mTbFocus.setOnCheckedChangeListener(StoreActivity.this);
+						mId = info.resultJo.getJSONArray(MallInfo.BRAND)
+								.getJSONArray(0).getJSONObject(0)
+								.getString("shop_id");
+
+						initUI();
+
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+			return false;
+
+		}
+	};
+
+	private void requestMallStatus() {
+		NetworkCenter.getInstance().putToQueue(
+				new RequestMall(HANDLER_MALL_STATUS, new MallInfo(mFocusId)));
+	}
+
+	private void initUI() {
+		ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+		mAdapter = new PageAdapter(getFragmentManager());
+		viewPager.setAdapter(mAdapter);
+		mPageIndicator = (PageIndicator) findViewById(R.id.page_indicator);
+		mPageIndicator.setViewPager(viewPager);
 	}
 
 	public class PageAdapter extends FragmentPagerAdapter implements
@@ -113,7 +204,7 @@ public class StoreActivity extends BaseActivity implements OnClickListener {
 					Bundle args = new Bundle();
 					args.putString(StoreProductsPage.ARG_SORT,
 							PAGES[position].ACTION);
-					args.putString(StoreProductsPage.ARG_STORE_ID, mMbId);
+					args.putString(StoreProductsPage.ARG_STORE_ID, mId);
 					page.setArguments(args);
 					PAGE_POOL.put(PAGES[position], page);
 				} catch (InstantiationException e) {
@@ -141,5 +232,30 @@ public class StoreActivity extends BaseActivity implements OnClickListener {
 		public int getIconResId(int index) {
 			return getItem(index).getIconResId();
 		}
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+		if (mIsStore) {
+			NetworkCenter.getInstance().putToQueue(
+					new RequestPushMallFocusStatus(this, mFocusId, isChecked));
+		} else {
+			NetworkCenter.getInstance().putToQueue(
+					new RequestPushBrandFocusStatus(this, mFocusId, isChecked));
+		}
+
+	}
+
+	@Override
+	public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
+		if (event == RequestEvent.FINISH) {
+			if (!info.ERROR_CODE.isOK()) {
+				mTbFocus.setOnCheckedChangeListener(null);
+				mTbFocus.toggle();
+				mTbFocus.setOnCheckedChangeListener(this);
+			}
+		}
+		return false;
 	}
 }

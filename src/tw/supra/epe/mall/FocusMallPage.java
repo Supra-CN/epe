@@ -174,7 +174,8 @@ public class FocusMallPage extends BaseHostFrag<FocusActivity> implements
 		try {
 			if (joItem.getString("mall_type").equals("2")) {
 				Intent intent = new Intent(getActivity(), StoreActivity.class);
-				intent.putExtra(StoreActivity.EXTRA_MB_ID,
+				intent.putExtra(StoreActivity.EXTRA_IS_STORE, true);
+				intent.putExtra(StoreActivity.EXTRA_FOCUS_ID,
 						joItem.getString("mall_id"));
 				intent.putExtra(StoreActivity.EXTRA_MALL_NAME,
 						joItem.getString("mall_name"));

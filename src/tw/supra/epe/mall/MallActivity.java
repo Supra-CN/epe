@@ -172,8 +172,11 @@ public class MallActivity extends BaseActivity implements OnClickListener,OnChec
 								.getItem(position);
 						Intent intent = new Intent(MallActivity.this,
 								StoreActivity.class);
-						intent.putExtra(StoreActivity.EXTRA_MB_ID,
+						intent.putExtra(StoreActivity.EXTRA_IS_STORE, false);
+						intent.putExtra(StoreActivity.EXTRA_ID,
 								jo.getString(MallInfo.SHOP_ID));
+						intent.putExtra(StoreActivity.EXTRA_FOCUS_ID, jo.getString(MallInfo.BRAND_ID));
+
 						intent.putExtra(StoreActivity.EXTRA_MALL_NAME,
 								mMallName);
 						intent.putExtra(StoreActivity.EXTRA_BROAD_NAME,

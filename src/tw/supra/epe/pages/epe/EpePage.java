@@ -184,7 +184,8 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 				if (joItem.getString(NearStoreInfo.ATTR_MALL_TYPE).equals("2")) {
 					Intent intent = new Intent(getActivity(),
 							StoreActivity.class);
-					intent.putExtra(StoreActivity.EXTRA_MB_ID,
+					intent.putExtra(StoreActivity.EXTRA_IS_STORE, true);
+					intent.putExtra(StoreActivity.EXTRA_FOCUS_ID,
 							joItem.getString(NearStoreInfo.ATTR_MALL_ID));
 					intent.putExtra(StoreActivity.EXTRA_MALL_NAME,
 							joItem.getString(NearStoreInfo.ATTR_MALL_NAME));

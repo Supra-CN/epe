@@ -273,8 +273,10 @@ public class BrandActivity extends BaseActivity implements
 		try {
 			JSONObject jo = DATA_SET.get(position - 1);
 			Intent intent = new Intent(this, StoreActivity.class);
-			intent.putExtra(StoreActivity.EXTRA_MB_ID,
+			intent.putExtra(StoreActivity.EXTRA_ID,
 					jo.getString(BrandInfo.MB_ID));
+			intent.putExtra(StoreActivity.EXTRA_IS_STORE	, false);
+			intent.putExtra(StoreActivity.EXTRA_FOCUS_ID, mBrandId);
 			intent.putExtra(StoreActivity.EXTRA_BROAD_NAME, mBrandName);
 			intent.putExtra(StoreActivity.EXTRA_MALL_NAME,
 					jo.getString(BrandInfo.MALL_NAME));
