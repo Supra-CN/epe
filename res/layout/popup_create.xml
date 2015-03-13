@@ -49,7 +49,7 @@
             android:layout_margin="20dp"
             android:layout_weight="1"
             android:drawablePadding="@dimen/drawable_padding"
-            android:drawableTop="@drawable/ic_my_fav"
+            android:drawableTop="@drawable/ic_popup_fav"
             android:gravity="center"
             android:text="@string/popup_fav" />
 
@@ -60,7 +60,7 @@
             android:layout_margin="20dp"
             android:layout_weight="1"
             android:drawablePadding="@dimen/drawable_padding"
-            android:drawableTop="@drawable/ic_my_focus"
+            android:drawableTop="@drawable/ic_popup_focus"
             android:gravity="center"
             android:text="@string/popup_focus" />
     </LinearLayout>
