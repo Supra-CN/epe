@@ -97,8 +97,24 @@
         <item name="android:layout_marginBottom">5dip</item>
     </style>
 
-    <style name="PopCreateDialog" parent="CleanDialog">
+    <style name="PopCreateDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+<!--         <item name="android:windowFrame">@null</item> -->
+        <item name="android:windowNoTitle">true</item>
+
+<!--         <item name="windowTitleStyle">@style/DialogWindowTitle</item> -->
+<!--         <item name="windowBackground">@drawable/panel_background</item> -->
+        <item name="android:windowIsFloating">false</item>
+                <item name="android:backgroundDimEnabled">true</item>
+        
+<!--         <item name="android:windowContentOverlay">@null</item> -->
+<!--         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item> -->
+<!--         <item name="android:windowSoftInputMode">stateUnspecified|aSdjustPan</item> -->
+<!--         <item name="android:windowActionModeOverlay">true</item> -->
+<!--         <item name="android:colorBackgroundCacheHint">@null</item> -->
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+
     <style name="CleanDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>

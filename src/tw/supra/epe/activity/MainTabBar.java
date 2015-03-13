@@ -16,9 +16,6 @@
  */
 package tw.supra.epe.activity;
 
-import tw.supra.epe.activity.fav.FavActivity;
-import tw.supra.epe.activity.t.TEditorActivity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -238,54 +235,8 @@ public class MainTabBar extends LinearLayout implements PageIndicator,
 		mListener = listener;
 	}
 
-	private Dialog mDialog;
-
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.popup_capture: {
-			Intent intent = new Intent(getContext(), TEditorActivity.class);
-			intent.putExtra(TEditorActivity.EXTRA_ACTION,
-					TEditorActivity.ACTION_CAPTURE);
-			getContext().startActivity(intent);
-			mDialog.dismiss();
-		}
-
-			break;
-		case R.id.popup_pick: {
-			Intent intent = new Intent(getContext(), TEditorActivity.class);
-			intent.putExtra(TEditorActivity.EXTRA_ACTION,
-					TEditorActivity.ACTION_PICK);
-			getContext().startActivity(intent);
-			mDialog.dismiss();
-		}
-
-			break;
-		case R.id.popup_fav: {
-			Intent intent = new Intent(getContext(), FavActivity.class);
-			getContext().startActivity(intent);
-			mDialog.dismiss();
-		}
-			break;
-		case R.id.popup_focus: {
-			Intent intent = new Intent(getContext(), FocusActivity.class);
-			getContext().startActivity(intent);
-			mDialog.dismiss();
-		}
-			break;
-
-		default:
-			if (null == mDialog) {
-				mDialog = new Dialog(getContext(), R.style.CleanDialog);
-				mDialog.setContentView(R.layout.popup_create);
-				mDialog.findViewById(R.id.popup_capture).setOnClickListener(
-						this);
-				mDialog.findViewById(R.id.popup_pick).setOnClickListener(this);
-				mDialog.findViewById(R.id.popup_fav).setOnClickListener(this);
-				mDialog.findViewById(R.id.popup_focus).setOnClickListener(this);
-			}
-			mDialog.show();
-			break;
-		}
+		getContext().startActivity(new Intent(getContext(),PopupActivity.class));
 	}
 }
