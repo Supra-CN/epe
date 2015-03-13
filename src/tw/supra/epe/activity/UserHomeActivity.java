@@ -84,7 +84,7 @@ public class UserHomeActivity extends BaseActivity implements OnClickListener,
 
 	private void requestT(int page) {
 		NetworkCenter.getInstance().putToQueue(
-				new RequestTArray(HANDLE_T_INFO, new TArrayInfo(page, PAGE_SIZE)));
+				new RequestTArray(HANDLE_T_INFO, new TArrayInfo(page, PAGE_SIZE,AccountCenter.getCurrentUser().getAuth())));
 	}
 
 	private final NetWorkHandler<TArrayInfo> HANDLE_T_INFO = new NetWorkHandler<TArrayInfo>() {

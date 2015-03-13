@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import org.json.JSONArray;
 
+import android.text.TextUtils;
+import tw.supra.epe.account.AccountCenter;
 import tw.supra.network.Request.Method;
 import tw.supra.network.request.EpeRequestInfo;
 
@@ -25,13 +27,19 @@ public class TArrayInfo extends EpeRequestInfo {
 	// ARGS
 	public final int ARG_PAGE;// 参数：页码；
 	public final int ARG_SIZE;// 参数：条数
+	public final String ARG_USER_ID;// 参数：条数
 
 	// RESULTS
 	public JSONArray resultJoList;// 返回：话题列表；
 
 	public TArrayInfo(int page, int size) {
+		this(page,size,null);
+	}
+	
+	public TArrayInfo(int page, int size,String userId) {
 		ARG_PAGE = page;
 		ARG_SIZE = size;
+		ARG_USER_ID = userId;
 	}
 
 	@Override
@@ -41,6 +49,10 @@ public class TArrayInfo extends EpeRequestInfo {
 		paramters.put("m", "listT");
 		paramters.put("page", String.valueOf(ARG_PAGE));
 		paramters.put("count", String.valueOf(ARG_SIZE));
+		paramters.put("authcode",AccountCenter.getCurrentUser().getAuth());
+		if(!TextUtils.isEmpty(ARG_USER_ID)){
+			paramters.put("user_id", ARG_USER_ID);
+		}
 	}
 
 	@Override
