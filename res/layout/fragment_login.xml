@@ -52,8 +52,9 @@
         android:layout_margin="10dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/dash_line"
-        >
-<!--         android:visibility="gone"  -->
+        android:visibility="gone" >
+
+        <!-- android:visibility="gone" -->
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,17 +70,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-    android:visibility="gone"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:visibility="gone" >
 
         <Button
             android:id="@+id/qq"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
             android:layout_margin="5dp"
+            android:background="@null"
             android:text="@string/account_login_by_qq" />
 
         <!-- <Button -->
