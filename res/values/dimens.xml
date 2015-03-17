@@ -26,8 +26,8 @@
     <dimen name="image_browser_page_gap">20dp</dimen>
     
     <!-- epe -->
-    <dimen name="epe_wave_item_half_width">72dp</dimen>
-    <dimen name="epe_wave_item_width">150dp</dimen>
+    <dimen name="epe_wave_item_half_width">60dp</dimen>
+    <dimen name="epe_wave_item_width">120dp</dimen>
     <!-- store -->
     <dimen name="store_table_row_margin">2dp</dimen>
     <dimen name="store_table_item_padding">10dp</dimen>

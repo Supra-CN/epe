@@ -2,6 +2,7 @@ package tw.supra.epe.store;
 
 import java.util.HashMap;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import tw.supra.epe.activity.brand.RequestBrandFocusStatus;
@@ -11,6 +12,8 @@ import tw.supra.epe.core.BaseFrag;
 import tw.supra.epe.mall.MallInfo;
 import tw.supra.epe.mall.RequestMall;
 import tw.supra.epe.mall.RequestPushMallFocusStatus;
+import tw.supra.epe.mall.RequestShop;
+import tw.supra.epe.mall.ShopInfo;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
@@ -167,10 +170,50 @@ public class StoreActivity extends BaseActivity implements OnClickListener,
 
 		}
 	};
+	private final NetWorkHandler<ShopInfo> HANDLER_SHOP_STATUS = new NetWorkHandler<ShopInfo>() {
+
+		@Override
+		public boolean HandleEvent(RequestEvent event, ShopInfo info) {
+			Log.i(LOG_TAG, "HandleEvent FINISH : " + info);
+			if (RequestEvent.FINISH == event) {
+				if (info.ERROR_CODE.isOK()) {
+					try {
+						String address = info.resultJo.getString("address");
+						if (!TextUtils.isEmpty(address)) {
+							TextView tv = ((TextView) findViewById(R.id.address));
+							tv.setText(getString(R.string.shop_info_address,
+									address));
+							tv.setVisibility(View.VISIBLE);
+						}
+						JSONArray ja = info.resultJo.getJSONArray("activity");
+						if (ja != null && ja.length() > 0 && !ja.isNull(0)) {
+							String activity = ja.getJSONObject(0).getString(
+									"activity_title");
+							if (!TextUtils.isEmpty(activity)) {
+							TextView tv = ((TextView) findViewById(R.id.activity));
+							tv.setText(getString(R.string.shop_info_activity,
+									activity));
+							tv.setVisibility(View.VISIBLE);}
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+			return false;
+
+		}
+	};
 
 	private void requestMallStatus() {
 		NetworkCenter.getInstance().putToQueue(
 				new RequestMall(HANDLER_MALL_STATUS, new MallInfo(mFocusId)));
+	}
+
+	private void requestShopInfo() {
+		NetworkCenter.getInstance().putToQueue(
+				new RequestShop(HANDLER_SHOP_STATUS, new ShopInfo(mId)));
 	}
 
 	private void initUI() {
@@ -179,6 +222,7 @@ public class StoreActivity extends BaseActivity implements OnClickListener,
 		viewPager.setAdapter(mAdapter);
 		mPageIndicator = (PageIndicator) findViewById(R.id.page_indicator);
 		mPageIndicator.setViewPager(viewPager);
+		requestShopInfo();
 	}
 
 	public class PageAdapter extends FragmentPagerAdapter implements

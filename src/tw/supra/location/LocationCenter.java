@@ -14,6 +14,7 @@ import android.util.Log;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 
 public class LocationCenter {
@@ -82,6 +83,11 @@ public class LocationCenter {
 	public void startUp(App app) {
 		SDKInitializer.initialize(app);
 		mLocationClient = new LocationClient(app); // 声明LocationClient类
+		LocationClientOption option = new LocationClientOption();
+		option.setOpenGps(true);// 打开gps
+		option.setCoorType("bd09ll"); // 设置坐标类型
+		option.setScanSpan(1000);
+		mLocationClient.setLocOption(option);
 		// LocationClientOption clientOption = new LocationClientOption();
 		// mLocationClient.setLocOption(clientOption);
 		mLocationClient.registerLocationListener(BAIDU_LOCATION_LISTENER); // 注册监听函数
@@ -296,9 +302,9 @@ public class LocationCenter {
 
 	public void requestLocation(LocationCallBack callBack) {
 		CALL_BACKS.add(callBack);
-		if (hasBestLoction()) {
-			notifyCallBacks();
-		}
+//		if (hasBestLoction()) {
+//			notifyCallBacks();
+//		}
 		requestLocation();
 	}
 
@@ -310,9 +316,9 @@ public class LocationCenter {
 		mLocationClient.requestLocation();
 	}
 
-	private boolean hasBestLoction() {
-		return mBestLocation != null;
-	}
+//	private boolean hasBestLoction() {
+//		return mBestLocation != null;
+//	}
 
 	private void notifyCallBacks() {
 		for (LocationCallBack callBack : CALL_BACKS) {

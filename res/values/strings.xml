@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">epe</string>
+    <string name="app_name">衣加衣</string>
     <string name="inc_name">北京衣加衣科技有限公司</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -186,6 +186,12 @@
     <string name="contact_owner">联系店主</string>
     <string name="product_fetch_faild">"单品加载失败，点击重试"</string>
 
+    
+    <!-- shop -->
+    <string name="shop_info_address">地址：%s</string>
+    <string name="shop_info_activity">活动：%s</string>
+    
+    
     <!-- brand -->
     <string name="brand_action_focus">+关注</string>
     <string name="brand_action_focused">已关注</string>

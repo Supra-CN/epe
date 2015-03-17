@@ -68,7 +68,7 @@
     <application
         android:name="tw.supra.epe.App"
         android:allowBackup="true"
-        android:icon="@drawable/ic_epe_logo"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data
@@ -80,7 +80,7 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="eILM9siivKgEVjhOGVGiZgpI" />
-<!--             android:value="WqsPjBeaTyzR0eeBGBjgO7VZ" /> -->
+<!--             android:value="0UnDpHBLDtA0Xfsztn0tsPZt" /> -->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
             android:value="kj7swf8o7zaf2" />

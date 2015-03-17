@@ -43,7 +43,7 @@ import com.yijiayi.yijiayi.R;
 public class EpePage extends BaseMainPage implements LocationCallBack {
 	private static final String LOG_TAG = EpePage.class.getSimpleName();
 
-	private SupraLocation mLocation;
+	// private SupraLocation mLocation;
 	private RequestNearStore mRequestNearStore;
 	private RequestNearBrand mRequestNearBrand;
 	private final ArrayList<JSONObject> AD_DATA_SET = new ArrayList<JSONObject>();
@@ -86,6 +86,7 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		requestAds();
+//		getHostActivity().showProgressDialog();
 		LocationCenter.getInstance().requestLocation(this);
 
 		// ((LocationManager) App.getInstance().getSystemService(
@@ -110,10 +111,10 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 		return 0;
 	}
 
-	private void requestNearStore() {
-		if (null != mLocation && null == mRequestNearStore) {
-			double latitude = mLocation.getLatitude();
-			double longitude = mLocation.getLongitude();
+	private void requestNearStore(SupraLocation location) {
+		if (null != location && null == mRequestNearStore) {
+			double latitude = location.getLatitude();
+			double longitude = location.getLongitude();
 
 			mRequestNearStore = new RequestNearStore(HANDLER_NEAR_STORE,
 					new NearStoreInfo(latitude, longitude, 1));
@@ -164,10 +165,10 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 		}
 	};
 
-	private void requestNearBrand() {
-		if (null != mLocation && null == mRequestNearBrand) {
-			double latitude = mLocation.getLatitude();
-			double longitude = mLocation.getLongitude();
+	private void requestNearBrand(SupraLocation location) {
+		if (null != location && null == mRequestNearBrand) {
+			double latitude = location.getLatitude();
+			double longitude = location.getLongitude();
 
 			mRequestNearBrand = new RequestNearBrand(HANDLER_NEAR_BRAND,
 					new NearBrandInfo(latitude, longitude, 1));
@@ -284,8 +285,8 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 				.getInt(NearStoreInfo.ATTR_DISTANCE));
 
 		View v = View.inflate(getActivity(),
-				isEnen ? R.layout.near_store_item_top
-						: R.layout.near_store_item_bottom, null);
+				isEnen ? R.layout.near_store_item_bottom
+						: R.layout.near_store_item_top, null);
 
 		TextView tvName = (TextView) v.findViewById(R.id.name);
 		TextView tvDistance = (TextView) v.findViewById(R.id.distance);
@@ -297,8 +298,8 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 		tvName.setTag(joItem);
 		tvName.setOnClickListener(MALL_CLICK_LISTENER);
 
-		ViewGroup viewGroup = isEnen ? mNearStoreContainerTop
-				: mNearStoreContainerBottom;
+		ViewGroup viewGroup = isEnen ? mNearStoreContainerBottom
+				: mNearStoreContainerTop;
 		viewGroup.addView(v, new LayoutParams(getResources()
 				.getDimensionPixelSize(R.dimen.epe_wave_item_width),
 				LayoutParams.WRAP_CONTENT));
@@ -367,9 +368,9 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 	@Override
 	public void callBack(SupraLocation location) {
 		Log.i(LOG_TAG, "onLocationChanged : " + location);
-		mLocation = location;
-		requestNearStore();
-		requestNearBrand();
+//		getHostActivity().hideProgressDialog();
+		requestNearStore(location);
+		requestNearBrand(location);
 
 	}
 

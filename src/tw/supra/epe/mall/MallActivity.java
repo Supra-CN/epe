@@ -34,8 +34,8 @@ import android.widget.ToggleButton;
 import com.viewpagerindicator.PageIndicator;
 import com.yijiayi.yijiayi.R;
 
-public class MallActivity extends BaseActivity implements OnClickListener,OnCheckedChangeListener,
-		NetWorkHandler<MallInfo> {
+public class MallActivity extends BaseActivity implements OnClickListener,
+		OnCheckedChangeListener, NetWorkHandler<MallInfo> {
 	private static final String LOG_TAG = MallActivity.class.getSimpleName();
 	public static final String EXTRA_MALL_ID = "extra_mall_id";
 
@@ -50,7 +50,7 @@ public class MallActivity extends BaseActivity implements OnClickListener,OnChec
 
 	private double mLat;
 	private double mLon;
-	
+
 	private ToggleButton mTbFocus;
 
 	private final ArrayList<Page> PAGES = new ArrayList<Page>();
@@ -68,7 +68,7 @@ public class MallActivity extends BaseActivity implements OnClickListener,OnChec
 
 		mTvAddress = (TextView) findViewById(R.id.address);
 		mTvMallName = (TextView) findViewById(R.id.mall_name);
-		
+
 		mTbFocus = (ToggleButton) findViewById(R.id.action_focus);
 		mTbFocus.setOnCheckedChangeListener(this);
 
@@ -77,7 +77,7 @@ public class MallActivity extends BaseActivity implements OnClickListener,OnChec
 		viewPager.setAdapter(mPageAdapter);
 		mPageIndicator = (PageIndicator) findViewById(R.id.page_indicator);
 		mPageIndicator.setViewPager(viewPager);
-//		requestFriendStatus();
+		// requestFriendStatus();
 
 	}
 
@@ -102,15 +102,16 @@ public class MallActivity extends BaseActivity implements OnClickListener,OnChec
 
 					mLat = info.resultJo.getDouble(MallInfo.LATITUDE);
 					mLon = info.resultJo.getDouble(MallInfo.LONGITUDE);
-					
-					String following = info.resultJo.getString(MallInfo.FOLLOWING);
+
+					String following = info.resultJo
+							.getString(MallInfo.FOLLOWING);
 					mTbFocus.setOnCheckedChangeListener(null);
 					mTbFocus.setChecked("1".equals(following));
 					mTbFocus.setOnCheckedChangeListener(this);
 
 					mMallName = info.resultJo.getString(MallInfo.MALL_NAME);
 					mTvMallName.setText(mMallName);
-					
+
 					mTvAddress.setText(getString(R.string.mall_info_address,
 							info.resultJo.getString(MallInfo.ADDRESS)));
 					JSONArray jaFloors = info.resultJo
@@ -119,9 +120,11 @@ public class MallActivity extends BaseActivity implements OnClickListener,OnChec
 					Log.i(LOG_TAG, "jaFloors : " + jaFloors);
 
 					for (int i = 0; i < jaFloors.length(); i++) {
-						JSONArray ja = jaFloors.getJSONArray(i);
-						PAGES.add(new Page(ja.getJSONObject(0).getString(
-								"floor_name"), ja));
+						if (!jaFloors.isNull(i)) {
+							JSONArray ja = jaFloors.getJSONArray(i);
+							PAGES.add(new Page(ja.getJSONObject(0).getString(
+									"floor_name"), ja));
+						}
 					}
 					Log.i(LOG_TAG, "PAGES : " + PAGES.size());
 					for (Page page : PAGES) {
@@ -175,7 +178,8 @@ public class MallActivity extends BaseActivity implements OnClickListener,OnChec
 						intent.putExtra(StoreActivity.EXTRA_IS_STORE, false);
 						intent.putExtra(StoreActivity.EXTRA_ID,
 								jo.getString(MallInfo.SHOP_ID));
-						intent.putExtra(StoreActivity.EXTRA_FOCUS_ID, jo.getString(MallInfo.BRAND_ID));
+						intent.putExtra(StoreActivity.EXTRA_FOCUS_ID,
+								jo.getString(MallInfo.BRAND_ID));
 
 						intent.putExtra(StoreActivity.EXTRA_MALL_NAME,
 								mMallName);
@@ -285,12 +289,12 @@ public class MallActivity extends BaseActivity implements OnClickListener,OnChec
 			break;
 		}
 	}
-	
+
 	private final NetWorkHandler<EpeRequestInfo> HANDLER_PUSH_FOCUS_STATUS = new NetWorkHandler<EpeRequestInfo>() {
 
 		@Override
 		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
-			if (event == RequestEvent.FINISH ) {
+			if (event == RequestEvent.FINISH) {
 				if (!info.ERROR_CODE.isOK()) {
 					mTbFocus.setOnCheckedChangeListener(null);
 					mTbFocus.toggle();
@@ -304,10 +308,8 @@ public class MallActivity extends BaseActivity implements OnClickListener,OnChec
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		NetworkCenter.getInstance().putToQueue(
-				new RequestPushMallFocusStatus(
-						HANDLER_PUSH_FOCUS_STATUS, mMallId, isChecked));		
+				new RequestPushMallFocusStatus(HANDLER_PUSH_FOCUS_STATUS,
+						mMallId, isChecked));
 	}
-	
-
 
 }
