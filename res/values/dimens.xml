@@ -26,6 +26,7 @@
     <dimen name="image_browser_page_gap">20dp</dimen>
     
     <!-- epe -->
+    <dimen name="epe_wave_item_height">40dp</dimen>
     <dimen name="epe_wave_item_half_width">60dp</dimen>
     <dimen name="epe_wave_item_width">120dp</dimen>
     <!-- store -->

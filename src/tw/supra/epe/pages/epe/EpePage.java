@@ -302,7 +302,7 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 				: mNearStoreContainerTop;
 		viewGroup.addView(v, new LayoutParams(getResources()
 				.getDimensionPixelSize(R.dimen.epe_wave_item_width),
-				LayoutParams.WRAP_CONTENT));
+				LayoutParams.MATCH_PARENT));
 
 		return tvName;
 	}

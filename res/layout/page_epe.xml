@@ -39,7 +39,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="5sp" >
+            android:paddingLeft="5sp"
+            android:paddingRight="5sp"
+            android:paddingTop="5sp" >
 
             <TextView
                 android:layout_width="match_parent"
@@ -55,8 +57,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content" >
 
             <!-- android:layout_weight="1" -->
 
@@ -101,9 +102,9 @@
                         <LinearLayout
                             android:id="@+id/near_store_container_wave"
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/epe_wave_item_half_width"
+                            android:layout_height="@dimen/epe_wave_item_height"
                             android:orientation="horizontal" />
-<!--                             android:layout_weight="1" -->
+                        <!-- android:layout_weight="1" -->
 
                         <LinearLayout
                             android:id="@+id/near_store_container_bottom"
@@ -124,7 +125,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="5sp" >
+            android:paddingLeft="5sp"
+            android:paddingRight="5sp"
+            android:paddingTop="5sp" >
 
             <TextView
                 android:layout_width="match_parent"
