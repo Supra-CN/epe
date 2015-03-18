@@ -38,7 +38,7 @@ public class NearBrandInfo extends EpeRequestInfo {
 		paramters.put("long", String.valueOf(ARG_LONGITUDE));
 		paramters.put("lat", String.valueOf(ARG_LATITUDE));
 		paramters.put("page", String.valueOf(ARG_PAGE));
-//		paramters.put("count", String.valueOf(ARG_COUNT));
+		paramters.put("count", "100");
 	}
 
 	@Override
