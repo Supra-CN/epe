@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.viewpagerindicator.PageIndicator;
@@ -86,7 +87,7 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		requestAds();
-//		getHostActivity().showProgressDialog();
+		// getHostActivity().showProgressDialog();
 		LocationCenter.getInstance().requestLocation(this);
 
 		// ((LocationManager) App.getInstance().getSystemService(
@@ -290,6 +291,7 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 
 		TextView tvName = (TextView) v.findViewById(R.id.name);
 		TextView tvDistance = (TextView) v.findViewById(R.id.distance);
+		ImageView iv = (ImageView) v.findViewById(R.id.dot);
 		// tv.setGravity((isEnen ? Gravity.BOTTOM : Gravity.TOP)
 		// | Gravity.CENTER_HORIZONTAL);
 		tvName.setText(name);
@@ -297,6 +299,9 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 
 		tvName.setTag(joItem);
 		tvName.setOnClickListener(MALL_CLICK_LISTENER);
+
+		iv.setImageResource(joItem.getString(NearStoreInfo.ATTR_MALL_TYPE)
+				.equals("2") ? R.drawable.dot_store : R.drawable.dot_shop);
 
 		ViewGroup viewGroup = isEnen ? mNearStoreContainerBottom
 				: mNearStoreContainerTop;
@@ -318,8 +323,8 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 		String name = joItem.getString(NearBrandInfo.ATTR_NAME);
 		String logo = joItem.getString(NearBrandInfo.ATTR_LOGO);
 		// String id = joItem.getString(NearBrandInfo.ATTR_ID);
-		 tvDistance.setText(AppUtiles.formatDistance(joItem
-					.getInt(NearBrandInfo.ATTR_DISTANCE)));
+		tvDistance.setText(AppUtiles.formatDistance(joItem
+				.getInt(NearBrandInfo.ATTR_DISTANCE)));
 		tv.setText(name);
 		iv.setImageUrl(logo, NetworkCenter.getInstance().getImageLoader());
 		v.setTag(joItem);
@@ -371,7 +376,7 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 	@Override
 	public void callBack(SupraLocation location) {
 		Log.i(LOG_TAG, "onLocationChanged : " + location);
-//		getHostActivity().hideProgressDialog();
+		// getHostActivity().hideProgressDialog();
 		requestNearStore(location);
 		requestNearBrand(location);
 
