@@ -312,11 +312,14 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 		View v = View
 				.inflate(getActivity(), R.layout.epe_page_brand_item, null);
 		TextView tv = (TextView) v.findViewById(R.id.text);
+		TextView tvDistance = (TextView) v.findViewById(R.id.distance);
 		NetworkRoundedImageView iv = (NetworkRoundedImageView) v
 				.findViewById(R.id.img);
 		String name = joItem.getString(NearBrandInfo.ATTR_NAME);
 		String logo = joItem.getString(NearBrandInfo.ATTR_LOGO);
 		// String id = joItem.getString(NearBrandInfo.ATTR_ID);
+		 tvDistance.setText(AppUtiles.formatDistance(joItem
+					.getInt(NearBrandInfo.ATTR_DISTANCE)));
 		tv.setText(name);
 		iv.setImageUrl(logo, NetworkCenter.getInstance().getImageLoader());
 		v.setTag(joItem);

@@ -10,15 +10,17 @@
         android:id="@+id/distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:gravity="center" />
+        android:gravity="center"
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
-        android:singleLine="true"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_near_store_top_item_bg"
-        android:gravity="center" />
+        android:gravity="center"
+        android:maxLines="2"
+         />
+    
 
 </LinearLayout>

@@ -104,10 +104,10 @@ public class StoreActivity extends BaseActivity implements OnClickListener,
 		findViewById(R.id.action_back).setOnClickListener(this);
 
 		if (mIsStore) {
-			requestMallStatus();
+			requestMallStatus(mFocusId);
 		} else {
 			initUI();
-			requestBrandStatus();
+			requestShopInfo(mId);
 		}
 
 	}
@@ -136,9 +136,9 @@ public class StoreActivity extends BaseActivity implements OnClickListener,
 		}
 	};
 
-	private void requestBrandStatus() {
+	private void requestBrandStatus(String brandId) {
 		NetworkCenter.getInstance().putToQueue(
-				new RequestBrandFocusStatus(HANDLER_BRAND_STATUS, mFocusId));
+				new RequestBrandFocusStatus(HANDLER_BRAND_STATUS, brandId));
 	}
 
 	private final NetWorkHandler<MallInfo> HANDLER_MALL_STATUS = new NetWorkHandler<MallInfo>() {
@@ -159,6 +159,7 @@ public class StoreActivity extends BaseActivity implements OnClickListener,
 								.getString("shop_id");
 
 						initUI();
+						requestShopInfo(mId);
 
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -195,6 +196,10 @@ public class StoreActivity extends BaseActivity implements OnClickListener,
 									activity));
 							tv.setVisibility(View.VISIBLE);}
 						}
+						if(!mIsStore){
+							mFocusId = info.resultJo.getString("brand_id");
+							requestBrandStatus(mFocusId);
+						}
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -206,14 +211,14 @@ public class StoreActivity extends BaseActivity implements OnClickListener,
 		}
 	};
 
-	private void requestMallStatus() {
+	private void requestMallStatus(String mallId) {
 		NetworkCenter.getInstance().putToQueue(
-				new RequestMall(HANDLER_MALL_STATUS, new MallInfo(mFocusId)));
+				new RequestMall(HANDLER_MALL_STATUS, new MallInfo(mallId)));
 	}
 
-	private void requestShopInfo() {
+	private void requestShopInfo(String shopId) {
 		NetworkCenter.getInstance().putToQueue(
-				new RequestShop(HANDLER_SHOP_STATUS, new ShopInfo(mId)));
+				new RequestShop(HANDLER_SHOP_STATUS, new ShopInfo(shopId)));
 	}
 
 	private void initUI() {
@@ -222,7 +227,6 @@ public class StoreActivity extends BaseActivity implements OnClickListener,
 		viewPager.setAdapter(mAdapter);
 		mPageIndicator = (PageIndicator) findViewById(R.id.page_indicator);
 		mPageIndicator.setViewPager(viewPager);
-		requestShopInfo();
 	}
 
 	public class PageAdapter extends FragmentPagerAdapter implements

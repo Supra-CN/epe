@@ -11,6 +11,7 @@ public class NearBrandInfo extends EpeRequestInfo {
 	public static final String ATTR_ID ="id";
 	public static final String ATTR_LOGO 	= "brand_logo";
 	public static final String ATTR_NAME =	 "brand_name";
+	public static final String ATTR_DISTANCE =	 "distance";
 	
 	// ARGS
 	public final double ARG_LATITUDE;// 参数：维度：
