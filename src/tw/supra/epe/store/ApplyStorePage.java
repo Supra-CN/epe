@@ -270,7 +270,7 @@ public class ApplyStorePage extends BaseHostFrag<ApplyStoreActivity> implements
 					mVerifyCode = info.RESULTS
 							.getString(RequestVerifyCode.RESULT_CODE);
 					// TODO:清理测试代码
-					mEtVerifyCode.setText(mVerifyCode);
+//					mEtVerifyCode.setText(mVerifyCode);
 					Toast.makeText(getActivity(),
 							R.string.account_toast_wait_for_verify_code,
 							Toast.LENGTH_SHORT).show();
