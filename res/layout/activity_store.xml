@@ -46,28 +46,33 @@
             android:textOn="@string/brand_action_focused" />
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/address"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:visibility="gone"
-        android:textSize="18sp" />
+        android:orientation="vertical"
+        android:padding="10dp" >
 
-    <TextView
-        android:id="@+id/activity"
+        <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:visibility="gone"
-        android:textSize="18sp" />
+            android:id="@+id/address"
+            android:textSize="18sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
     <tw.supra.epe.pages.home.HomePageTabBar
         android:id="@+id/page_indicator"
         android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
         android:gravity="center_vertical" />
+    </LinearLayout>
     <!-- android:background="@color/bottom_bar_bg" -->
 
     <android.support.v4.view.ViewPager

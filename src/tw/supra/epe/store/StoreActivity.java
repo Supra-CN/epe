@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import tw.supra.epe.activity.brand.RequestBrandFocusStatus;
 import tw.supra.epe.activity.brand.RequestPushBrandFocusStatus;
@@ -186,16 +187,20 @@ public class StoreActivity extends BaseActivity implements OnClickListener,
 									address));
 							tv.setVisibility(View.VISIBLE);
 						}
-						JSONArray ja = info.resultJo.getJSONArray("activity");
-						if (ja != null && ja.length() > 0 && !ja.isNull(0)) {
-							String activity = ja.getJSONObject(0).getString(
-									"activity_title");
-							if (!TextUtils.isEmpty(activity)) {
-							TextView tv = ((TextView) findViewById(R.id.activity));
-							tv.setText(getString(R.string.shop_info_activity,
-									activity));
-							tv.setVisibility(View.VISIBLE);}
+						
+						if(!info.resultJo.isNull("activity")){
+							JSONObject jo = info.resultJo.getJSONObject("activity");
+							if(jo!=null){
+								String activity = jo.getString(
+										"activit_title");
+								if (!TextUtils.isEmpty(activity)) {
+									TextView tv = ((TextView) findViewById(R.id.activity));
+									tv.setText(getString(R.string.shop_info_activity,
+											activity));
+									tv.setVisibility(View.VISIBLE);}
+							}
 						}
+						
 						if(!mIsStore){
 							mFocusId = info.resultJo.getString("brand_id");
 							requestBrandStatus(mFocusId);
