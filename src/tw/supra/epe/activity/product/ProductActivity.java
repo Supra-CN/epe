@@ -103,9 +103,16 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 				R.dimen.image_browser_page_gap));
 
 		mViewPager.setAdapter(mImageAdapter);
-
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (!isCurrentUser()) {
+			recreate();
+		}
+	}
+	
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
@@ -187,11 +194,11 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 
 			JSONObject joBrand = JsonUtils.getJoSafely(mJoData,
 					ProductInfo.BRAND_INFO);
-			
+
 			if (null != joBrand) {
-				mBrandName = JsonUtils
-						.getStrSafely(joBrand, ProductInfo.BRAND_NAME);
-			}else {
+				mBrandName = JsonUtils.getStrSafely(joBrand,
+						ProductInfo.BRAND_NAME);
+			} else {
 			}
 
 			JSONArray jaImages = JsonUtils.getJaSafely(mJoData,
@@ -225,7 +232,8 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 				: View.VISIBLE);
 		mTvPrice.setText(price);
 		mTvBrandName.setText(mBrandName);
-		mTvBrandName.setVisibility(TextUtils.isEmpty(mBrandName)?View.GONE:View.VISIBLE);
+		mTvBrandName.setVisibility(TextUtils.isEmpty(mBrandName) ? View.GONE
+				: View.VISIBLE);
 		mCbLike.setChecked(isLike);
 		mCbFav.setChecked(isFav);
 		mTvProductInfo.setText(productInfo);
@@ -344,21 +352,31 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 		case R.id.map:
 			MapActivity.show(this, mMallName, mLat, mLon);
 			break;
-		case R.id.like:{
-			
-			boolean status = !mCbLike.isChecked();
-			mCbLike.setChecked(status);
-			NetworkCenter.getInstance().putToQueue(
-					new RequestPushProductLikeStatus(HANDLER_PUSH_LIKE_STATUS, mProductId,
-							status));
+		case R.id.like: {
+			if (AccountCenter.isLogin()) {
+				boolean status = !mCbLike.isChecked();
+				mCbLike.setChecked(status);
+				NetworkCenter.getInstance().putToQueue(
+						new RequestPushProductLikeStatus(
+								HANDLER_PUSH_LIKE_STATUS, mProductId, status));
+			} else {
+				AccountCenter.doLogin(this);
+			}
+
 		}
 			break;
-		case R.id.fav:{
-			boolean status = !mCbFav.isChecked();
-			mCbFav.setChecked(status);
-			NetworkCenter.getInstance().putToQueue(
-					new RequestPushProductFavStatus(HANDLER_PUSH_FAV_STATUS, mProductId,
-							status));
+		case R.id.fav: {
+			if (AccountCenter.isLogin()) {
+
+				boolean status = !mCbFav.isChecked();
+				mCbFav.setChecked(status);
+				NetworkCenter.getInstance().putToQueue(
+						new RequestPushProductFavStatus(
+								HANDLER_PUSH_FAV_STATUS, mProductId, status));
+			} else {
+				AccountCenter.doLogin(this);
+
+			}
 		}
 			break;
 
@@ -372,8 +390,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 		onTouchViewPager(ev);
 		return false;
 	}
-	
-	
+
 	private final NetWorkHandler<EpeRequestInfo> HANDLER_PUSH_LIKE_STATUS = new NetWorkHandler<EpeRequestInfo>() {
 
 		@Override
@@ -387,7 +404,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 		}
 	};
 	private final NetWorkHandler<EpeRequestInfo> HANDLER_PUSH_FAV_STATUS = new NetWorkHandler<EpeRequestInfo>() {
-		
+
 		@Override
 		public boolean HandleEvent(RequestEvent event, EpeRequestInfo info) {
 			if (event == RequestEvent.FINISH) {

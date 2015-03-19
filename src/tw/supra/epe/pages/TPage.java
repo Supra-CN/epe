@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.activity.t.TActivity;
 import tw.supra.epe.activity.t.TEditorActivity;
 import tw.supra.epe.core.BaseMainPage;
@@ -282,8 +283,12 @@ public class TPage extends BaseMainPage implements NetWorkHandler<TArrayInfo>,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.action_editor:
+			if(AccountCenter.isLogin()){
 			startActivityForResult(new Intent(getActivity(),
 					TEditorActivity.class), REQUEST_CODE_PUSH_T);
+			}else {
+				AccountCenter.doLogin(getActivity());
+			}
 			break;
 
 		default:

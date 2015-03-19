@@ -2,8 +2,6 @@ package tw.supra.epe.activity;
 
 import tw.supra.data.CommonData;
 import tw.supra.epe.App;
-import tw.supra.epe.account.AccountCenter;
-import tw.supra.epe.account.LoginActivity;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.utils.Log;
 import android.accounts.Account;
@@ -134,11 +132,13 @@ public class SplashActivity extends BaseActivity implements IdleHandler {
 		// startActivity(new Intent(this, SohuClubActivity.class));
 		// }
 		// }
-		boolean isAnonymousUser = AccountCenter.isAnonymousUser(AccountCenter
-				.getCurrentUserUid());
-		startActivity(new Intent(this,
-				AccountCenter.isLogin() ? MainActivity.class
-						: LoginActivity.class));
+		// boolean isAnonymousUser = AccountCenter.isAnonymousUser(AccountCenter
+		// .getCurrentUserUid());
+
+		// startActivity(new Intent(this,
+		// AccountCenter.isLogin() ? MainActivity.class
+		// : LoginActivity.class));
+		startActivity(new Intent(this, MainActivity.class));
 		overridePendingTransition(android.R.anim.fade_in,
 				android.R.anim.fade_out);
 		finish();

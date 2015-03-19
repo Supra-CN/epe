@@ -1,8 +1,11 @@
 package tw.supra.epe.account;
 
 import tw.supra.data.CommonData;
+import tw.supra.epe.App;
 import tw.supra.epe.ColumnDef.PrefCommon;
 import tw.supra.mod.ModelManager;
+import android.content.Context;
+import android.content.Intent;
 
 public class AccountCenter {
 	private static final String LOG_TAG = AccountCenter.class.getSimpleName();
@@ -48,7 +51,7 @@ public class AccountCenter {
 		return UserData.getUserData(uid);
 	}
 
-	public static Boolean isCurrentUser(String uid) {
+	public static boolean isCurrentUser(String uid) {
 		return getCurrentUserUid().equals(uid);
 	}
 
@@ -58,6 +61,10 @@ public class AccountCenter {
 
 	public static boolean isLogin() {
 		return !isCurrentUser(User.ANONYMOUS);
+	}
+
+	public static void doLogin(Context c) {
+		c.startActivity(new Intent(App.ACTION_LOGIN));
 	}
 
 }

@@ -6,7 +6,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.core.BaseActivity;
+import tw.supra.epe.mall.MallActivity;
+import tw.supra.epe.mall.RequestPushMallFocusStatus;
 import tw.supra.epe.store.StoreActivity;
 import tw.supra.location.LocationCallBack;
 import tw.supra.location.LocationCenter;
@@ -94,6 +97,14 @@ public class BrandActivity extends BaseActivity implements
 		}, 500);
 	}
 
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (!isCurrentUser()) {
+			recreate();
+		}
+	}
 	private final NetWorkHandler<EpeRequestInfo> HANDLER_BRAND_FRIEND_STATUS = new NetWorkHandler<EpeRequestInfo>() {
 
 		@Override
@@ -288,8 +299,17 @@ public class BrandActivity extends BaseActivity implements
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		NetworkCenter.getInstance().putToQueue(
-				new RequestPushBrandFocusStatus(
-						HANDLER_BRAND_PUSH_FOCUS_STATUS, mBrandId, isChecked));
+		if(AccountCenter.isLogin()){
+			NetworkCenter.getInstance().putToQueue(
+					new RequestPushBrandFocusStatus(
+							HANDLER_BRAND_PUSH_FOCUS_STATUS, mBrandId, isChecked));
+		}else {
+			mTbFocus.setOnCheckedChangeListener(null);
+			mTbFocus.toggle();
+			mTbFocus.setOnCheckedChangeListener(this);
+			AccountCenter.doLogin(this);
+		}
+		
+		
 	}
 }

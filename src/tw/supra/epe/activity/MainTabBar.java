@@ -16,6 +16,7 @@
  */
 package tw.supra.epe.activity;
 
+import tw.supra.epe.account.AccountCenter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -237,6 +238,11 @@ public class MainTabBar extends LinearLayout implements PageIndicator,
 
 	@Override
 	public void onClick(View v) {
-		getContext().startActivity(new Intent(getContext(),PopupActivity.class));
+		if (AccountCenter.isLogin()) {
+			getContext().startActivity(
+					new Intent(getContext(), PopupActivity.class));
+		} else {
+			AccountCenter.doLogin(getContext());
+		}
 	}
 }

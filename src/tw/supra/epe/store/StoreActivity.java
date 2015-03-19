@@ -2,10 +2,10 @@ package tw.supra.epe.store;
 
 import java.util.HashMap;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.activity.brand.RequestBrandFocusStatus;
 import tw.supra.epe.activity.brand.RequestPushBrandFocusStatus;
 import tw.supra.epe.core.BaseActivity;
@@ -114,6 +114,14 @@ public class StoreActivity extends BaseActivity implements OnClickListener,
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		if (!isCurrentUser()) {
+			recreate();
+		}
+	}
+
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.action_back:
@@ -187,21 +195,23 @@ public class StoreActivity extends BaseActivity implements OnClickListener,
 									address));
 							tv.setVisibility(View.VISIBLE);
 						}
-						
-						if(!info.resultJo.isNull("activity")){
-							JSONObject jo = info.resultJo.getJSONObject("activity");
-							if(jo!=null){
-								String activity = jo.getString(
-										"activit_title");
+
+						if (!info.resultJo.isNull("activity")) {
+							JSONObject jo = info.resultJo
+									.getJSONObject("activity");
+							if (jo != null) {
+								String activity = jo.getString("activit_title");
 								if (!TextUtils.isEmpty(activity)) {
 									TextView tv = ((TextView) findViewById(R.id.activity));
-									tv.setText(getString(R.string.shop_info_activity,
+									tv.setText(getString(
+											R.string.shop_info_activity,
 											activity));
-									tv.setVisibility(View.VISIBLE);}
+									tv.setVisibility(View.VISIBLE);
+								}
 							}
 						}
-						
-						if(!mIsStore){
+
+						if (!mIsStore) {
 							mFocusId = info.resultJo.getString("brand_id");
 							requestBrandStatus(mFocusId);
 						}
@@ -289,13 +299,21 @@ public class StoreActivity extends BaseActivity implements OnClickListener,
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-		if (mIsStore) {
-			NetworkCenter.getInstance().putToQueue(
-					new RequestPushMallFocusStatus(this, mFocusId, isChecked));
+		if (AccountCenter.isLogin()) {
+			if (mIsStore) {
+				NetworkCenter.getInstance().putToQueue(
+						new RequestPushMallFocusStatus(this, mFocusId,
+								isChecked));
+			} else {
+				NetworkCenter.getInstance().putToQueue(
+						new RequestPushBrandFocusStatus(this, mFocusId,
+								isChecked));
+			}
 		} else {
-			NetworkCenter.getInstance().putToQueue(
-					new RequestPushBrandFocusStatus(this, mFocusId, isChecked));
+			mTbFocus.setOnCheckedChangeListener(null);
+			mTbFocus.toggle();
+			mTbFocus.setOnCheckedChangeListener(this);
+			AccountCenter.doLogin(this);
 		}
 
 	}

@@ -127,7 +127,7 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 
 		@Override
 		public boolean HandleEvent(RequestEvent event, NearStoreInfo info) {
-			if (RequestEvent.FINISH == event) {
+			if (RequestEvent.FINISH == event && isAdded()) {
 
 				if (info.ERROR_CODE.isOK()) {
 					mNearStoreContainerTop.removeAllViews();

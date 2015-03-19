@@ -36,6 +36,7 @@
     <!-- app -->
     <string name="external_storage_unavailable">sd卡不可用</string>
     <string name="image_description">衣+衣</string>
+    <string name="need_login">点击登录</string>
     <string name="time_some_seconds_ago">%s秒前</string>
     <string name="time_some_minutes_ago">%s分钟前</string>
     <string name="time_some_hours_ago">%s小时前</string>

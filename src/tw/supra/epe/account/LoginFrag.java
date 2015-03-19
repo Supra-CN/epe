@@ -125,9 +125,8 @@ public class LoginFrag extends BaseHostFrag<LoginActivity> implements
 			if (info.ERROR_CODE.isOK()) {
 				AccountCenter.switchUser(info.RESULTS.getString(
 						LoginInfo.RESULT_STR_UID, User.ANONYMOUS));
-				startActivity(new Intent(getActivity(), MainActivity.class));
+//				startActivity(new Intent(getActivity(), MainActivity.class));
 				getActivity().finish();
-
 			}
 			break;
 

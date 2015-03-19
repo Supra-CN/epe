@@ -115,6 +115,14 @@ public class TActivity extends BaseActivity implements OnClickListener,
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		if (!isCurrentUser()) {
+			recreate();
+		}
+	}
+
+	@Override
 	public boolean HandleEvent(RequestEvent event, TContentInfo info) {
 
 		Log.i(LOG_TAG, "HandleEvent FINISH : " + info);
@@ -301,15 +309,23 @@ public class TActivity extends BaseActivity implements OnClickListener,
 			}
 			break;
 		case R.id.comment:
-			mEditorLayer.setVisibility(View.VISIBLE);
-			showInputMethod();
+			if (AccountCenter.isLogin()) {
+				mEditorLayer.setVisibility(View.VISIBLE);
+				showInputMethod();
+			} else {
+				AccountCenter.doLogin(this);
+			}
 			break;
 		case R.id.like:
+			if(AccountCenter.isLogin()){
 			boolean status = !mTvLike.isChecked();
 			mTvLike.setChecked(status);
 			NetworkCenter.getInstance().putToQueue(
 					new RequestPushTLikeStatus(HANDLER_PUSH_LIKE_STATUS, mTId,
 							status));
+			}else {
+				AccountCenter.doLogin(this);
+			}
 			break;
 		case R.id.submit:
 			submit();

@@ -63,7 +63,7 @@ public class SettingsActivity extends BaseActivity implements OnClickListener,
 			break;
 		case R.id.logout:
 			AccountCenter.switchUser(User.ANONYMOUS);
-			startActivity(new Intent(App.ACTION_LOGIN));
+			AccountCenter.doLogin(this);
 			finish();
 			break;
 		default:

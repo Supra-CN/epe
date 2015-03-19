@@ -7,7 +7,11 @@ import tw.supra.epe.App;
 import tw.supra.network.RequestQueue;
 import android.app.Fragment;
 import android.content.Context;
+import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 public abstract class BaseFrag extends Fragment {
     public final UUID FRAG_ID = UUID.randomUUID();
@@ -17,6 +21,12 @@ public abstract class BaseFrag extends Fragment {
 
     private boolean mIsInited = false;
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    		Bundle savedInstanceState) {
+    	return super.onCreateView(inflater, container, savedInstanceState);
+    }
+    
     @Override
     public void onStart() {
         super.onStart();
@@ -54,5 +64,6 @@ public abstract class BaseFrag extends Fragment {
         }
         return mTitle;
     }
+    
 
 }

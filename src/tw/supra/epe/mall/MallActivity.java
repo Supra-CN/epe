@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.store.StoreActivity;
 import tw.supra.location.MapActivity;
@@ -79,6 +80,14 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 		mPageIndicator.setViewPager(viewPager);
 		// requestFriendStatus();
 
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (!isCurrentUser()) {
+			recreate();
+		}
 	}
 
 	@Override
@@ -307,9 +316,16 @@ public class MallActivity extends BaseActivity implements OnClickListener,
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		NetworkCenter.getInstance().putToQueue(
-				new RequestPushMallFocusStatus(HANDLER_PUSH_FOCUS_STATUS,
-						mMallId, isChecked));
+		if(AccountCenter.isLogin()){
+			NetworkCenter.getInstance().putToQueue(
+					new RequestPushMallFocusStatus(HANDLER_PUSH_FOCUS_STATUS,
+							mMallId, isChecked));
+		}else {
+			mTbFocus.setOnCheckedChangeListener(null);
+			mTbFocus.toggle();
+			mTbFocus.setOnCheckedChangeListener(this);
+			AccountCenter.doLogin(this);
+		}
 	}
 
 }

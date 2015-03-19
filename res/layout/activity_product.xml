@@ -75,6 +75,7 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:visibility="gone"
                     android:paddingLeft="@dimen/top_tab_item_margin"
                     android:paddingRight="@dimen/top_tab_item_margin"
                     android:background="@android:color/transparent"

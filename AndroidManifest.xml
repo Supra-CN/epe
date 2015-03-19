@@ -262,143 +262,147 @@
             android:process=":remote" >
         </service>
 
-        <activity
-            android:name="io.rong.imkit.RongActivity"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+        
+        <!-- 融云start -->
+<!--         <activity -->
+<!--             android:name="io.rong.imkit.RongActivity" -->
+<!--             android:screenOrientation="portrait" > -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.VIEW" /> -->
 
-                <category android:name="android.intent.category.DEFAULT" />
+<!--                 <category android:name="android.intent.category.DEFAULT" /> -->
 
-                <data
-                    android:host="com.yijiayi.yijiayi"
-                    android:pathPrefix="/conversationsetting/"
-                    android:scheme="rong" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+<!--                 <data -->
+<!--                     android:host="com.yijiayi.yijiayi" -->
+<!--                     android:pathPrefix="/conversationsetting/" -->
+<!--                     android:scheme="rong" /> -->
+<!--             </intent-filter> -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.VIEW" /> -->
 
-                <category android:name="android.intent.category.DEFAULT" />
+<!--                 <category android:name="android.intent.category.DEFAULT" /> -->
 
-                <data
-                    android:host="com.yijiayi.yijiayi"
-                    android:path="/grouplist"
-                    android:scheme="rong" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+<!--                 <data -->
+<!--                     android:host="com.yijiayi.yijiayi" -->
+<!--                     android:path="/grouplist" -->
+<!--                     android:scheme="rong" /> -->
+<!--             </intent-filter> -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.VIEW" /> -->
 
-                <category android:name="android.intent.category.DEFAULT" />
+<!--                 <category android:name="android.intent.category.DEFAULT" /> -->
 
-                <data
-                    android:host="com.yijiayi.yijiayi"
-                    android:path="/conversationgrouplist"
-                    android:scheme="rong" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+<!--                 <data -->
+<!--                     android:host="com.yijiayi.yijiayi" -->
+<!--                     android:path="/conversationgrouplist" -->
+<!--                     android:scheme="rong" /> -->
+<!--             </intent-filter> -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.VIEW" /> -->
 
-                <category android:name="android.intent.category.DEFAULT" />
+<!--                 <category android:name="android.intent.category.DEFAULT" /> -->
 
-                <data
-                    android:host="com.yijiayi.yijiayi"
-                    android:pathPrefix="/friend/"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="io.rong.imkit.RongSingleActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+<!--                 <data -->
+<!--                     android:host="com.yijiayi.yijiayi" -->
+<!--                     android:pathPrefix="/friend/" -->
+<!--                     android:scheme="rong" /> -->
+<!--             </intent-filter> -->
+<!--         </activity> -->
+<!--         <activity -->
+<!--             android:name="io.rong.imkit.RongSingleActivity" -->
+<!--             android:launchMode="singleTask" -->
+<!--             android:screenOrientation="portrait" > -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.VIEW" /> -->
 
-                <category android:name="android.intent.category.DEFAULT" />
+<!--                 <category android:name="android.intent.category.DEFAULT" /> -->
 
-                <data
-                    android:host="com.yijiayi.yijiayi"
-                    android:path="/conversationlist"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="io.rong.imkit.RongSecActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+<!--                 <data -->
+<!--                     android:host="com.yijiayi.yijiayi" -->
+<!--                     android:path="/conversationlist" -->
+<!--                     android:scheme="rong" /> -->
+<!--             </intent-filter> -->
+<!--         </activity> -->
+<!--         <activity -->
+<!--             android:name="io.rong.imkit.RongSecActivity" -->
+<!--             android:launchMode="singleTask" -->
+<!--             android:screenOrientation="portrait" > -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.VIEW" /> -->
 
-                <category android:name="android.intent.category.DEFAULT" />
+<!--                 <category android:name="android.intent.category.DEFAULT" /> -->
 
-                <data
-                    android:host="com.yijiayi.yijiayi"
-                    android:pathPrefix="/conversation/"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="io.rong.voipkit.activity.CallSideActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="io.rong.voipkit.activity.CalledSideActivity"
-            android:excludeFromRecents="true"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="io.rong.voipkit.calledSideActivity.action" />
+<!--                 <data -->
+<!--                     android:host="com.yijiayi.yijiayi" -->
+<!--                     android:pathPrefix="/conversation/" -->
+<!--                     android:scheme="rong" /> -->
+<!--             </intent-filter> -->
+<!--         </activity> -->
+<!--         <activity -->
+<!--             android:name="io.rong.voipkit.activity.CallSideActivity" -->
+<!--             android:screenOrientation="portrait" /> -->
+<!--         <activity -->
+<!--             android:name="io.rong.voipkit.activity.CalledSideActivity" -->
+<!--             android:excludeFromRecents="true" -->
+<!--             android:screenOrientation="portrait" > -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="io.rong.voipkit.calledSideActivity.action" /> -->
 
-                <category android:name="android.intent.category.DEFAULT" />
+<!--                 <category android:name="android.intent.category.DEFAULT" /> -->
 
-                <data
-                    android:host="com.yijiayi.yijiayi"
-                    android:path="/calledsideactivity"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
+<!--                 <data -->
+<!--                     android:host="com.yijiayi.yijiayi" -->
+<!--                     android:path="/calledsideactivity" -->
+<!--                     android:scheme="rong" /> -->
+<!--             </intent-filter> -->
+<!--         </activity> -->
 
-        <service
-            android:name="io.rong.imkit.service.RongIMService"
-            android:enabled="true"
-            android:exported="false"
-            android:priority="1000" >
-        </service>
-        <service android:name="io.rong.imlib.RongService" />
-        <service
-            android:name="io.rong.imlib.push.PushService"
-            android:process=":push" >
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
+<!--         <service -->
+<!--             android:name="io.rong.imkit.service.RongIMService" -->
+<!--             android:enabled="true" -->
+<!--             android:exported="false" -->
+<!--             android:priority="1000" > -->
+<!--         </service> -->
+<!--         <service android:name="io.rong.imlib.RongService" /> -->
+<!--         <service -->
+<!--             android:name="io.rong.imlib.push.PushService" -->
+<!--             android:process=":push" > -->
+<!--             <intent-filter> -->
+<!--                 <category android:name="android.intent.category.DEFAULT" /> -->
 
-                <action android:name="io.rong.push" />
-            </intent-filter>
-        </service>
-        <service
-            android:name="io.rong.imlib.push.CommandService"
-            android:process=":push" >
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
+<!--                 <action android:name="io.rong.push" /> -->
+<!--             </intent-filter> -->
+<!--         </service> -->
+<!--         <service -->
+<!--             android:name="io.rong.imlib.push.CommandService" -->
+<!--             android:process=":push" > -->
+<!--             <intent-filter> -->
+<!--                 <category android:name="android.intent.category.DEFAULT" /> -->
 
-                <action android:name="io.rong.command" />
-            </intent-filter>
-        </service>
+<!--                 <action android:name="io.rong.command" /> -->
+<!--             </intent-filter> -->
+<!--         </service> -->
 
-        <receiver
-            android:name="io.rong.imlib.push.PushReceiver"
-            android:process=":push" >
-            <intent-filter>
-                <action android:name="io.rong.imlib.action.push.heartbeat" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name="io.rong.imlib.push.PushMessageReceiver" >
-            <intent-filter>
-                <action android:name="io.rong.push.message" />
-            </intent-filter>
-        </receiver>
+<!--         <receiver -->
+<!--             android:name="io.rong.imlib.push.PushReceiver" -->
+<!--             android:process=":push" > -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="io.rong.imlib.action.push.heartbeat" /> -->
+<!--             </intent-filter> -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" /> -->
+<!--             </intent-filter> -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.BOOT_COMPLETED" /> -->
+<!--             </intent-filter> -->
+<!--         </receiver> -->
+<!--         <receiver android:name="io.rong.imlib.push.PushMessageReceiver" > -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="io.rong.push.message" /> -->
+<!--             </intent-filter> -->
+<!--         </receiver> -->
+
+<!-- 融云end -->
 
         <activity
             android:name="com.tencent.tauth.AuthActivity"

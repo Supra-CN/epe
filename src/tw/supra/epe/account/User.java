@@ -31,7 +31,7 @@ public class User extends PersistableObj {
 	private LoginInfo mLoginInfo;
 
 	public final String UID;
-	private String mAuth;
+	private String mAuth = "";
 	private String mName;
 	private String mShopMan;
 	private String mShopId;

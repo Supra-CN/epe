@@ -40,7 +40,6 @@ public class ApplyStoreActivity extends BaseActivity implements OnClickListener 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		MobclickAgent.updateOnlineConfig(this);
 		setContentView(R.layout.activity_create_store);
 		findViewById(R.id.action_back).setOnClickListener(this);
 

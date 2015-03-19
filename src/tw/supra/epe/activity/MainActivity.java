@@ -1,7 +1,8 @@
 package tw.supra.epe.activity;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
+import tw.supra.epe.NeedLoginPage;
 import tw.supra.epe.account.AccountCenter;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseMainPage;
@@ -9,21 +10,25 @@ import tw.supra.epe.pages.MyPage;
 import tw.supra.epe.pages.TPage;
 import tw.supra.epe.pages.home.HomePage;
 import tw.supra.epe.pages.msg.MsgPage;
+import tw.supra.utils.Log;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-import com.umeng.analytics.MobclickAgent;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
 import com.yijiayi.yijiayi.R;
 
-public class MainActivity extends BaseActivity implements OnClickListener {
+public class MainActivity extends BaseActivity implements OnClickListener,
+		OnPageChangeListener {
 
 	private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -31,9 +36,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 
 	private static Handler sHandle = new Handler();
 
-	private static final Class<?>[] PAGES = { HomePage.class, TPage.class,
-			MsgPage.class, MyPage.class };
-
+	private ViewPager mViewPager;
 	private PageAdapter mAdapter;
 	private PageIndicator mPageIndicator;
 
@@ -43,22 +46,23 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		MobclickAgent.updateOnlineConfig(this);
 		setContentView(R.layout.activity_main);
-
-		ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-		mAdapter = new PageAdapter(getFragmentManager());
-		viewPager.setAdapter(mAdapter);
+		initPage();
+		mViewPager = (ViewPager) findViewById(R.id.view_pager);
 		mPageIndicator = (PageIndicator) findViewById(R.id.page_indicator);
-		mPageIndicator.setViewPager(viewPager);
+		mPageIndicator.setOnPageChangeListener(this);
+		mAdapter = new PageAdapter(getFragmentManager());
+		mViewPager.setAdapter(mAdapter);
+		mViewPager.setOffscreenPageLimit(mAdapter.getCount());
+		mPageIndicator.setViewPager(mViewPager);
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		if (!AccountCenter.isLogin()) {
+	protected void onResume() {
+		super.onResume();
+		if (!isCurrentUser()) {
 			finish();
-//			startActivity(new Intent(App.ACTION_LOGIN));
+			startActivity(getIntent());
 		}
 	}
 
@@ -81,10 +85,44 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
+	public void initPage() {
+		Log.i(LOG_TAG, "reset");
+		PAGES.clear();
+		PAGES.add(new HomePage());
+		PAGES.add(new TPage());
+		if (AccountCenter.isLogin()) {
+			PAGES.add(new MsgPage());
+			PAGES.add(new MyPage());
+		} else {
+			PAGES.add(new NeedLoginPage() {
+				@Override
+				protected CharSequence getDefaultTitle(Context c) {
+					return c.getText(R.string.indictor_tab_msg);
+				}
+
+				@Override
+				public int getIconResId() {
+					return R.drawable.indicator_icon_msg;
+				}
+			});
+			PAGES.add(new NeedLoginPage() {
+				@Override
+				protected CharSequence getDefaultTitle(Context c) {
+					return c.getText(R.string.indictor_tab_my);
+				}
+
+				@Override
+				public int getIconResId() {
+					return R.drawable.indicator_icon_my;
+				}
+			});
+		}
+	}
+
+	private final ArrayList<BaseMainPage> PAGES = new ArrayList<BaseMainPage>();
+
 	public class PageAdapter extends FragmentPagerAdapter implements
 			IconPagerAdapter {
-
-		private final HashMap<Class<?>, BaseMainPage> PAGE_POOL = new HashMap<Class<?>, BaseMainPage>();
 
 		public PageAdapter(FragmentManager fm) {
 			super(fm);
@@ -92,30 +130,13 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 
 		@Override
 		public int getCount() {
-			return PAGES.length;
+			return PAGES.size();
 		}
 
 		@Override
 		public BaseMainPage getItem(int position) {
-			BaseMainPage page = PAGE_POOL.get(PAGES[position]);
-			if (null == page) {
-				try {
-					page = (BaseMainPage) PAGES[position].newInstance();
-					PAGE_POOL.put(PAGES[position], page);
-				} catch (InstantiationException e) {
-					e.printStackTrace();
-					throw new IllegalStateException(String.format(
-							"the page %s is not a legal page",
-							PAGES[position].getSimpleName()), e);
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-					throw new IllegalStateException(String.format(
-							"the page %s is not a legal page",
-							PAGES[position].getSimpleName()), e);
-				}
-			}
-			// Log.i(LOG_TAG, "getItem :  pos =" + position + " page" + page);
-			return page;
+			Log.i(LOG_TAG, "getItem");
+			return PAGES.get(position);
 		}
 
 		@Override
@@ -126,6 +147,25 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		@Override
 		public int getIconResId(int index) {
 			return getItem(index).getIconResId();
+		}
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onPageSelected(int position) {
+		if (NeedLoginPage.class.isInstance(mAdapter.getItem(position))) {
+			AccountCenter.doLogin(this);
 		}
 	}
 

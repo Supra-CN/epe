@@ -72,7 +72,7 @@ public class RegFrag extends BaseHostFrag<LoginActivity> implements
 				if (info.ERROR_CODE.isOK()) {
 					AccountCenter.switchUser(info.RESULTS.getString(
 							RegInfo.RESULT_STR_UID, User.ANONYMOUS));
-					startActivity(new Intent(getActivity(), MainActivity.class));
+//					startActivity(new Intent(getActivity(), MainActivity.class));
 					getActivity().finish();
 				}
 				break;
