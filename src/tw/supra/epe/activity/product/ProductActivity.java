@@ -18,11 +18,11 @@ import tw.supra.network.request.RequestEvent;
 import tw.supra.ui.PhotoPager;
 import tw.supra.ui.PhotoPager.OnDispatchTouchListener;
 import tw.supra.utils.JsonUtils;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -78,7 +78,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 		super.onCreate(savedInstanceState);
 		mProductId = getIntent().getStringExtra(EXTRA_PRODUCT_ID);
 		mTouchSlop = ViewConfiguration.get(this).getScaledTouchSlop();
-		mImageAdapter = new ImagePagerAdapter(getFragmentManager());
+		mImageAdapter = new ImagePagerAdapter(getSupportFragmentManager());
 
 		setContentView(R.layout.activity_product);
 		findViewById(R.id.fetch_failed).setOnClickListener(this);

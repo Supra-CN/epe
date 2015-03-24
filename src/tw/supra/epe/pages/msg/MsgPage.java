@@ -83,13 +83,15 @@ public class MsgPage extends BaseMainPage implements OnItemClickListener,
 		item.icon = iconResDefault;
 		item.type = type;
 		item.id = joMsg.getString("latest_msg_id");
-		item.title = JsonUtils.getStrSafely(joMsg, "latest_msg_title",
-				titleDefault);
+//		item.title = JsonUtils.getStrSafely(joMsg, "latest_msg_title",
+//				titleDefault);
 
 		if (TextUtils.isEmpty(item.title) || "0".equals(item.title)) {
 			item.title = titleDefault;
 		}
-		item.content = JsonUtils.getStrSafely(joMsg, "latest_msg_content",
+//		item.content = JsonUtils.getStrSafely(joMsg, "latest_msg_content",
+//				titleDefault);
+		item.content = JsonUtils.getStrSafely(joMsg, "latest_msg_title",
 				titleDefault);
 		if (TextUtils.isEmpty(item.content) || "0".equals(item.content)) {
 			item.content = contentDefault;

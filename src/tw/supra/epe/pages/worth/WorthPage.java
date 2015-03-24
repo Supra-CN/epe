@@ -291,7 +291,7 @@ public class WorthPage extends BaseMainPage implements OnClickListener,
 		double latitude = mLocation.getLatitude();
 		double longitude = mLocation.getLongitude();
 		mRequestWorth = new RequestWorth(this, new WorthInfo(latitude,
-				longitude, mSort, mGender, 1));
+				longitude, mSort, mGender, page));
 		NetworkCenter.getInstance().putToQueue(mRequestWorth);
 	}
 

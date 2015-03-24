@@ -16,12 +16,11 @@ import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkRoundedImageView;
 import tw.supra.utils.JsonUtils;
 import android.app.AlertDialog.Builder;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -88,7 +87,7 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener,
 		findViewById(R.id.action_create).setOnClickListener(this);
 
 		ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-		mAdapter = new PageAdapter(getFragmentManager());
+		mAdapter = new PageAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(mAdapter);
 		mPageIndicator = (PageIndicator) findViewById(R.id.page_indicator);
 		mPageIndicator.setViewPager(viewPager);
@@ -105,7 +104,7 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener,
 		super.onPostCreate(savedInstanceState);
 		setupPages();
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -216,14 +215,14 @@ public class MyStoreActivity extends BaseActivity implements OnClickListener,
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
 		switch (which) {
-		case DialogInterface.BUTTON_POSITIVE:{
-			
+		case DialogInterface.BUTTON_POSITIVE: {
+
 			Intent intent = new Intent(this, ActivityEditorActivity.class);
 			intent.putExtra(ActivityEditorActivity.EXTRA_MALL_ID, mMallId);
 			startActivity(intent);
 		}
 			break;
-		case DialogInterface.BUTTON_NEGATIVE:{
+		case DialogInterface.BUTTON_NEGATIVE: {
 			Intent intent = new Intent(this, ProductEditorActivity.class);
 			intent.putExtra(ActivityEditorActivity.EXTRA_MALL_ID, mMallId);
 			startActivity(intent);

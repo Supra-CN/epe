@@ -3,7 +3,7 @@ package tw.supra.epe.account;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseFrag;
 import android.os.Bundle;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.viewpagerindicator.PageIndicator;
@@ -26,7 +26,7 @@ public class LoginActivity extends BaseActivity {
 
 	private FragmentStatePagerAdapter getAdapter() {
 		if (null == mAdapter) {
-			mAdapter = new FragmentStatePagerAdapter(getFragmentManager()) {
+			mAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
 
 				@Override
 				public BaseFrag getItem(int pos) {

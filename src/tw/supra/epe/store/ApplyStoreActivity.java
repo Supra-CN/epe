@@ -9,16 +9,15 @@ import tw.supra.epe.core.BaseActivity;
 import tw.supra.epe.core.BaseHostFrag;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.umeng.analytics.MobclickAgent;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
 import com.yijiayi.yijiayi.R;
@@ -44,7 +43,7 @@ public class ApplyStoreActivity extends BaseActivity implements OnClickListener 
 		findViewById(R.id.action_back).setOnClickListener(this);
 
 		ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-		mAdapter = new PageAdapter(getFragmentManager());
+		mAdapter = new PageAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(mAdapter);
 		mPageIndicator = (PageIndicator) findViewById(R.id.page_indicator);
 		mPageIndicator.setViewPager(viewPager);

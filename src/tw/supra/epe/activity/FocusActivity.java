@@ -7,11 +7,10 @@ import tw.supra.epe.core.BaseFrag;
 import tw.supra.epe.mall.FocusBrandPage;
 import tw.supra.epe.mall.FocusMallPage;
 import tw.supra.utils.Log;
-import android.app.Fragment.InstantiationException;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,12 +41,11 @@ public class FocusActivity extends BaseActivity implements OnClickListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Intent intent = getIntent();
 		setContentView(R.layout.activity_focus);
 		findViewById(R.id.action_back).setOnClickListener(this);
 
 		ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-		mAdapter = new PageAdapter(getFragmentManager());
+		mAdapter = new PageAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(mAdapter);
 		mPageIndicator = (PageIndicator) findViewById(R.id.page_indicator);
 		mPageIndicator.setViewPager(viewPager);
@@ -98,9 +96,6 @@ public class FocusActivity extends BaseActivity implements OnClickListener,
 					throw new IllegalStateException(String.format(
 							"the page %s is not a legal page",
 							PAGES[position].getSimpleName()), e);
-				} catch (java.lang.InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			}
 			Log.i(LOG_TAG, "getItem :  pos =" + position + " page" + page);

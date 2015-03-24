@@ -6,17 +6,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tw.supra.epe.activity.t.TContentInfo;
 import tw.supra.epe.core.BaseActivity;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
 import tw.supra.network.ui.NetworkImageView;
+import tw.supra.network.ui.NetworkRoundedImageView;
 import tw.supra.utils.JsonUtils;
 import tw.supra.utils.TimeUtil;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -46,7 +46,6 @@ public class MsgTopicActivity extends BaseActivity implements OnClickListener,
 	private final ArrayList<JSONObject> DATA_SET = new ArrayList<JSONObject>();
 
 	private String mTopicId;
-	private JSONObject mJoData;
 
 	private TextView mLabel;
 	private PullToRefreshListView mPullableList;
@@ -62,7 +61,7 @@ public class MsgTopicActivity extends BaseActivity implements OnClickListener,
 		mLabel.setText(getIntent().getStringExtra(EXTRA_TOPIC_TITLE));
 
 		findViewById(R.id.action_back).setOnClickListener(this);
-		
+
 		mPullableList = (PullToRefreshListView) findViewById(R.id.list);
 		mPullableList.getRefreshableView().setAdapter(ADAPTER);
 		mPullableList.setOnItemClickListener(this);
@@ -101,116 +100,6 @@ public class MsgTopicActivity extends BaseActivity implements OnClickListener,
 		return false;
 	}
 
-	private void updateUi() {
-
-		if (mJoData == null) {
-			return;
-		}
-
-		String img = "";
-		String avator = "";
-		String name = "";
-		String time = "";
-		String content = "";
-		String info = "";
-		int width = 0;
-		int height = 0;
-		String like = "";
-		String comment = "";
-		String share = "";
-		Boolean isLike = false;
-
-		try {
-
-			JSONObject joUser = JsonUtils.getJoSafely(mJoData,
-					TContentInfo.UINFO);
-			avator = JsonUtils.getStrSafely(joUser, TContentInfo.PHOTO);
-			name = JsonUtils.getStrSafely(joUser, TContentInfo.USER_NAME);
-
-			JSONObject joImg = JsonUtils.getJoSafely(mJoData,
-					TContentInfo.IMAGE);
-			img = JsonUtils.getStrSafely(joImg, TContentInfo.IMG_SRC);
-			width = JsonUtils.getIntSafely(joImg, TContentInfo.IMG_WIDTH);
-			height = JsonUtils.getIntSafely(joImg, TContentInfo.IMG_HEIGHT);
-
-			isLike = JsonUtils.getIntSafely(mJoData, TContentInfo.IS_LIKE, 0) != 0;
-			time = TimeUtil.formatTimeWithCountDown(this,
-					JsonUtils.getLongSafely(mJoData, TContentInfo.ADD_TIME));
-			content = JsonUtils.getStrSafely(mJoData, TContentInfo.TT_CONTENT);
-			info = JsonUtils.getJaSafely(mJoData, TContentInfo.TT_DETAIL)
-					.getJSONObject(0).toString();
-
-			like = JsonUtils.getStrSafely(mJoData, TContentInfo.TT_LIKE_NUM);
-			comment = JsonUtils.getStrSafely(mJoData,
-					TContentInfo.TT_COMMENT_NUM);
-			share = JsonUtils.getStrSafely(mJoData, TContentInfo.TT_SHARE_NUM);
-
-			// if (null != joImages) {
-			// JSONObject joOriginal = JsonUtils.getJoSafely(joImages,
-			// ProductInfo.IMG_ORIGINAL);
-			// if (null != joOriginal) {
-			// img = JsonUtils.getStrSafely(joOriginal,
-			// ProductInfo.IMG_SRC);
-			// width = JsonUtils.getIntSafely(joOriginal,
-			// ProductInfo.IMG_WIDTH);
-			// height = JsonUtils.getIntSafely(joOriginal,
-			// ProductInfo.IMG_HEIGHT);
-			// }
-			// }
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		// mTvContent.setText(content);
-		// mTvName.setText(name);
-		// mTvTime.setText(time);
-		// mTvInfo.setText(info);
-		//
-		// mTvShare.setText(share);
-		// mTvLike.setText(like);
-		// mTvComment.setText(comment);
-		// mTvLike.setSelected(isLike);
-		//
-		// mIvAvator.setImageUrl(avator, NetworkCenter.getInstance()
-		// .getImageLoader());
-		// mIvImg.setImageUrl(img,
-		// NetworkCenter.getInstance().getImageLoader());
-		// adjustViewHeight(mIvImg, width, height);
-	}
-
-	private int adjustViewWidth() {
-		return getResources().getDisplayMetrics().widthPixels;
-	}
-
-	private void adjustViewHeight(View view, int width, int height) {
-		Log.i(LOG_TAG, "===adjustIconView start===");
-
-		int iw = width;
-		int ih = height;
-		Log.i(LOG_TAG, "iw : " + iw);
-		Log.i(LOG_TAG, "ih : " + ih);
-		if (iw < 0 || ih < 0) {
-			return;
-		}
-
-		float ratio = (Float.valueOf(iw) / Float.valueOf(ih));
-		Log.i(LOG_TAG, "ratio : " + ratio);
-
-		int vw = view.getWidth();
-		int vh = -1;
-		Log.i(LOG_TAG, "vw : " + vw);
-
-		if (vw < 1) {
-			vw = adjustViewWidth();
-			Log.i(LOG_TAG, "vw = ADJUST_IMAGE_WIDTH : " + vw);
-		}
-
-		vh = Float.valueOf(vw / ratio).intValue();
-		Log.i(LOG_TAG, "vh : " + vh);
-		view.getLayoutParams().height = vh;
-
-		Log.i(LOG_TAG, "===adjustIconView end===");
-	}
-
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -235,8 +124,11 @@ public class MsgTopicActivity extends BaseActivity implements OnClickListener,
 				convertView = View.inflate(MsgTopicActivity.this,
 						R.layout.msg_topic_item, null);
 				ItemHolder holder = new ItemHolder();
+				holder.avatar = (NetworkRoundedImageView) convertView
+						.findViewById(R.id.avator);
 				holder.img = (NetworkImageView) convertView
 						.findViewById(R.id.img);
+				holder.name = (TextView) convertView.findViewById(R.id.name);
 				holder.title = (TextView) convertView.findViewById(R.id.title);
 				holder.time = (TextView) convertView.findViewById(R.id.time);
 				holder.content = (TextView) convertView
@@ -245,6 +137,8 @@ public class MsgTopicActivity extends BaseActivity implements OnClickListener,
 			}
 
 			ItemHolder holder = (ItemHolder) convertView.getTag();
+			String name = "";
+			String avatar = "";
 			String img = "";
 			String title = "";
 			long time = 0;
@@ -253,16 +147,27 @@ public class MsgTopicActivity extends BaseActivity implements OnClickListener,
 			JSONObject jo = getItem(position);
 
 			try {
-				img = jo.getString(MsgTopicInfo.PHOTO);
+				 avatar = jo.getString(MsgTopicInfo.PHOTO);
+				img = jo.getString(MsgTopicInfo.PIC);
 				content = jo.getString(MsgTopicInfo.CONTENT);
+				name = jo.getString(MsgTopicInfo.FROM_USERNAME);
 				title = jo.getString(MsgTopicInfo.TITLE);
 				time = jo.getLong(MsgTopicInfo.SEND_TIME);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 
-			holder.img.setImageUrl(img, NetworkCenter.getInstance()
+			if (TextUtils.isEmpty(img)) {
+				holder.img.setVisibility(View.GONE);
+			} else {
+				holder.img.setVisibility(View.VISIBLE);
+				holder.img.setImageUrl(img, NetworkCenter.getInstance()
+						.getImageLoader());
+			}
+			
+			holder.avatar.setImageUrl(avatar, NetworkCenter.getInstance()
 					.getImageLoader());
+			holder.name.setText(name);
 			holder.title.setText(title);
 			holder.time.setText(TimeUtil.formatTimeWithCountDown(
 					MsgTopicActivity.this, time));
@@ -288,7 +193,9 @@ public class MsgTopicActivity extends BaseActivity implements OnClickListener,
 	};
 
 	private class ItemHolder {
+		NetworkRoundedImageView avatar;
 		NetworkImageView img;
+		TextView name;
 		TextView title;
 		TextView time;
 		TextView content;
@@ -308,10 +215,11 @@ public class MsgTopicActivity extends BaseActivity implements OnClickListener,
 			long id) {
 		try {
 			Intent intent = new Intent(this, MsgActivity.class);
-			intent.putExtra(MsgActivity.EXTRA_MSG_ID, JsonUtils.getStrSafely(DATA_SET.get(position-1), MsgTopicInfo.MSG_ID));
+			intent.putExtra(MsgActivity.EXTRA_MSG_ID, JsonUtils.getStrSafely(
+					DATA_SET.get(position - 1), MsgTopicInfo.MSG_ID));
 			startActivity(intent);
 		} catch (JSONException e) {
-//			 TODO Auto-generated catch block
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

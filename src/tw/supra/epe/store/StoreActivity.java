@@ -19,10 +19,10 @@ import tw.supra.network.NetworkCenter;
 import tw.supra.network.request.EpeRequestInfo;
 import tw.supra.network.request.NetWorkHandler;
 import tw.supra.network.request.RequestEvent;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -238,7 +238,7 @@ public class StoreActivity extends BaseActivity implements OnClickListener,
 
 	private void initUI() {
 		ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-		mAdapter = new PageAdapter(getFragmentManager());
+		mAdapter = new PageAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(mAdapter);
 		mPageIndicator = (PageIndicator) findViewById(R.id.page_indicator);
 		mPageIndicator.setViewPager(viewPager);

@@ -4,7 +4,8 @@
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="@android:style/Theme.Holo.Light.NoActionBar">
+<!--     <style name="AppBaseTheme" parent="@android:style/Theme.Holo.Light.NoActionBar"> -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -97,7 +98,7 @@
         <item name="android:layout_marginBottom">5dip</item>
     </style>
 
-    <style name="PopCreateDialog" parent="@android:style/Theme.Dialog">
+    <style name="PopCreateDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:windowIsTranslucent">true</item>
 <!--         <item name="android:windowFrame">@null</item> -->
         <item name="android:windowNoTitle">true</item>
@@ -115,7 +116,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="CleanDialog" parent="@android:style/Theme.Dialog">
+    <style name="CleanDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
