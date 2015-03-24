@@ -304,6 +304,10 @@ public class PhotoView extends NetworkImageView implements OnGestureListener,
 		mDoubleTapOccurred = false;
 		return handled;
 	}
+	
+	public void fitView(){
+		scale(getHeight()/getActualHeight(), getWidth()/2, getHeight()/2);
+	}
 
 	@Override
 	public boolean onSingleTapConfirmed(MotionEvent e) {

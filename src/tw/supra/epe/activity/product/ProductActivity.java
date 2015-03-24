@@ -116,7 +116,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener,
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-		delayedHide(AUTO_HIDE_DELAY_MILLIS);
+//		delayedHide(AUTO_HIDE_DELAY_MILLIS);
 		request();
 	}
 

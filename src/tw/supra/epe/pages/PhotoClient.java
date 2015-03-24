@@ -4,7 +4,7 @@ package tw.supra.epe.pages;
 import tw.supra.epe.core.BaseFrag;
 import tw.supra.network.NetworkCenter;
 import tw.supra.network.Response.Listener;
-import tw.supra.network.ui.PhotoView;
+import tw.supra.network.ui.NetworkImageView;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -22,7 +22,8 @@ public class PhotoClient extends BaseFrag implements Listener<Bitmap> {
 
     private String mImgUrl;
 
-    private PhotoView mPhotoView;
+//    private PhotoView mPhotoView;
+    private NetworkImageView mPhotoView;
     private View mProgressBar;
 
     @Override
@@ -36,7 +37,8 @@ public class PhotoClient extends BaseFrag implements Listener<Bitmap> {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = View.inflate(getActivity(), R.layout.client_photo, null);
-        mPhotoView = (PhotoView)root.findViewById(R.id.photo_view);
+//        mPhotoView = (PhotoView)root.findViewById(R.id.photo_view);
+        mPhotoView = (NetworkImageView)root.findViewById(R.id.photo_view);
         mProgressBar =root.findViewById(R.id.progress_bar);
         return root;
     }
@@ -45,9 +47,11 @@ public class PhotoClient extends BaseFrag implements Listener<Bitmap> {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPhotoView.setImageListener(this);
-        mPhotoView.enableImageTransforms(true);
+//        mPhotoView.enableImageTransforms(true);
         mPhotoView.setImageUrl(mImgUrl, NetworkCenter.getInstance().getImageLoader());
+//        mPhotoView.setFullScreen(true, true);
     }
+    
 
     @Override
     public void onResponse(Bitmap response) {
