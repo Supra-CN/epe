@@ -9,7 +9,8 @@
     <TextView
         android:id="@+id/distance"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/epe_home_item_text" />
 
     <tw.supra.network.ui.NetworkRoundedImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,7 +27,8 @@
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/epe_home_item_text" />
 
     <!-- android:background="@drawable/list_item_bg_selector" -->
 

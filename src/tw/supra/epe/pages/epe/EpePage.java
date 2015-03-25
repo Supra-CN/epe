@@ -22,6 +22,7 @@ import tw.supra.network.ui.NetworkRoundedImageView;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -43,6 +44,8 @@ import com.yijiayi.yijiayi.R;
 
 public class EpePage extends BaseMainPage implements LocationCallBack {
 	private static final String LOG_TAG = EpePage.class.getSimpleName();
+
+	private static final float AD_SIZE_RATIO = 320f / 180f;
 
 	// private SupraLocation mLocation;
 	private RequestNearStore mRequestNearStore;
@@ -73,6 +76,11 @@ public class EpePage extends BaseMainPage implements LocationCallBack {
 				.findViewById(R.id.near_brand_container);
 		mAdAdapter = new AdAdapter(getChildFragmentManager());
 		mAdPager = (ViewPager) v.findViewById(R.id.view_pager);
+		Point outSize = new Point();
+		getActivity().getWindowManager().getDefaultDisplay().getSize(outSize);
+		mAdPager.getLayoutParams().height = Float.valueOf(
+				getResources().getDisplayMetrics().widthPixels / AD_SIZE_RATIO)
+				.intValue();
 		mAdPager.setAdapter(mAdAdapter);
 		PageIndicator indicator = (PageIndicator) v
 				.findViewById(R.id.page_indicator);

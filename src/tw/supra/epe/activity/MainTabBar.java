@@ -24,10 +24,12 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,7 +46,7 @@ public class MainTabBar extends LinearLayout implements PageIndicator,
 	/** Title text used when no title is provided by the adapter. */
 	private static final CharSequence EMPTY_TITLE = "";
 
-	private ImageButton mCreateTabView;
+	private ImageView mCreateTabView;
 
 	/**
 	 * Interface for a callback when the selected tab has been reselected.
@@ -112,7 +114,7 @@ public class MainTabBar extends LinearLayout implements PageIndicator,
 
 	private void addCreateTab() {
 		if (null == mCreateTabView) {
-			mCreateTabView = new ImageButton(getContext());
+			mCreateTabView = new ImageView(getContext());
 			mCreateTabView.setOnClickListener(this);
 		}
 		mCreateTabView.setImageResource(R.drawable.indicator_create_tab);
@@ -129,6 +131,7 @@ public class MainTabBar extends LinearLayout implements PageIndicator,
 		tabView.setOnClickListener(mTabClickListener);
 		tabView.setText(text);
 		tabView.setGravity(Gravity.CENTER);
+		tabView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
 		tabView.setTextColor(getResources().getColorStateList(
 				R.color.indicator_text_color));
 

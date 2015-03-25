@@ -47,7 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/epe_page_label_near_store"
-                android:textSize="18sp" />
+                android:textSize="@dimen/epe_home_title_text"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
@@ -120,18 +121,17 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:paddingTop="5dp"
                             android:orientation="horizontal"
-                            android:paddingLeft="@dimen/epe_wave_item_half_width" />
+                            android:paddingLeft="@dimen/epe_wave_item_half_width"
+                            android:paddingTop="5dp" />
 
                         <LinearLayout
                             android:id="@+id/near_store_container_bottom"
-                            android:paddingBottom="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:orientation="horizontal"
-                            />
+                            android:paddingBottom="5dp" />
                     </LinearLayout>
                 </FrameLayout>
             </HorizontalScrollView>
@@ -153,7 +153,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/epe_page_label_near_brand"
-                android:textSize="18sp" />
+                android:textSize="@dimen/epe_home_title_text"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"

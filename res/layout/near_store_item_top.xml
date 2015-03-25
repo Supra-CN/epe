@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+                android:textSize="@dimen/epe_home_item_text"
         android:singleLine="true" />
 
     <TextView
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_near_store_top_item_bg"
         android:gravity="center"
+                android:textSize="@dimen/epe_home_item_text"
                 android:lines="2"
          />
 
