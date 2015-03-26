@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -22,6 +23,10 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.navi.BaiduMapAppNotSupportNaviException;
+import com.baidu.mapapi.navi.BaiduMapNavigation;
+import com.baidu.mapapi.navi.IllegalNaviArgumentException;
+import com.baidu.mapapi.navi.NaviPara;
 import com.yijiayi.yijiayi.R;
 
 public class MapActivity extends BaseActivity implements OnClickListener ,BDLocationListener{
@@ -41,6 +46,9 @@ public class MapActivity extends BaseActivity implements OnClickListener ,BDLoca
 	 */
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
+	
+	private LatLng mTargetPos;
+	private LatLng mPosition;
 
 	public static void show(Context c, String label, double lat, double lon) {
 		Intent i = new Intent(c, MapActivity.class);
@@ -63,10 +71,11 @@ public class MapActivity extends BaseActivity implements OnClickListener ,BDLoca
 				.getStringExtra(EXTRA_STR_LABEL));
 
 		// 当用intent参数时，设置中心点为指定点
-		LatLng p = new LatLng(intent.getDoubleExtra(EXTRA_DOUBLE_LAT, 0),
+		mTargetPos = new LatLng(intent.getDoubleExtra(EXTRA_DOUBLE_LAT, 0),
 				intent.getDoubleExtra(EXTRA_DOUBLE_LON, 0));
 
 		findViewById(R.id.action_back).setOnClickListener(this);
+		findViewById(R.id.action_nav).setOnClickListener(this);
 		mMapView = (MapView) findViewById(R.id.map);
 		mBaiduMap = mMapView.getMap();
 
@@ -86,9 +95,9 @@ public class MapActivity extends BaseActivity implements OnClickListener ,BDLoca
 		mLocClient.setLocOption(option);
 		mLocClient.start();
 		
-		mBaiduMap.addOverlay(new MarkerOptions().position(p).icon(
+		mBaiduMap.addOverlay(new MarkerOptions().position(mTargetPos).icon(
 				BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding)));
-		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(p));
+		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(mTargetPos));
 	}
 
 	@Override
@@ -97,8 +106,32 @@ public class MapActivity extends BaseActivity implements OnClickListener ,BDLoca
 		case R.id.action_back:
 			onBackPressed();
 			break;
+		case R.id.action_nav:
+			nav();
+			break;
 		default:
 			break;
+		}
+	}
+
+	private void nav() {
+		if(mPosition == null){
+			Toast.makeText(this, R.string.map_toast_need_loction, Toast.LENGTH_SHORT).show();
+			return;
+		}
+		
+		NaviPara para = new NaviPara();
+		para.startPoint = mPosition;
+		para.startName = getString(R.string.map_nav_start);
+		para.endName = getString(R.string.map_nav_end);
+		para.endPoint = mTargetPos;
+		try {
+			BaiduMapNavigation.openBaiduMapNavi(para, this);
+		} catch (BaiduMapAppNotSupportNaviException e) {
+			BaiduMapNavigation.openWebBaiduMapNavi(para, this);
+		}catch (IllegalNaviArgumentException e) {
+			Toast.makeText(this, R.string.map_toast_need_loction, Toast.LENGTH_SHORT).show();
+
 		}
 	}
 
@@ -139,11 +172,11 @@ public class MapActivity extends BaseActivity implements OnClickListener ,BDLoca
 				.direction(100).latitude(location.getLatitude())
 				.longitude(location.getLongitude()).build();
 		mBaiduMap.setMyLocationData(locData);
+		mPosition = new LatLng(location.getLatitude(),
+				location.getLongitude());
 		if (isFirstLoc) {
 			isFirstLoc = false;
-			LatLng ll = new LatLng(location.getLatitude(),
-					location.getLongitude());
-			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(mPosition);
 			mBaiduMap.animateMapStatus(u);
 		}		
 	}

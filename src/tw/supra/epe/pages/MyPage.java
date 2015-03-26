@@ -111,8 +111,8 @@ public class MyPage extends BaseMainPage implements OnItemClickListener,
 			LIST.add(new Item(R.string.my_page_item_apply_store_on_hold,
 					R.drawable.ic_apply_store));
 		}
-		LIST.add(new Item());
-		LIST.add(new Item(R.string.my_page_item_invite, R.drawable.ic_my_invite));
+//		LIST.add(new Item());
+//		LIST.add(new Item(R.string.my_page_item_invite, R.drawable.ic_my_invite));
 		// new Item()
 	}
 

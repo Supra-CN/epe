@@ -228,6 +228,10 @@
     <string name="fav_label">我的收藏</string>
     <!-- map -->
     <string name="map_picker_label">选择地点</string>
+    <string name="map_action_nav">导航</string>
+    <string name="map_toast_need_loction">尚未定位，请稍候</string>
+    <string name="map_nav_start">起点</string>
+    <string name="map_nav_end">终点</string>
     <!-- settings -->
     <string name="settings_label">设置</string>
     <string name="settings_item_about">关于我们</string>
