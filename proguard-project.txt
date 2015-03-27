@@ -18,3 +18,206 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+##--------------- start: epe  ----------
+#-keep class com.android.** { *; }
+#-keep interface com.android.** { *; }
+#-keep class libcore.icu.ICU.** { *; }
+#-keep interface libcore.icu.ICU.** { *; }
+#-keep class android.app.** { *; }
+#-keep interface android.app.** { *; }
+#-keep class tw.supra.network.** { *; }
+#-keep interface tw.supra.network.** { *; }
+#-keep class com.directionalviewpager.** { *; }
+#-keep interface com.directionalviewpager.** { *; }
+##--------------- end: epe ----------
+
+##--------------- start: Baidu map  ----------
+
+#-libraryjars libs/BaiduLBS_Android.jar
+-keep class com.baidu.** { *; }
+-keep class vi.com.gdi.bgl.android.**{*;}
+
+#-keep interface com.sinovoice.** { *; }
+#-keep class com.sinovoice.** { *; }
+-dontwarn com.baidu.navisdk.comapi.tts.ttsplayer.**
+
+
+#-libraryjars   /libs/android-support-v13.jar
+#-libraryjars   /libs/BaiduLBS_Android.jar
+#-dontwarn **CompatHoneycomb
+#-dontwarn **CompatHoneycombMR2
+#-dontwarn **CompatCreatorHoneycombMR2
+#-keep class android.support.v4.** { *; }
+#-keep class com.baidu.mapapi.* {*; }
+#-keep public class * extends android.support.v4.**
+#-keep public class * extends android.app.Fragment
+#-keep public class * extends android.app.Activity
+#-keep public class * extends android.app.Application
+#-keep public class * extends android.app.Service
+#-keep public class * extends android.content.BroadcastReceiver
+#-keep public class * extends android.content.ContentProvider
+#-keep public class * extends android.app.backup.BackupAgentHelper
+#-keep public class * extends android.preference.Preference
+#-keep public class com.android.vending.licensing.ILicensingService
+
+##--------------- end: baidu  map ----------
+
+
+##--------------- start: picasso  ----------
+-dontwarn com.squareup.okhttp.**
+##--------------- end:  picasso ----------
+
+
+
+##--------------- start: pulltorefresh  ----------
+#-keep class com.handmark.pulltorefresh.library.** { *; }
+#-keep interface com.handmark.pulltorefresh.library.** { *; }
+##--------------- end:  pulltorefresh ----------
+
+
+
+
+
+##--------------- start: google ads  ----------
+-keep public class com.google.android.gms.ads.** {
+   public *;
+}
+
+-keep public class com.google.ads.** {
+   public *;
+}
+##--------------- end:  google ads ----------
+
+
+
+##--------------- start: gson  ----------
+# Gson uses generic type information stored in a class file when working with fields. Proguard
+# removes such information by default, so configure it to keep all of it.
+
+##---------------Begin: proguard configuration for Gson  ----------
+# Gson uses generic type information stored in a class file when working with fields. Proguard
+# removes such information by default, so configure it to keep all of it.
+-keepattributes Signature
+
+# Gson specific classes
+-keep class sun.misc.Unsafe { *; }
+#-keep class com.google.gson.stream.** { *; }
+-keep class com.google.gson.** { *; }
+
+# Application classes that will be serialized/deserialized over Gson
+-keep class com.google.gson.examples.android.model.** { *; }
+
+##---------------End: proguard configuration for Gson  ----------
+
+##--------------- start: rong  ----------
+-keepattributes Exceptions,InnerClasses
+
+-keep class io.rong.** {*;}
+
+-keepattributes Signature
+
+-keepattributes *Annotation*
+
+-keepclassmembers class * extends de.greenrobot.dao.AbstractDao {
+    public static java.lang.String TABLENAME;
+}
+
+-keep class **$Properties
+-dontwarn  org.eclipse.jdt.annotation.**
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+
+
+
+
+#-keepattributes Exceptions,InnerClasses
+#-keepattributes *Annotation*
+#-keep class * extends java.lang.annotation.Annotation { *; }
+#-keep class io.rong.** {*;}
+#-keep class uk.co.senab.bitmapcache.** {*;}
+#-keep class com.jakewharton.disklrucache.** {*;}
+#-keep public class com.leyye.leader.R**{*;}
+
+#-keep class de.greenrobot.** { *; }
+#-keep interface de.greenrobot.** { *; }
+
+#-keep class com.ultrapower.** { *; }
+#-keep interface com.ultrapower.** { *; }
+
+#-keep class com.sea_monster.** { *; }
+#-keep interface com.sea_monster.** { *; }
+
+#-libraryjars libs/Rong_IMKit_v1_2_7.jar    
+#-keep class io.rong.imkit.** {*;}
+#-keep class io.rong.imlib.** {*;}
+#-keep class io.rong.imlib.** {*;}
+#-keep class io.rong.message.** {*;}
+
+#-keepclassmembers class **.R$* {
+#public static <fields>;
+#}
+
+#-keep public class com.yijiayi.yijiayi.R**{*;}
+#-keep class *.R$ { *; }  
+
+#-libraryjars .bs/Rong_IMLib_v1_2_7.jar
+
+#-keepclassmembers class * extends de.greenrobot.dao.AbstractDao {
+  #  public static java.lang.String TABLENAME;
+#}
+#-keep class **$Properties
+#-dontwarn  org.eclipse.jdt.annotation.**
+
+
+
+#-keep class android.support.v4.** { *; }
+#-keep interface android.support.v4.** { *; }
+
+#-keep class android.support.v4.app.** { *; }
+#-keep interface android.support.v4.app.** { *; }
+
+#-keep class android.support.v4.app.FragmentActivity.** { *; }
+#-keep interface android.support.v4.app.FragmentActivity.** { *; }
+
+#-keep class android.support.v4.app.SharedElementCallback.** { *; }
+#-keep interface android.support.v4.app.SharedElementCallback.** { *; }
+
+#-keep class fhgdffghdfg.** { *; }
+#-keep interface sdfgdfgdsgsr.** { *; }
+
+#-keep class fhgdffghdfg.** { *; }
+#-keep interface sdfgdfgdsgsr.** { *; }
+
+##--------------- end:  rong ----------
+
+
+
+
+
+# [proguard] Note: com.google.ads.AdRequest: can't find dynamically referenced class com.google.analytics.tracking.android.AdMobInfo
+# [proguard] Note: com.google.gson.internal.UnsafeAllocator: can't find dynamically referenced class sun.misc.Unsafe
+# [proguard] Note: the configuration refers to the unknown class 'com.google.vending.licensing.ILicensingService'
+# [proguard] Note: the configuration refers to the unknown class 'com.android.vending.licensing.ILicensingService'
+# [proguard] Note: the configuration refers to the unknown class 'com.android.volley.ui.NetworkImageView'
+# [proguard]       Maybe you meant the fully qualified name 'tw.supra.network.ui.NetworkImageView'?
+# [proguard] Note: the configuration refers to the unknown class 'com.android.volley.ui.PhotoView'
+# [proguard]       Maybe you meant the fully qualified name 'tw.supra.network.ui.PhotoView'?
+# [proguard]       Maybe you meant the fully qualified name 'uk.co.senab.photoview.PhotoView'?
+# [proguard] Note: the configuration keeps the entry point 'com.google.ads.AdView { AdView(android.app.Activity,com.google.ads.AdSize,java.lang.String); }', but not the descriptor class 'com.google.ads.AdSize'
+# [proguard] Note: the configuration keeps the entry point 'com.google.ads.AdView { AdView(android.app.Activity,com.google.ads.AdSize[],java.lang.String); }', but not the descriptor class 'com.google.ads.AdSize'
+# [proguard] Note: the configuration keeps the entry point 'com.ultrapower.mcs.engine.internal.UMCSInternal { int GetLocalVideoInfo(com.ultrapower.mcs.engine.internal.SendVideoInfo); }', but not the descriptor class 'com.ultrapower.mcs.engine.internal.SendVideoInfo'
+# [proguard] Note: the configuration keeps the entry point 'com.ultrapower.mcs.engine.internal.UMCSInternal { int GetRemoteVideoInfo(com.ultrapower.mcs.engine.internal.ReceiveVideoInfo); }', but not the descriptor class 'com.ultrapower.mcs.engine.internal.ReceiveVideoInfo'
+# [proguard] Note: the configuration keeps the entry point 'com.ultrapower.mcs.engine.internal.UMCSInternal { int GetLocalAudioInfo(com.ultrapower.mcs.engine.internal.SendAudioInfo); }', but not the descriptor class 'com.ultrapower.mcs.engine.internal.SendAudioInfo'
+# [proguard] Note: the configuration keeps the entry point 'com.ultrapower.mcs.engine.internal.UMCSInternal { int GetRemoteAudioInfo(com.ultrapower.mcs.engine.internal.ReceiveAudioInfo); }', but not the descriptor class 'com.ultrapower.mcs.engine.internal.ReceiveAudioInfo'
+
+
+
+
+
+
+
+
